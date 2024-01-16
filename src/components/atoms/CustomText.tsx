@@ -2,13 +2,13 @@ import React from "react"
 import { ColorValue, StyleSheet, Text, TextStyle } from "react-native"
 
 interface Props{
-    title: String,
+    children: String,
     color: ColorValue,
     type: keyof typeof styles
 }
 
 const CustomText = (props: Props) => {
-    return <Text style={[{color: props.color}, props.type] as TextStyle}>{props.title}</Text>
+    return <Text style={[{color: props.color}, props.type] as TextStyle}>{props.children}</Text>
 }
 
 export default CustomText;
