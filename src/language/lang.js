@@ -1,0 +1,4 @@
+const lang = {
+    en,
+    vn
+}
