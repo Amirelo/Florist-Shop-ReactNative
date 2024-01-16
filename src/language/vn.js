@@ -1,4 +1,4 @@
-const vn = {
+export default vn = {
     // Login
     appTitle:  "Flora",
 
