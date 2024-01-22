@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         borderWidth: 2,
         borderColor: themes['defaultTheme'].primaryColor
+    },
+    match_parent:{
+        width:'auto',
+        height:149,
+        borderRadius: 7
     }
 
 })

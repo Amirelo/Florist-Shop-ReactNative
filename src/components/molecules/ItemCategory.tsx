@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 import CustomImage from "../atoms/CustomImage"
 import CategoryModel from "../models/CategoryModel"
 import CustomText from "../atoms/CustomText"
+import themes from "../../themes/themes"
 
 interface Props{
     marginTop?: number,
@@ -13,7 +14,7 @@ const ItemCategory = (props: Props) => {
     return (
     <View style={styles.view}>
         <CustomImage type="category" source={props.category.link}/>
-        <CustomText>{props.category.name}</CustomText>
+        <CustomText color={themes['defaultTheme'].textSecondaryColor}>{props.category.name}</CustomText>
     </View>)
 }
 
