@@ -3,17 +3,21 @@ import { ColorValue, StyleSheet, Text, TextStyle } from "react-native"
 
 interface Props{
     children: String,
-    color: ColorValue,
-    type: keyof typeof styles
+    color?: ColorValue,
+    type?: keyof typeof styles
 }
 
 const CustomText = (props: Props) => {
-    return <Text style={[{color: props.color}, props.type] as TextStyle}>{props.children}</Text>
+    const selectedType = props.type ? props.type : 'normal';
+    return <Text style={[{color: props.color ? props.color : "#000000" }, styles[selectedType]] as TextStyle}>{props.children}</Text>
 }
 
 export default CustomText;
 
 const styles = StyleSheet.create({
+    big:{
+        fontSize: 40,
+    },
     header:{
         fontSize: 33,
     },
