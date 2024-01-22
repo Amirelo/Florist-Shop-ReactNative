@@ -20,14 +20,18 @@ const HomeScreen = () => {
     list.push(testCategory3)
     console.log(list)
 
+    var productList = new Array<ProductModel>();
     const testProduct = new ProductModel('Spark', 90, 'A bouquet',2.4,1,['https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg'])
+    productList.push(testProduct)
+    productList.push(testProduct)
+    productList.push(testProduct)
+    
     return (
         <View style={styles.view}>
             <CustomText type="subTitle">{lang['en'].appBarHome}</CustomText>
-            <CustomText type="header">Welcome!</CustomText>
-            <CardHelp marginTop={24} />
+            <CustomText type="header" marginBottom={24}>Welcome!</CustomText>
+            <CardHelp marginBottom={24}/>
             <FlatList
-                style={{ marginTop: 24 }}
                 contentContainerStyle={{ justifyContent: 'space-between', width: '100%' }}
                 horizontal={true}
                 data={list}
@@ -36,7 +40,14 @@ const HomeScreen = () => {
                     <ItemCategory category={item} />} />
 
             <CustomText type="title" marginTop={32}>Popularity</CustomText>
-            <ItemProductBig product={testProduct}/>
+            <FlatList
+                contentContainerStyle={{ justifyContent: 'space-between',flexGrow:1 }}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+                data={productList}
+                keyExtractor={item => item.name}
+                renderItem={({ item }) =>
+                    <ItemProductBig product={item} />} />
         </View>
     )
 }

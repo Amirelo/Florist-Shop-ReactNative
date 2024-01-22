@@ -1,7 +1,9 @@
 import en from "./en"
 import vn from "./vn"
 
-export default lang = {
+const lang = {
     en,
     vn
 }
+
+export default lang;

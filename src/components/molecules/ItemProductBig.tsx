@@ -29,7 +29,9 @@ const ItemProductBig = (props: Props) => {
           source={props.product.links[0]}
         />
         <View style={styles.body}>
-          <CustomText type="subHeader">{props.product.name}</CustomText>
+          <CustomText
+            type="subHeader"
+            color={themes['defaultTheme'].primaryColor}>{props.product.name}</CustomText>
           <View style={styles.rating}>
             <FontAwesomeIcon size={18} icon={faStar} />
             <FontAwesomeIcon size={18} icon={faStar} />
@@ -48,7 +50,7 @@ export default ItemProductBig;
 
 const styles = StyleSheet.create({
   view: {
-    width: '80%',
+    alignSelf:'baseline',
     padding: 12,
     backgroundColor: themes['defaultTheme'].tertiaryColor,
   },

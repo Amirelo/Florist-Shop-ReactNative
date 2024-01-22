@@ -1,4 +1,4 @@
-export default en = {
+const en = {
     // Login
     appTitle:  "Flora",
 
@@ -11,3 +11,5 @@ export default en = {
 
 
 }
+
+export default en;

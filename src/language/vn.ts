@@ -1,4 +1,4 @@
-export default vn = {
+const vn = {
     // Login
     appTitle:  "Flora",
 
@@ -9,3 +9,5 @@ export default vn = {
 
     appBarHome: 'FLORIST',
 }
+
+export default vn;

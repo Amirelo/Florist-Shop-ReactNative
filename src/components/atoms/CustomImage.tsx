@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
         borderColor: themes['defaultTheme'].primaryColor
     },
     match_parent: {
-        width: 'auto',
-        height: 149,
+        width: 311,
+        height: 237,
         borderRadius: 7
     }
 
