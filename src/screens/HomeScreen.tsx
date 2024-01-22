@@ -4,15 +4,18 @@ import CustomText from "../components/atoms/CustomText";
 import {StyleSheet, View } from "react-native";
 import CardHelp from "../components/molecules/CardHelp";
 import CustomImage from "../components/atoms/CustomImage";
+import CategoryModel from "../components/models/CategoryModel";
+import ItemCategory from "../components/molecules/ItemCategory";
 
 const HomeScreen = () => {
+    const testCategory = new CategoryModel('test', 'https://images.pexels.com/photos/16061696/pexels-photo-16061696/free-photo-of-a-grass-field-and-rocky-mountains-covered-in-fog.jpeg')
     return (
         <View style = {styles.view}>
             <CustomText type="subTitle">{lang['en'].appBarHome}</CustomText>
             <CustomText type="header">Welcome!</CustomText>
             <CardHelp marginTop={24}/>
-            <CustomImage type="category" source="https://cdn.pixabay.com/photo/2023/12/19/21/53/trees-8458467_1280.jpg"/>
-            <CustomText marginTop={10}>All</CustomText>
+            <ItemCategory category={testCategory}/>
+            
         </View>
     )
 }
