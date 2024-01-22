@@ -1,6 +1,6 @@
 import React from "react"
 import { View } from "react-native"
-import CustomText from "../components/atoms/CustomText"
+import CustomText from "../../../components/atoms/CustomText"
 
 const ExploreScreen = () => {
     return(

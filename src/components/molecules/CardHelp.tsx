@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import CustomText from "../atoms/CustomText"
+import { CustomText } from "../atoms"
 import { StyleSheet, View, ViewStyle } from "react-native"
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons"
 

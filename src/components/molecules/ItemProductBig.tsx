@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import CustomImage from '../atoms/CustomImage';
-import CustomText from '../atoms/CustomText';
-import ProductModel from '../models/ProductModel';
+import { CustomText, CustomImage } from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar} from '@fortawesome/free-regular-svg-icons';
 import themes from '../../themes/themes';
+import { ProductModel } from '../models';
+
 
 interface Props {
   product: ProductModel;

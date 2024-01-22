@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import CustomImage from '../atoms/CustomImage';
-import CategoryModel from '../models/CategoryModel';
-import CustomText from '../atoms/CustomText';
 import themes from '../../themes/themes';
+import { CustomText, CustomImage } from '../atoms';
+import { CategoryModel } from '../models';
 
 interface Props {
   marginTop?: number;
