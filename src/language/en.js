@@ -7,5 +7,7 @@ export default en = {
     edConPass: "Confirm Password",
     buttonLogin: "Sign In",
 
+    appBarHome: 'FLORIST',
+
 
 }

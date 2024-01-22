@@ -1,39 +1,45 @@
 import React from "react"
 import { ColorValue, StyleSheet, Text, TextStyle } from "react-native"
 
-interface Props{
+interface Props {
     children: String,
     color?: ColorValue,
+    marginTop?: number,
     type?: keyof typeof styles
 }
 
 const CustomText = (props: Props) => {
     const selectedType = props.type ? props.type : 'normal';
-    return <Text style={[{color: props.color ? props.color : "#000000" }, styles[selectedType]] as TextStyle}>{props.children}</Text>
+    return <Text style={[
+        {
+            color: props.color ? props.color : "#000000",
+            marginTop: props.marginTop
+        },
+        styles[selectedType]] as TextStyle}>{props.children}</Text>
 }
 
 export default CustomText;
 
 const styles = StyleSheet.create({
-    big:{
+    big: {
         fontSize: 40,
     },
-    header:{
+    header: {
         fontSize: 33,
     },
-    subHeader:{
+    subHeader: {
         fontSize: 30,
     },
-    title:{
+    title: {
         fontSize: 20,
     },
-    subTitle:{
+    subTitle: {
         fontSize: 16,
     },
-    normal:{
+    normal: {
         fontSize: 14,
     },
-    small:{
+    small: {
         fontSize: 12,
     }
 })
