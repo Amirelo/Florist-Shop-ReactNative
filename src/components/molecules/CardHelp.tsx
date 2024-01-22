@@ -4,12 +4,13 @@ import { StyleSheet, View, ViewStyle } from "react-native"
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons"
 
 interface Props{
-    marginTop?: number
+    marginTop?: number,
+    marginBottom?:number,
 }
 
 const CardHelp = (props: Props) => {
     return (
-        <View style={[styles.view, {marginTop: props.marginTop}] as ViewStyle}>
+        <View style={[styles.view, {marginTop: props.marginTop, marginBottom: props.marginBottom}] as ViewStyle}>
             <View>
                 <CustomText type="big" color={'#ffffff'}>Need help?</CustomText>
                 <CustomText type="subTitle" color={'#ffffff'}>Make an appointment or chat with us.</CustomText>

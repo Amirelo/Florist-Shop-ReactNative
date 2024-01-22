@@ -5,6 +5,7 @@ interface Props {
     children: String,
     color?: ColorValue,
     marginTop?: number,
+    marginBottom?:number,
     type?: keyof typeof styles
 }
 
@@ -13,7 +14,8 @@ const CustomText = (props: Props) => {
     return <Text style={[
         {
             color: props.color ? props.color : "#000000",
-            marginTop: props.marginTop
+            marginTop: props.marginTop,
+            marginBottom: props.marginBottom,
         },
         styles[selectedType]] as TextStyle}>{props.children}</Text>
 }
