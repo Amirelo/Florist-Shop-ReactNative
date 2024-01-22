@@ -3,6 +3,7 @@ const defaultTheme = {
     bgColor:'#ffffff',
     secondaryColor:'',
     textColor:'#000000',
+    textSecondaryColor:'2E2D2D',
     errorcolor:'',
     warnColor:'',
     
