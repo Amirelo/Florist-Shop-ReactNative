@@ -1,8 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage, RatingStars} from '../atoms';
+import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
 import themes from '../../themes/themes';
 import {ProductModel} from '../../models';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   product: ProductModel;
@@ -11,8 +12,13 @@ interface Props {
 }
 
 const ItemProductBig = (props: Props) => {
+  const navigation = useNavigation();
+  const onItemPressed = () => {
+    navigation.navigate('ProductDetail' as never);
+  };
   return (
-    <View
+    <CustomButton
+      onPressed={onItemPressed}
       style={
         [
           styles.view,
@@ -31,11 +37,11 @@ const ItemProductBig = (props: Props) => {
             color={themes['defaultTheme'].primaryColor}>
             {props.product.name}
           </CustomText>
-          <RatingStars totalRating={props.product.totalRating}/>
+          <RatingStars totalRating={props.product.totalRating} />
         </View>
         <CustomText type="title">{`$${props.product.price}`}</CustomText>
       </View>
-    </View>
+    </CustomButton>
   );
 };
 
