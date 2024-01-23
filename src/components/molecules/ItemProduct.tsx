@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {CustomText, CustomImage, CustomButton} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import * as regular from '@fortawesome/free-regular-svg-icons';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
 import {ProductModel} from '../../models';

@@ -3,7 +3,6 @@ import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import themes from '../../themes/themes';
 
 const QuantityCounter = () => {
   return (

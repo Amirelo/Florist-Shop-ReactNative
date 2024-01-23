@@ -17,8 +17,8 @@ const ExploreScreen = () => {
   return (
     <View>
       <FlatList
-        columnWrapperStyle={{justifyContent:'space-around',marginBottom:24}}
-        style={{marginTop:24}}
+        columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 24}}
+        style={{marginTop: 24}}
         numColumns={2}
         data={productList}
         keyExtractor={item => item.name}

@@ -15,27 +15,57 @@ const RatingStars = (props: Props) => {
       <FontAwesomeIcon
         size={18}
         color={themes['defaultTheme'].warnColor}
-        icon={props.totalRating >= 1 ? solid.faStar : props.totalRating>=0.5? solid.faStarHalfAlt : regular.faStar}
+        icon={
+          props.totalRating >= 1
+            ? solid.faStar
+            : props.totalRating >= 0.5
+            ? solid.faStarHalfAlt
+            : regular.faStar
+        }
       />
       <FontAwesomeIcon
         size={18}
         color={themes['defaultTheme'].warnColor}
-        icon={props.totalRating >= 2 ? solid.faStar : props.totalRating>=1.5? solid.faStarHalfAlt : regular.faStar}
+        icon={
+          props.totalRating >= 2
+            ? solid.faStar
+            : props.totalRating >= 1.5
+            ? solid.faStarHalfAlt
+            : regular.faStar
+        }
       />
       <FontAwesomeIcon
         size={18}
         color={themes['defaultTheme'].warnColor}
-        icon={props.totalRating >= 3 ? solid.faStar : props.totalRating>=2.5? solid.faStarHalfAlt : regular.faStar}
+        icon={
+          props.totalRating >= 3
+            ? solid.faStar
+            : props.totalRating >= 2.5
+            ? solid.faStarHalfAlt
+            : regular.faStar
+        }
       />
       <FontAwesomeIcon
         size={18}
         color={themes['defaultTheme'].warnColor}
-        icon={props.totalRating >= 4 ? solid.faStar : props.totalRating>=3.5? solid.faStarHalfAlt : regular.faStar}
+        icon={
+          props.totalRating >= 4
+            ? solid.faStar
+            : props.totalRating >= 3.5
+            ? solid.faStarHalfAlt
+            : regular.faStar
+        }
       />
       <FontAwesomeIcon
         size={18}
         color={themes['defaultTheme'].warnColor}
-        icon={props.totalRating == 5 ? solid.faStar : props.totalRating>=4.5? solid.faStarHalfAlt : regular.faStar}
+        icon={
+          props.totalRating == 5
+            ? solid.faStar
+            : props.totalRating >= 4.5
+            ? solid.faStarHalfAlt
+            : regular.faStar
+        }
       />
     </View>
   );

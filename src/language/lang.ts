@@ -1,9 +1,9 @@
-import en from "./en"
-import vn from "./vn"
+import en from './en';
+import vn from './vn';
 
 const lang = {
-    en,
-    vn
-}
+  en,
+  vn,
+};
 
 export default lang;

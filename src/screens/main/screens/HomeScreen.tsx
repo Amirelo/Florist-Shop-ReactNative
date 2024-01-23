@@ -1,5 +1,4 @@
 import React from 'react';
-import lang from '../../../language/lang';
 import CustomText from '../../../components/atoms/CustomText';
 import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import CardHelp from '../../../components/molecules/CardHelp';

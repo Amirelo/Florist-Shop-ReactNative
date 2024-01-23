@@ -1,9 +1,7 @@
-import { CustomText } from "../../../components/atoms"
+import {CustomText} from '../../../components/atoms';
 
 const AccountScreen = () => {
-    return(
-        <CustomText>Account screen</CustomText>
-    )
-}
+  return <CustomText>Account screen</CustomText>;
+};
 
-export default AccountScreen
+export default AccountScreen;

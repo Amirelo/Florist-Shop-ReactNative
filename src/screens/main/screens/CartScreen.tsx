@@ -1,9 +1,7 @@
-import { CustomText } from "../../../components/atoms"
+import {CustomText} from '../../../components/atoms';
 
 const CartScreen = () => {
-    return(
-        <CustomText>Cart screen</CustomText>
-    )
-}
+  return <CustomText>Cart screen</CustomText>;
+};
 
-export default CartScreen
+export default CartScreen;
