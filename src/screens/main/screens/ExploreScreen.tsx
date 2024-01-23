@@ -5,7 +5,7 @@ import {ProductModel} from '../../../components/models';
 
 const ExploreScreen = () => {
   var productList = new Array<ProductModel>();
-  const testProduct = new ProductModel('Spark', 90, 'A bouquet', 2.4, 1, [
+  const testProduct = new ProductModel('Spark', 90, 5, 'A bouquet', 2.4, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
   productList.push(testProduct);

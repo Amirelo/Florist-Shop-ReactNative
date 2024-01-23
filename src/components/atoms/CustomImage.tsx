@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: themes['defaultTheme'].primaryColor
     },
-    match_parent: {
+    itemBig: {
         width: 311,
         height: 237,
         borderRadius: 7
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
         width:144,
         height: 101,
         borderRadius:14,
+    },
+    productDetail:{
+        width:'100%',
+        height: 405,
     }
 
 })

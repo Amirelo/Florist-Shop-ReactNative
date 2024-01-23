@@ -21,7 +21,7 @@ const ItemProductBig = (props: Props) => {
       }>
       <View>
         <CustomImage
-          type="match_parent"
+          type="itemBig"
           marginBottom={12}
           source={props.product.links[0]}
         />
