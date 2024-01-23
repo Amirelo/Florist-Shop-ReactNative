@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     },
     productDetail:{
         width:'100%',
-        height: 405,
+        height: 350,
     }
 
 })

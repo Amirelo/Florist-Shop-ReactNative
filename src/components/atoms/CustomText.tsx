@@ -6,7 +6,8 @@ interface Props {
     color?: ColorValue,
     marginTop?: number,
     marginBottom?:number,
-    type?: keyof typeof styles
+    type?: keyof typeof styles,
+    style?: any
 }
 
 const CustomText = (props: Props) => {
@@ -17,7 +18,8 @@ const CustomText = (props: Props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
         },
-        styles[selectedType]] as TextStyle}>{props.children}</Text>
+        styles[selectedType],
+        props.style,] as TextStyle}>{props.children}</Text>
 }
 
 export default CustomText;
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
     },
     header: {
-        fontSize: 33,
+        fontSize: 32,
     },
     subHeader: {
         fontSize: 30,

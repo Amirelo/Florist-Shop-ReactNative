@@ -1,10 +1,10 @@
 import React from "react"
-import { Button, Pressable, StyleSheet } from "react-native"
+import { Button, Pressable, StyleProp, StyleSheet, ViewStyle } from "react-native"
 
 interface Props{
     onPressed?(): void,
     children: any,
-    style: any
+    style?: StyleProp<ViewStyle>
 }
 
 const CustomButton = (props: Props) => {
