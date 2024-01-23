@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {CustomText, CustomImage, RatingStars} from '../atoms';
 import themes from '../../themes/themes';
-import {ProductModel} from '../models';
+import {ProductModel} from '../../models';
 
 interface Props {
   product: ProductModel;

@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as regular from '@fortawesome/free-regular-svg-icons';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
-import {ProductModel} from '../models';
+import {ProductModel} from '../../models';
 import {useNavigation} from '@react-navigation/native';
 
 interface Props {

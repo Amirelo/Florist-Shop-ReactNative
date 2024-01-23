@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import {ItemProduct} from '../../../components/molecules';
-import {ProductModel} from '../../../components/models';
+import {ProductModel} from '../../../models';
 
 const ExploreScreen = () => {
   var productList = new Array<ProductModel>();

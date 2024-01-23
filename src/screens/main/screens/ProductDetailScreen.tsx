@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomImage, CustomText, RatingStars} from '../../../components/atoms';
-import {ProductModel} from '../../../components/models';
+import {ProductModel} from '../../../models';
 import {ItemRow} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 

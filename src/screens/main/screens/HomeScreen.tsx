@@ -3,10 +3,10 @@ import lang from '../../../language/lang';
 import CustomText from '../../../components/atoms/CustomText';
 import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import CardHelp from '../../../components/molecules/CardHelp';
-import CategoryModel from '../../../components/models/CategoryModel';
+import CategoryModel from '../../../models/CategoryModel';
 import ItemCategory from '../../../components/molecules/ItemCategory';
 import ItemProductBig from '../../../components/molecules/ItemProductBig';
-import ProductModel from '../../../components/models/ProductModel';
+import ProductModel from '../../../models/ProductModel';
 
 const HomeScreen = () => {
   var list = new Array<CategoryModel>();
