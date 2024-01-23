@@ -1,8 +1,13 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {HomeScreen, ExploreScreen} from './screens';
+import {HomeScreen, ExploreScreen, CartScreen, AccountScreen} from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHome, faCompass} from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faCompass,
+  faCartShopping,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
 import lang from '../../language/lang';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,14 +17,18 @@ const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const MainNavigation = () => {
-  return(
-  <NavigationContainer>
-    <Stack.Navigator initialRouteName='hometab'>
-      <Stack.Screen options={{headerShown:false}} name="hometab" component={MainTab} />
-      <Stack.Screen name="product detail" component={ProductDetailScreen} />
-    </Stack.Navigator>
-  </NavigationContainer>
-  )
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="hometab">
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="hometab"
+          component={MainTab}
+        />
+        <Stack.Screen name="product detail" component={ProductDetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 const MainTab = () => {
@@ -47,6 +56,29 @@ const MainTab = () => {
         }}
         name="Explore"
         component={ExploreScreen}
+      />
+      <tab.Screen
+        options={{
+          headerTitleAlign: 'center',
+          tabBarIcon: ({size, color}) => (
+            <FontAwesomeIcon size={size} color={color} icon={faCartShopping} />
+          ),
+          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+        }}
+        name="Cart"
+        component={CartScreen}
+      />
+
+      <tab.Screen
+        options={{
+          headerTitleAlign: 'center',
+          tabBarIcon: ({size, color}) => (
+            <FontAwesomeIcon size={size} color={color} icon={faUser} />
+          ),
+          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+        }}
+        name="Account"
+        component={AccountScreen}
       />
     </tab.Navigator>
   );
