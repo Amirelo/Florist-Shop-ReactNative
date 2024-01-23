@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage} from '../atoms';
+import {CustomText, CustomImage, CustomButton} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as regular from '@fortawesome/free-regular-svg-icons';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
 import {ProductModel} from '../models';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   product: ProductModel;
@@ -14,12 +15,20 @@ interface Props {
 }
 
 const ItemProduct = (props: Props) => {
+  const navigation = useNavigation();
+  const onItemPressed = () => {
+    navigation.navigate('ProductDetail' as never);
+  };
   return (
-    <View
+    <CustomButton
+      onPressed={onItemPressed}
       style={
         [
           styles.view,
-          {marginTop: props.marginTop, marginBottom: props.marginBottom},
+          {
+            marginTop: props.marginTop,
+            marginBottom: props.marginBottom,
+          },
         ] as ViewStyle
       }>
       <View>
@@ -41,7 +50,7 @@ const ItemProduct = (props: Props) => {
           />
         </View>
       </View>
-    </View>
+    </CustomButton>
   );
 };
 
@@ -51,7 +60,7 @@ const styles = StyleSheet.create({
   view: {
     alignSelf: 'baseline',
     padding: 12,
-    borderRadius:14,
+    borderRadius: 14,
     backgroundColor: themes['defaultTheme'].tertiaryColor,
   },
   body: {

@@ -25,7 +25,7 @@ const MainNavigation = () => {
           name="hometab"
           component={MainTab}
         />
-        <Stack.Screen name="product detail" component={ProductDetailScreen} />
+        <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
