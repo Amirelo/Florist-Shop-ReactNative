@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
         width: 311,
         height: 237,
         borderRadius: 7
+    },
+    item:{
+        width:144,
+        height: 101,
+        borderRadius:14,
     }
 
 })

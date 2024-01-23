@@ -12,22 +12,22 @@ const HomeScreen = () => {
   var list = new Array<CategoryModel>();
   const testCategory = new CategoryModel(
     'Bouquet',
-    'https://images.pexels.com/photos/16061696/pexels-photo-16061696/free-photo-of-a-grass-field-and-rocky-mountains-covered-in-fog.jpeg',
+    'https://images.pexels.com/photos/67567/bridal-bouquet-bride-bridal-bouquet-67567.jpeg',
   );
   list.push(testCategory);
   const testCategory1 = new CategoryModel(
-    'table',
-    'https://images.pexels.com/photos/16061696/pexels-photo-16061696/free-photo-of-a-grass-field-and-rocky-mountains-covered-in-fog.jpeg',
+    'Flower',
+    'https://images.pexels.com/photos/68507/spring-flowers-flowers-collage-floral-68507.jpeg',
   );
   list.push(testCategory1);
   const testCategory2 = new CategoryModel(
-    'Aisle',
-    'https://images.pexels.com/photos/16061696/pexels-photo-16061696/free-photo-of-a-grass-field-and-rocky-mountains-covered-in-fog.jpeg',
+    'Seeds',
+    'https://images.pexels.com/photos/401213/pexels-photo-401213.jpeg',
   );
   list.push(testCategory2);
   const testCategory3 = new CategoryModel(
-    'Acessories',
-    'https://images.pexels.com/photos/16061696/pexels-photo-16061696/free-photo-of-a-grass-field-and-rocky-mountains-covered-in-fog.jpeg',
+    'Tools',
+    'https://images.pexels.com/photos/6913493/pexels-photo-6913493.jpeg',
   );
   list.push(testCategory3);
   console.log(list);
