@@ -8,6 +8,7 @@ import ItemAccount from './ItemAccount';
 import ItemUser from './ItemUser';
 import ItemCart from './ItemCart';
 import ItemProfile from './ItemProfile';
+import CustomInput from './CustomInput';
 
 export {
   CardHelp,
@@ -20,4 +21,5 @@ export {
   ItemUser,
   ItemCart,
   ItemProfile,
+  CustomInput,
 };
