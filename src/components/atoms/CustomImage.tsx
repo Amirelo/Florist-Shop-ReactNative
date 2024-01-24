@@ -5,6 +5,7 @@ import themes from '../../themes/themes';
 interface Props {
   source: string;
   type?: keyof typeof styles;
+  marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
 }
@@ -18,6 +19,7 @@ const CustomImage = (props: Props) => {
           styles[selectedStyle],
           {
             resizeMode: 'stretch',
+            marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight:props.marginRight,
           },
@@ -69,5 +71,11 @@ const styles = StyleSheet.create({
     width:94,
     height: 76,
     borderRadius: 7,
+  },
+  profile:{
+    width: 100,
+    height: 100,
+    borderRadius: 7,
+    alignSelf:'center'
   }
 });

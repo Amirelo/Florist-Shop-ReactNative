@@ -1,6 +1,6 @@
 import React from 'react';
 import {ColorValue, StyleSheet, View} from 'react-native';
-import {CustomText} from '../atoms';
+import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
@@ -11,6 +11,7 @@ interface Props {
   quantity?: number;
   marginTop?: number;
   marginBottom?: number;
+  onPressed?():void;
 }
 
 const ItemAccount = (props: Props) => {
@@ -27,7 +28,8 @@ const ItemAccount = (props: Props) => {
     ? 'Change your password'
     : 'Logout of you account';
   return (
-    <View
+    <CustomButton
+    onPressed={props.onPressed}
       style={[
         styles.view,
         {
@@ -44,7 +46,7 @@ const ItemAccount = (props: Props) => {
         </CustomText>
       </View>
       <FontAwesomeIcon icon={faChevronRight} />
-    </View>
+    </CustomButton>
   );
 };
 

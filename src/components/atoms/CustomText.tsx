@@ -6,6 +6,7 @@ interface Props {
   color?: ColorValue;
   marginTop?: number;
   marginBottom?: number;
+  marginRight?: number;
   type?: keyof typeof styles;
   style?: any;
 }
@@ -20,6 +21,7 @@ const CustomText = (props: Props) => {
             color: props.color ? props.color : '#000000',
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
+            marginRight: props.marginRight,
           },
           styles[selectedType],
           props.style,

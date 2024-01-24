@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CustomImage, CustomText} from '../atoms';
+import {CustomButton, CustomImage, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 
@@ -10,11 +10,13 @@ interface Props {
   email?: String;
   marginTop?: number;
   marginBottom?: number;
+  onPressed?(): void;
 }
 
 const ItemUser = (props: Props) => {
   return (
-    <View
+    <CustomButton
+    onPressed={props.onPressed}
       style={[
         styles.view,
         {
@@ -32,7 +34,7 @@ const ItemUser = (props: Props) => {
         </View>
       </View>
       <FontAwesomeIcon icon={faChevronRight} />
-    </View>
+    </CustomButton>
   );
 };
 
