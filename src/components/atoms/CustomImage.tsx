@@ -64,5 +64,10 @@ const styles = StyleSheet.create({
     width:72,
     height:72,
     borderRadius: 7
+  },
+  cart:{
+    width:94,
+    height: 76,
+    borderRadius: 7,
   }
 });

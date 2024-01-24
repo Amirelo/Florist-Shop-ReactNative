@@ -72,7 +72,7 @@ const ProductDetailScreen = () => {
             marginBottom={24}
             leftWidget={<CustomText type="title">Quantity</CustomText>}
             rightWidget={
-              <QuantityCounter quantity={quantity} setQuantity={setQuantity} />
+              <QuantityCounter maxQuantity={testProduct.quantity} quantity={quantity} setQuantity={setQuantity} />
             }
           />
 

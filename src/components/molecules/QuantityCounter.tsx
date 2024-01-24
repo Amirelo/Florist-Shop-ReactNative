@@ -4,15 +4,22 @@ import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 
-interface Props{
+interface Props {
   quantity: number;
   setQuantity: any;
+  setIsAdd: any;
+  maxQuantity: number;
 }
 
-const QuantityCounter = (props:Props) => {
-
+const QuantityCounter = (props: Props) => {
   const onChangeQuantityPressed = (amount: number) => {
-    props.quantity+amount > 0? props.setQuantity(props.quantity + amount) : <></>;
+    props.quantity + amount > 0 &&
+    props.quantity + amount <= props.maxQuantity ? (
+      props.setQuantity(props.quantity + amount)
+    ) : (
+      <></>
+    );
+    amount == -1 ? props.setIsAdd(false) : props.setIsAdd(true)
   };
 
   return (

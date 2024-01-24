@@ -6,6 +6,7 @@ import ItemRow from './ItemRow';
 import QuantityCounter from './QuantityCounter';
 import ItemAccount from './ItemAccount';
 import ItemUser from './ItemUser';
+import ItemCart from './ItemCart';
 
 export {
   CardHelp,
@@ -16,4 +17,5 @@ export {
   QuantityCounter,
   ItemAccount,
   ItemUser,
+  ItemCart,
 };
