@@ -4,8 +4,8 @@ const defaultTheme = {
   tertiaryColor: '#ffffff',
   secondaryColor: '',
   textColor: '#000000',
-  textSecondaryColor: '#2E2D2D',
-  errorcolor: '',
+  textSecondaryColor: '#9B9B9B',
+  errorcolor: '#FF3D3D',
   warnColor: '#e9d700',
 };
 

@@ -6,6 +6,7 @@ interface Props {
   source: string;
   type?: keyof typeof styles;
   marginBottom?: number;
+  marginRight?: number;
 }
 
 const CustomImage = (props: Props) => {
@@ -18,6 +19,7 @@ const CustomImage = (props: Props) => {
           {
             resizeMode: 'stretch',
             marginBottom: props.marginBottom,
+            marginRight:props.marginRight,
           },
         ] as ImageStyle
       }
@@ -58,4 +60,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 350,
   },
+  tabImage:{
+    width:72,
+    height:72,
+    borderRadius: 7
+  }
 });

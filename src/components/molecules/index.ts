@@ -4,6 +4,8 @@ import ItemProduct from './ItemProduct';
 import ItemProductBig from './ItemProductBig';
 import ItemRow from './ItemRow';
 import QuantityCounter from './QuantityCounter';
+import ItemAccount from './ItemAccount';
+import ItemUser from './ItemUser';
 
 export {
   CardHelp,
@@ -12,4 +14,6 @@ export {
   ItemProductBig,
   ItemRow,
   QuantityCounter,
+  ItemAccount,
+  ItemUser,
 };
