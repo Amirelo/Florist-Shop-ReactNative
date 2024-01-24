@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CustomText} from '../atoms';
+import {CustomButton, CustomText} from '../atoms';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
 
@@ -11,11 +11,13 @@ interface Props {
   data: string;
   marginTop?: number;
   marginBottom?: number;
+  onPressed?(): void;
 }
 
 const ItemProfile = (props: Props) => {
   return (
-    <View
+    <CustomButton
+    onPressed={props.onPressed}
       style={[
         styles.view,
         {marginTop: props.marginTop, marginBottom: props.marginBottom},
@@ -33,7 +35,7 @@ const ItemProfile = (props: Props) => {
         <CustomText marginRight={12}>{props.data}</CustomText>
         <FontAwesomeIcon icon={faChevronRight} />
       </View>
-    </View>
+    </CustomButton>
   );
 };
 
