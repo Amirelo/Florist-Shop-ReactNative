@@ -13,7 +13,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 
 const ProductDetailScreen = () => {
-  const [quantity, setQuantity] = React.useState(2);
+  const [quantity, setQuantity] = React.useState(1);
+
+  React.useEffect(() => {
+    console.log('Changed:', quantity);
+  }, [quantity]);
 
   const testProduct = new ProductModel('Spark', 90, 5, 'A bouquet', 2.4, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
@@ -67,7 +71,9 @@ const ProductDetailScreen = () => {
           <ItemRow
             marginBottom={24}
             leftWidget={<CustomText type="title">Quantity</CustomText>}
-            rightWidget={<QuantityCounter />}
+            rightWidget={
+              <QuantityCounter quantity={quantity} setQuantity={setQuantity} />
+            }
           />
 
           <ItemRow

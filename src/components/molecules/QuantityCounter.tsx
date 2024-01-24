@@ -4,16 +4,30 @@ import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 
-const QuantityCounter = () => {
+interface Props{
+  quantity: number;
+  setQuantity: any;
+}
+
+const QuantityCounter = (props:Props) => {
+
+  const onChangeQuantityPressed = (amount: number) => {
+    props.quantity+amount > 0? props.setQuantity(props.quantity + amount) : <></>;
+  };
+
   return (
     <View style={styles.view}>
-      <CustomButton style={styles.button}>
+      <CustomButton
+        style={styles.button}
+        onPressed={() => onChangeQuantityPressed(-1)}>
         <FontAwesomeIcon icon={faMinus} />
       </CustomButton>
       <View style={styles.text}>
-        <CustomText type="subTitle">2</CustomText>
+        <CustomText type="subTitle">{props.quantity + ''}</CustomText>
       </View>
-      <CustomButton style={styles.button}>
+      <CustomButton
+        style={styles.button}
+        onPressed={() => onChangeQuantityPressed(1)}>
         <FontAwesomeIcon icon={faPlus} />
       </CustomButton>
     </View>
