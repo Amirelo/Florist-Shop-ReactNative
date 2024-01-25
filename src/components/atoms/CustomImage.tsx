@@ -77,5 +77,10 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 7,
     alignSelf:'center'
+  },
+  itemProductLong:{
+    height:'auto',
+    width:120,
+    borderRadius: 7,
   }
 });

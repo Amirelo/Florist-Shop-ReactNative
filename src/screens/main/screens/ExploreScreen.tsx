@@ -3,8 +3,9 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {
   ItemProduct,
   ItemProductBig,
+  ItemProductLong,
 } from '../../../components/molecules';
-import {ItemRow} from '../../../components/atoms';
+import {CustomButton, ItemRow} from '../../../components/atoms';
 import {ProductModel} from '../../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -44,10 +45,12 @@ const ExploreScreen = () => {
           <CustomText>Sort</CustomText>
         </ItemRow>
 
+      <CustomButton onPressed={onDisplayPressed}>
         <ItemRow justifyContent="flex-start">
           <FontAwesomeIcon style={{marginRight: 4}} icon={faTableColumns} />
           <CustomText>Column</CustomText>
         </ItemRow>
+        </CustomButton>
       </View>
       {isColumn ? (
         <FlatList
@@ -64,11 +67,13 @@ const ExploreScreen = () => {
         />
       ) : (
         <FlatList
+          key={'#'}
+          contentContainerStyle={{gap: 16}}
           style={{marginTop: 24}}
           showsVerticalScrollIndicator={false}
           data={productList}
           keyExtractor={item => item.name}
-          renderItem={({item}) => <ItemProductBig product={item} />}
+          renderItem={({item}) => <ItemProductLong product={item} />}
         />
       )}
     </View>
