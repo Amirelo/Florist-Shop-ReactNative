@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import React from 'react';
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 const ProfileScreen = () => {
   const [userImage, setUserImage] = React.useState('https://images.pexels.com/photos/19899425/pexels-photo-19899425/free-photo-of-mt-machhapuchree.jpeg')
@@ -24,15 +25,26 @@ const ProfileScreen = () => {
       mediaType: 'photo',
       includeBase64: false,
     };
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('Cancelled');
-      } else {
-        var imageUri = response.assets?.[0].uri
-        setUserImage(imageUri ? imageUri : userImage)
-        console.log('OK');
-      }
-    });
+
+    ImageCropPicker.openPicker({
+      width: 100,
+      height: 100,
+      mediaType:'photo',
+      cropping:true,
+    }).then(uri => {
+      console.log(uri)
+      setUserImage(uri.path)
+    })
+
+    // launchImageLibrary(options, (response) => {
+    //   if (response.didCancel) {
+    //     console.log('Cancelled');
+    //   } else {
+    //     var imageUri = response.assets?.[0].uri
+    //     setUserImage(imageUri ? imageUri : userImage)
+    //     console.log('OK');
+    //   }
+    // });
   };
   return (
     <View style={styles.view}>
