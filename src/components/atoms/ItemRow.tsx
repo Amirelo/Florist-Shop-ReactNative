@@ -1,10 +1,9 @@
 import {FlexStyle, StyleSheet, View} from 'react-native';
 
 interface Props {
-  leftWidget: React.JSX.Element;
-  rightWidget: React.JSX.Element;
   justifyContent?: FlexStyle['justifyContent'];
   marginBottom?: number;
+  children: any
 }
 
 const ItemRow = (props: Props) => {
@@ -19,8 +18,7 @@ const ItemRow = (props: Props) => {
             : 'space-between',
         },
       ]}>
-      {props.leftWidget}
-      {props.rightWidget}
+      {props.children}
     </View>
   );
 };

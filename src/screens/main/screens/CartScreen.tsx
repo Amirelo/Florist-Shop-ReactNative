@@ -1,7 +1,8 @@
 import React from 'react';
 import {CustomButton, CustomText} from '../../../components/atoms';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {ItemCart, ItemRow} from '../../../components/molecules';
+import {ItemCart} from '../../../components/molecules';
+import {ItemRow} from '../../../components/atoms';
 import {ProductModel} from '../../../models';
 import themes from '../../../themes/themes';
 
@@ -16,14 +17,14 @@ const CartScreen = () => {
   const testProduct1 = new ProductModel('Sponk', 90, 3, 'A bouquet', 2.5, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
-  productList.push(testProduct1)
-  React.useEffect(()=>{
-    var sum = 0
-    for(var i = 0; i < productList.length; i++){
-      sum += productList[i].price * 1
+  productList.push(testProduct1);
+  React.useEffect(() => {
+    var sum = 0;
+    for (var i = 0; i < productList.length; i++) {
+      sum += productList[i].price * 1;
     }
-    setTotal(sum)
-  },[])
+    setTotal(sum);
+  }, []);
 
   return (
     <View style={styles.view}>
@@ -40,15 +41,22 @@ const CartScreen = () => {
         showsVerticalScrollIndicator={false}
         data={productList}
         keyExtractor={item => item.name}
-        renderItem={({item}) => <ItemCart marginBottom={12} item={item} total={total} setTotal={setTotal}/>}
+        renderItem={({item}) => (
+          <ItemCart
+            marginBottom={12}
+            item={item}
+            total={total}
+            setTotal={setTotal}
+          />
+        )}
       />
 
       <View style={styles.line} />
 
-      <ItemRow
-        leftWidget={<CustomText type="title">Total</CustomText>}
-        rightWidget={<CustomText type="title">{`$${total}`}</CustomText>}
-      />
+      <ItemRow>
+        <CustomText type="title">Total</CustomText>
+        <CustomText type="title">{`$${total}`}</CustomText>
+      </ItemRow>
 
       <CustomButton style={styles.couponButton}>
         <CustomText>Click here to find coupons</CustomText>

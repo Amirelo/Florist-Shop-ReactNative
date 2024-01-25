@@ -7,7 +7,7 @@ import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 interface Props {
   quantity: number;
   setQuantity: any;
-  setIsAdd: any;
+  setIsAdd?: any;
   maxQuantity: number;
 }
 
