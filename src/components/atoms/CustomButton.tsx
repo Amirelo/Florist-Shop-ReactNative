@@ -3,7 +3,7 @@ import {Pressable, StyleProp, ViewStyle} from 'react-native';
 
 interface Props {
   onPressed?(): void;
-  children: any;
+  children?: any;
   style?: StyleProp<ViewStyle>;
 }
 

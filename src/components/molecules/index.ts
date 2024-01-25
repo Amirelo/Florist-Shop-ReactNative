@@ -9,6 +9,7 @@ import ItemUser from './ItemUser';
 import ItemCart from './ItemCart';
 import ItemProfile from './ItemProfile';
 import CustomInput from './CustomInput';
+import OptionsPanel from './OptionsPanel';
 
 export {
   CardHelp,
@@ -22,4 +23,5 @@ export {
   ItemCart,
   ItemProfile,
   CustomInput,
+  OptionsPanel,
 };
