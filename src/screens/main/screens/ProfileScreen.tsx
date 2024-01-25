@@ -71,16 +71,6 @@ const ProfileScreen = () => {
         );
       }
     });
-
-    ImageCropPicker.openCamera({
-      width: 100,
-      height: 100,
-      mediaType: 'photo',
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-      setUserImage(image.path);
-    });
   };
 
   return (
