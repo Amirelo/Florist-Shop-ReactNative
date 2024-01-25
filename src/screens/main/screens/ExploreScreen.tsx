@@ -2,7 +2,6 @@ import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {
   ItemProduct,
-  ItemProductBig,
   ItemProductLong,
 } from '../../../components/molecules';
 import {CustomButton, ItemRow} from '../../../components/atoms';
@@ -10,13 +9,16 @@ import {ProductModel} from '../../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faFilter,
+  faGripVertical,
+  faSliders,
   faSort,
+  faSquareFull,
   faTableColumns,
 } from '@fortawesome/free-solid-svg-icons';
 import {CustomText} from '../../../components/atoms';
 
 const ExploreScreen = () => {
-  const [isColumn, setIsColumn] = React.useState(true);
+  const [isColumn, setIsColumn] = React.useState(false);
 
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
@@ -36,7 +38,7 @@ const ExploreScreen = () => {
     <View style={styles.view}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <ItemRow justifyContent="flex-start">
-          <FontAwesomeIcon style={{marginRight: 4}} icon={faFilter} />
+          <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
           <CustomText>Filter</CustomText>
         </ItemRow>
 
@@ -47,12 +49,12 @@ const ExploreScreen = () => {
 
       <CustomButton onPressed={onDisplayPressed}>
         <ItemRow justifyContent="flex-start">
-          <FontAwesomeIcon style={{marginRight: 4}} icon={faTableColumns} />
-          <CustomText>Column</CustomText>
+          <FontAwesomeIcon style={{marginRight: 4}} icon={isColumn ? faSquareFull : faGripVertical} />
+          <CustomText>{isColumn ? "Column" : "Grid"}</CustomText>
         </ItemRow>
         </CustomButton>
       </View>
-      {isColumn ? (
+      {isColumn ==false ? (
         <FlatList
           columnWrapperStyle={{
             justifyContent: 'space-around',
