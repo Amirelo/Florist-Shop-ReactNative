@@ -22,6 +22,8 @@ const ProfileScreen = () => {
     'https://images.pexels.com/photos/19899425/pexels-photo-19899425/free-photo-of-mt-machhapuchree.jpeg',
   );
 
+  // Set to display option menu for image
+  // (get image from storage or camera)
   const [active, setActive] = React.useState(false);
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -29,10 +31,12 @@ const ProfileScreen = () => {
     navigation.navigate('UpdateInfo', {type: type});
   };
 
+  // Show option menu when image pressed
   const onImagePressed = () => {
     setActive(true);
   };
 
+  // Get picture from storage and crop
   const onStoragePressed = () => {
     setActive(false);
     ImageCropPicker.openPicker({
@@ -46,23 +50,26 @@ const ProfileScreen = () => {
     });
   };
 
+  // Take picture and crop
   const onCameraPressed = () => {
     setActive(false);
     const options: CameraOptions = {
       mediaType: 'photo',
     };
+    // Take picture
     launchCamera(options, response => {
       if (response.didCancel) {
         console.log('Cancel');
       } else {
-        var imageUri =  response.assets![0].uri;
+        var imageUri = response.assets![0].uri;
         console.log('OK');
         imageUri != null ? (
+          // Crop
           ImageCropPicker.openCropper({
             path: imageUri,
             width: 100,
             height: 100,
-            mediaType:'photo',
+            mediaType: 'photo',
           }).then(image => {
             setUserImage(image.path);
           })
