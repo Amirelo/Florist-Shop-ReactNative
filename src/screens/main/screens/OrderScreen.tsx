@@ -4,7 +4,7 @@ import { ItemOrder } from '../../../components/molecules';
 const OrderScreen = () => {
   return (
     <View style={styles.view}>
-      <ItemOrder />
+      <ItemOrder marginTop={12}/>
     </View>
   );
 };

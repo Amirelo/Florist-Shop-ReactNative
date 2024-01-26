@@ -1,6 +1,8 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText, ItemRow} from '../atoms';
 import themes from '../../themes/themes';
+import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 interface Props {
   marginTop?: number;
@@ -8,6 +10,11 @@ interface Props {
 }
 
 const ItemOrder = (props: Props) => {
+    const navigation = useNavigation<NavigationProp<any>>();
+    const onDetailPressed = () => {
+        navigation.navigate('OrderDetail');
+    }
+
   return (
     <View
       style={[
@@ -28,7 +35,7 @@ const ItemOrder = (props: Props) => {
         <CustomText>Price</CustomText>
         <CustomText>$90</CustomText>
       </ItemRow>
-      <CustomButton style={styles.button}>
+      <CustomButton onPressed={onDetailPressed} style={styles.button}>
         <CustomText type='subTitle' color={'white'}>See details</CustomText>
       </CustomButton>
     </View>
