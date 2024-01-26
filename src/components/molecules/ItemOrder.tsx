@@ -1,5 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomText, ItemRow} from '../atoms';
+import {CustomButton, CustomText, ItemRow} from '../atoms';
+import themes from '../../themes/themes';
 
 interface Props {
   marginTop?: number;
@@ -23,7 +24,13 @@ const ItemOrder = (props: Props) => {
         <CustomText>Status</CustomText>
       </ItemRow>
       <View style={styles.divider} />
-      <CustomText>Price</CustomText>
+      <ItemRow marginBottom={12}>
+        <CustomText>Price</CustomText>
+        <CustomText>$90</CustomText>
+      </ItemRow>
+      <CustomButton style={styles.button}>
+        <CustomText type='subTitle' color={'white'}>See details</CustomText>
+      </CustomButton>
     </View>
   );
 };
@@ -42,4 +49,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 16,
   },
+  button:{
+    padding:12,
+    borderRadius: 7,
+    alignSelf:'flex-end',
+    backgroundColor: themes['defaultTheme'].primaryColor,
+  }
 });
