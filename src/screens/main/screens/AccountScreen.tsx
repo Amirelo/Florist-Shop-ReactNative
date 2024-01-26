@@ -1,14 +1,24 @@
 import {StyleSheet, View} from 'react-native';
-import {ItemAccount, ItemProfile, ItemUser} from '../../../components/molecules';
+import {
+  ItemAccount,
+  ItemProfile,
+  ItemUser,
+} from '../../../components/molecules';
 import themes from '../../../themes/themes';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { useNavigation } from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const AccountScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<any>>();
+  // Navigate to profile screen when UserTab pressed
   const onUserTabPressed = () => {
-    navigation.navigate('Profile' as never);
-  }
+    navigation.navigate('Profile');
+  };
+
+  // Navigate to order screen
+  const onOrderPressed = () => {
+    navigation.navigate('Order');
+  };
+
   return (
     <View style={styles.body}>
       <ItemUser
@@ -19,11 +29,15 @@ const AccountScreen = () => {
         marginBottom={12}
         onPressed={onUserTabPressed}
       />
-      <ItemAccount>Order</ItemAccount>
+      <ItemAccount onPressed={onOrderPressed}>Order</ItemAccount>
       <ItemAccount>Shipping Address</ItemAccount>
       <ItemAccount>Promocodes</ItemAccount>
-      <ItemAccount color={themes['defaultTheme'].errorcolor}>Change Password</ItemAccount>
-      <ItemAccount color={themes['defaultTheme'].errorcolor}>Logout</ItemAccount>
+      <ItemAccount color={themes['defaultTheme'].errorcolor}>
+        Change Password
+      </ItemAccount>
+      <ItemAccount color={themes['defaultTheme'].errorcolor}>
+        Logout
+      </ItemAccount>
     </View>
   );
 };

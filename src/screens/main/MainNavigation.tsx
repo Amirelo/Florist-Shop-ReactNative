@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {HomeScreen, ExploreScreen, CartScreen, AccountScreen, ProfileScreen, UpdateInfoScreen} from './screens';
+import {HomeScreen, ExploreScreen, CartScreen, AccountScreen, ProfileScreen, UpdateInfoScreen, OrderScreen} from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faHome,
@@ -28,6 +28,7 @@ const MainNavigation = () => {
         <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="UpdateInfo" component={UpdateInfoScreen} />
+        <Stack.Screen name='Order' component={OrderScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

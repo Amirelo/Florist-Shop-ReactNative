@@ -5,6 +5,7 @@ import AccountScreen from './AccountScreen';
 import ProductDetailScreen from './ProductDetailScreen';
 import ProfileScreen from './ProfileScreen';
 import UpdateInfoScreen from './UpdateInfoScreen';
+import OrderScreen from './OrderScreen';
 
 export {
   HomeScreen,
@@ -14,4 +15,5 @@ export {
   ProductDetailScreen,
   ProfileScreen,
   UpdateInfoScreen,
+  OrderScreen
 };

@@ -10,6 +10,7 @@ import ItemCart from './ItemCart';
 import ItemProfile from './ItemProfile';
 import CustomInput from './CustomInput';
 import OptionsPanel from './OptionsPanel';
+import ItemOrder from './ItemOrder';
 
 export {
   CardHelp,
@@ -24,4 +25,5 @@ export {
   ItemProfile,
   CustomInput,
   OptionsPanel,
+  ItemOrder,
 };
