@@ -22,6 +22,7 @@ const CustomText = (props: Props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight: props.marginRight,
+            textTransform: 'capitalize'
           },
           styles[selectedType],
           props.style,

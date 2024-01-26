@@ -1,11 +1,24 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText, ItemRow} from '../../../components/atoms';
-import {ItemProduct} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faColumns} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { OrderModel } from '../../../models';
+import { ItemProduct, ItemProductLong } from '../../../components/molecules';
 
 const OrderDetailScreen = () => {
+  const route = useRoute<RouteProp<any>>();
+  const [item, setItem] = React.useState<OrderModel>();
+  React.useEffect(()=>{
+    if (route.params?.data){
+      setItem(route.params.data)
+    } else{
+      console.log("No item found")
+    }
+  },[])
+
   return (
     <ScrollView>
       <View style={styles.view}>
@@ -17,15 +30,15 @@ const OrderDetailScreen = () => {
         </ItemRow>
         <ItemRow marginBottom={8}>
           <CustomText>Order ID</CustomText>
-          <CustomText>1</CustomText>
+          <CustomText>{item ? item.id.toString() : ''}</CustomText>
         </ItemRow>
         <ItemRow marginBottom={8}>
           <CustomText>Order date</CustomText>
-          <CustomText>22/1/2024</CustomText>
+          <CustomText>{item ? item.orderDate.toString() : ''}</CustomText>
         </ItemRow>
         <ItemRow marginBottom={30}>
           <CustomText>Status</CustomText>
-          <CustomText>Completed</CustomText>
+          <CustomText>{item ? item.status : ''}</CustomText>
         </ItemRow>
 
         <ItemRow>
@@ -34,6 +47,14 @@ const OrderDetailScreen = () => {
           </CustomText>
           <FontAwesomeIcon size={24} icon={faColumns} />
         </ItemRow>
+
+        <FlatList
+        style={{marginBottom: 20}}
+        horizontal={true}
+        data={item? item.products : null}
+        keyExtractor={item => item.name}
+        renderItem={({item}) => (<ItemProduct product={item}/>)}
+        />
 
         <ItemRow marginBottom={30}>
           <CustomText>Total Price</CustomText>
@@ -73,6 +94,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   review: {
-    backgroundColor: themes['defaultTheme'].warnColor,
+    backgroundColor: themes['defaultTheme'].primaryColor,
   },
 });
