@@ -10,6 +10,8 @@ import OrderDetailScreen from './OrderDetailScreen';
 import AddressScreen from './AddressScreen';
 import AddressEdit from './AddressEditScreen';
 import PromocodeScreen from './PromocodeScreen';
+import AboutUsScreen from './AboutUsScreen';
+
 export {
   HomeScreen,
   ExploreScreen,
@@ -23,4 +25,5 @@ export {
   AddressScreen,
   AddressEdit,
   PromocodeScreen,
+  AboutUsScreen,
 };
