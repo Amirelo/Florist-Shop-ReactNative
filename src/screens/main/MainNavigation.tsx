@@ -1,6 +1,20 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {HomeScreen, ExploreScreen, CartScreen, AccountScreen, ProfileScreen, UpdateInfoScreen, OrderScreen, OrderDetailScreen, AddressScreen, AddressEdit, PromocodeScreen, AboutUsScreen} from './screens';
+import {
+  HomeScreen,
+  ExploreScreen,
+  CartScreen,
+  AccountScreen,
+  ProfileScreen,
+  UpdateInfoScreen,
+  OrderScreen,
+  OrderDetailScreen,
+  AddressScreen,
+  AddressEdit,
+  PromocodeScreen,
+  AboutUsScreen,
+  CartDelivery,
+} from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faHome,
@@ -28,12 +42,13 @@ const MainNavigation = () => {
         <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="UpdateInfo" component={UpdateInfoScreen} />
-        <Stack.Screen name='Order' component={OrderScreen}/>
-        <Stack.Screen name='OrderDetail' component={OrderDetailScreen}/>
-        <Stack.Screen name = 'Address' component={AddressScreen}/>
-        <Stack.Screen name = 'AddressEdit' component={AddressEdit}/>
-        <Stack.Screen name = 'Promo' component={PromocodeScreen}/>
-        <Stack.Screen name = 'About' component={AboutUsScreen}/>
+        <Stack.Screen name="Order" component={OrderScreen} />
+        <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+        <Stack.Screen name="Address" component={AddressScreen} />
+        <Stack.Screen name="AddressEdit" component={AddressEdit} />
+        <Stack.Screen name="Promo" component={PromocodeScreen} />
+        <Stack.Screen name="About" component={AboutUsScreen} />
+        <Stack.Screen name="CartDeli" options={{title: 'Cart Delivery'}} component={CartDelivery} />
       </Stack.Navigator>
     </NavigationContainer>
   );

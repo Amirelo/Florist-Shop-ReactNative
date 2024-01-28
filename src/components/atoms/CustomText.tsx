@@ -1,5 +1,5 @@
 import React from 'react';
-import {ColorValue, StyleSheet, Text, TextStyle} from 'react-native';
+import {ColorValue, StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
 
 interface Props {
   children: String;
@@ -8,7 +8,7 @@ interface Props {
   marginBottom?: number;
   marginRight?: number;
   type?: keyof typeof styles;
-  style?: any;
+  style?: StyleProp<TextStyle>;
   textTransform?: TextStyle['textTransform']
 }
 
