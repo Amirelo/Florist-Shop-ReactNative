@@ -25,14 +25,29 @@ const ExploreScreen = () => {
   };
 
   var productList = new Array<ProductModel>();
-  const testProduct = new ProductModel('Spark', 90, 5, 'A bouquet', 2.4, 1, [
+  var testProduct = new ProductModel(1,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
   productList.push(testProduct);
+  testProduct = new ProductModel(2,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
+    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  ]);
   productList.push(testProduct);
+  testProduct = new ProductModel(3,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
+    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  ]);
   productList.push(testProduct);
+  testProduct = new ProductModel(4,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
+    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  ]);
   productList.push(testProduct);
+  testProduct = new ProductModel(5,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
+    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  ]);
   productList.push(testProduct);
+  testProduct = new ProductModel(6,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
+    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  ]);
   productList.push(testProduct);
   return (
     <View style={styles.view}>
@@ -64,7 +79,7 @@ const ExploreScreen = () => {
           showsVerticalScrollIndicator={false}
           numColumns={2}
           data={productList}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <ItemProduct product={item} />}
         />
       ) : (
@@ -74,7 +89,7 @@ const ExploreScreen = () => {
           style={{marginTop: 24}}
           showsVerticalScrollIndicator={false}
           data={productList}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <ItemProductLong product={item} />}
         />
       )}

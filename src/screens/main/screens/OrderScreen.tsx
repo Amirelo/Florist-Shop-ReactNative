@@ -6,7 +6,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const OrderScreen = () => {
   var productList = [];
-  var product = new ProductModel('Spark', 40, 20, 'A bouquet', 2.5, 1, [
+  var product = new ProductModel(1,'Spark', 40, 20, 'A bouquet', 2.5, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
   productList.push(product);

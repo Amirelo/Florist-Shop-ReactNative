@@ -10,11 +10,11 @@ const CartScreen = () => {
   const [total, setTotal] = React.useState(0);
 
   var productList = Array<ProductModel>();
-  const testProduct = new ProductModel('Spark', 90, 3, 'A bouquet', 2.5, 1, [
+  const testProduct = new ProductModel(1,'Spark', 90, 3, 'A bouquet', 2.5, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
   productList.push(testProduct);
-  const testProduct1 = new ProductModel('Sponk', 90, 3, 'A bouquet', 2.5, 1, [
+  const testProduct1 = new ProductModel(2,'Sponk', 90, 3, 'A bouquet', 2.5, 1, [
     'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
   ]);
   productList.push(testProduct1);
@@ -40,7 +40,7 @@ const CartScreen = () => {
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
         data={productList}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <ItemCart
             marginBottom={12}
