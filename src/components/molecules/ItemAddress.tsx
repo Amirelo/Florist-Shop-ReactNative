@@ -5,6 +5,7 @@ import themes from '../../themes/themes';
 
 interface Props {
   item: AddressModel;
+  onPressed?(): void; 
 }
 
 const ItemAddress = (props: Props) => {
@@ -42,7 +43,7 @@ const ItemAddress = (props: Props) => {
         <CustomText>City</CustomText>
         <CustomText>{props.item.city}</CustomText>
       </ItemRow>
-      <CustomButton style={styles.button}>
+      <CustomButton onPressed={props.onPressed} style={styles.button}>
         <CustomText color={'white'} type='subTitle'>Edit</CustomText>
       </CustomButton>
     </View>

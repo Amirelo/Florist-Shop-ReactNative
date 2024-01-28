@@ -1,9 +1,14 @@
 import {FlatList, StyleSheet, View} from 'react-native';
 import {ItemAddress} from '../../../components/molecules';
 import {AddressModel} from '../../../models';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const AddressScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const addressList = new Array<AddressModel>();
+  const onEditPressed = (item: AddressModel) => {
+    navigation.navigate('AddressEdit', {item: item});
+  };
 
   var address = new AddressModel(
     1,
@@ -37,10 +42,12 @@ const AddressScreen = () => {
     <View style={styles.view}>
       <FlatList
         data={addressList}
-        style={{marginTop:30}}
-        contentContainerStyle={{gap:16}}
+        style={{marginTop: 30}}
+        contentContainerStyle={{gap: 16}}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => <ItemAddress item={item} />}
+        renderItem={({item}) => (
+          <ItemAddress onPressed={() => onEditPressed(item)} item={item} />
+        )}
       />
     </View>
   );
@@ -49,7 +56,7 @@ const AddressScreen = () => {
 export default AddressScreen;
 
 const styles = StyleSheet.create({
-    view:{
-        paddingHorizontal: 16
-    }
-})
+  view: {
+    paddingHorizontal: 16,
+  },
+});
