@@ -10,6 +10,7 @@ const PromocodeScreen = () => {
     'All items get discount',
     '%15',
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
+    false
   );
   promoList.push(promo);
   promo = new PromocodeModel(
@@ -18,6 +19,7 @@ const PromocodeScreen = () => {
     'All items',
     '%15',
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
+    true
   );
   promoList.push(promo);
   promo = new PromocodeModel(
@@ -26,6 +28,7 @@ const PromocodeScreen = () => {
     'All items',
     '%15',
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
+    true
   );
   promoList.push(promo);
   promo = new PromocodeModel(
@@ -34,6 +37,7 @@ const PromocodeScreen = () => {
     'All items',
     '%15',
     'https://images.pexels.com/photos/5872364/pexels-photo-5872364.jpeg',
+    true
   );
   promoList.push(promo);
   return (
