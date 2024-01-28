@@ -12,6 +12,7 @@ import CustomInput from './CustomInput';
 import OptionsPanel from './OptionsPanel';
 import ItemOrder from './ItemOrder';
 import ItemAddress from './ItemAddress';
+import ItemPromocode from './ItemPromocode';
 
 export {
   CardHelp,
@@ -28,4 +29,5 @@ export {
   OptionsPanel,
   ItemOrder,
   ItemAddress,
+  ItemPromocode,
 };

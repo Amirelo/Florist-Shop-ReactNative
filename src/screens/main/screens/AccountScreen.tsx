@@ -33,7 +33,9 @@ const AccountScreen = () => {
       <ItemAccount onPressed={() => onTabPressed('Address')}>
         Shipping Address
       </ItemAccount>
-      <ItemAccount>Promocodes</ItemAccount>
+      <ItemAccount onPressed={() => onTabPressed('Promo')}>
+        Promocodes
+      </ItemAccount>
       <ItemAccount>About us</ItemAccount>
       <ItemAccount color={themes['defaultTheme'].errorcolor}>
         Change Password

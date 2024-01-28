@@ -9,7 +9,7 @@ import OrderScreen from './OrderScreen';
 import OrderDetailScreen from './OrderDetailScreen';
 import AddressScreen from './AddressScreen';
 import AddressEdit from './AddressEditScreen';
-
+import PromocodeScreen from './PromocodeScreen';
 export {
   HomeScreen,
   ExploreScreen,
@@ -21,5 +21,6 @@ export {
   OrderScreen,
   OrderDetailScreen,
   AddressScreen,
-  AddressEdit
+  AddressEdit,
+  PromocodeScreen,
 };
