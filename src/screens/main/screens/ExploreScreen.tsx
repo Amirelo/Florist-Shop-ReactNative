@@ -4,6 +4,7 @@ import {
   CustomInput,
   ItemProduct,
   ItemProductLong,
+  OptionsPanel,
 } from '../../../components/molecules';
 import {CustomButton, ItemRow} from '../../../components/atoms';
 import {ProductModel} from '../../../models';
@@ -23,9 +24,28 @@ const ExploreScreen = () => {
     [],
   );
 
+  const [panelActive, setPanelActive] = React.useState(false);
+
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
   };
+
+  const onSortPressed = () => {
+    setPanelActive(true);
+  };
+
+  const onSortOptionSelected = (type:string) => {
+    console.log("Sort pressed")
+    type == 'NAME_ASC'? filteredList.sort((a, b) => a.name.localeCompare(b.name)) 
+    : type == 'NAME_DESC'?
+     filteredList.sort((a, b) => b.name.localeCompare(a.name))
+     : type =='PRICE_ASC'?
+     filteredList.sort((a, b) => a.price - b.price)
+     :type =='PRICE_DESC'?
+     filteredList.sort((a, b) => b.price - a.price) : <></>
+    setFilteredList(filteredList)
+    setPanelActive(false)
+  }
 
   const onSearch = (searchText: string) => {
     var filtered = productList.filter(item =>
@@ -65,7 +85,7 @@ const ExploreScreen = () => {
   }, []);
 
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View style={styles.view}>
         <CustomInput
           onChangeText={text => onSearch(text)}
@@ -78,10 +98,12 @@ const ExploreScreen = () => {
             <CustomText type="subTitle">Filter</CustomText>
           </ItemRow>
 
-          <ItemRow justifyContent="flex-start">
-            <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
-            <CustomText type="subTitle">Sort</CustomText>
-          </ItemRow>
+          <CustomButton onPressed={onSortPressed}>
+            <ItemRow justifyContent="flex-start">
+              <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
+              <CustomText type="subTitle">Sort</CustomText>
+            </ItemRow>
+          </CustomButton>
 
           <CustomButton onPressed={onDisplayPressed}>
             <ItemRow justifyContent="flex-start">
@@ -111,7 +133,7 @@ const ExploreScreen = () => {
         ) : (
           <FlatList
             key={'#'}
-            contentContainerStyle={{gap: 16, paddingBottom:20}}
+            contentContainerStyle={{gap: 16, paddingBottom: 20}}
             style={{marginTop: 24}}
             showsVerticalScrollIndicator={false}
             data={filteredList}
@@ -120,6 +142,32 @@ const ExploreScreen = () => {
           />
         )}
       </View>
+      {panelActive ? (
+        <OptionsPanel title="Sort" setActive={setPanelActive}>
+          <CustomButton onPressed={()=>onSortOptionSelected('NAME_ASC')}>
+            <CustomText type="subTitle" marginBottom={8}>
+              Name Asc
+            </CustomText>
+          </CustomButton>
+          <CustomButton onPressed={()=>onSortOptionSelected('NAME_DESC')}>
+            <CustomText type="subTitle" marginBottom={8}>
+              Name Desc
+            </CustomText>
+          </CustomButton>
+          <CustomButton onPressed={()=>onSortOptionSelected('PRICE_DESC')}>
+            <CustomText type="subTitle" marginBottom={8}>
+              Price Desc
+            </CustomText>
+          </CustomButton>
+          <CustomButton onPressed={()=>onSortOptionSelected('PRICE_ASC')}>
+            <CustomText type="subTitle" marginBottom={8}>
+              Price Asc
+            </CustomText>
+          </CustomButton>
+        </OptionsPanel>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -130,6 +178,6 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
     paddingTop: 20,
-    flex:1
+    flex: 1,
   },
 });
