@@ -7,7 +7,7 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 interface Props {
   placeholder?: string;
-  onChange?(): void;
+  onChangeText?(text:string): void;
   children?: string;
   marginTop?: number;
   marginBottom?: number;
@@ -31,7 +31,7 @@ const CustomInput = (props: Props) => {
 
       <TextInput
         placeholder={props.placeholder}
-        onChange={props.onChange}
+        onChangeText={props.onChangeText}
         style={[props.icon ? styles.input : styles.viewUpdate]}
       >{props.children}</TextInput>
     </View>

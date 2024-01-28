@@ -44,7 +44,7 @@ const AddressScreen = () => {
         data={addressList}
         style={{marginTop: 30}}
         contentContainerStyle={{gap: 16}}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id!.toString()}
         renderItem={({item}) => (
           <ItemAddress onPressed={() => onEditPressed(item)} item={item} />
         )}
