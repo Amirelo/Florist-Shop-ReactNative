@@ -26,7 +26,10 @@ const ItemAccount = (props: Props) => {
     ? 'available'
     : props.children.includes('Password')
     ? 'Change your password'
-    : 'Logout of you account';
+    : props.children.includes('About')?
+    'Company contact'
+    : 
+    'Logout of you account';
   return (
     <CustomButton
     onPressed={props.onPressed}

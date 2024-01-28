@@ -15,8 +15,8 @@ const AccountScreen = () => {
   };
 
   // Navigate to order screen
-  const onOrderPressed = () => {
-    navigation.navigate('Order');
+  const onTabPressed = (name: string) => {
+    navigation.navigate(name);
   };
 
   return (
@@ -29,9 +29,12 @@ const AccountScreen = () => {
         marginBottom={12}
         onPressed={onUserTabPressed}
       />
-      <ItemAccount onPressed={onOrderPressed}>Order</ItemAccount>
-      <ItemAccount>Shipping Address</ItemAccount>
+      <ItemAccount onPressed={() => onTabPressed('Order')}>Order</ItemAccount>
+      <ItemAccount onPressed={() => onTabPressed('Address')}>
+        Shipping Address
+      </ItemAccount>
       <ItemAccount>Promocodes</ItemAccount>
+      <ItemAccount>About us</ItemAccount>
       <ItemAccount color={themes['defaultTheme'].errorcolor}>
         Change Password
       </ItemAccount>

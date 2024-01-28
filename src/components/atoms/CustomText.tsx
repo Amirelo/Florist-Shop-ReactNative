@@ -9,6 +9,7 @@ interface Props {
   marginRight?: number;
   type?: keyof typeof styles;
   style?: any;
+  textTransform?: TextStyle['textTransform']
 }
 
 const CustomText = (props: Props) => {
@@ -22,7 +23,7 @@ const CustomText = (props: Props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight: props.marginRight,
-            textTransform: 'capitalize'
+            textTransform: props.textTransform ? props.textTransform : 'capitalize'
           },
           styles[selectedType],
           props.style,

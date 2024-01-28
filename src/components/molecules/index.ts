@@ -11,6 +11,7 @@ import ItemProfile from './ItemProfile';
 import CustomInput from './CustomInput';
 import OptionsPanel from './OptionsPanel';
 import ItemOrder from './ItemOrder';
+import ItemAddress from './ItemAddress';
 
 export {
   CardHelp,
@@ -26,4 +27,5 @@ export {
   CustomInput,
   OptionsPanel,
   ItemOrder,
+  ItemAddress,
 };
