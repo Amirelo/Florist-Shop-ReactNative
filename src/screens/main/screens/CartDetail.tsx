@@ -4,8 +4,10 @@ import {CustomButton, CustomText, Divider, ItemRow} from '../../../components/at
 import {ItemProductLong} from '../../../components/molecules';
 import React from 'react';
 import themes from '../../../themes/themes';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const CartDetail = () => {
+    const navigation = useNavigation<NavigationProp<any>>();
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [total, setTotal] = React.useState(0);
   var productList = Array<ProductModel>();
@@ -26,6 +28,11 @@ const CartDetail = () => {
     ],
   );
   productList.push(testProduct1);
+
+  const onOrderPressed = () => {
+    console.log("Pressed")
+    navigation.navigate('Home')
+  }
 
   return (
     <View style={styles.view}>
@@ -75,7 +82,7 @@ const CartDetail = () => {
       </ItemRow>
 
       <CustomText marginBottom={20} type='subTitle'>Cash payment</CustomText>
-      <CustomButton style={styles.orderButton}>
+      <CustomButton onPressed={onOrderPressed} style={styles.orderButton}>
           <CustomText color={'white'}>Order</CustomText>
         </CustomButton>
     </View>
