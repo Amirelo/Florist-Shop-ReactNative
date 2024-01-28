@@ -12,6 +12,7 @@ import AddressEdit from './AddressEditScreen';
 import PromocodeScreen from './PromocodeScreen';
 import AboutUsScreen from './AboutUsScreen';
 import CartDelivery from './CartDeliverty';
+import CartDetail from './CartDetail';
 
 export {
   HomeScreen,
@@ -28,4 +29,5 @@ export {
   PromocodeScreen,
   AboutUsScreen,
   CartDelivery,
+  CartDetail,
 };
