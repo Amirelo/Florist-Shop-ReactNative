@@ -14,6 +14,7 @@ import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
+import { langText } from '../../../utils/Utils';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -75,7 +76,7 @@ const SignInScreen = () => {
 
       <View style={styles.body}>
         <ItemRow marginBottom={30}>
-          <CustomText type="title">{lang[langPref].signin_title}</CustomText>
+          <CustomText type="title">{langText('signin_title')}</CustomText>
 
           <CustomButton onPressed={onLanguagePressed}>
             <CustomText type="subTitle">{`Language: ` + langPref}</CustomText>
@@ -84,29 +85,29 @@ const SignInScreen = () => {
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
-          placeholder={lang[langPref].edEmail}
+          placeholder={langText('edEmail')}
           icon={faEnvelope}
         />
         <CustomInput
           marginBottom={20}
           onChangeText={setPassword}
-          placeholder={lang[langPref].edPass}
+          placeholder={langText('edPass')}
           icon={faLock}
         />
 
         <CustomButton onPressed={onForgotPasswordPressed}>
           <CustomText marginBottom={20}>
-            {lang[langPref].signin_forgot}
+            {langText('signin_forgot')}
           </CustomText>
         </CustomButton>
 
         <CustomButton onPressed={handleLogin} style={styles.orderButton}>
-          <CustomText color={'white'}>{lang[langPref].signin_title}</CustomText>
+          <CustomText color={'white'}>{langText('buttonLogin')}</CustomText>
         </CustomButton>
 
         <CustomButton onPressed={onSignUpPressed}>
           <CustomText type="subTitle">
-            {lang[langPref].signin_no_account}
+            {langText('signin_no_account')}
           </CustomText>
         </CustomButton>
       </View>
