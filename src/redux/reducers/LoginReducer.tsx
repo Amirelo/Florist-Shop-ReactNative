@@ -8,12 +8,10 @@ export default (state = initialState, action:any) => {
     switch(action.type) {
         case LOGIN_AUTHORIZE:
             return{
-                ...state,
                 isLoggedIn: true
             }
         case LOGOUT:
             return{
-                ...state,
                 isLoggedIn: false
             }
         default:

@@ -1,5 +1,4 @@
 const vn = {
-  // Login
   appTitle: 'Flora',
 
   edEmail: 'Email',
@@ -8,6 +7,11 @@ const vn = {
   buttonLogin: 'Đăng nhập',
 
   appBarHome: 'FLORIST',
+
+  // Login
+  signin_title : 'Đăng Nhập',
+  signin_forgot: 'Đổi mật khẩu',
+  signin_no_account: "Đăng ký tài khoản"
 };
 
 export default vn;
