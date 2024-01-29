@@ -11,23 +11,14 @@ const CartDetail = () => {
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [total, setTotal] = React.useState(0);
   var productList = Array<ProductModel>();
-  const testProduct = new ProductModel(1, 'Spark', 90, 3, 'A bouquet', 2.5, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
+    'https://images.pexels.com/photos/230129/pexels-photo-230129.jpeg',
   ]);
   productList.push(testProduct);
-  const testProduct1 = new ProductModel(
-    2,
-    'Sponk',
-    90,
-    3,
-    'A bouquet',
-    2.5,
-    1,
-    [
-      'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
-    ],
-  );
-  productList.push(testProduct1);
+  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, 1, [
+    'https://images.pexels.com/photos/953057/pexels-photo-953057.jpeg',
+  ]);
+  productList.push(testProduct);
 
   const onOrderPressed = () => {
     console.log("Pressed")
