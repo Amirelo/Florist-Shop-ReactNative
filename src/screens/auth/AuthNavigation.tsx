@@ -6,17 +6,24 @@ import React from 'react';
 const Stack = createNativeStackNavigator();
 
 const AuthNavigation = () => {
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='SignIn'>
+      <Stack.Navigator initialRouteName="SignIn">
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="SignUp" component={SignUpScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="ChangePass" component={ChangePasswordScreen} />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ChangePass"
+          component={ChangePasswordScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
