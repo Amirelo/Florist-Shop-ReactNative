@@ -6,6 +6,7 @@ import themes from '../../../themes/themes';
 import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
 import {useDispatch} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { langText } from '../../../utils/Utils';
 
 const SignUpScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -16,15 +17,18 @@ const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
 
+  // Check if all fields are not empty
   const checkFields = () => {
     const status = email.length > 0 && password.length > 0 && confirmPassword.length >0? true : false;
     return status;
   };
 
+  // Return to SignInScreen on bottom text pressed
   const onGoBackPressed = () => {
     navigation.goBack();
   };
 
+  // Sign up on press
   const onSignUpPressed = () =>{
     navigation.goBack();
   }
@@ -34,45 +38,46 @@ const SignUpScreen = () => {
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
         <CustomImage
           type="match_parent"
+          resizeMode='cover'
           source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
         />
       </View>
       <View style={styles.body}>
         <CustomText marginBottom={30} type="title">
-          Sign Up
+          {langText('signup_title')}
         </CustomText>
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
-          placeholder="Email"
+          placeholder={langText('edEmail')}
           icon={faEnvelope}
         />
         <CustomInput
           marginBottom={12}
           onChangeText={setPassword}
-          placeholder="Password"
+          placeholder={langText('edPass')}
           icon={faLock}
         />
         <CustomInput
           marginBottom={12}
           onChangeText={setConfirmPassword}
-          placeholder="Confirm Password"
+          placeholder={langText('edConPass')}
           icon={faLock}
         />
 
         <CustomInput
           marginBottom={12}
           onChangeText={setFullname}
-          placeholder="Fulname (optional)"
+          placeholder={langText('edFullname')}
           icon={faAddressCard}
         />
         <CustomButton onPressed={onSignUpPressed} style={styles.orderButton}>
-          <CustomText color={'white'}>Sign Up</CustomText>
+          <CustomText color={'white'}>{langText('buttonSignUp')}</CustomText>
         </CustomButton>
 
         <CustomButton onPressed={onGoBackPressed}>
           <CustomText type="subTitle">
-            Already have an account? Sign In
+           {langText('signup_have_account')}
           </CustomText>
         </CustomButton>
       </View>

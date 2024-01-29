@@ -7,6 +7,7 @@ import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
 import {useDispatch} from 'react-redux';
 import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { langText } from '../../../utils/Utils';
 
 const ChangePasswordScreen = () => {
   const [password, setPassword] = React.useState('');
@@ -23,28 +24,29 @@ const ChangePasswordScreen = () => {
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
         <CustomImage
           type="match_parent"
+          resizeMode='cover'
           source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
         />
       </View>
       <View style={styles.body}>
         <CustomText marginBottom={30} type="title">
-          Change Password
+          {langText('changePass_title')}
         </CustomText>
         <CustomInput
           marginBottom={12}
           onChangeText={setPassword}
-          placeholder="Password"
+          placeholder={langText('edPass')}
           icon={faLock}
         />
         <CustomInput
           marginBottom={20}
           onChangeText={setConfirmPassword}
-          placeholder="Confirm Password"
+          placeholder={langText('edConPass')}
           icon={faLock}
         />
 
         <CustomButton onPressed={onChangePasswordPressed} style={styles.orderButton}>
-          <CustomText color={'white'}>Change Password</CustomText>
+          <CustomText color={'white'}>{langText('buttonChangePass')}</CustomText>
         </CustomButton>
 
       </View>

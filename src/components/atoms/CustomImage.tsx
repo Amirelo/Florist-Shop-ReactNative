@@ -1,10 +1,11 @@
 import React from 'react';
-import {Image, ImageStyle, StyleSheet} from 'react-native';
+import {Image, ImageProps, ImageStyle, StyleProp, StyleSheet} from 'react-native';
 import themes from '../../themes/themes';
 
 interface Props {
   source: string;
   type?: keyof typeof styles;
+  resizeMode?: ImageProps['resizeMode']
   marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
@@ -18,7 +19,7 @@ const CustomImage = (props: Props) => {
         [
           styles[selectedStyle],
           {
-            resizeMode: 'stretch',
+            resizeMode: props.resizeMode ? props.resizeMode : 'stretch',
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight:props.marginRight,

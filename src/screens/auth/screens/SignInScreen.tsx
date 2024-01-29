@@ -70,6 +70,7 @@ const SignInScreen = () => {
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
         <CustomImage
           type="match_parent"
+          resizeMode='cover'
           source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
         />
       </View>
