@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView
-} from 'react-native';
-import HomeScreen from './src/screens/main/screens/HomeScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import MainNavigation from './src/screens/main/MainNavigation';
+import AppNavigation from './src/screens/AppNavigation';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 function App(): React.JSX.Element {
   return (
-      <MainNavigation/>
+    <Provider store={store}>
+      <AppNavigation />
+    </Provider>
   );
 }
 
