@@ -1,6 +1,6 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {AddressModel} from '../../../models';
+import {AddressModel, CartModel} from '../../../models';
 import {CustomButton, CustomText, Divider} from '../../../components/atoms';
 import themes from '../../../themes/themes';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
@@ -9,14 +9,24 @@ import React from 'react';
 const CartDelivery = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const addressList = new Array<AddressModel>();
+  const route = useRoute<RouteProp<any>>();
+  var cartList = Array<CartModel>();
+  var total = route.params?.total? route.params.total : 0;
 
   const [optionActive, setOptionActive] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>(
     new AddressModel('', '', '', '', '', ''),
   );
 
+    React.useEffect(()=>{
+      if (route.params?.carts){
+        cartList = route.params.carts
+      }
+    },[])
+
+    // Go to Cart Detail screen
   const onContinuePressed = () => {
-    navigation.navigate('CartDetail');
+    navigation.navigate('CartDetail', {carts: cartList, total: total, address: selectedAddress});
   };
 
   const onSelectPressed = () => {

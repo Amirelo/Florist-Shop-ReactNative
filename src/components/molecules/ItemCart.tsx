@@ -11,19 +11,33 @@ interface Props {
   marginBottom?: number;
   item: ProductModel;
   total: number;
-  setTotal:any;
+  setTotal: any;
+  setItemQuantity?: any;
 }
 
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
   const [isAdd, setIsAdd] = React.useState(false);
 
-    React.useEffect(() => {
-        isAdd == true ?
-        props.setTotal(props.total + (props.item.price * quantity) - (props.item.price * (quantity - 1))):
-        props.setTotal(props.total + (props.item.price * quantity) - (props.item.price * (quantity + 1)))
-    },[quantity])
-
+  React.useEffect(() => {
+    isAdd == true
+      ? [
+          props.setTotal(
+            props.total +
+              props.item.price * quantity -
+              props.item.price * (quantity - 1),
+          ),
+          props.setItemQuantity(quantity),
+        ]
+      : [
+          props.setTotal(
+            props.total +
+              props.item.price * quantity -
+              props.item.price * (quantity + 1),
+            props.setItemQuantity(quantity),
+          ),
+        ];
+  }, [quantity]);
 
   return (
     <View
@@ -31,11 +45,7 @@ const ItemCart = (props: Props) => {
         styles.view,
         {marginTop: props.marginTop, marginBottom: props.marginBottom},
       ]}>
-      <CustomImage
-        type="cart"
-        marginRight={8}
-        source={props.item.links[0]}
-      />
+      <CustomImage type="cart" marginRight={8} source={props.item.links[0]} />
       <View style={styles.body}>
         <View style={[styles.row, {marginBottom: 8}]}>
           <CustomText type="title">{props.item.name}</CustomText>

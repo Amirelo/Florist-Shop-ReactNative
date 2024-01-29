@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../../../components/atoms';
 import {CustomInput, ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
-import {ProductModel, PromocodeModel} from '../../../models';
+import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {CartDelivery} from '.';
@@ -62,8 +62,15 @@ const CartScreen = () => {
   );
   promoList.push(promo);
 
+  var cartList = new Array<CartModel>();
+  var cart = new CartModel(1, 3, 1)
+  cartList.push(cart)
+  cart = new CartModel(2, 2, 2)
+  cartList.push(cart)
+
+  // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
-    navigation.navigate('CartDeli');
+    navigation.navigate('CartDeli', {carts: cartList, total: total});
   };
 
   const onPromocodePressed = () => {
@@ -105,6 +112,7 @@ const CartScreen = () => {
               item={item}
               total={total}
               setTotal={setTotal}
+              setItemQuantity={(quantity: number) => cartList.filter(filterItem => filterItem.productID == item.id)[0].setQuantity(quantity)}
             />
           )}
         />
