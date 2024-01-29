@@ -13,11 +13,28 @@ const SignInScreen = () => {
 
     const dispatch = useDispatch();
 
-    const isLoggedIn = useSelector((store:any) => store.isLoggedIn.isLoggedIn)
-    const handleLogin = () => {
-        console.log("Login Button pressed")
-        dispatch(authorizeLogin())
+    const checkFields = () => {
+        const status = email.length >0 && password.length > 0 ? true : false
+        return status;
     }
+
+    const checkAccount = () => {
+        const status = email =='admin@gmail.com' && password =='123'? true : false 
+        return status;
+    }
+
+
+    const handleLogin = () => {
+        checkFields() ?
+            checkAccount()?
+        
+        [console.log("Login Successful"),
+        dispatch(authorizeLogin())] : console.log('Invalid username or password')
+        :
+        console.log('Fields cannot be empty')
+    }
+
+
 
   return (
     <View style={styles.view}>
@@ -37,7 +54,6 @@ const SignInScreen = () => {
       <CustomButton onPressed={handleLogin} style={styles.orderButton}>
         <CustomText color={'white'}>Sign In</CustomText>
       </CustomButton>
-      <CustomText>{'status: ' + isLoggedIn}</CustomText>
     </View>
   );
 };

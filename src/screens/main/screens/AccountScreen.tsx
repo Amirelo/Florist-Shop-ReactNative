@@ -1,14 +1,22 @@
 import {StyleSheet, View} from 'react-native';
 import {
   ItemAccount,
-  ItemProfile,
   ItemUser,
 } from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/actions/LoginAction';
 
 const AccountScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const dispatch = useDispatch()
+
+  const onLogoutPressed = () => {
+    dispatch(logout())
+  }
+
   // Navigate to profile screen when UserTab pressed
   const onUserTabPressed = () => {
     navigation.navigate('Profile');
@@ -40,7 +48,7 @@ const AccountScreen = () => {
       <ItemAccount color={themes['defaultTheme'].errorcolor}>
         Change Password
       </ItemAccount>
-      <ItemAccount color={themes['defaultTheme'].errorcolor}>
+      <ItemAccount onPressed={onLogoutPressed} color={themes['defaultTheme'].errorcolor}>
         Logout
       </ItemAccount>
     </View>

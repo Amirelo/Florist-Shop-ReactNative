@@ -30,8 +30,10 @@ const CustomInput = (props: Props) => {
       )}
 
       <TextInput
+        secureTextEntry = {props.placeholder?.toLowerCase().includes('password')}
         placeholder={props.placeholder}
         onChangeText={props.onChangeText}
+        
         style={[props.icon ? styles.input : styles.viewUpdate]}
       >{props.children}</TextInput>
     </View>

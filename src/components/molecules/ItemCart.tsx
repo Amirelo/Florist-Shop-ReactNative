@@ -34,7 +34,7 @@ const ItemCart = (props: Props) => {
       <CustomImage
         type="cart"
         marginRight={8}
-        source="https://images.pexels.com/photos/931179/pexels-photo-931179.jpeg"
+        source={props.item.links[0]}
       />
       <View style={styles.body}>
         <View style={[styles.row, {marginBottom: 8}]}>
