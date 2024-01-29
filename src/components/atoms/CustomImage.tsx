@@ -82,5 +82,9 @@ const styles = StyleSheet.create({
     height:'auto',
     width:120,
     borderRadius: 7,
+  },
+  match_parent:{
+    width:'100%',
+    height:'100%'
   }
 });
