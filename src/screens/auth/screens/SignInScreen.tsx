@@ -6,17 +6,27 @@ import themes from '../../../themes/themes';
 import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
 import {useDispatch} from 'react-redux';
 import {authorizeLogin} from '../../../redux/actions/LoginAction';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
 
   const checkFields = () => {
     const status = email.length > 0 && password.length > 0 ? true : false;
     return status;
   };
+
+  const onSignUpPressed = () => {
+    navigation.navigate('SignUp')
+  }
+
+  const onForgotPasswordPressed = () => {
+    navigation.navigate('ChangePass')
+  }
 
   const checkAccount = () => {
     const status =
@@ -57,8 +67,18 @@ const SignInScreen = () => {
           icon={faLock}
         />
 
+        <CustomButton onPressed={onForgotPasswordPressed}>
+          <CustomText marginBottom={20}>Forgot Password</CustomText>
+        </CustomButton>
+
         <CustomButton onPressed={handleLogin} style={styles.orderButton}>
           <CustomText color={'white'}>Sign In</CustomText>
+        </CustomButton>
+
+        <CustomButton onPressed={onSignUpPressed}>
+          <CustomText type="subTitle">
+            Don't have an account? Sign Up
+          </CustomText>
         </CustomButton>
       </View>
     </View>
@@ -81,10 +101,10 @@ const styles = StyleSheet.create({
   },
   body: {
     justifyContent: 'center',
-    backgroundColor: '#ffffff70',
+    backgroundColor: '#ffffff99',
     padding: 16,
     borderRadius: 7,
     marginTop: '30%',
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
 });
