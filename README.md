@@ -5,5 +5,5 @@ Step to run app:
 3. npm run android
 
 Test login account:
-   username: admin@gmail.com
+   email: admin@gmail.com
    password: 123
