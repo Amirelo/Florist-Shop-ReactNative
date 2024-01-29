@@ -33,6 +33,7 @@ const ItemProduct = (props: Props) => {
       <View>
         <CustomImage
           type="item"
+          resizeMode='cover'
           marginBottom={12}
           source={props.product.links[0]}
         />

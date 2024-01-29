@@ -32,28 +32,28 @@ const HomeScreen = () => {
   console.log(list);
 
   var productList = new Array<ProductModel>();
-  var testProduct = new ProductModel(1,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
+    'https://images.pexels.com/photos/230129/pexels-photo-230129.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(2,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, 1, [
+    'https://images.pexels.com/photos/953057/pexels-photo-953057.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(3,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  testProduct = new ProductModel(3, 'Rot', 13, 5, 'A bouquet', 4.3, 1, [
+    'https://images.pexels.com/photos/2099737/pexels-photo-2099737.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(4,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  testProduct = new ProductModel(4, 'Roto', 36, 5, 'A bouquet', 5, 1, [
+    'https://images.pexels.com/photos/250716/pexels-photo-250716.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(5,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  testProduct = new ProductModel(5, 'Comb', 78, 5, 'A bouquet', 1.2, 1, [
+    'https://images.pexels.com/photos/372166/pexels-photo-372166.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(6,'Spark', 90, 5, 'A bouquet', 2.4, 1, [
-    'https://cdn.pixabay.com/photo/2024/01/12/21/23/cortina-dampezzo-8504755_1280.jpg',
+  testProduct = new ProductModel(6, 'Sap', 54, 5, 'A bouquet', 3.6, 1, [
+    'https://images.pexels.com/photos/18011894/pexels-photo-18011894/free-photo-of-tea-glasses-on-windowsill.jpeg',
   ]);
   productList.push(testProduct);
 

@@ -19,7 +19,7 @@ const CustomImage = (props: Props) => {
         [
           styles[selectedStyle],
           {
-            resizeMode: props.resizeMode ? props.resizeMode : 'stretch',
+            resizeMode: props.resizeMode ? props.resizeMode : 'cover',
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight:props.marginRight,
