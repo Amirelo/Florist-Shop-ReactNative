@@ -6,7 +6,6 @@ import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {CartDelivery} from '.';
 
 const CartScreen = () => {
   const [total, setTotal] = React.useState(0);
@@ -29,7 +28,8 @@ const CartScreen = () => {
     1,
     'Summer sale',
     'All items get discount',
-    '%15',
+    '%',
+    10,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     false,
   );
@@ -38,7 +38,8 @@ const CartScreen = () => {
     2,
     'Winter sale',
     'All items',
-    '%15',
+    '-',
+    15,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     true,
   );
@@ -47,7 +48,8 @@ const CartScreen = () => {
     3,
     'Autumn sale',
     'All items',
-    '%15',
+    '%',
+    15,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     true,
   );
@@ -56,7 +58,8 @@ const CartScreen = () => {
     4,
     'Spring sale',
     'All items',
-    '%15',
+    '%',
+    15,
     'https://images.pexels.com/photos/5872364/pexels-photo-5872364.jpeg',
     true,
   );
@@ -97,7 +100,7 @@ const CartScreen = () => {
           style={{
             marginTop: 30,
             marginBottom: 20,
-            height: '50%',
+            maxHeight: '50%',
             borderWidth: 1,
             borderColor: themes['defaultTheme'].primaryColor,
             borderRadius: 7,
@@ -134,15 +137,7 @@ const CartScreen = () => {
           <CustomText type="title">
             {selectedPromo
               ? `${
-                  total *
-                  (1 -
-                    parseInt(
-                      selectedPromo.effect.slice(
-                        1,
-                        selectedPromo.effect.length,
-                      ),
-                    ) /
-                      100)
+                  total * selectedPromo.amount /100  
                 }`
               : `$${total}`}
           </CustomText>

@@ -6,8 +6,10 @@ import CategoryModel from '../../../models/CategoryModel';
 import ItemCategory from '../../../components/molecules/ItemCategory';
 import ItemProductBig from '../../../components/molecules/ItemProductBig';
 import ProductModel from '../../../models/ProductModel';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   var list = new Array<CategoryModel>();
   const testCategory = new CategoryModel(
     'Bouquet',
@@ -57,6 +59,10 @@ const HomeScreen = () => {
   ]);
   productList.push(testProduct);
 
+  const onProductPressed = (item: ProductModel) => {
+    navigation.navigate('ProductDetail', {item: item})
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.view}>
@@ -90,7 +96,7 @@ const HomeScreen = () => {
           horizontal={true}
           data={productList}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => <ItemProductBig product={item} />}
+          renderItem={({item}) => <ItemProductBig onPressed={() => onProductPressed(item)} product={item} />}
         />
       </View>
     </ScrollView>

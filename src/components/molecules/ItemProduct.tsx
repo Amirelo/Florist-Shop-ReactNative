@@ -5,22 +5,18 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
 import {ProductModel} from '../../models';
-import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   product: ProductModel;
+  onPressed?(): void;
   marginBottom?: number;
   marginTop?: number;
 }
 
 const ItemProduct = (props: Props) => {
-  const navigation = useNavigation();
-  const onItemPressed = () => {
-    navigation.navigate('ProductDetail' as never);
-  };
   return (
     <CustomButton
-      onPressed={onItemPressed}
+      onPressed={props.onPressed}
       style={
         [
           styles.view,

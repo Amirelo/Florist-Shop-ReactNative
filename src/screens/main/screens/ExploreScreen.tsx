@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {
   CustomInput,
   ItemProduct,
@@ -17,6 +17,7 @@ import {
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import {CustomText} from '../../../components/atoms';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const ExploreScreen = () => {
   const [isColumn, setIsColumn] = React.useState(false);
@@ -26,6 +27,8 @@ const ExploreScreen = () => {
 
   const [panelActive, setPanelActive] = React.useState(false);
 
+  const navigation = useNavigation<NavigationProp<any>>();
+
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
   };
@@ -34,24 +37,32 @@ const ExploreScreen = () => {
     setPanelActive(true);
   };
 
-  const onSortOptionSelected = (type:string) => {
-    console.log("Sort pressed")
-    type == 'NAME_ASC'? filteredList.sort((a, b) => a.name.localeCompare(b.name)) 
-    : type == 'NAME_DESC'?
-     filteredList.sort((a, b) => b.name.localeCompare(a.name))
-     : type =='PRICE_ASC'?
-     filteredList.sort((a, b) => a.price - b.price)
-     :type =='PRICE_DESC'?
-     filteredList.sort((a, b) => b.price - a.price) : <></>
-    setFilteredList(filteredList)
-    setPanelActive(false)
-  }
+  const onSortOptionSelected = (type: string) => {
+    console.log('Sort pressed');
+    type == 'NAME_ASC' ? (
+      filteredList.sort((a, b) => a.name.localeCompare(b.name))
+    ) : type == 'NAME_DESC' ? (
+      filteredList.sort((a, b) => b.name.localeCompare(a.name))
+    ) : type == 'PRICE_ASC' ? (
+      filteredList.sort((a, b) => a.price - b.price)
+    ) : type == 'PRICE_DESC' ? (
+      filteredList.sort((a, b) => b.price - a.price)
+    ) : (
+      <></>
+    );
+    setFilteredList(filteredList);
+    setPanelActive(false);
+  };
 
   const onSearch = (searchText: string) => {
     var filtered = productList.filter(item =>
       item.name.toLowerCase().includes(searchText.toLowerCase()),
     );
     setFilteredList(filtered);
+  };
+
+  const onProductPressed = (item: ProductModel) => {
+    navigation.navigate('ProductDetail', {item: item});
   };
 
   var productList = new Array<ProductModel>();
@@ -128,7 +139,12 @@ const ExploreScreen = () => {
             numColumns={2}
             data={filteredList}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => <ItemProduct product={item} />}
+            renderItem={({item}) => (
+              <ItemProduct
+                onPressed={() => onProductPressed(item)}
+                product={item}
+              />
+            )}
           />
         ) : (
           <FlatList
@@ -138,28 +154,33 @@ const ExploreScreen = () => {
             showsVerticalScrollIndicator={false}
             data={filteredList}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => <ItemProductLong product={item} />}
+            renderItem={({item}) => (
+              <ItemProductLong
+                onPressed={() => onProductPressed(item)}
+                product={item}
+              />
+            )}
           />
         )}
       </View>
       {panelActive ? (
         <OptionsPanel title="Sort" setActive={setPanelActive}>
-          <CustomButton onPressed={()=>onSortOptionSelected('NAME_ASC')}>
+          <CustomButton onPressed={() => onSortOptionSelected('NAME_ASC')}>
             <CustomText type="subTitle" marginBottom={8}>
               Name Asc
             </CustomText>
           </CustomButton>
-          <CustomButton onPressed={()=>onSortOptionSelected('NAME_DESC')}>
+          <CustomButton onPressed={() => onSortOptionSelected('NAME_DESC')}>
             <CustomText type="subTitle" marginBottom={8}>
               Name Desc
             </CustomText>
           </CustomButton>
-          <CustomButton onPressed={()=>onSortOptionSelected('PRICE_DESC')}>
+          <CustomButton onPressed={() => onSortOptionSelected('PRICE_DESC')}>
             <CustomText type="subTitle" marginBottom={8}>
               Price Desc
             </CustomText>
           </CustomButton>
-          <CustomButton onPressed={()=>onSortOptionSelected('PRICE_ASC')}>
+          <CustomButton onPressed={() => onSortOptionSelected('PRICE_ASC')}>
             <CustomText type="subTitle" marginBottom={8}>
               Price Asc
             </CustomText>

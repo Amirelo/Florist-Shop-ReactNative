@@ -3,6 +3,7 @@ class PromocodeModel {
   title: string;
   description: string;
   effect: string;
+  amount: number;
   image: string;
   status: boolean;
   constructor(
@@ -10,6 +11,7 @@ class PromocodeModel {
     title: string,
     description: string,
     effect: string,
+    amount: number,
     image: string,
     status: boolean,
   ) {
@@ -17,6 +19,7 @@ class PromocodeModel {
     this.title = title;
     this.description = description;
     this.effect = effect;
+    this.amount = amount;
     this.image = image;
     this.status = status;
   }

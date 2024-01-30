@@ -7,18 +7,16 @@ import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   product: ProductModel;
+  onPressed?(): void;
   marginBottom?: number;
   marginTop?: number;
 }
 
 const ItemProductBig = (props: Props) => {
   const navigation = useNavigation();
-  const onItemPressed = () => {
-    navigation.navigate('ProductDetail' as never);
-  };
   return (
     <CustomButton
-      onPressed={onItemPressed}
+      onPressed={props.onPressed}
       style={
         [
           styles.view,

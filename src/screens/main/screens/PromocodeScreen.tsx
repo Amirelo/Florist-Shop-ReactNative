@@ -8,7 +8,8 @@ const PromocodeScreen = () => {
     1,
     'Summer sale',
     'All items get discount',
-    '%15',
+    '%',
+    15,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     false
   );
@@ -17,7 +18,8 @@ const PromocodeScreen = () => {
     2,
     'Winter sale',
     'All items',
-    '%15',
+    '%',
+    10,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     true
   );
@@ -26,7 +28,8 @@ const PromocodeScreen = () => {
     3,
     'Autumn sale',
     'All items',
-    '%15',
+    '%',
+    20,
     'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
     true
   );
@@ -35,7 +38,8 @@ const PromocodeScreen = () => {
     4,
     'Spring sale',
     'All items',
-    '%15',
+    '%',
+    3,
     'https://images.pexels.com/photos/5872364/pexels-photo-5872364.jpeg',
     true
   );
