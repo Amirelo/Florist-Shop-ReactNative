@@ -8,6 +8,7 @@ import {useDispatch} from 'react-redux';
 import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { langText } from '../../../utils/Utils';
+import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
 
 const ChangePasswordScreen = () => {
   const [password, setPassword] = React.useState('');
@@ -25,7 +26,7 @@ const ChangePasswordScreen = () => {
         <CustomImage
           type="background"
           resizeMode='cover'
-          source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
+          source={IMAGE_AUTH_BACKGROUND}
         />
       </View>
       <View style={styles.body}>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   body: {
     justifyContent: 'center',
-    backgroundColor: '#ffffff99',
+    backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 7,
     marginTop: '30%',

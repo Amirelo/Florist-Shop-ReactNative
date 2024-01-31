@@ -8,6 +8,7 @@ import {useDispatch} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { langText } from '../../../utils/Utils';
 import { passwordSignUp } from '../AuthService';
+import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
 
 const SignUpScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -42,7 +43,7 @@ const SignUpScreen = () => {
         <CustomImage
           type="background"
           resizeMode='cover'
-          source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
+          source={IMAGE_AUTH_BACKGROUND}
         />
       </View>
       <View style={styles.body}>
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   },
   body: {
     justifyContent: 'center',
-    backgroundColor: '#ffffff99',
+    backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 7,
     marginTop: '30%',

@@ -16,6 +16,7 @@ import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
 import { langText } from '../../../utils/Utils';
 import { passwordLogin } from '../AuthService';
+import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -52,14 +53,14 @@ const SignInScreen = () => {
     navigation.navigate('ChangePass');
   };
 
-  const checkAccount= ():boolean  => {
-    const status = passwordLogin(email, password);
+  const checkAccount= async()  => {
+    const status:boolean = await passwordLogin(email, password);
     return status;
   };
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     checkFields()
-      ? checkAccount() 
+      ? await checkAccount() 
         ? [console.log('Login Successful'), dispatch(authorizeLogin())]
         : console.log('Invalid username or password')
       : console.log('Fields cannot be empty');
@@ -71,8 +72,7 @@ const SignInScreen = () => {
         
         <CustomImage
           type="background"
-          resizeMode='cover'
-          source="https://images.pexels.com/photos/2879820/pexels-photo-2879820.jpeg"
+          source={IMAGE_AUTH_BACKGROUND}
         />
       </View>
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   body: {
     justifyContent: 'center',
-    backgroundColor: '#ffffff99',
+    backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 7,
     marginTop: '30%',

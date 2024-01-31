@@ -1,12 +1,12 @@
 import React from 'react';
-import {Image, ImageProps, ImageStyle, StyleProp, StyleSheet} from 'react-native';
+import {Image, ImageProps, ImageResizeMode, ImageStyle, StyleProp, StyleSheet} from 'react-native';
 import themes from '../../themes/themes';
 import { deviceHeight, deviceWidth } from '../../utils/Utils';
 
 interface Props {
   source: string;
   type?: keyof typeof styles;
-  resizeMode?: ImageProps['resizeMode']
+  resizeMode?: ImageResizeMode;
   marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
