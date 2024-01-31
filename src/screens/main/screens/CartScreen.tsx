@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../../../components/atoms';
-import {CustomInput, ItemCart, OptionsPanel} from '../../../components/molecules';
+import {ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
@@ -13,15 +13,7 @@ const CartScreen = () => {
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const navigation = useNavigation<NavigationProp<any>>();
 
-  var productList = Array<ProductModel>();
-  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
-    'https://images.pexels.com/photos/230129/pexels-photo-230129.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, 1, [
-    'https://images.pexels.com/photos/953057/pexels-photo-953057.jpeg',
-  ]);
-  productList.push(testProduct);
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([])
 
   const promoList = Array<PromocodeModel>();
   var promo = new PromocodeModel(
@@ -87,8 +79,8 @@ const CartScreen = () => {
 
   React.useEffect(() => {
     var sum = 0;
-    for (var i = 0; i < productList.length; i++) {
-      sum += productList[i].price * 1;
+    for (var i = 0; i < listProducts.length; i++) {
+      sum += listProducts[i].price * 1;
     }
     setTotal(sum);
   }, []);
@@ -107,7 +99,7 @@ const CartScreen = () => {
           }}
           scrollEnabled={true}
           showsVerticalScrollIndicator={false}
-          data={productList}
+          data={listProducts}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
             <ItemCart

@@ -7,39 +7,14 @@ import ItemCategory from '../../../components/molecules/ItemCategory';
 import ItemProductBig from '../../../components/molecules/ItemProductBig';
 import ProductModel from '../../../models/ProductModel';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { getCategories } from '../MainService';
+import { getCategories, getProducts } from '../MainService';
 
 const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   var list = new Array<CategoryModel>();
 
   const [listCategories, setListCategories] = React.useState<Array<CategoryModel>>()
-
-  var productList = new Array<ProductModel>();
-  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
-    'https://images.pexels.com/photos/230129/pexels-photo-230129.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, 1, [
-    'https://images.pexels.com/photos/953057/pexels-photo-953057.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(3, 'Rot', 13, 5, 'A bouquet', 4.3, 1, [
-    'https://images.pexels.com/photos/2099737/pexels-photo-2099737.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(4, 'Roto', 36, 5, 'A bouquet', 5, 1, [
-    'https://images.pexels.com/photos/250716/pexels-photo-250716.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(5, 'Comb', 78, 5, 'A bouquet', 1.2, 1, [
-    'https://images.pexels.com/photos/372166/pexels-photo-372166.jpeg',
-  ]);
-  productList.push(testProduct);
-  testProduct = new ProductModel(6, 'Sap', 54, 5, 'A bouquet', 3.6, 1, [
-    'https://images.pexels.com/photos/18011894/pexels-photo-18011894/free-photo-of-tea-glasses-on-windowsill.jpeg',
-  ]);
-  productList.push(testProduct);
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>()
 
   const onProductPressed = (item: ProductModel) => {
     navigation.navigate('ProductDetail', {item: item})
@@ -49,6 +24,10 @@ const HomeScreen = () => {
     const categories: Array<CategoryModel> = await getCategories()
     console.log('category list: ',categories)
     setListCategories(categories)
+
+    const products: Array<ProductModel> = await getProducts()
+    console.log('product list: ',products)
+    setListProducts(products)
   }
 
   React.useEffect(()=>{
@@ -86,7 +65,7 @@ const HomeScreen = () => {
           }}
           showsHorizontalScrollIndicator={false}
           horizontal={true}
-          data={productList}
+          data={listProducts}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => <ItemProductBig onPressed={() => onProductPressed(item)} product={item} />}
         />

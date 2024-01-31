@@ -12,7 +12,20 @@
           "package_name": "com.floristshop"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1062427919397-n11nfdjpaf4prlrb823ebhfga3fi62or.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.floristshop",
+            "certificate_hash": "d85af675fe0bd2870b1d5c53176e461c54a3b6f1"
+          }
+        },
+        {
+          "client_id": "1062427919397-kol5gfgtpsupm9j9l4gqrjvbf2ehgv76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCKMPOHUVP2lUVeqWWNV2Q5_DUv-VozrVA"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062427919397-kol5gfgtpsupm9j9l4gqrjvbf2ehgv76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
