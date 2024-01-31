@@ -17,7 +17,7 @@ import {changeLanguage} from '../../../redux/actions/PreferenceAction';
 import {langText} from '../../../utils/Utils';
 import {passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
-import TextButton from '../../../components/molecules/buttons/TextButton';
+import { TextButton } from '../../../components/molecules/buttons';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');

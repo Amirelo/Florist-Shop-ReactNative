@@ -9,6 +9,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { langText } from '../../../utils/Utils';
 import { passwordSignUp } from '../AuthService';
 import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
+import { TextButton } from '../../../components/molecules/buttons';
 
 const SignUpScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -69,15 +70,9 @@ const SignUpScreen = () => {
           icon={faLock}
         />
 
-        <CustomButton onPressed={onSignUpPressed} style={styles.orderButton}>
-          <CustomText color={'white'}>{langText('buttonSignUp')}</CustomText>
-        </CustomButton>
+        <TextButton marginBottom={20} type='primary' onPressed={onGoBackPressed}>{langText('buttonSignUp')}</TextButton>
 
-        <CustomButton onPressed={onGoBackPressed}>
-          <CustomText type="subTitle">
-           {langText('signup_have_account')}
-          </CustomText>
-        </CustomButton>
+        <TextButton fontSize='subTitle'>{langText('signup_have_account')}</TextButton>
       </View>
     </View>
   );

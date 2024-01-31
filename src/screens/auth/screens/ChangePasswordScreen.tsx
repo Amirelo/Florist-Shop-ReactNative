@@ -1,14 +1,13 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomInput} from '../../../components/molecules';
-import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRotateBack, faLock} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import themes from '../../../themes/themes';
-import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
-import {useDispatch} from 'react-redux';
-import {authorizeLogin} from '../../../redux/actions/LoginAction';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { langText } from '../../../utils/Utils';
-import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
+import {CustomImage, CustomText} from '../../../components/atoms';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {langText} from '../../../utils/Utils';
+import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import {TextButton} from '../../../components/molecules/buttons';
 
 const ChangePasswordScreen = () => {
   const [password, setPassword] = React.useState('');
@@ -17,15 +16,15 @@ const ChangePasswordScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
   const onChangePasswordPressed = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.view}>
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
         <CustomImage
           type="background"
-          resizeMode='cover'
+          resizeMode="cover"
           source={IMAGE_AUTH_BACKGROUND}
         />
       </View>
@@ -46,10 +45,12 @@ const ChangePasswordScreen = () => {
           icon={faLock}
         />
 
-        <CustomButton onPressed={onChangePasswordPressed} style={styles.orderButton}>
-          <CustomText color={'white'}>{langText('buttonChangePass')}</CustomText>
-        </CustomButton>
-
+        <TextButton
+          type="primary"
+          onPressed={onChangePasswordPressed}
+          marginBottom={20}>
+          {langText('buttonChangePass')}
+        </TextButton>
       </View>
     </View>
   );
