@@ -14,9 +14,10 @@ import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
-import { langText } from '../../../utils/Utils';
-import { passwordLogin } from '../AuthService';
-import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
+import {langText} from '../../../utils/Utils';
+import {passwordLogin} from '../AuthService';
+import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import TextButton from '../../../components/molecules/buttons/TextButton';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -53,14 +54,14 @@ const SignInScreen = () => {
     navigation.navigate('ChangePass');
   };
 
-  const checkAccount= async()  => {
-    const status:boolean = await passwordLogin(email, password);
+  const checkAccount = async () => {
+    const status: boolean = await passwordLogin(email, password);
     return status;
   };
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     checkFields()
-      ? await checkAccount() 
+      ? (await checkAccount())
         ? [console.log('Login Successful'), dispatch(authorizeLogin())]
         : console.log('Invalid username or password')
       : console.log('Fields cannot be empty');
@@ -69,11 +70,7 @@ const SignInScreen = () => {
   return (
     <View style={styles.view}>
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
-        
-        <CustomImage
-          type="background"
-          source={IMAGE_AUTH_BACKGROUND}
-        />
+        <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
       </View>
 
       <View style={styles.body}>
@@ -97,21 +94,14 @@ const SignInScreen = () => {
           icon={faLock}
         />
 
-        <CustomButton onPressed={onForgotPasswordPressed}>
-          <CustomText marginBottom={20}>
-            {langText('signin_forgot')}
-          </CustomText>
-        </CustomButton>
+        <TextButton marginBottom={20} onPressed={onForgotPasswordPressed}>{langText('signin_forgot')}</TextButton>
 
-        <CustomButton onPressed={handleLogin} style={styles.orderButton}>
-          <CustomText color={'white'}>{langText('buttonLogin')}</CustomText>
-        </CustomButton>
+        <TextButton type="primary" onPressed={handleLogin} marginBottom={20}>
+          {langText('buttonLogin')}
+        </TextButton>
 
-        <CustomButton onPressed={onSignUpPressed}>
-          <CustomText type="subTitle">
-            {langText('signin_no_account')}
-          </CustomText>
-        </CustomButton>
+        <TextButton onPressed={onSignUpPressed} fontSize='subTitle'>{langText('signin_no_account')}</TextButton>
+
       </View>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
