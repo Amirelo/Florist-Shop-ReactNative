@@ -4,7 +4,7 @@ Step to run app:
 2. npm start
 3. npm run android
 
-Go to Sign In Screen and create new account
+Go to Sign Up Screen and create new account
 
 Test account:
    username: test@gmail.com
