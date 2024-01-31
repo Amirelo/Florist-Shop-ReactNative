@@ -14,6 +14,7 @@ const AccountScreen = () => {
   const dispatch = useDispatch()
 
   const onLogoutPressed = () => {
+    logout()
     dispatch(logout())
   }
 

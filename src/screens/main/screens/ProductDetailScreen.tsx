@@ -16,7 +16,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 
 const ProductDetailScreen = () => {
   const [quantity, setQuantity] = React.useState(1);
-  const [product, setProduct] = React.useState<ProductModel>(new ProductModel(-10,'',-10,-10,'',-10,-10,[]));
+  const [product, setProduct] = React.useState<ProductModel>(new ProductModel(-10,'',-10,-10,'',-10,[],[]));
   const route = useRoute<RouteProp<any>>();
 
   React.useEffect(() => {
@@ -34,7 +34,7 @@ const ProductDetailScreen = () => {
       <View>
         <CustomImage
           marginBottom={10}
-          source={product!.links[0]}
+          source={product!.images[0]}
           type="productDetail"
         />
         <View style={styles.body}>

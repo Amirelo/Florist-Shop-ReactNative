@@ -15,6 +15,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
 import { langText } from '../../../utils/Utils';
+import { passwordLogin } from '../AuthService';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -51,15 +52,14 @@ const SignInScreen = () => {
     navigation.navigate('ChangePass');
   };
 
-  const checkAccount = () => {
-    const status =
-      email == 'admin@gmail.com' && password == '123' ? true : false;
+  const checkAccount= ():boolean  => {
+    const status = passwordLogin(email, password);
     return status;
   };
 
   const handleLogin = () => {
     checkFields()
-      ? checkAccount()
+      ? checkAccount() 
         ? [console.log('Login Successful'), dispatch(authorizeLogin())]
         : console.log('Invalid username or password')
       : console.log('Fields cannot be empty');
