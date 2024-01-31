@@ -19,7 +19,7 @@ const ItemCategory = (props: Props) => {
           {marginTop: props.marginTop, marginBottom: props.marginBottom},
         ] as ViewStyle
       }>
-      <CustomImage type="category" source={props.category.link} />
+      <CustomImage type="category" source={props.category.image} />
       <CustomText color={themes['defaultTheme'].textSecondaryColor}>
         {props.category.name}
       </CustomText>

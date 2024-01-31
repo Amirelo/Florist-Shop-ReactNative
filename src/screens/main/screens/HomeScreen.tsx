@@ -7,31 +7,13 @@ import ItemCategory from '../../../components/molecules/ItemCategory';
 import ItemProductBig from '../../../components/molecules/ItemProductBig';
 import ProductModel from '../../../models/ProductModel';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { getCategories } from '../MainService';
 
 const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   var list = new Array<CategoryModel>();
-  const testCategory = new CategoryModel(
-    'Bouquet',
-    'https://images.pexels.com/photos/67567/bridal-bouquet-bride-bridal-bouquet-67567.jpeg',
-  );
-  list.push(testCategory);
-  const testCategory1 = new CategoryModel(
-    'Flower',
-    'https://images.pexels.com/photos/68507/spring-flowers-flowers-collage-floral-68507.jpeg',
-  );
-  list.push(testCategory1);
-  const testCategory2 = new CategoryModel(
-    'Seeds',
-    'https://images.pexels.com/photos/401213/pexels-photo-401213.jpeg',
-  );
-  list.push(testCategory2);
-  const testCategory3 = new CategoryModel(
-    'Tools',
-    'https://images.pexels.com/photos/6913493/pexels-photo-6913493.jpeg',
-  );
-  list.push(testCategory3);
-  console.log(list);
+
+  const [listCategories, setListCategories] = React.useState<Array<CategoryModel>>()
 
   var productList = new Array<ProductModel>();
   var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
@@ -63,6 +45,16 @@ const HomeScreen = () => {
     navigation.navigate('ProductDetail', {item: item})
   }
 
+  const waitForData = async() =>{
+    const categories: Array<CategoryModel> = await getCategories()
+    console.log('category list: ',categories)
+    setListCategories(categories)
+  }
+
+  React.useEffect(()=>{
+    waitForData()
+  },[])
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.view}>
@@ -77,7 +69,7 @@ const HomeScreen = () => {
             width: '100%',
           }}
           horizontal={true}
-          data={list}
+          data={listCategories?.slice(0,4)}
           keyExtractor={item => item.name}
           renderItem={({item}) => <ItemCategory category={item} />}
         />

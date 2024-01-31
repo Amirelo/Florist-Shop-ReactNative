@@ -1,8 +1,10 @@
 export default class CategoryModel{
+    id: string|number;
     name: string;
-    link: string;
-    constructor(name: string, link:string){
+    image: string;
+    constructor(id: string|number, name: string, image:string){
+        this.id = id;
         this.name = name;
-        this.link = link;
+        this.image = image;
     }
 }
