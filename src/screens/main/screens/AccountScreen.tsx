@@ -14,8 +14,7 @@ const AccountScreen = () => {
   const dispatch = useDispatch()
 
   const onLogoutPressed = () => {
-    logout()
-    dispatch(logout())
+    logout() ? dispatch(logout()) : console.log('Something wrong')
   }
 
   // Navigate to profile screen when UserTab pressed

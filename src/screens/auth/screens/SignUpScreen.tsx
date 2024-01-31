@@ -7,31 +7,34 @@ import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
 import {useDispatch} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { langText } from '../../../utils/Utils';
+import { passwordSignUp } from '../AuthService';
 
 const SignUpScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [fullname, setFullname] = React.useState('');
 
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
 
   // Check if all fields are not empty
   const checkFields = () => {
-    const status = email.length > 0 && password.length > 0 && confirmPassword.length >0? true : false;
+    const status = email.length > 0 && password.length > 0 && confirmPassword.length >0 && password == confirmPassword? true : false;
     return status;
   };
+
+  // Sign up on press
+  const onSignUpPressed = () =>{
+    checkFields() ? [passwordSignUp(email, password), 
+      //navigation.goBack()
+    ] :''
+  }
 
   // Return to SignInScreen on bottom text pressed
   const onGoBackPressed = () => {
     navigation.goBack();
   };
 
-  // Sign up on press
-  const onSignUpPressed = () =>{
-    navigation.goBack();
-  }
 
   return (
     <View style={styles.view}>
@@ -65,12 +68,6 @@ const SignUpScreen = () => {
           icon={faLock}
         />
 
-        <CustomInput
-          marginBottom={12}
-          onChangeText={setFullname}
-          placeholder={langText('edFullname')}
-          icon={faAddressCard}
-        />
         <CustomButton onPressed={onSignUpPressed} style={styles.orderButton}>
           <CustomText color={'white'}>{langText('buttonSignUp')}</CustomText>
         </CustomButton>
