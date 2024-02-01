@@ -10,6 +10,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
+  style?:any;
 }
 
 const CustomImage = (props: Props) => {
@@ -19,6 +20,7 @@ const CustomImage = (props: Props) => {
       style={
         [
           styles[selectedStyle],
+          props.style,
           {
             resizeMode: props.resizeMode ? props.resizeMode : 'cover',
             marginTop: props.marginTop,

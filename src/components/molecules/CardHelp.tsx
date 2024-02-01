@@ -12,7 +12,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   backgroundImage?: string;
-  height?:ViewStyle['height'];
+  height?: ViewStyle['height'];
 }
 
 const CardHelp = (props: Props) => {
@@ -20,8 +20,12 @@ const CardHelp = (props: Props) => {
     <View
       style={
         [
-          styles.view,
-          {marginTop: props.marginTop, marginBottom: props.marginBottom, height: props.height ? props.height : null},
+          props.backgroundImage ? '' : styles.view,
+          {
+            marginTop: props.marginTop,
+            marginBottom: props.marginBottom,
+            height: props.height ? props.height : null,
+          },
         ] as ViewStyle
       }>
       {props.backgroundImage ? (
@@ -32,20 +36,20 @@ const CardHelp = (props: Props) => {
         <></>
       )}
       <View style={styles.body}>
-      <View>
-        <CustomText type="big" color={'#ffffff'}>
-          {props.title?props.title:''}
-        </CustomText>
-        <CustomText type="subTitle" color={'#ffffff'}>
-          {props.description? props.description : ''}
-        </CustomText>
-      </View>
-      
-      {props.icon ? (
-        <FontAwesomeIcon color="white" size={39} icon={props.icon} />
-      ) : (
-        <></>
-      )}
+        <View>
+          <CustomText type="big" color={'#ffffff'}>
+            {props.title ? props.title : ''}
+          </CustomText>
+          <CustomText type="subTitle" color={'#ffffff'}>
+            {props.description ? props.description : ''}
+          </CustomText>
+        </View>
+
+        {props.icon ? (
+          <FontAwesomeIcon color="white" size={39} icon={props.icon} />
+        ) : (
+          <></>
+        )}
       </View>
     </View>
   );
@@ -58,18 +62,19 @@ const styles = StyleSheet.create({
     backgroundColor: themes['defaultTheme'].primaryColor,
     borderRadius: 7,
     borderBottomLeftRadius: 0,
-    
   },
   backgroundView: {
     position: 'absolute',
-    width:'100%',
-    height:'100%'
+    width: '100%',
+    height: '100%',
+    borderRadius: 7,
+    overflow: 'hidden',
   },
-  body:{
+  body: {
     paddingHorizontal: 20,
     paddingVertical: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
 });
