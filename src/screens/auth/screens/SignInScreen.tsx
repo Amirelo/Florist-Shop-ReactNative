@@ -29,38 +29,46 @@ const SignInScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
 
+  // Get current language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
 
+  // Open change language panel
   const onLanguagePressed = () => {
     setLanguageOptionActive(true);
   };
 
+  // Change language by option
   const onLanguageOptionPressed = (lang: string) => {
     console.log('Option selected');
     dispatch(changeLanguage(lang));
     setLanguageOptionActive(false);
   };
 
+  // Check fields not empty
   const checkFields = () => {
     const status = email.length > 0 && password.length > 0 ? true : false;
     return status;
   };
 
+  // Navigate to sign up
   const onSignUpPressed = () => {
     navigation.navigate('SignUp');
   };
 
+  // Navigate to Verify screen
   const onForgotPasswordPressed = () => {
     navigation.navigate('Verify');
   };
 
+  // Check if user exist (for sign in with email and password)
   const checkAccount = async () => {
     const status: boolean = await passwordLogin(email, password);
     return status;
   };
 
+  // Login if all check pass
   const handleLogin = async () => {
     checkFields()
       ? (await checkAccount())
@@ -69,15 +77,18 @@ const SignInScreen = () => {
       : console.log('Fields cannot be empty');
   };
 
+  // Sign in with google
   const onGooglePressed = async() => {
     await SignInWithGoogle() ? dispatch(authorizeLogin()) : console.log("Login failed")
   }
 
+  // Check if user already sign in with google
   const checkSavedUser = async() => {
     await checkIsSignIn() ? dispatch(authorizeLogin()) : console.log("No user found")
     
   }
 
+  // Navigate to Home Screen if user found
   React.useEffect(()=>{
     checkSavedUser()
   },[])
