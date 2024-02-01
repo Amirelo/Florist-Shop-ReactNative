@@ -12,6 +12,8 @@ const vn = {
   buttonLogin: 'Đăng nhập',
   buttonSignUp: 'Đăng ký',
   buttonChangePass: 'Đổi mật khẩu',
+  buttonVerify: 'Xác thực',
+  buttonGoBack_long: 'Nhấn vào đây để quay lại',
 
   // Login
   signin_title : 'Đăng Nhập',

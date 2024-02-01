@@ -33,7 +33,7 @@ const VerifyEmailScreen = () => {
         />
 
         <TextButton type="primary" onPressed={onSendEmailPressed}>
-          Verify
+          {langText('buttonVerify')}
         </TextButton>
       </View>
     </View>

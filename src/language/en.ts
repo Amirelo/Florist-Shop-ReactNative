@@ -11,6 +11,8 @@ const en = {
   buttonLogin: 'Sign In',
   buttonSignUp: 'Sign Up',
   buttonChangePass: 'Change Password',
+  buttonVerify: 'Verify',
+  buttonGoBack_long: 'Click here to go back',
 
   appBarHome: 'FLORIST',
 

@@ -3,6 +3,7 @@ import {CustomText} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
 import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
+import { langText } from '../../../utils/Utils';
 
 const ActionCompleteScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -34,7 +35,7 @@ const ActionCompleteScreen = () => {
       </CustomText>
       </View>
       <TextButton onPressed={onGoBackPressed} type="primary">
-        Click here to go back
+        {langText('buttonGoBack_long')}
       </TextButton>
     </View>
   );
