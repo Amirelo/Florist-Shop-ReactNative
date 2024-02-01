@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
-import themes from '../../themes/themes';
-import {ProductModel} from '../../models';
 import {useNavigation} from '@react-navigation/native';
+import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
+import {ProductModel} from '../../models';
+import themes from '../../themes/themes';
 
 interface Props {
   product: ProductModel;
@@ -13,7 +13,6 @@ interface Props {
 }
 
 const ItemProductBig = (props: Props) => {
-  const navigation = useNavigation();
   return (
     <CustomButton
       onPressed={props.onPressed}

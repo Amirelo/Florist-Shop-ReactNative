@@ -1,15 +1,17 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomInput} from '../../../components/molecules';
-import {faAddressCard, faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
+import {
+  faEnvelope,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import themes from '../../../themes/themes';
-import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
-import {useDispatch} from 'react-redux';
+import {CustomImage, CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import { langText } from '../../../utils/Utils';
-import { passwordSignUp } from '../AuthService';
-import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
-import { TextButton } from '../../../components/molecules/buttons';
+import {langText} from '../../../utils/Utils';
+import {passwordSignUp} from '../AuthService';
+import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import {TextButton} from '../../../components/molecules/buttons';
 
 const SignUpScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -17,33 +19,40 @@ const SignUpScreen = () => {
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
   const navigation = useNavigation<NavigationProp<any>>();
-  const dispatch = useDispatch();
 
   // Check if all fields are not empty
   const checkFields = () => {
-    const status = email.length > 0 && password.length > 0 && confirmPassword.length >0 && password == confirmPassword? true : false;
+    const status =
+      email.length > 0 &&
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password == confirmPassword
+        ? true
+        : false;
     return status;
   };
 
   // Sign up on press
-  const onSignUpPressed = () =>{
-    checkFields() ? [passwordSignUp(email, password), 
-      //navigation.goBack()
-    ] :''
-  }
+  const onSignUpPressed = () => {
+    checkFields()
+      ? [
+          passwordSignUp(email, password),
+          //navigation.goBack()
+        ]
+      : '';
+  };
 
   // Return to SignInScreen on bottom text pressed
   const onGoBackPressed = () => {
     navigation.goBack();
   };
 
-
   return (
     <View style={styles.view}>
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
         <CustomImage
           type="background"
-          resizeMode='cover'
+          resizeMode="cover"
           source={IMAGE_AUTH_BACKGROUND}
         />
       </View>
@@ -70,9 +79,16 @@ const SignUpScreen = () => {
           icon={faLock}
         />
 
-        <TextButton marginBottom={20} type='primary' onPressed={onGoBackPressed}>{langText('buttonSignUp')}</TextButton>
+        <TextButton
+          marginBottom={20}
+          type="primary"
+          onPressed={onSignUpPressed}>
+          {langText('buttonSignUp')}
+        </TextButton>
 
-        <TextButton fontSize='subTitle'>{langText('signup_have_account')}</TextButton>
+        <TextButton onPressed={onGoBackPressed} fontSize="subTitle">
+          {langText('signup_have_account')}
+        </TextButton>
       </View>
     </View>
   );

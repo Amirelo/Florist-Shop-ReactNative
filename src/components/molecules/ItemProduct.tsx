@@ -31,7 +31,7 @@ const ItemProduct = (props: Props) => {
           type="item"
           resizeMode='cover'
           marginBottom={12}
-          source={props.product.links[0]}
+          source={props.product.images[0]}
         />
         <View style={styles.body}>
           <CustomText type="title">{props.product.name}</CustomText>

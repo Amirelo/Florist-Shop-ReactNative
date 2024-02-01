@@ -45,7 +45,7 @@ const ItemCart = (props: Props) => {
         styles.view,
         {marginTop: props.marginTop, marginBottom: props.marginBottom},
       ]}>
-      <CustomImage type="cart" marginRight={8} source={props.item.links[0]} />
+      <CustomImage type="cart" marginRight={8} source={props.item.images[0]} />
       <View style={styles.body}>
         <View style={[styles.row, {marginBottom: 8}]}>
           <CustomText type="title">{props.item.name}</CustomText>

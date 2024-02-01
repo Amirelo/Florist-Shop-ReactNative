@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText} from '../atoms';
+import {CustomButton, CustomText, Divider} from '../atoms';
 import React from 'react';
 
 interface Props {
@@ -20,6 +20,7 @@ const OptionsPanel = (props: Props) => {
         <CustomText type="title" marginBottom={20}>
           {props.title}
         </CustomText>
+        <Divider />
         {props.children}
       </View>
     </View>

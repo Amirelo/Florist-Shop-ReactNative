@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ChangePasswordScreen, SignInScreen, SignUpScreen} from './screens';
+import {SignInScreen, SignUpScreen, VerifyEmailScreen} from './screens';
 import React from 'react';
 
 const Stack = createNativeStackNavigator();
@@ -20,8 +20,8 @@ const AuthNavigation = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="ChangePass"
-          component={ChangePasswordScreen}
+          name="Verify"
+          component={VerifyEmailScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

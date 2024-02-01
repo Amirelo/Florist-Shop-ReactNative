@@ -1,5 +1,5 @@
-import SignInScreen from "./SignInScreen";
-import SignUpScreen from "./SignUpScreen";
-import ChangePasswordScreen from "./ChangePasswordScreen";
+import SignInScreen from './SignInScreen';
+import SignUpScreen from './SignUpScreen';
+import VerifyEmailScreen from './VerifyEmailScreen';
 
-export {SignInScreen, SignUpScreen, ChangePasswordScreen}
+export {SignInScreen, SignUpScreen, VerifyEmailScreen};

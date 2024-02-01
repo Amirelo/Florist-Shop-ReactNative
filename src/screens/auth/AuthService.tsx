@@ -26,7 +26,7 @@ export const passwordSignUp = async (email: string, password: string) => {
   var status = false;
   const res = await auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(async (credential) => {
+    .then(async credential => {
       console.log('User created');
       status = true;
       await credential.user
@@ -45,4 +45,11 @@ export const logout = async () => {
   return await auth()
     .signOut()
     .then(() => console.log('Logout'));
+};
+
+export const sendPasswordChangeEmail = async (email: string) => {
+  return await auth()
+    .sendPasswordResetEmail(email)
+    .then(() => console.log('Change password email sent'))
+    .catch((error: any) => console.log('Error sending email:', error.code));
 };

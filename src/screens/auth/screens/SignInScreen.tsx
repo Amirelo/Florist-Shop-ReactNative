@@ -51,7 +51,7 @@ const SignInScreen = () => {
   };
 
   const onForgotPasswordPressed = () => {
-    navigation.navigate('ChangePass');
+    navigation.navigate('Verify');
   };
 
   const checkAccount = async () => {
