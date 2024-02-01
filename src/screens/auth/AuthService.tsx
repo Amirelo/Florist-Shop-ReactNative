@@ -15,6 +15,12 @@ export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
     .catch(error => console.log('Error sending email:', error.code));
 };
 
+export const checkIsSignIn = async() => {
+  var status = false
+  await GoogleSignin.isSignedIn() ? status = true : '';
+  return status;
+}
+
 export const passwordLogin = async (email: string, password: string) => {
   var status = false;
   const res = await auth()
@@ -50,7 +56,7 @@ export const passwordSignUp = async (email: string, password: string) => {
 };
 
 export const googleLogout = async () => {
-  await GoogleSignin.isSignedIn() ? GoogleSignin.signOut() :''
+  (await GoogleSignin.isSignedIn()) ? GoogleSignin.signOut() : '';
   auth().currentUser != null ? auth().signOut() : '';
   return true;
 };

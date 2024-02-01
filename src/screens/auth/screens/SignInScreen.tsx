@@ -15,10 +15,11 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
 import {langText} from '../../../utils/Utils';
-import {SignInWithGoogle, passwordLogin} from '../AuthService';
+import {SignInWithGoogle, checkIsSignIn, passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import { SocialButton, TextButton } from '../../../components/molecules/buttons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -71,6 +72,15 @@ const SignInScreen = () => {
   const onGooglePressed = async() => {
     await SignInWithGoogle() ? dispatch(authorizeLogin()) : console.log("Login failed")
   }
+
+  const checkSavedUser = async() => {
+    await checkIsSignIn() ? dispatch(authorizeLogin()) : console.log("No user found")
+    
+  }
+
+  React.useEffect(()=>{
+    checkSavedUser()
+  },[])
 
   return (
     <View style={styles.view}>
