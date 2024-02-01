@@ -10,7 +10,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {getCategories, getProducts} from '../MainService';
 import {langText} from '../../../utils/Utils';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
-import { IMAGE_HOME_HEADER } from '../../../constants/AppConstants';
+import {IMAGE_HOME_HEADER} from '../../../constants/AppConstants';
 
 const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -70,11 +70,10 @@ const HomeScreen = () => {
           {langText('home_popular')}
         </CustomText>
         <FlatList
-          style={{marginBottom: 32}}
+          style={{marginBottom: 30, height:'100%'}}
           contentContainerStyle={{
             justifyContent: 'space-between',
             flexGrow: 1,
-            gap: 24,
           }}
           showsHorizontalScrollIndicator={false}
           horizontal={true}
@@ -98,5 +97,6 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
     paddingTop: 30,
+    flex: 1
   },
 });

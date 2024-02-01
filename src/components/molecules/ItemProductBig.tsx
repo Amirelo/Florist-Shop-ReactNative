@@ -18,11 +18,10 @@ const ItemProductBig = (props: Props) => {
       onPressed={props.onPressed}
       style={
         [
-          styles.view,
           {marginTop: props.marginTop, marginBottom: props.marginBottom},
         ] as ViewStyle
       }>
-      <View>
+      <View style={styles.view}>
         <CustomImage
           type="itemBig"
           marginBottom={12}
@@ -30,6 +29,8 @@ const ItemProductBig = (props: Props) => {
         />
         <View style={styles.body}>
           <CustomText
+            maxLines={1}
+            style={{maxWidth: '70%'}}
             type="subHeader"
             color={themes['defaultTheme'].primaryColor}>
             {props.product.name}
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     padding: 12,
     backgroundColor: themes['defaultTheme'].tertiaryColor,
+    borderRadius: 7,
   },
   rating: {
     flexDirection: 'row',

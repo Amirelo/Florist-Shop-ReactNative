@@ -9,13 +9,15 @@ interface Props {
   marginRight?: number;
   type?: keyof typeof styles;
   style?: StyleProp<TextStyle>;
-  textTransform?: TextStyle['textTransform']
+  textTransform?: TextStyle['textTransform'],
+  maxLines?: number
 }
 
 const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
   return (
     <Text
+    numberOfLines={props.maxLines ? props.maxLines : 10}
       style={
         [
           {
@@ -23,11 +25,11 @@ const CustomText = (props: Props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight: props.marginRight,
-            textTransform: props.textTransform ? props.textTransform : 'none'
+            textTransform: props.textTransform ? props.textTransform : 'none',
           },
           styles[selectedType],
           props.style,
-        ] as TextStyle
+        ] 
       }>
       {props.children}
     </Text>

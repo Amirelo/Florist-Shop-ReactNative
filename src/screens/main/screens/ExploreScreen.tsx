@@ -18,6 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { getProducts } from '../MainService';
 
 const ExploreScreen = () => {
   const [isColumn, setIsColumn] = React.useState(false);
@@ -67,10 +68,18 @@ const ExploreScreen = () => {
     navigation.navigate('ProductDetail', {item: item});
   };
 
- 
+  const waitForData = async () => {
+  
+    const products: Array<ProductModel> = await getProducts();
+    console.log('product list: ', products);
+    setListProducts(products);
+    setFilteredList(products);
+  };
+
   React.useEffect(() => {
-    setFilteredList(listProducts);
+    waitForData()
   }, []);
+
 
   return (
     <View style={{flex: 1}}>
