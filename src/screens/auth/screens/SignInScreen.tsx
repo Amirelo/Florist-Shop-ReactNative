@@ -106,12 +106,12 @@ const SignInScreen = () => {
         </TextButton>
 
         <TextButton onPressed={onSignUpPressed} fontSize='subTitle' marginBottom={20}>{langText('signin_no_account')}</TextButton>
-        <SocialButton icon={faGoogle} onPressed={onGooglePressed} marginBottom={10}>Sign In with Google</SocialButton>
+        <SocialButton icon={faGoogle} onPressed={onGooglePressed} marginBottom={10}>{langText('buttonGoogleSignIn')}</SocialButton>
       </View>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
           <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>
-            <CustomText marginBottom={20}>Vietnamese</CustomText>
+            <CustomText marginBottom={20}>Tiếng Việt</CustomText>
           </CustomButton>
           <CustomButton onPressed={() => onLanguageOptionPressed('en')}>
             <CustomText marginBottom={20}>English</CustomText>

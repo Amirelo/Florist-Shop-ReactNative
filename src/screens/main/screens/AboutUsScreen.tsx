@@ -16,6 +16,11 @@ const AboutUsScreen = () => {
             </ItemRow>
 
             <ItemRow marginBottom={12}>
+                <CustomText type="subTitle">Major:</CustomText>
+                <CustomText type="subTitle">Computer Science</CustomText>
+            </ItemRow>
+
+            <ItemRow marginBottom={12}>
                 <CustomText type="subTitle">Phone:</CustomText>
                 <CustomText type="subTitle">0582814653</CustomText>
             </ItemRow>

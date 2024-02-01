@@ -1,12 +1,18 @@
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CustomText} from '../atoms';
+import {CustomImage, CustomText} from '../atoms';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {faCalendarDays} from '@fortawesome/free-regular-svg-icons';
 import themes from '../../themes/themes';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 interface Props {
+  title: string;
+  description?: string;
+  icon?: IconProp;
   marginTop?: number;
   marginBottom?: number;
+  backgroundImage?: string;
+  height?:ViewStyle['height'];
 }
 
 const CardHelp = (props: Props) => {
@@ -15,19 +21,32 @@ const CardHelp = (props: Props) => {
       style={
         [
           styles.view,
-          {marginTop: props.marginTop, marginBottom: props.marginBottom},
+          {marginTop: props.marginTop, marginBottom: props.marginBottom, height: props.height ? props.height : null},
         ] as ViewStyle
       }>
+      {props.backgroundImage ? (
+        <View style={styles.backgroundView}>
+          <CustomImage type="match_parent" source={props.backgroundImage} />
+        </View>
+      ) : (
+        <></>
+      )}
+      <View style={styles.body}>
       <View>
         <CustomText type="big" color={'#ffffff'}>
-          Need help?
+          {props.title?props.title:''}
         </CustomText>
         <CustomText type="subTitle" color={'#ffffff'}>
-          Make an appointment or chat with us.
+          {props.description? props.description : ''}
         </CustomText>
       </View>
-
-      <FontAwesomeIcon color="white" size={39} icon={faCalendarDays} />
+      
+      {props.icon ? (
+        <FontAwesomeIcon color="white" size={39} icon={props.icon} />
+      ) : (
+        <></>
+      )}
+      </View>
     </View>
   );
 };
@@ -39,10 +58,18 @@ const styles = StyleSheet.create({
     backgroundColor: themes['defaultTheme'].primaryColor,
     borderRadius: 7,
     borderBottomLeftRadius: 0,
+    
+  },
+  backgroundView: {
+    position: 'absolute',
+    width:'100%',
+    height:'100%'
+  },
+  body:{
     paddingHorizontal: 20,
     paddingVertical: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
+  }
 });
