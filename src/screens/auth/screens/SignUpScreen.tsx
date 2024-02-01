@@ -37,7 +37,7 @@ const SignUpScreen = () => {
     checkFields()
       ? [
           passwordSignUp(email, password),
-          //navigation.goBack()
+          navigation.navigate('Complete', {title:'Verification email sent', description:'You need to verify email before you can Sign In'})
         ]
       : '';
   };
