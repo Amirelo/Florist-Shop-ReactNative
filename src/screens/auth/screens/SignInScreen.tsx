@@ -15,9 +15,10 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
 import {langText} from '../../../utils/Utils';
-import {passwordLogin} from '../AuthService';
+import {SignInWithGoogle, passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
-import { TextButton } from '../../../components/molecules/buttons';
+import { SocialButton, TextButton } from '../../../components/molecules/buttons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -67,6 +68,10 @@ const SignInScreen = () => {
       : console.log('Fields cannot be empty');
   };
 
+  const onGooglePressed = async() => {
+    await SignInWithGoogle() ? dispatch(authorizeLogin()) : console.log("Login failed")
+  }
+
   return (
     <View style={styles.view}>
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
@@ -100,8 +105,8 @@ const SignInScreen = () => {
           {langText('buttonLogin')}
         </TextButton>
 
-        <TextButton onPressed={onSignUpPressed} fontSize='subTitle'>{langText('signin_no_account')}</TextButton>
-
+        <TextButton onPressed={onSignUpPressed} fontSize='subTitle' marginBottom={20}>{langText('signin_no_account')}</TextButton>
+        <SocialButton icon={faGoogle} onPressed={onGooglePressed} marginBottom={10}>Sign In with Google</SocialButton>
       </View>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">

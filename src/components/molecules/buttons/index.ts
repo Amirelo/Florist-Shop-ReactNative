@@ -1,3 +1,4 @@
 import TextButton from "./TextButton";
+import SocialButton from "./SocialButton";
 
-export {TextButton}
+export {TextButton, SocialButton}

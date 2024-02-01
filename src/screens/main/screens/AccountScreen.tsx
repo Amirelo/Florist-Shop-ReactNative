@@ -7,14 +7,15 @@ import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/actions/LoginAction';
+import { googleLogout } from '../../auth/AuthService';
 
 const AccountScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
   const dispatch = useDispatch()
 
-  const onLogoutPressed = () => {
-    logout() ? dispatch(logout()) : console.log('Something wrong')
+  const onLogoutPressed = async() => {
+    await googleLogout() ? dispatch(logout()) : console.log('Something wrong')
   }
 
   // Navigate to profile screen when UserTab pressed

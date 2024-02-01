@@ -1,4 +1,12 @@
 import auth, {FirebaseAuthTypes, firebase} from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  scopes: [],
+  webClientId:
+    '1062427919397-kol5gfgtpsupm9j9l4gqrjvbf2ehgv76.apps.googleusercontent.com',
+  offlineAccess: true,
+});
 
 export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
   await user
@@ -41,10 +49,10 @@ export const passwordSignUp = async (email: string, password: string) => {
   return status;
 };
 
-export const logout = async () => {
-  return await auth()
-    .signOut()
-    .then(() => console.log('Logout'));
+export const googleLogout = async () => {
+  await GoogleSignin.isSignedIn() ? GoogleSignin.signOut() :''
+  auth().currentUser != null ? auth().signOut() : '';
+  return true;
 };
 
 export const sendPasswordChangeEmail = async (email: string) => {
@@ -52,4 +60,15 @@ export const sendPasswordChangeEmail = async (email: string) => {
     .sendPasswordResetEmail(email)
     .then(() => console.log('Change password email sent'))
     .catch((error: any) => console.log('Error sending email:', error.code));
+};
+
+export const SignInWithGoogle = async () => {
+  try {
+    const userInfo = await GoogleSignin.signIn();
+    console.log('user info:', userInfo);
+    return true;
+  } catch (error: any) {
+    console.log('error', error.code);
+    return false;
+  }
 };
