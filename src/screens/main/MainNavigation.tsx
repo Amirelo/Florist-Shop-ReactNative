@@ -15,6 +15,7 @@ import {
   AboutUsScreen,
   CartDelivery,
   CartDetail,
+  SettingScreen,
 } from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -52,6 +53,7 @@ const MainNavigation = () => {
         <Stack.Screen name="About" component={AboutUsScreen} />
         <Stack.Screen name="CartDeli" options={{title: 'Cart Delivery'}} component={CartDelivery} />
         <Stack.Screen name="CartDetail" options={{title: 'Cart Detail'}} component={CartDetail} />
+        <Stack.Screen name="Settings" component={SettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

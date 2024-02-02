@@ -13,6 +13,7 @@ import PromocodeScreen from './PromocodeScreen';
 import AboutUsScreen from './AboutUsScreen';
 import CartDelivery from './CartDeliverty';
 import CartDetail from './CartDetail';
+import SettingScreen from './SettingScreen';
 
 export {
   HomeScreen,
@@ -30,4 +31,5 @@ export {
   AboutUsScreen,
   CartDelivery,
   CartDetail,
+  SettingScreen,
 };
