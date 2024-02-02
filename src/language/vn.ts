@@ -17,6 +17,7 @@ const vn = {
   buttonGoBack_long: 'Nhấn vào đây để quay lại',
   buttonGoogleSignIn: 'Đăng nhập với Google',
   buttonPlaceOrder: 'Đặt hàng',
+  buttonAddToCart:'Add To Cart',
 
   // Tab Navigation
   bottomTab_home: 'Trang Chủ',
@@ -64,6 +65,13 @@ const vn = {
   text_tab_setting_description: 'Đổi ngôn ngữ và giao diện',
   text_tab_changePass_description:'Đổi mật khẩu của bạn',
   text_tab_logout_description:'Đăng xuất khỏi tài khoản',
+
+  // Product Detail Screen
+  text_availability: 'Tình trạng',
+  text_availability_instock:'Còn hàng',
+  text_availability_none:'Hết hàng',
+  text_rating: 'Đánh giá',
+  text_quantity: 'Số lượng',
 };
 
 export default vn;

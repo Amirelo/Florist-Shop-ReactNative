@@ -18,6 +18,7 @@ const en = {
   buttonGoBack_long: 'Click here to go back',
   buttonGoogleSignIn :'Sign In with Google',
   buttonPlaceOrder: 'Place Order',
+  buttonAddToCart:'Add To Cart',
 
 
   // Tab Navigation
@@ -66,6 +67,13 @@ const en = {
   text_tab_setting_description: 'Change language and themes',
   text_tab_changePass_description:'Change your password',
   text_tab_logout_description:'Logout of your account',
+
+  // Product Detail Screen
+  text_availability: 'Availability',
+  text_availability_instock:'In Stock',
+  text_availability_none:'Out Of Stock',
+  text_rating: 'Rating',
+  text_quantity: 'Quantity',
 
 };
 

@@ -83,7 +83,7 @@ const ProductDetailScreen = () => {
           </ItemRow>
 
           <ItemRow marginBottom={6}>
-            <CustomText type="subTitle">Availability</CustomText>
+            <CustomText type="subTitle">{lang[langPref]['text_availability']}</CustomText>
             <CustomText
               type="subTitle"
               color={
@@ -91,18 +91,18 @@ const ProductDetailScreen = () => {
                   ? themes['defaultTheme'].primaryColor
                   : themes['defaultTheme'].errorcolor
               }>
-              {product!.quantity > 0 ? 'In Stock' : 'Out Of Stock'}
+              {product!.quantity > 0 ? lang[langPref]['text_availability_instock'] : lang[langPref]['text_availability_none']}
             </CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={30}>
-            <CustomText type="subTitle">Rating</CustomText>
+            <CustomText type="subTitle">{lang[langPref]['text_rating']}</CustomText>
             <RatingStars totalRating={product!.totalRating} />
           </ItemRow>
           <View style={styles.line}></View>
 
           <ItemRow marginBottom={24}>
-            <CustomText type="title">Quantity</CustomText>
+            <CustomText type="title">{lang[langPref]['text_quantity']}</CustomText>
             <QuantityCounter
               maxQuantity={product!.quantity}
               quantity={quantity}
@@ -131,7 +131,7 @@ const ProductDetailScreen = () => {
               borderRadius: 7,
             }}>
             <FontAwesomeIcon color="white" icon={faCartShopping} />
-            <CustomText color={'white'}>Add To Cart</CustomText>
+            <CustomText color={'white'}>{lang[langPref]['buttonAddToCart']}</CustomText>
           </View>
         </CustomButton>
       </View>
