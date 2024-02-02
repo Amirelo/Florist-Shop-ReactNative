@@ -8,10 +8,11 @@ import ItemProductBig from '../../../components/molecules/ItemProductBig';
 import ProductModel from '../../../models/ProductModel';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {getCategories, getProducts} from '../MainService';
-import {langText} from '../../../utils/Utils';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
 import {IMAGE_HOME_HEADER} from '../../../constants/AppConstants';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import lang from '../../../language/lang';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = () => {
   // Navigation
@@ -21,6 +22,11 @@ const HomeScreen = () => {
   const [listCategories, setListCategories] =
     React.useState<Array<CategoryModel>>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>();
+
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Navigate to Product Detail Screen with item
   const onProductPressed = (item: ProductModel) => {
@@ -57,8 +63,8 @@ const HomeScreen = () => {
           />
 
           <CardHelp
-            title={langText('home_card_title')}
-            description={langText('home_card_description')}
+            title={lang[langPref]['home_card_title']}
+            description={lang[langPref]['home_card_description']}
             icon={faCalendarDay}
             marginBottom={24}
           />
@@ -75,7 +81,7 @@ const HomeScreen = () => {
           />
 
           <CustomText type="title" marginBottom={24}>
-            {langText('home_popular')}
+            {lang[langPref]['home_popular']}
           </CustomText>
           <FlatList
             style={{marginBottom: 30}}

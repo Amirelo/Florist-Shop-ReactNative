@@ -2,15 +2,6 @@ import {useSelector} from 'react-redux';
 import lang from '../language/lang';
 import {Dimensions} from 'react-native';
 
-
-
-export const langText = (text: keyof typeof lang['en']) => {
-  var langPref: keyof typeof lang = useSelector(
-    (store: any) => store.preference.language,
-  );
-  return lang[langPref][text] 
-};
-
 export const priceFormat = (price: string) => {
   var result;
   var langPref: keyof typeof lang = useSelector(

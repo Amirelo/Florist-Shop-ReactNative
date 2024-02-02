@@ -3,18 +3,29 @@ import {CustomText} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
 import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
-import { langText } from '../../../utils/Utils';
+import lang from '../../../language/lang';
+import { useSelector } from 'react-redux';
 
 const ActionCompleteScreen = () => {
+  // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+
+  // Fields
   const [title, setTitle] = React.useState('')
   const [description, setDescription] = React.useState('')
 
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+
+  // Navigate to Sign In
   const onGoBackPressed = () => {
     navigation.navigate('SignIn');
   };
 
+  // Get data from route
   React.useEffect(() => {
     if(route.params?.title){
         setTitle(route.params.title)
@@ -35,7 +46,7 @@ const ActionCompleteScreen = () => {
       </CustomText>
       </View>
       <TextButton onPressed={onGoBackPressed} type="primary">
-        {langText('buttonGoBack_long')}
+        {lang[langPref]['buttonGoBack_long']}
       </TextButton>
     </View>
   );

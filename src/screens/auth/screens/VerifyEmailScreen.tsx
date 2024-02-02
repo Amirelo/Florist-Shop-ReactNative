@@ -1,5 +1,4 @@
 import {StyleSheet, View} from 'react-native';
-import {langText} from '../../../utils/Utils';
 import React, {useState} from 'react';
 import {CustomInput} from '../../../components/molecules';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +7,8 @@ import {sendPasswordChangeEmail} from '../AuthService';
 import CustomImage from '../../../components/atoms/CustomImage';
 import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import lang from '../../../language/lang';
+import { useSelector } from 'react-redux';
 
 const VerifyEmailScreen = () => {
   // Navigation
@@ -15,6 +16,11 @@ const VerifyEmailScreen = () => {
   
   // Fields
   const [email, setEmail] = useState('');
+
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Send email and navigate to Action Complete Screen when finish
   const onSendEmailPressed = () => {
@@ -32,12 +38,12 @@ const VerifyEmailScreen = () => {
         <CustomInput
           marginBottom={20}
           onChangeText={setEmail}
-          placeholder={langText('edEmail')}
+          placeholder={lang[langPref]['edEmail']}
           icon={faEnvelope}
         />
 
         <TextButton type="primary" onPressed={onSendEmailPressed}>
-          {langText('buttonVerify')}
+          {lang[langPref]['buttonVerify']}
         </TextButton>
       </View>
     </View>

@@ -8,10 +8,11 @@ import React from 'react';
 import themes from '../../../themes/themes';
 import {CustomImage, CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {langText} from '../../../utils/Utils';
 import {passwordSignUp} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {TextButton} from '../../../components/molecules/buttons';
+import lang from '../../../language/lang';
+import { useSelector } from 'react-redux';
 
 const SignUpScreen = () => {
   // Fields
@@ -19,6 +20,11 @@ const SignUpScreen = () => {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
+// Saved language
+const langPref: keyof typeof lang = useSelector(
+  (store: any) => store.preference.language,
+);
+  
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
 
@@ -60,24 +66,24 @@ const SignUpScreen = () => {
       </View>
       <View style={styles.body}>
         <CustomText marginBottom={30} type="title">
-          {langText('signup_title')}
+          {lang[langPref]['signup_title']}
         </CustomText>
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
-          placeholder={langText('edEmail')}
+          placeholder={lang[langPref]['edEmail']}
           icon={faEnvelope}
         />
         <CustomInput
           marginBottom={12}
           onChangeText={setPassword}
-          placeholder={langText('edPass')}
+          placeholder={lang[langPref]['edPass']}
           icon={faLock}
         />
         <CustomInput
           marginBottom={12}
           onChangeText={setConfirmPassword}
-          placeholder={langText('edConPass')}
+          placeholder={lang[langPref]['edConPass']}
           icon={faLock}
         />
 
@@ -85,11 +91,11 @@ const SignUpScreen = () => {
           marginBottom={20}
           type="primary"
           onPressed={onSignUpPressed}>
-          {langText('buttonSignUp')}
+          {lang[langPref]['buttonSignUp']}
         </TextButton>
 
         <TextButton onPressed={onGoBackPressed} fontSize="subTitle">
-          {langText('signup_have_account')}
+          {lang[langPref]['signup_have_account']}
         </TextButton>
       </View>
     </View>

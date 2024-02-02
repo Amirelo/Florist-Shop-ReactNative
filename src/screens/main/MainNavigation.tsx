@@ -28,7 +28,7 @@ import themes from '../../themes/themes';
 import lang from '../../language/lang';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailScreen from './screens/ProductDetailScreen';
-import { langText } from '../../utils/Utils';
+import {useSelector} from 'react-redux';
 
 const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,8 +51,16 @@ const MainNavigation = () => {
         <Stack.Screen name="AddressEdit" component={AddressEdit} />
         <Stack.Screen name="Promo" component={PromocodeScreen} />
         <Stack.Screen name="About" component={AboutUsScreen} />
-        <Stack.Screen name="CartDeli" options={{title: 'Cart Delivery'}} component={CartDelivery} />
-        <Stack.Screen name="CartDetail" options={{title: 'Cart Detail'}} component={CartDetail} />
+        <Stack.Screen
+          name="CartDeli"
+          options={{title: 'Cart Delivery'}}
+          component={CartDelivery}
+        />
+        <Stack.Screen
+          name="CartDetail"
+          options={{title: 'Cart Detail'}}
+          component={CartDetail}
+        />
         <Stack.Screen name="Settings" component={SettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -60,6 +68,10 @@ const MainNavigation = () => {
 };
 
 const MainTab = () => {
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
   return (
     <tab.Navigator initialRouteName="Home">
       <tab.Screen
@@ -72,7 +84,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={langText('bottomTab_home')}
+        name={lang[langPref]['bottomTab_home']}
         component={HomeScreen}
       />
       <tab.Screen
@@ -83,7 +95,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={langText('bottomTab_explore')}
+        name={lang[langPref]['bottomTab_explore']}
         component={ExploreScreen}
       />
       <tab.Screen
@@ -94,7 +106,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={langText('bottomTab_cart')}
+        name={lang[langPref]['bottomTab_cart']}
         component={CartScreen}
       />
 
@@ -106,7 +118,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={langText('bottomTab_account')}
+        name={lang[langPref]['bottomTab_account']}
         component={AccountScreen}
       />
     </tab.Navigator>

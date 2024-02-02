@@ -7,7 +7,8 @@ import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
-import { langText } from '../../../utils/Utils';
+import lang from '../../../language/lang';
+import { useSelector } from 'react-redux';
 
 const CartScreen = () => {
   // Initial
@@ -19,6 +20,10 @@ const CartScreen = () => {
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
+  );
+
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
   );
 
   const promoList = Array<PromocodeModel>();
@@ -133,12 +138,12 @@ const CartScreen = () => {
           <CustomText>
             {selectedPromo
               ? selectedPromo.title
-              : langText('text_find_promocodes')}
+              : lang[langPref]['text_find_promocodes']}
           </CustomText>
         </CustomButton>
 
         <ItemRow marginBottom={20}>
-          <CustomText type="title">{langText('text_total')}</CustomText>
+          <CustomText type="title">{lang[langPref]['text_total']}</CustomText>
           <CustomText type="title">
             {selectedPromo
               ? `${(total * selectedPromo.amount) / 100}`
@@ -147,7 +152,7 @@ const CartScreen = () => {
         </ItemRow>
 
         <TextButton onPressed={onBuyPressed} type="primary">
-          {langText('buttonPlaceOrder')}
+          {lang[langPref]['buttonPlaceOrder']}
         </TextButton>
       </View>
       {promoActive ? (

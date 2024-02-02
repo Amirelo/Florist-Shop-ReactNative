@@ -18,22 +18,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import { getProducts } from '../MainService';
-import { langText } from '../../../utils/Utils';
+import {getProducts} from '../MainService';
+import lang from '../../../language/lang';
+import {useSelector} from 'react-redux';
 
 const ExploreScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
-  
+
   // Fields
   const [isColumn, setIsColumn] = React.useState(false);
   const [filteredList, setFilteredList] = React.useState<Array<ProductModel>>(
     [],
   );
-  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([])
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
+    [],
+  );
   const [panelActive, setPanelActive] = React.useState(false);
 
-    // Change product display mode
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+
+  // Change product display mode
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
   };
@@ -84,9 +92,8 @@ const ExploreScreen = () => {
 
   // Run at the beginning
   React.useEffect(() => {
-    waitForData()
+    waitForData();
   }, []);
-
 
   return (
     <View style={{flex: 1}}>
@@ -95,18 +102,22 @@ const ExploreScreen = () => {
           onChangeText={text => onSearch(text)}
           icon={faSearch}
           marginBottom={12}
-          placeholder={langText('edSearch')}
+          placeholder={lang[langPref]['edSearch']}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <ItemRow justifyContent="flex-start">
             <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
-            <CustomText type="subTitle">{langText('text_filter')}</CustomText>
+            <CustomText type="subTitle">
+              {lang[langPref]['text_filter']}
+            </CustomText>
           </ItemRow>
 
           <CustomButton onPressed={onSortPressed}>
             <ItemRow justifyContent="flex-start">
               <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
-              <CustomText type="subTitle">{langText('text_sort')}</CustomText>
+              <CustomText type="subTitle">
+                {lang[langPref]['text_sort']}
+              </CustomText>
             </ItemRow>
           </CustomButton>
 
@@ -117,7 +128,9 @@ const ExploreScreen = () => {
                 icon={isColumn ? faSquareFull : faGripVertical}
               />
               <CustomText type="subTitle">
-                {isColumn ? langText('text_display_column') : langText('text_display_grid')}
+                {isColumn
+                  ? lang[langPref]['text_display_column']
+                  : lang[langPref]['text_display_grid']}
               </CustomText>
             </ItemRow>
           </CustomButton>

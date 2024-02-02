@@ -14,11 +14,10 @@ import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
-import {langText} from '../../../utils/Utils';
 import {SignInWithGoogle, checkIsSignIn, passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
-import { SocialButton, TextButton } from '../../../components/molecules/buttons';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import {SocialButton, TextButton} from '../../../components/molecules/buttons';
+import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -77,20 +76,23 @@ const SignInScreen = () => {
   };
 
   // Sign in with google
-  const onGooglePressed = async() => {
-    await SignInWithGoogle() ? dispatch(authorizeLogin()) : console.log("Login failed")
-  }
+  const onGooglePressed = async () => {
+    (await SignInWithGoogle())
+      ? dispatch(authorizeLogin())
+      : console.log('Login failed');
+  };
 
   // Check if user already sign in with google
-  const checkSavedUser = async() => {
-    await checkIsSignIn() ? dispatch(authorizeLogin()) : console.log("No user found")
-    
-  }
+  const checkSavedUser = async () => {
+    (await checkIsSignIn())
+      ? dispatch(authorizeLogin())
+      : console.log('No user found');
+  };
 
   // Navigate to Home Screen if user found
-  React.useEffect(()=>{
-    checkSavedUser()
-  },[])
+  React.useEffect(() => {
+    checkSavedUser();
+  }, []);
 
   return (
     <View style={styles.view}>
@@ -100,7 +102,7 @@ const SignInScreen = () => {
 
       <View style={styles.body}>
         <ItemRow marginBottom={30}>
-          <CustomText type="title">{langText('signin_title')}</CustomText>
+          <CustomText type="title">{lang[langPref]['signin_title']}</CustomText>
 
           <CustomButton onPressed={onLanguagePressed}>
             <CustomText type="subTitle">{`Language: ` + langPref}</CustomText>
@@ -109,24 +111,36 @@ const SignInScreen = () => {
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
-          placeholder={langText('edEmail')}
+          placeholder={lang[langPref]['edEmail']}
           icon={faEnvelope}
         />
         <CustomInput
           marginBottom={20}
           onChangeText={setPassword}
-          placeholder={langText('edPass')}
+          placeholder={lang[langPref]['edPass']}
           icon={faLock}
         />
 
-        <TextButton marginBottom={20} onPressed={onForgotPasswordPressed}>{langText('signin_forgot')}</TextButton>
-
-        <TextButton type="primary" onPressed={handleLogin} marginBottom={20}>
-          {langText('buttonLogin')}
+        <TextButton marginBottom={20} onPressed={onForgotPasswordPressed}>
+          {lang[langPref]['signin_forgot']}
         </TextButton>
 
-        <TextButton onPressed={onSignUpPressed} fontSize='subTitle' marginBottom={20}>{langText('signin_no_account')}</TextButton>
-        <SocialButton icon={faGoogle} onPressed={onGooglePressed} marginBottom={10}>{langText('buttonGoogleSignIn')}</SocialButton>
+        <TextButton type="primary" onPressed={handleLogin} marginBottom={20}>
+          {lang[langPref]['buttonLogin']}
+        </TextButton>
+
+        <TextButton
+          onPressed={onSignUpPressed}
+          fontSize="subTitle"
+          marginBottom={20}>
+          {lang[langPref]['signin_no_account']}
+        </TextButton>
+        <SocialButton
+          icon={faGoogle}
+          onPressed={onGooglePressed}
+          marginBottom={10}>
+          {lang[langPref]['buttonGoogleSignIn']}
+        </SocialButton>
       </View>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
