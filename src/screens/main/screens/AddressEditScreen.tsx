@@ -7,8 +7,13 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { AddressModel } from "../../../models";
 
 const AddressEdit = () => {
+    // Fields
     const [address, setAddress] = React.useState<AddressModel>();
+    
+    // Route
     const route = useRoute<RouteProp<any>>();
+    
+    // Get data from route
     React.useEffect(()=>{
         if(route.params?.item){
             setAddress(route.params.item)

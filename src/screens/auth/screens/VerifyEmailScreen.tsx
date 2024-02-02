@@ -10,9 +10,13 @@ import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const VerifyEmailScreen = () => {
-    const navigation = useNavigation<NavigationProp<any>>()
+  // Navigation
+  const navigation = useNavigation<NavigationProp<any>>()
+  
+  // Fields
   const [email, setEmail] = useState('');
 
+  // Send email and navigate to Action Complete Screen when finish
   const onSendEmailPressed = () => {
     email != ''
       ? [sendPasswordChangeEmail(email), navigation.navigate('Complete', {title: 'Email Sent', description:'Please check your email for password change'})]

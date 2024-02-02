@@ -7,17 +7,22 @@ import {CustomInput, OptionsPanel} from '../../../components/molecules';
 import React from 'react';
 
 const CartDelivery = () => {
+  // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
-  const addressList = new Array<AddressModel>();
   const route = useRoute<RouteProp<any>>();
+  
+  // Fields
+  const addressList = new Array<AddressModel>();
   var cartList = Array<CartModel>();
-  var total = route.params?.total? route.params.total : 0;
-
   const [optionActive, setOptionActive] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>(
     new AddressModel('', '', '', '', '', ''),
   );
+  
+  // Get total amount of price
+  var total = route.params?.total? route.params.total : 0;
 
+// Get data from route
     React.useEffect(()=>{
       if (route.params?.carts){
         cartList = route.params.carts
@@ -29,15 +34,18 @@ const CartDelivery = () => {
     navigation.navigate('CartDetail', {carts: cartList, total: total, address: selectedAddress});
   };
 
+  // Show option panel (pick address)
   const onSelectPressed = () => {
     setOptionActive(true);
   };
 
+  // Saved selected address into fields
   const onOptionPressed = (item: AddressModel) => {
     setSelectedAddress(item);
     setOptionActive(false);
   };
 
+  // Update part of address
   const onInfoChanged = (type: string, data: string) => {
     const newAddress = new AddressModel(
       '',

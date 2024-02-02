@@ -14,10 +14,12 @@ import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {TextButton} from '../../../components/molecules/buttons';
 
 const SignUpScreen = () => {
+  // Fields
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
+  // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
 
   // Check if all fields are not empty

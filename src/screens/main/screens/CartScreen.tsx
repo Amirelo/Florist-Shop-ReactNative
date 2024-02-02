@@ -8,11 +8,13 @@ import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const CartScreen = () => {
+  // Initial
+  const navigation = useNavigation<NavigationProp<any>>();
+  
+  // Fields
   const [total, setTotal] = React.useState(0);
   const [promoActive, setPromoActive] = React.useState(false);
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
-  const navigation = useNavigation<NavigationProp<any>>();
-
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([])
 
   const promoList = Array<PromocodeModel>();
@@ -68,15 +70,18 @@ const CartScreen = () => {
     navigation.navigate('CartDeli', {carts: cartList, total: total});
   };
 
+  // Open option panel (promocodes)
   const onPromocodePressed = () => {
     setPromoActive(true);
   };
 
+  // Saved selected promocodes into useState
   const onPromocodeSelected = (item: PromocodeModel) => {
     setPromoActive(false);
     setSelectedPromo(item);
   };
 
+  // Count total price
   React.useEffect(() => {
     var sum = 0;
     for (var i = 0; i < listProducts.length; i++) {

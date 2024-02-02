@@ -21,25 +21,28 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { getProducts } from '../MainService';
 
 const ExploreScreen = () => {
+  // Initial
+  const navigation = useNavigation<NavigationProp<any>>();
+  
+  // Fields
   const [isColumn, setIsColumn] = React.useState(false);
   const [filteredList, setFilteredList] = React.useState<Array<ProductModel>>(
     [],
   );
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([])
-
-
   const [panelActive, setPanelActive] = React.useState(false);
 
-  const navigation = useNavigation<NavigationProp<any>>();
-
+    // Change product display mode
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
   };
 
+  // Show option panel (sort order)
   const onSortPressed = () => {
     setPanelActive(true);
   };
 
+  // Sort products by selected options
   const onSortOptionSelected = (type: string) => {
     console.log('Sort pressed');
     type == 'NAME_ASC' ? (
@@ -57,6 +60,7 @@ const ExploreScreen = () => {
     setPanelActive(false);
   };
 
+  // Filter list on search
   const onSearch = (searchText: string) => {
     var filtered = listProducts.filter(item =>
       item.name.toLowerCase().includes(searchText.toLowerCase()),
@@ -64,18 +68,20 @@ const ExploreScreen = () => {
     setFilteredList(filtered);
   };
 
+  // Navigate to Product Detail Screen on item pressed
   const onProductPressed = (item: ProductModel) => {
     navigation.navigate('ProductDetail', {item: item});
   };
 
+  // Get data from server
   const waitForData = async () => {
-  
     const products: Array<ProductModel> = await getProducts();
     console.log('product list: ', products);
     setListProducts(products);
     setFilteredList(products);
   };
 
+  // Run at the beginning
   React.useEffect(() => {
     waitForData()
   }, []);

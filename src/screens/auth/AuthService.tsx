@@ -1,6 +1,7 @@
 import auth, {FirebaseAuthTypes, firebase} from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
+// Config for signing in with Google
 GoogleSignin.configure({
   scopes: [],
   webClientId:
@@ -8,6 +9,7 @@ GoogleSignin.configure({
   offlineAccess: true,
 });
 
+// Send verification email if signing in with email and password
 export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
   await user
     .sendEmailVerification()
@@ -15,12 +17,14 @@ export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
     .catch(error => console.log('Error sending email:', error.code));
 };
 
+// Check if user has sign in before with google sign in
 export const checkIsSignIn = async() => {
   var status = false
   await GoogleSignin.isSignedIn() ? status = true : '';
   return status;
 }
 
+// Sign in user with email and password
 export const passwordLogin = async (email: string, password: string) => {
   var status = false;
   const res = await auth()
@@ -36,6 +40,7 @@ export const passwordLogin = async (email: string, password: string) => {
   return status;
 };
 
+// Sign up with email and password
 export const passwordSignUp = async (email: string, password: string) => {
   var status = false;
   const res = await auth()
@@ -55,19 +60,7 @@ export const passwordSignUp = async (email: string, password: string) => {
   return status;
 };
 
-export const googleLogout = async () => {
-  (await GoogleSignin.isSignedIn()) ? GoogleSignin.signOut() : '';
-  auth().currentUser != null ? auth().signOut() : '';
-  return true;
-};
-
-export const sendPasswordChangeEmail = async (email: string) => {
-  return await auth()
-    .sendPasswordResetEmail(email)
-    .then(() => console.log('Change password email sent'))
-    .catch((error: any) => console.log('Error sending email:', error.code));
-};
-
+// Sign in with google
 export const SignInWithGoogle = async () => {
   try {
     const userInfo = await GoogleSignin.signIn();
@@ -78,3 +71,19 @@ export const SignInWithGoogle = async () => {
     return false;
   }
 };
+
+// Logout of google sign in
+export const googleLogout = async () => {
+  (await GoogleSignin.isSignedIn()) ? GoogleSignin.signOut() : '';
+  auth().currentUser != null ? auth().signOut() : '';
+  return true;
+};
+
+// Send email to change password
+export const sendPasswordChangeEmail = async (email: string) => {
+  return await auth()
+    .sendPasswordResetEmail(email)
+    .then(() => console.log('Change password email sent'))
+    .catch((error: any) => console.log('Error sending email:', error.code));
+};
+

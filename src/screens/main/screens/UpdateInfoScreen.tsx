@@ -5,8 +5,11 @@ import React from "react";
 import { useRoute } from "@react-navigation/native";
 
 const UpdateInfoScreen = () => {
+    // Fields
     const [title, setTitle] = React.useState('');
     const route = useRoute<any>();
+
+    // Get data from route
     React.useEffect(()=>{
         if(route.params?.type){
             setTitle(route.params.type)

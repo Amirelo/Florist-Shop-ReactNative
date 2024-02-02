@@ -9,8 +9,13 @@ import { OrderModel } from '../../../models';
 import { ItemProduct, ItemProductLong } from '../../../components/molecules';
 
 const OrderDetailScreen = () => {
+  // Initial
   const route = useRoute<RouteProp<any>>();
+  
+  // Fields
   const [item, setItem] = React.useState<OrderModel>();
+  
+  // Get data from route
   React.useEffect(()=>{
     if (route.params?.data){
       setItem(route.params.data)

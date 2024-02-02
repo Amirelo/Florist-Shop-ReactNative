@@ -4,8 +4,12 @@ import {AddressModel} from '../../../models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const AddressScreen = () => {
+  // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
+  
   const addressList = new Array<AddressModel>();
+  
+   // Navigate to Address Edit Screen with address detail
   const onEditPressed = (item: AddressModel) => {
     navigation.navigate('AddressEdit', {item: item});
   };

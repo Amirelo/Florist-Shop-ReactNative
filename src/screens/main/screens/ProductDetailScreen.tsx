@@ -15,14 +15,19 @@ import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 const ProductDetailScreen = () => {
-  const [quantity, setQuantity] = React.useState(1);
-  const [product, setProduct] = React.useState<ProductModel>(new ProductModel(-10,'',-10,-10,'',-10,[],[]));
+  // Initial
   const route = useRoute<RouteProp<any>>();
 
+  // Fields
+  const [quantity, setQuantity] = React.useState(1);
+  const [product, setProduct] = React.useState<ProductModel>(new ProductModel(-10,'',-10,-10,'',-10,[],[]));
+
+  // Check quantity changed
   React.useEffect(() => {
     console.log('Changed:', quantity);
   }, [quantity]);
 
+  // Get data from route
   React.useEffect(()=>{
     if(route.params?.item){
       setProduct(route.params.item)

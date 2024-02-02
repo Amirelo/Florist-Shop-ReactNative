@@ -5,8 +5,8 @@ import {CustomText, CustomImage} from '../atoms';
 import {CategoryModel} from '../../models';
 
 interface Props {
-  marginTop?: number;
-  marginBottom?: number;
+  //marginTop?: number;
+  //marginBottom?: number;
   category: CategoryModel;
 }
 
@@ -16,7 +16,7 @@ const ItemCategory = (props: Props) => {
       style={
         [
           styles.view,
-          {marginTop: props.marginTop, marginBottom: props.marginBottom},
+          //{marginTop: props.marginTop, marginBottom: props.marginBottom},
         ] as ViewStyle
       }>
       <CustomImage type="category" source={props.category.image} />
@@ -31,7 +31,6 @@ export default ItemCategory;
 
 const styles = StyleSheet.create({
   view: {
-    display: 'flex',
     alignItems: 'center',
     alignSelf: 'baseline',
   },

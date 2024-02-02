@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import {CategoryModel, ProductModel} from '../../models';
 
+// Get all categories from server
 const getCategories = async () => {
   const snapshot = await firestore().collection('categories').get();
   return snapshot.docs.map(
@@ -8,6 +9,7 @@ const getCategories = async () => {
   );
 };
 
+// Get all products from server
 const getProducts = async () => {
   const snapshot = await firestore().collection('products').get();
   return snapshot.docs.map(

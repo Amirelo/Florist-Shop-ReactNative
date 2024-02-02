@@ -3,6 +3,7 @@ import {PromocodeModel} from '../../../models';
 import {ItemPromocode} from '../../../components/molecules';
 
 const PromocodeScreen = () => {
+  // Fields
   const promoList = Array<PromocodeModel>();
   var promo = new PromocodeModel(
     1,

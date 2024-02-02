@@ -61,6 +61,7 @@ const MainTab = () => {
     <tab.Navigator initialRouteName="Home">
       <tab.Screen
         options={{
+          headerShown: false,
           headerTitle: lang['en'].appBarHome,
           headerTitleAlign: 'center',
           tabBarIcon: ({color, size}) => (

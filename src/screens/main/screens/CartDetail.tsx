@@ -17,27 +17,33 @@ import {
 } from '@react-navigation/native';
 
 const CartDetail = () => {
+  // initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  
+  // Fields
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [total, setTotal] = React.useState(0);
   const [address, setAddress] = React.useState<AddressModel>();
   const [cartList, setCartList] = React.useState();
   var productList = Array<ProductModel>();
-  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, 1, [
+  
+  var testProduct = new ProductModel(1, 'Spark', 35, 5, 'A bouquet', 2.4, [], [
     'https://images.pexels.com/photos/230129/pexels-photo-230129.jpeg',
   ]);
   productList.push(testProduct);
-  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, 1, [
+  testProduct = new ProductModel(2, 'Bomb', 75, 5, 'A bouquet', 3.6, [], [
     'https://images.pexels.com/photos/953057/pexels-photo-953057.jpeg',
   ]);
   productList.push(testProduct);
 
+  // Navigate home on pressed
   const onOrderPressed = () => {
     console.log('Pressed');
     navigation.navigate('Home');
   };
 
+  // Get data from routes
   React.useEffect(() => {
     if (route.params?.carts) {
       setCartList(route.params.carts);

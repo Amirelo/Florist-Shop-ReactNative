@@ -10,10 +10,11 @@ import { logout } from '../../../redux/actions/LoginAction';
 import { googleLogout } from '../../auth/AuthService';
 
 const AccountScreen = () => {
+  // Navigation and dispatch
   const navigation = useNavigation<NavigationProp<any>>();
-
   const dispatch = useDispatch()
 
+  // Logout on pressed
   const onLogoutPressed = async() => {
     await googleLogout() ? dispatch(logout()) : console.log('Something wrong')
   }

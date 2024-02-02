@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
 import {ProductModel} from '../../models';
 import themes from '../../themes/themes';
@@ -18,10 +17,11 @@ const ItemProductBig = (props: Props) => {
       onPressed={props.onPressed}
       style={
         [
+          styles.view,
           {marginTop: props.marginTop, marginBottom: props.marginBottom},
         ] as ViewStyle
       }>
-      <View style={styles.view}>
+      <View>
         <CustomImage
           type="itemBig"
           marginBottom={12}
@@ -47,10 +47,10 @@ export default ItemProductBig;
 
 const styles = StyleSheet.create({
   view: {
-    alignSelf: 'baseline',
     padding: 12,
     backgroundColor: themes['defaultTheme'].tertiaryColor,
     borderRadius: 7,
+    
   },
   rating: {
     flexDirection: 'row',
