@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {ItemAccount, ItemUser} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -30,6 +30,7 @@ const AccountScreen = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.body}>
       <ItemUser
         username={'Miron'}
@@ -76,6 +77,7 @@ const AccountScreen = () => {
         {langText('text_tab_logout_title')}
       </ItemAccount>
     </View>
+    </ScrollView>
   );
 };
 
