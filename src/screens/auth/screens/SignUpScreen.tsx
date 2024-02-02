@@ -79,12 +79,14 @@ const langPref: keyof typeof lang = useSelector(
           onChangeText={setPassword}
           placeholder={lang[langPref]['edPass']}
           icon={faLock}
+          hidden={true}
         />
         <CustomInput
           marginBottom={12}
           onChangeText={setConfirmPassword}
           placeholder={lang[langPref]['edConPass']}
           icon={faLock}
+          hidden={true}
         />
 
         <TextButton

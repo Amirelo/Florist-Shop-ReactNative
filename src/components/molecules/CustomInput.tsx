@@ -1,13 +1,15 @@
 import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import themes from '../../themes/themes';
-import {CustomText} from '../atoms';
+import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   placeholder?: string;
-  onChangeText?(text:string): void;
+  hidden?: boolean;
+  onChangeText?(text: string): void;
   children?: string;
   marginTop?: number;
   marginBottom?: number;
@@ -15,6 +17,12 @@ interface Props {
 }
 
 const CustomInput = (props: Props) => {
+  const [secure, setSecure] = React.useState(props.hidden);
+
+  const onSecurePressed = () => {
+    setSecure(!secure);
+  };
+
   return (
     <View
       style={[
@@ -26,16 +34,23 @@ const CustomInput = (props: Props) => {
           {props.placeholder + ''}
         </CustomText>
       ) : (
-        <FontAwesomeIcon style={styles.icon} size={18} icon={props.icon!} />
+        <FontAwesomeIcon style={styles.icon} size={18} icon={props.icon} />
       )}
 
       <TextInput
-        secureTextEntry = {props.placeholder?.toLowerCase().includes('password')}
+        secureTextEntry={secure}
         placeholder={props.placeholder}
         onChangeText={props.onChangeText}
-        
-        style={[props.icon ? styles.input : styles.viewUpdate]}
-      >{props.children}</TextInput>
+        style={[props.icon ? styles.input : styles.viewUpdate]}>
+        {props.children}
+      </TextInput>
+      {props.hidden ? (
+        <CustomButton style={styles.iconEnd} onPressed={onSecurePressed}>
+          <FontAwesomeIcon size={18} icon={secure ? faEye : faEyeSlash} />
+        </CustomButton>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -61,6 +76,12 @@ const styles = StyleSheet.create({
   icon: {
     paddingHorizontal: 20,
     position: 'absolute',
+  },
+
+  iconEnd: {
+    position: 'absolute',
+    right: 0,
+    paddingHorizontal: 20,
   },
   input: {
     paddingStart: 38,

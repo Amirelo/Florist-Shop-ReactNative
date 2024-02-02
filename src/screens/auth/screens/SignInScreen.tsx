@@ -119,6 +119,7 @@ const SignInScreen = () => {
           onChangeText={setPassword}
           placeholder={lang[langPref]['edPass']}
           icon={faLock}
+          hidden={true}
         />
 
         <TextButton marginBottom={20} onPressed={onForgotPasswordPressed}>
