@@ -19,6 +19,7 @@ import {
 import {CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { getProducts } from '../MainService';
+import { langText } from '../../../utils/Utils';
 
 const ExploreScreen = () => {
   // Initial
@@ -94,17 +95,18 @@ const ExploreScreen = () => {
           onChangeText={text => onSearch(text)}
           icon={faSearch}
           marginBottom={12}
+          placeholder={langText('edSearch')}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <ItemRow justifyContent="flex-start">
             <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
-            <CustomText type="subTitle">Filter</CustomText>
+            <CustomText type="subTitle">{langText('text_filter')}</CustomText>
           </ItemRow>
 
           <CustomButton onPressed={onSortPressed}>
             <ItemRow justifyContent="flex-start">
               <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
-              <CustomText type="subTitle">Sort</CustomText>
+              <CustomText type="subTitle">{langText('text_sort')}</CustomText>
             </ItemRow>
           </CustomButton>
 
@@ -115,7 +117,7 @@ const ExploreScreen = () => {
                 icon={isColumn ? faSquareFull : faGripVertical}
               />
               <CustomText type="subTitle">
-                {isColumn ? 'Colm' : 'Grid'}
+                {isColumn ? langText('text_display_column') : langText('text_display_grid')}
               </CustomText>
             </ItemRow>
           </CustomButton>

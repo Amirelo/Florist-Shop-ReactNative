@@ -7,6 +7,7 @@ import themes from '../../themes/themes';
 
 interface Props {
   children: string;
+  description: string;
   color?: ColorValue;
   quantity?: number;
   marginTop?: number;
@@ -15,21 +16,6 @@ interface Props {
 }
 
 const ItemAccount = (props: Props) => {
-  const [quantity, setQuantity] = React.useState(
-    props.quantity ? props.quantity : '',
-  );
-  const subText = props.children.includes('Order')
-    ? 'orders in progress'
-    : props.children.includes('Address')
-    ? 'address(es)'
-    : props.children.includes('Promocodes')
-    ? 'available'
-    : props.children.includes('Password')
-    ? 'Change your password'
-    : props.children.includes('About')?
-    'Company contact'
-    : 
-    'Logout of you account';
   return (
     <CustomButton
     onPressed={props.onPressed}
@@ -45,7 +31,7 @@ const ItemAccount = (props: Props) => {
           {props.children}
         </CustomText>
         <CustomText color={themes['defaultTheme'].textSecondaryColor}>
-          {quantity + subText}
+          {props.description}
         </CustomText>
       </View>
       <FontAwesomeIcon icon={faChevronRight} />

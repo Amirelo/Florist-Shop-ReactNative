@@ -6,16 +6,20 @@ import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {TextButton} from '../../../components/molecules/buttons';
+import { langText } from '../../../utils/Utils';
 
 const CartScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
-  
+
   // Fields
   const [total, setTotal] = React.useState(0);
   const [promoActive, setPromoActive] = React.useState(false);
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
-  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([])
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
+    [],
+  );
 
   const promoList = Array<PromocodeModel>();
   var promo = new PromocodeModel(
@@ -60,10 +64,10 @@ const CartScreen = () => {
   promoList.push(promo);
 
   var cartList = new Array<CartModel>();
-  var cart = new CartModel(1, 3, 1)
-  cartList.push(cart)
-  cart = new CartModel(2, 2, 2)
-  cartList.push(cart)
+  var cart = new CartModel(1, 3, 1);
+  cartList.push(cart);
+  cart = new CartModel(2, 2, 2);
+  cartList.push(cart);
 
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
@@ -97,7 +101,7 @@ const CartScreen = () => {
           style={{
             marginTop: 30,
             marginBottom: 20,
-            maxHeight: '50%',
+            height: '50%',
             borderWidth: 1,
             borderColor: themes['defaultTheme'].primaryColor,
             borderRadius: 7,
@@ -112,7 +116,11 @@ const CartScreen = () => {
               item={item}
               total={total}
               setTotal={setTotal}
-              setItemQuantity={(quantity: number) => cartList.filter(filterItem => filterItem.productID == item.id)[0].setQuantity(quantity)}
+              setItemQuantity={(quantity: number) =>
+                cartList
+                  .filter(filterItem => filterItem.productID == item.id)[0]
+                  .setQuantity(quantity)
+              }
             />
           )}
         />
@@ -125,24 +133,22 @@ const CartScreen = () => {
           <CustomText>
             {selectedPromo
               ? selectedPromo.title
-              : 'Click here to find promocodes'}
+              : langText('text_find_promocodes')}
           </CustomText>
         </CustomButton>
 
         <ItemRow marginBottom={20}>
-          <CustomText type="title">Total</CustomText>
+          <CustomText type="title">{langText('text_total')}</CustomText>
           <CustomText type="title">
             {selectedPromo
-              ? `${
-                  total * selectedPromo.amount /100  
-                }`
+              ? `${(total * selectedPromo.amount) / 100}`
               : `$${total}`}
           </CustomText>
         </ItemRow>
 
-        <CustomButton onPressed={onBuyPressed} style={styles.orderButton}>
-          <CustomText color={'white'}>Place Order</CustomText>
-        </CustomButton>
+        <TextButton onPressed={onBuyPressed} type="primary">
+          {langText('buttonPlaceOrder')}
+        </TextButton>
       </View>
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
@@ -157,7 +163,6 @@ const CartScreen = () => {
               </CustomButton>
             )}
           />
-          
         </OptionsPanel>
       ) : (
         <></>
@@ -196,5 +201,4 @@ const styles = StyleSheet.create({
     borderColor: themes['defaultTheme'].textSecondaryColor,
     marginBottom: 20,
   },
-  
 });

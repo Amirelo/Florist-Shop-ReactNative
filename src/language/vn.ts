@@ -5,6 +5,7 @@ const vn = {
   edPass: 'Mật khẩu',
   edConPass: 'Xác nhận mật khẩu',
   edFullname: "Fullname",
+  edSearch: 'Tìm kiếm',
 
   appBarHome: 'FLORIST',
 
@@ -15,6 +16,13 @@ const vn = {
   buttonVerify: 'Xác thực',
   buttonGoBack_long: 'Nhấn vào đây để quay lại',
   buttonGoogleSignIn: 'Đăng nhập với Google',
+  buttonPlaceOrder: 'Đặt hàng',
+
+  // Tab Navigation
+  bottomTab_home: 'Trang Chủ',
+  bottomTab_explore: 'Tìm Kiếm',
+  bottomTab_cart: 'Giỏ Hàng',
+  bottomTab_account:'Tài Khoản',
 
   // Login
   signin_title : 'Đăng Nhập',
@@ -29,6 +37,31 @@ const vn = {
   home_card_title: 'Cần trợ giúp?',
   home_card_description:'Hãy gọi hoặc đặt lịch hẹn với chúng tôi.',
   home_welcome: 'Chào mừng!',
+
+  // Explore
+  text_filter: 'Lọc',
+  text_sort: 'Sắp xếp',
+  text_display_grid: 'Lưới',
+  text_display_column: 'Cột',
+
+  // Cart
+  text_find_promocodes:'Nhấn vào đây để tìm phiếu giảm giá',
+  text_total: 'Tổng',
+
+  // Account
+  text_tab_order_title: 'Đơn hàng',
+  text_tab_address_title:'Địa chỉ giao hàng',
+  text_tab_promocodes_title:'Mã khuyến mãi',
+  text_tab_about_title:'Về chúng tôi',
+  text_tab_changePass_title:'Đổi mật khẩu',
+  text_tab_logout_title:'Đăng xuất',
+
+  text_tab_order_description: 'đơn hàng chưa hoàn thành',
+  text_tab_address_description:'địa chỉ',
+  text_tab_promocodes_description:'hiện có',
+  text_tab_about_description:'Thông tin về app',
+  text_tab_changePass_description:'Đổi mật khẩu của bạn',
+  text_tab_logout_description:'Đăng xuất khỏi tài khoản',
 };
 
 export default vn;

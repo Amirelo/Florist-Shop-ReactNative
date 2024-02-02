@@ -27,6 +27,7 @@ import themes from '../../themes/themes';
 import lang from '../../language/lang';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailScreen from './screens/ProductDetailScreen';
+import { langText } from '../../utils/Utils';
 
 const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -69,7 +70,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name="Home"
+        name={langText('bottomTab_home')}
         component={HomeScreen}
       />
       <tab.Screen
@@ -80,7 +81,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name="Explore"
+        name={langText('bottomTab_explore')}
         component={ExploreScreen}
       />
       <tab.Screen
@@ -91,7 +92,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name="Cart"
+        name={langText('bottomTab_cart')}
         component={CartScreen}
       />
 
@@ -103,7 +104,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name="Account"
+        name={langText('bottomTab_account')}
         component={AccountScreen}
       />
     </tab.Navigator>
