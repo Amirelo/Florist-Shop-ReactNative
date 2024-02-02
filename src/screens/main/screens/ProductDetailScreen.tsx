@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {
   CustomButton,
   CustomImage,
@@ -15,7 +15,7 @@ import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {priceFormat} from '../../../utils/Utils';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const ProductDetailScreen = () => {
   // Initial
@@ -29,7 +29,7 @@ const ProductDetailScreen = () => {
 
   const [priceString, setPriceString] = React.useState<string>();
   const [price, setPrice] = React.useState<number>();
-  const [isAdd, setIsAdd] =React.useState(false)
+  const [isAdd, setIsAdd] = React.useState(false);
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -47,7 +47,7 @@ const ProductDetailScreen = () => {
       var data: ProductModel = route.params.item;
       setProduct(data);
       var formatedPrice = priceFormat(data.price, langPref);
-      setPrice(data.price)
+      setPrice(data.price);
       setPriceString(formatedPrice);
     }
   }, []);
@@ -65,14 +65,21 @@ const ProductDetailScreen = () => {
             overflow: 'hidden',
             marginBottom: 20,
           }}>
-          <CustomImage source={product!.images[0]} type="match_parent" />
+          <FlatList
+            horizontal={true}
+            data={product!.images}
+            keyExtractor={item => item}
+            renderItem={({item}) => <CustomImage source={item} type="detail" />}
+          />
         </View>
         <View style={styles.body}>
           <ItemRow marginBottom={6}>
             <CustomText type="subHeader">{product!.name}</CustomText>
             <CustomText
               type="subHeader"
-              color={themes['defaultTheme'].primaryColor}>{priceString+''}</CustomText>
+              color={themes['defaultTheme'].primaryColor}>
+              {priceString + ''}
+            </CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={6}>
@@ -104,8 +111,12 @@ const ProductDetailScreen = () => {
           </ItemRow>
 
           <ItemRow marginBottom={34}>
-            <CustomText type="header">{lang[langPref]['text_total']}</CustomText>
-            <CustomText type="header">{price ? priceFormat(price*quantity, langPref) :''}</CustomText>
+            <CustomText type="header">
+              {lang[langPref]['text_total']}
+            </CustomText>
+            <CustomText type="header">
+              {price ? priceFormat(price * quantity, langPref) : ''}
+            </CustomText>
           </ItemRow>
         </View>
         <CustomButton style={{alignSelf: 'center', marginBottom: 30}}>

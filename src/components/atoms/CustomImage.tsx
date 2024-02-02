@@ -1,7 +1,14 @@
 import React from 'react';
-import {Image, ImageProps, ImageResizeMode, ImageStyle, StyleProp, StyleSheet} from 'react-native';
+import {
+  Image,
+  ImageProps,
+  ImageResizeMode,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+} from 'react-native';
 import themes from '../../themes/themes';
-import { deviceHeight, deviceWidth } from '../../utils/Utils';
+import {deviceHeight, deviceWidth} from '../../utils/Utils';
 
 interface Props {
   source: string;
@@ -10,7 +17,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
-  style?:any;
+  style?: any;
 }
 
 const CustomImage = (props: Props) => {
@@ -25,7 +32,7 @@ const CustomImage = (props: Props) => {
             resizeMode: props.resizeMode ? props.resizeMode : 'cover',
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
-            marginRight:props.marginRight,
+            marginRight: props.marginRight,
           },
         ] as ImageStyle
       }
@@ -66,33 +73,37 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 350,
   },
-  tabImage:{
-    width:72,
-    height:72,
-    borderRadius: 7
+  tabImage: {
+    width: 72,
+    height: 72,
+    borderRadius: 7,
   },
-  cart:{
-    width:94,
+  cart: {
+    width: 94,
     height: 76,
     borderRadius: 7,
   },
-  profile:{
+  profile: {
     width: 100,
     height: 100,
     borderRadius: 7,
-    alignSelf:'center'
+    alignSelf: 'center',
   },
-  itemProductLong:{
-    height:'auto',
-    width:120,
+  itemProductLong: {
+    height: 'auto',
+    width: 120,
     borderRadius: 7,
   },
-  match_parent:{
-    width:'100%',
-    height:'100%'
+  match_parent: {
+    width: '100%',
+    height: '100%',
   },
-  background:{
+  detail: {
     width: deviceWidth,
-    height: deviceHeight
-  }
+    height: 350,
+  },
+  background: {
+    width: deviceWidth,
+    height: deviceHeight,
+  },
 });
