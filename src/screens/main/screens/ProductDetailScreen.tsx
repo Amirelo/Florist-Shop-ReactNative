@@ -12,7 +12,10 @@ import {QuantityCounter} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {priceFormat} from '../../../utils/Utils';
+import lang from '../../../language/lang';
+import { useSelector } from 'react-redux';
 
 const ProductDetailScreen = () => {
   // Initial
@@ -20,7 +23,18 @@ const ProductDetailScreen = () => {
 
   // Fields
   const [quantity, setQuantity] = React.useState(1);
-  const [product, setProduct] = React.useState<ProductModel>(new ProductModel(-10,'',-10,-10,'',-10,[],[]));
+  const [product, setProduct] = React.useState<ProductModel>(
+    new ProductModel(-10, '', -10, -10, '', -10, [], []),
+  );
+
+  const [priceString, setPriceString] = React.useState<string>();
+  const [price, setPrice] = React.useState<number>();
+  const [isAdd, setIsAdd] =React.useState(false)
+
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Check quantity changed
   React.useEffect(() => {
@@ -28,28 +42,37 @@ const ProductDetailScreen = () => {
   }, [quantity]);
 
   // Get data from route
-  React.useEffect(()=>{
-    if(route.params?.item){
-      setProduct(route.params.item)
+  React.useEffect(() => {
+    if (route.params?.item) {
+      var data: ProductModel = route.params.item;
+      setProduct(data);
+      var formatedPrice = priceFormat(data.price, langPref);
+      setPrice(data.price)
+      setPriceString(formatedPrice);
     }
-  },[])
+  }, []);
 
   return (
     <ScrollView>
       <View>
-        <CustomImage
-          marginBottom={10}
-          source={product!.images[0]}
-          type="productDetail"
-        />
+        <View
+          style={{
+            width: '100%',
+            height: 350,
+            borderWidth: 1,
+            borderBottomLeftRadius: 40,
+            borderBottomRightRadius: 40,
+            overflow: 'hidden',
+            marginBottom: 20,
+          }}>
+          <CustomImage source={product!.images[0]} type="match_parent" />
+        </View>
         <View style={styles.body}>
           <ItemRow marginBottom={6}>
             <CustomText type="subHeader">{product!.name}</CustomText>
             <CustomText
               type="subHeader"
-              color={
-                themes['defaultTheme'].primaryColor
-              }>{`$${product!.price}`}</CustomText>
+              color={themes['defaultTheme'].primaryColor}>{priceString+''}</CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={6}>
@@ -81,10 +104,8 @@ const ProductDetailScreen = () => {
           </ItemRow>
 
           <ItemRow marginBottom={34}>
-            <CustomText type="header">Total</CustomText>
-            <CustomText type="header">{`$${
-              product!.price * quantity
-            }`}</CustomText>
+            <CustomText type="header">{lang[langPref]['text_total']}</CustomText>
+            <CustomText type="header">{price ? priceFormat(price*quantity, langPref) :''}</CustomText>
           </ItemRow>
         </View>
         <CustomButton style={{alignSelf: 'center', marginBottom: 30}}>

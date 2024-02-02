@@ -19,7 +19,9 @@ const QuantityCounter = (props: Props) => {
     ) : (
       <></>
     );
+    props.setIsAdd ?
     amount == -1 ? props.setIsAdd(false) : props.setIsAdd(true)
+    : ''
   };
 
   return (

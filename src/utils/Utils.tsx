@@ -2,13 +2,10 @@ import {useSelector} from 'react-redux';
 import lang from '../language/lang';
 import {Dimensions} from 'react-native';
 
-export const priceFormat = (price: string) => {
+export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   var result;
-  var langPref: keyof typeof lang = useSelector(
-    (store: any) => store.preference.language,
-  );
-  langPref == 'vn' ? (result = price + 'đ') : (result = '$' + price);
-
+  langPref == 'vn' ? (result = price + 'đ') : (result = '$' + (price*0.000041));
+  console.log(result)
   return result;
 };
 
