@@ -60,6 +60,11 @@ const AccountScreen = () => {
         {langText('text_tab_about_title')}
       </ItemAccount>
       <ItemAccount
+        onPressed={() => onTabPressed('Settings')}
+        description={langText('text_tab_setting_description')}>
+        {langText('text_tab_setting_title')}
+      </ItemAccount>
+      <ItemAccount
         color={themes['defaultTheme'].errorcolor}
         description={langText('text_tab_changePass_description')}>
         {langText('text_tab_changePass_title')}

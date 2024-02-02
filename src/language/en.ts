@@ -55,6 +55,7 @@ const en = {
   text_tab_address_title:'Shipping Address',
   text_tab_promocodes_title:'Promocodes',
   text_tab_about_title:'About Us',
+  text_tab_setting_title: 'Settings',
   text_tab_changePass_title:'Change Password',
   text_tab_logout_title:'Logout',
 
@@ -62,6 +63,7 @@ const en = {
   text_tab_address_description:'address(es)',
   text_tab_promocodes_description:'available',
   text_tab_about_description:'Developer info',
+  text_tab_setting_description: 'Change language and themes',
   text_tab_changePass_description:'Change your password',
   text_tab_logout_description:'Logout of your account',
 

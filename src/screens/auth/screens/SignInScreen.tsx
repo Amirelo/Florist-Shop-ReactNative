@@ -19,7 +19,6 @@ import {SignInWithGoogle, checkIsSignIn, passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import { SocialButton, TextButton } from '../../../components/molecules/buttons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -41,7 +40,7 @@ const SignInScreen = () => {
 
   // Change language by option
   const onLanguageOptionPressed = (lang: string) => {
-    console.log('Option selected');
+    console.log('Option selected:', lang);
     dispatch(changeLanguage(lang));
     setLanguageOptionActive(false);
   };

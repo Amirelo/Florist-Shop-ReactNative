@@ -53,6 +53,7 @@ const vn = {
   text_tab_address_title:'Địa chỉ giao hàng',
   text_tab_promocodes_title:'Mã khuyến mãi',
   text_tab_about_title:'Về chúng tôi',
+  text_tab_setting_title: 'Cài đặt',
   text_tab_changePass_title:'Đổi mật khẩu',
   text_tab_logout_title:'Đăng xuất',
 
@@ -60,6 +61,7 @@ const vn = {
   text_tab_address_description:'địa chỉ',
   text_tab_promocodes_description:'hiện có',
   text_tab_about_description:'Thông tin về app',
+  text_tab_setting_description: 'Đổi ngôn ngữ và giao diện',
   text_tab_changePass_description:'Đổi mật khẩu của bạn',
   text_tab_logout_description:'Đăng xuất khỏi tài khoản',
 };
