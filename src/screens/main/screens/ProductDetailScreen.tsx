@@ -13,7 +13,7 @@ import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {priceFormat} from '../../../utils/Utils';
+import {deviceWidth, priceFormat} from '../../../utils/Utils';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 
@@ -29,7 +29,6 @@ const ProductDetailScreen = () => {
 
   const [priceString, setPriceString] = React.useState<string>();
   const [price, setPrice] = React.useState<number>();
-  const [isAdd, setIsAdd] = React.useState(false);
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -65,16 +64,21 @@ const ProductDetailScreen = () => {
             overflow: 'hidden',
             marginBottom: 20,
           }}>
+            {/* Product Image List */}
           <FlatList
             horizontal={true}
             data={product!.images}
+            snapToInterval={deviceWidth}
+            decelerationRate={'fast'}
             keyExtractor={item => item}
             renderItem={({item}) => <CustomImage source={item} type="detail" />}
           />
         </View>
         <View style={styles.body}>
           <ItemRow marginBottom={6}>
+            {/* Product Name */}
             <CustomText type="subHeader">{product!.name}</CustomText>
+            {/* Product Price */}
             <CustomText
               type="subHeader"
               color={themes['defaultTheme'].primaryColor}>
@@ -84,6 +88,7 @@ const ProductDetailScreen = () => {
 
           <ItemRow marginBottom={6}>
             <CustomText type="subTitle">{lang[langPref]['text_availability']}</CustomText>
+            {/* Product Status */}
             <CustomText
               type="subTitle"
               color={
@@ -97,12 +102,14 @@ const ProductDetailScreen = () => {
 
           <ItemRow marginBottom={30}>
             <CustomText type="subTitle">{lang[langPref]['text_rating']}</CustomText>
+            {/* Rating Stars */}
             <RatingStars totalRating={product!.totalRating} />
           </ItemRow>
           <View style={styles.line}></View>
 
           <ItemRow marginBottom={24}>
             <CustomText type="title">{lang[langPref]['text_quantity']}</CustomText>
+            {/* Change Quantity */}
             <QuantityCounter
               maxQuantity={product!.quantity}
               quantity={quantity}
@@ -114,11 +121,13 @@ const ProductDetailScreen = () => {
             <CustomText type="header">
               {lang[langPref]['text_total']}
             </CustomText>
+            {/* Total Price */}
             <CustomText type="header">
               {price ? priceFormat(price * quantity, langPref) : ''}
             </CustomText>
           </ItemRow>
         </View>
+        {/* Order Button */}
         <CustomButton style={{alignSelf: 'center', marginBottom: 30}}>
           <View
             style={{
