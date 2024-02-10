@@ -38,7 +38,7 @@ const AccountScreen = () => {
 
   // Navigate to profile screen when UserTab pressed
   const onUserTabPressed = () => {
-    navigation.navigate('Profile');
+    navigation.navigate('Profile', {email: userEmail, user: user});
   };
 
   // Navigate to order screen
