@@ -30,6 +30,7 @@ const ItemProduct = (props: Props) => {
         ] as ViewStyle
       }>
       <View>
+        {/* Product Image */}
         <CustomImage
           type="item"
           resizeMode='cover'
@@ -37,12 +38,15 @@ const ItemProduct = (props: Props) => {
           source={props.product.images[0]}
         />
         <View style={styles.body}>
+          {/* Product Name */}
           <CustomText type="title">{props.product.name}</CustomText>
         </View>
         <View style={styles.body}>
+          {/* Product Price */}
           <CustomText
             color={themes['defaultTheme'].primaryColor}
             type="subTitle">{priceFormat(props.product.price, props.langPref)}</CustomText>
+            {/* Buy Icon */}
           <FontAwesomeIcon
             color={themes['defaultTheme'].primaryColor}
             icon={solid.faCartShopping}

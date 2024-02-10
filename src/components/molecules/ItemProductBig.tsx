@@ -25,12 +25,14 @@ const ItemProductBig = (props: Props) => {
         ] as ViewStyle
       }>
       <View>
+        {/* Product Image */}
         <CustomImage
           type="itemBig"
           marginBottom={12}
           source={props.product.images[0]}
         />
         <View style={styles.body}>
+          {/* Product Name */}
           <CustomText
             maxLines={1}
             style={{maxWidth: '70%'}}
@@ -38,8 +40,10 @@ const ItemProductBig = (props: Props) => {
             color={themes['defaultTheme'].primaryColor}>
             {props.product.name}
           </CustomText>
+          {/* Rating Stars */}
           <RatingStars totalRating={props.product.totalRating} />
         </View>
+        {/* Product Price */}
         <CustomText type="title">{priceFormat(props.product.price, props.langPref)}</CustomText>
       </View>
     </CustomButton>

@@ -50,7 +50,7 @@ const ItemProductLong = (props: Props) => {
             <CustomText type="title" color={themes['defaultTheme'].errorcolor}>
               {priceFormat(props.product.price, props.langPref)}
             </CustomText>
-            {/* Rating stars */}
+            {/* Rating Stars */}
             <RatingStars totalRating={props.product.totalRating} />
           </View>
           {/* Buy Icon */}

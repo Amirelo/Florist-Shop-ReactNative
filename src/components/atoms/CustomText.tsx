@@ -9,8 +9,9 @@ interface Props {
   marginRight?: number;
   type?: keyof typeof styles;
   style?: StyleProp<TextStyle>;
-  textTransform?: TextStyle['textTransform'],
-  maxLines?: number
+  textTransform?: TextStyle['textTransform'];
+  maxLines?: number;
+  fontWeight?: TextStyle['fontWeight'];
 }
 
 const CustomText = (props: Props) => {
@@ -25,7 +26,8 @@ const CustomText = (props: Props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginRight: props.marginRight,
-            textTransform: props.textTransform ? props.textTransform : 'none',
+            textTransform: props.textTransform,
+            fontWeight: props.fontWeight
           },
           styles[selectedType],
           props.style,
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold'
   },
   subTitle: {
     fontSize: 16,
