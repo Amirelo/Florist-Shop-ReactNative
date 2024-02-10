@@ -50,6 +50,7 @@ export const SaveUserFirestore = async (email: string) => {
     .doc(email)
     // Set parameters
     .set({
+      username: email.split('@')[0],
       favoriteProducts: [],
       language: '',
       theme: '',
@@ -106,8 +107,8 @@ export const SignInWithGoogle = async () => {
         });
       });
 
-      // Sign Up if user data not in Firestore
-      isSignedUp ? '' : SaveUserFirestore(userEmail);
+    // Sign Up if user data not in Firestore
+    isSignedUp ? '' : SaveUserFirestore(userEmail);
 
     return true;
   } catch (error: any) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText} from '../../../components/atoms';
+import {CustomButton, CustomText, Divider} from '../../../components/atoms';
 import {ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
@@ -102,6 +102,7 @@ const CartScreen = () => {
   return (
     <View style={{height: '100%'}}>
       <View style={styles.view}>
+        {/* Cart Item List */}
         <FlatList
           style={{
             marginTop: 30,
@@ -130,7 +131,7 @@ const CartScreen = () => {
           )}
         />
 
-        <View style={styles.line} />
+        <Divider marginBottom={20}/>
 
         <CustomButton
           onPressed={onPromocodePressed}
