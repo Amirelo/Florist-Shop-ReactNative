@@ -1,13 +1,14 @@
-import { LOGIN_AUTHORIZE, LOGOUT } from "../../constants/AppConstants"
+import {LOGIN_AUTHORIZE, LOGOUT} from '../../constants/AppConstants';
 
-export const authorizeLogin = () => {
-    return {
-        type: LOGIN_AUTHORIZE
-    }
-}
+export const authorizeLogin = (data: string) => {
+  return {
+    type: LOGIN_AUTHORIZE,
+    payload: {data: data},
+  };
+};
 
 export const logout = () => {
-    return {
-        type: LOGOUT
-    }
-}
+  return {
+    type: LOGOUT,
+  };
+};

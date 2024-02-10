@@ -4,18 +4,30 @@ import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../../redux/actions/LoginAction';
-import {googleLogout} from '../../auth/AuthService';
+import {getUserInfo, googleLogout} from '../../auth/AuthService';
 import lang from '../../../language/lang';
+import React from 'react';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 const AccountScreen = () => {
   // Navigation and dispatch
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
+  const [user, setUser] = React.useState<FirebaseFirestoreTypes.DocumentData|undefined>({});
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+  // User email
+  const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
+
+  // Get User Info
+  const getInfo = async () => {
+    const info:FirebaseFirestoreTypes.DocumentData|undefined = await getUserInfo(userEmail);
+    setUser(info);
+    console.log('User:', info)
+  };
 
   // Logout on pressed
   const onLogoutPressed = async () => {
@@ -34,13 +46,18 @@ const AccountScreen = () => {
     navigation.navigate(name);
   };
 
+  React.useEffect(()=>{
+    console.log(userEmail)
+    getInfo()
+  },[])
+
   return (
     <ScrollView>
       <View style={styles.body}>
         <ItemUser
-          username={'Miron'}
-          email={'miron@gmail.com'}
-          source="https://images.pexels.com/photos/19899425/pexels-photo-19899425/free-photo-of-mt-machhapuchree.jpeg"
+          username={user!.username}
+          email={userEmail}
+          source={user!.image}
           marginTop={40}
           marginBottom={12}
           onPressed={onUserTabPressed}

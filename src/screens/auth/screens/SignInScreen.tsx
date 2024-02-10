@@ -18,6 +18,7 @@ import {SignInWithGoogle, checkIsSignIn, passwordLogin} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -70,7 +71,7 @@ const SignInScreen = () => {
   const handleLogin = async () => {
     checkFields()
       ? (await checkAccount())
-        ? [console.log('Login Successful'), dispatch(authorizeLogin())]
+        ? [console.log('Login Successful'), dispatch(authorizeLogin(email))]
         : console.log('Invalid username or password')
       : console.log('Fields cannot be empty');
   };
@@ -78,14 +79,14 @@ const SignInScreen = () => {
   // Sign in with google
   const onGooglePressed = async () => {
     (await SignInWithGoogle())
-      ? dispatch(authorizeLogin())
+      ? dispatch(authorizeLogin((await GoogleSignin.signIn()).user.email))
       : console.log('Login failed');
   };
 
   // Check if user already sign in with google
   const checkSavedUser = async () => {
     (await checkIsSignIn())
-      ? dispatch(authorizeLogin())
+      ? dispatch(authorizeLogin((await GoogleSignin.signIn()).user.email))
       : console.log('No user found');
   };
 

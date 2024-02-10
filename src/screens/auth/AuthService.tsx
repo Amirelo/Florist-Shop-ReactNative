@@ -54,6 +54,7 @@ export const SaveUserFirestore = async (email: string) => {
       favoriteProducts: [],
       language: '',
       theme: '',
+      image: 'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
     })
     .then(() => {
       return true;
@@ -131,4 +132,10 @@ export const sendPasswordChangeEmail = async (email: string) => {
     .sendPasswordResetEmail(email)
     .then(() => console.log('Change password email sent'))
     .catch((error: any) => console.log('Error sending email:', error.code));
+};
+
+// Get user info
+export const getUserInfo = async (email: string) => {
+  const data = (await firestore().collection('users').doc(email).get()).data();
+  return data;
 };

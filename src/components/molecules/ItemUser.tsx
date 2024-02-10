@@ -25,12 +25,15 @@ const ItemUser = (props: Props) => {
         },
       ]}>
       <View style={styles.body}>
+        {/* User Image */}
         <CustomImage type="tabImage" marginRight={8} source={props.source!} />
         <View>
-          <CustomText type="title" marginBottom={4}>
-            {props.username + ''}
+          {/* Email */}
+          <CustomText type="subTitle" marginBottom={4}>
+            {props.email + ''}
           </CustomText>
-          <CustomText>{props.email + ''}</CustomText>
+          {/* Username */}
+          <CustomText>{props.username + ''}</CustomText>
         </View>
       </View>
       <FontAwesomeIcon icon={faChevronRight} />
