@@ -18,14 +18,15 @@ export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
     .catch(error => console.log('Error sending email:', error.code));
 };
 
-// Check if user has sign in before with google sign in
+// Check if user has Sign In before with google Sign In
 export const checkIsSignIn = async () => {
   var status = false;
   (await GoogleSignin.isSignedIn()) ? (status = true) : '';
+  // Return Sign In status
   return status;
 };
 
-// Sign in user with email and password
+// Sign In user with email and password
 export const passwordLogin = async (email: string, password: string) => {
   var status = false;
   const res = await auth()
@@ -43,9 +44,11 @@ export const passwordLogin = async (email: string, password: string) => {
 
 // Register user to firestore
 export const SaveUserFirestore = async (email: string) => {
-  const res = await firestore()
+  await firestore()
     .collection('users')
+    // Set Id
     .doc(email)
+    // Set parameters
     .set({
       favoriteProducts: [],
       language: '',
@@ -63,12 +66,15 @@ export const SaveUserFirestore = async (email: string) => {
 // Sign up with email and password
 export const passwordSignUp = async (email: string, password: string) => {
   var status = false;
+  // Create user with email and password
   const res = await auth()
     .createUserWithEmailAndPassword(email, password)
     .then(async credential => {
       console.log('User created');
       status = true;
+      // Save user to Firestore
       await SaveUserFirestore(email);
+      // Send email verification
       await credential.user
         .sendEmailVerification()
         .then(() => console.log('Email sent'))
@@ -81,22 +87,26 @@ export const passwordSignUp = async (email: string, password: string) => {
   return status;
 };
 
-// Sign in with google
+// Sign In with google
 export const SignInWithGoogle = async () => {
   try {
     var isSignedUp = false;
+    // Get user email
     const userEmail = (await GoogleSignin.signIn()).user.email;
     console.log('user info:', userEmail);
 
+    // Get all user
     await firestore()
       .collection('users')
       .get()
       .then(querySnapshot => {
+        // Check whether user data is in Firestore
         querySnapshot.forEach(document => {
           document.id == userEmail ? (isSignedUp = true) : '';
         });
       });
 
+      // Sign Up if user data not in Firestore
       isSignedUp ? '' : SaveUserFirestore(userEmail);
 
     return true;
@@ -106,8 +116,9 @@ export const SignInWithGoogle = async () => {
   }
 };
 
-// Logout of google sign in
+// Logout of google Sign In
 export const googleLogout = async () => {
+  // Logout of both google signin and auth
   (await GoogleSignin.isSignedIn()) ? GoogleSignin.signOut() : '';
   auth().currentUser != null ? auth().signOut() : '';
   return true;
