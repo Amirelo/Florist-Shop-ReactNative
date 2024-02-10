@@ -109,7 +109,7 @@ const ExploreScreen = () => {
           placeholder={lang[langPref]['edSearch']}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <CustomButton onPressed={onFilterPressed}>
+          <CustomButton onPressed={onFilterPressed} flex={1}>
             <ItemRow justifyContent="flex-start">
               <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
               <CustomText type="subTitle">
@@ -118,8 +118,8 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
 
-          <CustomButton onPressed={onSortPressed}>
-            <ItemRow justifyContent="flex-start">
+          <CustomButton onPressed={onSortPressed} flex={1}>
+            <ItemRow justifyContent="center">
               <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
               <CustomText type="subTitle">
                 {lang[langPref]['text_sort']}
@@ -127,8 +127,8 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
 
-          <CustomButton onPressed={onDisplayPressed}>
-            <ItemRow justifyContent="flex-start">
+          <CustomButton onPressed={onDisplayPressed} flex={1}>
+            <ItemRow justifyContent="flex-end">
               <FontAwesomeIcon
                 style={{marginRight: 4}}
                 icon={isColumn ? faSquareFull : faGripVertical}

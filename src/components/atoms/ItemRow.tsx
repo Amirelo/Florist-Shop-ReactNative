@@ -3,7 +3,8 @@ import {FlexStyle, StyleSheet, View} from 'react-native';
 interface Props {
   justifyContent?: FlexStyle['justifyContent'];
   marginBottom?: number;
-  children: any
+  children: any;
+  flex?: number;
 }
 
 const ItemRow = (props: Props) => {
@@ -16,6 +17,7 @@ const ItemRow = (props: Props) => {
           justifyContent: props.justifyContent
             ? props.justifyContent
             : 'space-between',
+          flex: props.flex,
         },
       ]}>
       {props.children}
@@ -28,6 +30,6 @@ export default ItemRow;
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems: 'center',
   },
 });
