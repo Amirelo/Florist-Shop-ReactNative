@@ -1,9 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomInput} from '../../../components/molecules';
-import {
-  faEnvelope,
-  faLock,
-} from '@fortawesome/free-solid-svg-icons';
+import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import themes from '../../../themes/themes';
 import {CustomImage, CustomText} from '../../../components/atoms';
@@ -12,7 +9,7 @@ import {passwordSignUp} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const SignUpScreen = () => {
   // Fields
@@ -20,11 +17,11 @@ const SignUpScreen = () => {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
-// Saved language
-const langPref: keyof typeof lang = useSelector(
-  (store: any) => store.preference.language,
-);
-  
+  // Saved language
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
 
@@ -45,7 +42,10 @@ const langPref: keyof typeof lang = useSelector(
     checkFields()
       ? [
           passwordSignUp(email, password),
-          navigation.navigate('Complete', {title:'Verification email sent', description:'You need to verify email before you can Sign In'})
+          navigation.navigate('Complete', {
+            title: 'Verification email sent',
+            description: 'You need to verify email before you can Sign In',
+          }),
         ]
       : '';
   };

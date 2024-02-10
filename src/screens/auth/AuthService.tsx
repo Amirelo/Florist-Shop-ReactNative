@@ -1,4 +1,5 @@
-import auth, {FirebaseAuthTypes, firebase} from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 // Config for signing in with Google
@@ -18,11 +19,11 @@ export const sendVerificationEmail = async (user: FirebaseAuthTypes.User) => {
 };
 
 // Check if user has sign in before with google sign in
-export const checkIsSignIn = async() => {
-  var status = false
-  await GoogleSignin.isSignedIn() ? status = true : '';
+export const checkIsSignIn = async () => {
+  var status = false;
+  (await GoogleSignin.isSignedIn()) ? (status = true) : '';
   return status;
-}
+};
 
 // Sign in user with email and password
 export const passwordLogin = async (email: string, password: string) => {
@@ -40,6 +41,25 @@ export const passwordLogin = async (email: string, password: string) => {
   return status;
 };
 
+// Register user to firestore
+export const SaveUserFirestore = async (email: string) => {
+  const res = await firestore()
+    .collection('users')
+    .doc(email)
+    .set({
+      favoriteProducts: [],
+      language: '',
+      theme: '',
+    })
+    .then(() => {
+      return true;
+    })
+    .catch(error => {
+      console.log('Save user to Firestore error:', error.code);
+      return false;
+    });
+};
+
 // Sign up with email and password
 export const passwordSignUp = async (email: string, password: string) => {
   var status = false;
@@ -48,6 +68,7 @@ export const passwordSignUp = async (email: string, password: string) => {
     .then(async credential => {
       console.log('User created');
       status = true;
+      await SaveUserFirestore(email);
       await credential.user
         .sendEmailVerification()
         .then(() => console.log('Email sent'))
@@ -63,8 +84,21 @@ export const passwordSignUp = async (email: string, password: string) => {
 // Sign in with google
 export const SignInWithGoogle = async () => {
   try {
-    const userInfo = await GoogleSignin.signIn();
-    console.log('user info:', userInfo);
+    var isSignedUp = false;
+    const userEmail = (await GoogleSignin.signIn()).user.email;
+    console.log('user info:', userEmail);
+
+    await firestore()
+      .collection('users')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(document => {
+          document.id == userEmail ? (isSignedUp = true) : '';
+        });
+      });
+
+      isSignedUp ? '' : SaveUserFirestore(userEmail);
+
     return true;
   } catch (error: any) {
     console.log('error', error.code);
@@ -86,4 +120,3 @@ export const sendPasswordChangeEmail = async (email: string) => {
     .then(() => console.log('Change password email sent'))
     .catch((error: any) => console.log('Error sending email:', error.code));
 };
-
