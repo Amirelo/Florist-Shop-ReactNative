@@ -48,8 +48,12 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 30,
   },
+  bigTitle:{
+    fontSize: 24,
+  },
   title: {
     fontSize: 20,
+    fontWeight: 'bold'
   },
   subTitle: {
     fontSize: 16,

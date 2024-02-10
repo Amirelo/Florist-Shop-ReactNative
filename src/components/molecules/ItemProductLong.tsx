@@ -6,7 +6,7 @@ import {ProductModel} from '../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import lang from '../../language/lang';
-import { priceFormat } from '../../utils/Utils';
+import {priceFormat} from '../../utils/Utils';
 
 interface Props {
   product: ProductModel;
@@ -27,24 +27,35 @@ const ItemProductLong = (props: Props) => {
         ] as ViewStyle
       }>
       <View style={styles.body}>
+        {/* Product Image */}
         <CustomImage
           type="itemProductLong"
           marginRight={12}
           source={props.product.images[0]}
         />
-        <View style={{flex:1}}>
+        <View style={{flex: 1}}>
+          {/* Product Name */}
           <CustomText
-            type="subHeader"
+            type="bigTitle"
+            maxLines={1}
             color={themes['defaultTheme'].primaryColor}>
             {props.product.name}
           </CustomText>
-          <CustomText type='subTitle'>{props.product.description}</CustomText>
+          {/* Produt Description */}
+          <CustomText type="subTitle" maxLines={2}>
+            {props.product.description}
+          </CustomText>
           <View style={styles.rating}>
-          <CustomText type="title">{priceFormat(props.product.price, props.langPref)}</CustomText>
-          <RatingStars totalRating={props.product.totalRating} />
+            {/* Product Price */}
+            <CustomText type="title" color={themes['defaultTheme'].errorcolor}>
+              {priceFormat(props.product.price, props.langPref)}
+            </CustomText>
+            {/* Rating stars */}
+            <RatingStars totalRating={props.product.totalRating} />
           </View>
+          {/* Buy Icon */}
           <FontAwesomeIcon
-            style={{alignSelf:'flex-end'}}
+            style={{alignSelf: 'flex-end'}}
             size={18}
             color={themes['defaultTheme'].primaryColor}
             icon={faShoppingCart}
@@ -64,9 +75,9 @@ const styles = StyleSheet.create({
   },
   rating: {
     flexDirection: 'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    marginBottom:8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   body: {
     flexDirection: 'row',
