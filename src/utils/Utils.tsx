@@ -4,7 +4,7 @@ import {Dimensions} from 'react-native';
 
 export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   var result;
-  langPref == 'vn' ? (result = price + 'đ') : (result = '$' + (price*0.000041));
+  langPref == 'vn' ? (result = price.toFixed(2) + 'đ') : (result = '$' + (price*0.000041).toFixed(2));
   console.log(result)
   return result;
 };

@@ -96,6 +96,7 @@ const HomeScreen = () => {
               <ItemProductBig
                 onPressed={() => onProductPressed(item)}
                 product={item}
+                langPref={langPref}
               />
             )}
           />

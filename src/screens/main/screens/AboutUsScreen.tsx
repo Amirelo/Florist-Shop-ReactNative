@@ -22,12 +22,17 @@ const AboutUsScreen = () => {
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
           <CustomText type="subTitle">Phone:</CustomText>
-          <CustomText type="subTitle">0582814653</CustomText>
+          <CustomText type="subTitle">+84 582 814 653</CustomText>
         </ItemRow>
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
           <CustomText type="subTitle">Technologies:</CustomText>
           <CustomText type="subTitle">React Native</CustomText>
+        </ItemRow>
+        <Divider marginBottom={12} />
+        <ItemRow marginBottom={12}>
+          <CustomText type="subTitle">Backend:</CustomText>
+          <CustomText type="subTitle">Firebase</CustomText>
         </ItemRow>
       </View>
     </View>

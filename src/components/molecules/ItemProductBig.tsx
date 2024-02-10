@@ -3,12 +3,15 @@ import {StyleSheet, View, ViewStyle} from 'react-native';
 import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
 import {ProductModel} from '../../models';
 import themes from '../../themes/themes';
+import lang from '../../language/lang';
+import { priceFormat } from '../../utils/Utils';
 
 interface Props {
   product: ProductModel;
   onPressed?(): void;
   marginBottom?: number;
   marginTop?: number;
+  langPref: keyof typeof lang;
 }
 
 const ItemProductBig = (props: Props) => {
@@ -37,7 +40,7 @@ const ItemProductBig = (props: Props) => {
           </CustomText>
           <RatingStars totalRating={props.product.totalRating} />
         </View>
-        <CustomText type="title">{`$${props.product.price}`}</CustomText>
+        <CustomText type="title">{priceFormat(props.product.price, props.langPref)}</CustomText>
       </View>
     </CustomButton>
   );

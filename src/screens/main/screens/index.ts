@@ -3,6 +3,7 @@ import ExploreScreen from './ExploreScreen';
 import CartScreen from './CartScreen';
 import AccountScreen from './AccountScreen';
 import ProductDetailScreen from './ProductDetailScreen';
+import ProductFilterScreen from './ProductFilterScreen';
 import ProfileScreen from './ProfileScreen';
 import UpdateInfoScreen from './UpdateInfoScreen';
 import OrderScreen from './OrderScreen';
@@ -32,4 +33,5 @@ export {
   CartDelivery,
   CartDetail,
   SettingScreen,
+  ProductFilterScreen
 };

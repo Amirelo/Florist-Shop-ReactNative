@@ -5,12 +5,15 @@ import themes from '../../themes/themes';
 import {ProductModel} from '../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
+import lang from '../../language/lang';
+import { priceFormat } from '../../utils/Utils';
 
 interface Props {
   product: ProductModel;
   onPressed?(): void;
   marginBottom?: number;
   marginTop?: number;
+  langPref: keyof typeof lang;
 }
 
 const ItemProductLong = (props: Props) => {
@@ -37,7 +40,7 @@ const ItemProductLong = (props: Props) => {
           </CustomText>
           <CustomText type='subTitle'>{props.product.description}</CustomText>
           <View style={styles.rating}>
-          <CustomText type="title">{`$${props.product.price}`}</CustomText>
+          <CustomText type="title">{priceFormat(props.product.price, props.langPref)}</CustomText>
           <RatingStars totalRating={props.product.totalRating} />
           </View>
           <FontAwesomeIcon

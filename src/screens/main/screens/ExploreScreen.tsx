@@ -41,6 +41,10 @@ const ExploreScreen = () => {
     (store: any) => store.preference.language,
   );
 
+  const onFilterPressed = () => {
+    navigation.navigate('Filter');
+  };
+
   // Change product display mode
   const onDisplayPressed = () => {
     setIsColumn(!isColumn);
@@ -105,12 +109,14 @@ const ExploreScreen = () => {
           placeholder={lang[langPref]['edSearch']}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <ItemRow justifyContent="flex-start">
-            <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
-            <CustomText type="subTitle">
-              {lang[langPref]['text_filter']}
-            </CustomText>
-          </ItemRow>
+          <CustomButton onPressed={onFilterPressed}>
+            <ItemRow justifyContent="flex-start">
+              <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
+              <CustomText type="subTitle">
+                {lang[langPref]['text_filter']}
+              </CustomText>
+            </ItemRow>
+          </CustomButton>
 
           <CustomButton onPressed={onSortPressed}>
             <ItemRow justifyContent="flex-start">
@@ -150,6 +156,7 @@ const ExploreScreen = () => {
               <ItemProduct
                 onPressed={() => onProductPressed(item)}
                 product={item}
+                langPref={langPref}
               />
             )}
           />
@@ -165,6 +172,7 @@ const ExploreScreen = () => {
               <ItemProductLong
                 onPressed={() => onProductPressed(item)}
                 product={item}
+                langPref={langPref}
               />
             )}
           />
