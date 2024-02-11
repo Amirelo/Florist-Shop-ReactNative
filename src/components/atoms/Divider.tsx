@@ -1,9 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {DimensionValue, StyleSheet} from 'react-native';
 import {View} from 'react-native';
 
 interface Props {
   paddingHorizontal?: number;
   marginBottom?: number;
+  width?: DimensionValue;
 }
 
 const Divider = (props: Props) => {
@@ -14,6 +15,7 @@ const Divider = (props: Props) => {
         {
           paddingHorizontal: props.paddingHorizontal,
           marginBottom: props.marginBottom,
+          width: props.width
         },
       ]}
     />

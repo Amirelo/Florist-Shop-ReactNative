@@ -20,7 +20,7 @@ const OptionsPanel = (props: Props) => {
         <CustomText type="title" marginBottom={20}>
           {props.title}
         </CustomText>
-        <Divider />
+        <Divider width={'90%'} marginBottom={20}/>
         {props.children}
       </View>
     </View>
