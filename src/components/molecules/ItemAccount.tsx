@@ -8,17 +8,18 @@ import themes from '../../themes/themes';
 interface Props {
   children: string;
   description: string;
+  amount?: number;
   color?: ColorValue;
   quantity?: number;
   marginTop?: number;
   marginBottom?: number;
-  onPressed?():void;
+  onPressed?(): void;
 }
 
 const ItemAccount = (props: Props) => {
   return (
     <CustomButton
-    onPressed={props.onPressed}
+      onPressed={props.onPressed}
       style={[
         styles.view,
         {
@@ -31,7 +32,9 @@ const ItemAccount = (props: Props) => {
           {props.children}
         </CustomText>
         <CustomText color={themes['defaultTheme'].textSecondaryColor}>
-          {props.description}
+          {props.amount!= null
+            ? props.amount + ' ' + props.description
+            : props.description}
         </CustomText>
       </View>
       <FontAwesomeIcon icon={faChevronRight} />
