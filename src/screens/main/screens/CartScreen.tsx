@@ -10,6 +10,7 @@ import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {getProductByID} from '../MainService';
+import { priceFormat } from '../../../utils/Utils';
 
 const CartScreen = () => {
   // Initial
@@ -22,36 +23,14 @@ const CartScreen = () => {
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
-  const [listCarts, setListCarts] = React.useState<any>()
+  const [listCarts, setListCarts] = React.useState<any>();
+  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>();
 
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
 
   const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
-
-  const promoList = Array<PromocodeModel>();
-  var promo = new PromocodeModel(
-    1,
-    'Summer sale',
-    'All items get discount',
-    '%',
-    10,
-    'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
-    false,
-  );
-  promoList.push(promo);
-
-  promo = new PromocodeModel(
-    4,
-    'Spring sale',
-    'All items',
-    '%',
-    15,
-    'https://images.pexels.com/photos/5872364/pexels-photo-5872364.jpeg',
-    true,
-  );
-  promoList.push(promo);
 
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
@@ -70,30 +49,35 @@ const CartScreen = () => {
   };
 
   const waitForData = async () => {
-    const carts: Array<any> = userInfo.carts;
-    const tempProductList: any = [];
-    console.log('User carts:', carts);
-    carts.forEach(async (cart: any) => {
-      console.log('Cart:', cart);
-      console.log('Product Ref:', cart.productRef[0]);
-      var product = await getProductByID(cart.productRef);
-      console.log('Retreive cart product:', product);
-      tempProductList.push(product);
-      setListProducts(item => [... item,...tempProductList]);
-      console.log('Temp product list:',tempProductList)
-    });
-    // Get products
-  };
+      // Get Promocodes
+      console.log('User Promocodes:', userInfo.promocodes);
+      setListPromos(userInfo.promocodes);
 
+      const carts: Array<any> = userInfo.carts;
+      const tempProductList: any = [];
+      console.log('User carts:', carts);
+
+      var sum = 0;
+
+      // Get Products
+      carts.forEach(async (cart: any) => {
+        console.log('Cart:', cart);
+        console.log('Product Ref:', cart.productRef[0]);
+        var product = await getProductByID(cart.productRef);
+        console.log('Retreive cart product:', product);
+        tempProductList.push(product);
+        sum += product!.price * cart.quantity
+        console.log("Sum of products price:", sum)
+        setListProducts(item => [...item, ...tempProductList]);
+        console.log('Temp product list:', tempProductList);
+        setTotal(sum)
+      });
+     
+  };
 
   // Count total price
   React.useEffect(() => {
     waitForData();
-    var sum = 0;
-    for (var i = 0; i < listProducts.length; i++) {
-      sum += listProducts[i].price * 1;
-    }
-    setTotal(sum);
   }, []);
 
   return (
@@ -119,8 +103,7 @@ const CartScreen = () => {
               marginBottom={12}
               item={item}
               total={total}
-              setTotal={setTotal}
-              
+              //setTotal={setTotal}
             />
           )}
         />
@@ -141,8 +124,9 @@ const CartScreen = () => {
           <CustomText type="title">{lang[langPref]['text_total']}</CustomText>
           <CustomText type="title">
             {selectedPromo
-              ? `${(total * selectedPromo.amount) / 100}`
-              : `$${total}`}
+              ? priceFormat((total * selectedPromo.amount) / 100, 'en')
+              : priceFormat(total, 'en')
+            }
           </CustomText>
         </ItemRow>
 
@@ -153,8 +137,8 @@ const CartScreen = () => {
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
           <FlatList
-            data={promoList}
-            keyExtractor={item => item.id.toString()}
+            data={listPromos}
+            keyExtractor={item => item.id}
             renderItem={({item}) => (
               <CustomButton onPressed={() => onPromocodeSelected(item)}>
                 <CustomText type="subTitle" marginBottom={12}>
@@ -163,6 +147,9 @@ const CartScreen = () => {
               </CustomButton>
             )}
           />
+          <CustomButton onPressed={() => setSelectedPromo(undefined)}>
+            <CustomText type="subTitle">Cancel</CustomText>
+          </CustomButton>
         </OptionsPanel>
       ) : (
         <></>

@@ -12,7 +12,7 @@ interface Props {
   marginBottom?: number;
   item: ProductModel;
   total: number;
-  setTotal: any;
+  //setTotal: any;
   //setItemQuantity?: any;
 }
 
@@ -21,25 +21,25 @@ const ItemCart = (props: Props) => {
   const [isAdd, setIsAdd] = React.useState(false);
   console.log('ITEMCART:', props.item);
 
-  React.useEffect(() => {
-    isAdd == true
-      ? [
-          props.setTotal(
-            props.total +
-              props.item.price * quantity -
-              props.item.price * (quantity - 1),
-          ),
-          //props.setItemQuantity(quantity),
-        ]
-      : [
-          props.setTotal(
-            props.total +
-              props.item.price * quantity -
-              props.item.price * (quantity + 1),
-            // props.setItemQuantity(quantity),
-          ),
-        ];
-  }, [quantity]);
+  // React.useEffect(() => {
+  //   isAdd == true
+  //     ? [
+  //         props.setTotal(
+  //           props.total +
+  //             props.item.price * quantity -
+  //             props.item.price * (quantity - 1),
+  //         ),
+  //         //props.setItemQuantity(quantity),
+  //       ]
+  //     : [
+  //         props.setTotal(
+  //           props.total +
+  //             props.item.price * quantity -
+  //             props.item.price * (quantity + 1),
+  //           // props.setItemQuantity(quantity),
+  //         ),
+  //       ];
+  // }, [quantity]);
 
   return (
     <View
