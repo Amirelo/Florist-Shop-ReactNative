@@ -28,7 +28,17 @@ export const getProducts = async () => {
 };
 
 export const getProductByID = async (id: string) => {
-  const data = (await firestore().collection('products').doc(id).get()).data();
-  console.log("SERVICE GET PRODUCT:", data)
-  return data
+  const doc = await firestore().collection('products').doc(id).get();
+  const res = new ProductModel(
+    id,
+    doc.data()!.name,
+    doc.data()!.price,
+    doc.data()!.quantity,
+    doc.data()!.description,
+    doc.data()!.totalRating,
+    doc.data()!.categories,
+    doc.data()!.images,
+  );
+  console.log('SERVICE GET PRODUCT:', res);
+  return res;
 };

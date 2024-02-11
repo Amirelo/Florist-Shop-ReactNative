@@ -12,6 +12,7 @@ interface Props {
   marginBottom?: number;
   item: ProductModel;
   total: number;
+  quantity:number;
   //setTotal: any;
   //setItemQuantity?: any;
 }
@@ -20,6 +21,10 @@ const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
   const [isAdd, setIsAdd] = React.useState(false);
   console.log('ITEMCART:', props.item);
+
+  React.useEffect(() => {
+    setQuantity(props.quantity)
+  },[])
 
   // React.useEffect(() => {
   //   isAdd == true

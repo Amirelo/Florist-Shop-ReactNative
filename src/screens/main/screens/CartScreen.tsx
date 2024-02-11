@@ -58,11 +58,11 @@ const CartScreen = () => {
       console.log('User carts:', carts);
 
       var sum = 0;
-
+      setListProducts([])
       // Get Products
       carts.forEach(async (cart: any) => {
         console.log('Cart:', cart);
-        console.log('Product Ref:', cart.productRef[0]);
+        console.log('Product Ref:', cart.productRef);
         var product = await getProductByID(cart.productRef);
         console.log('Retreive cart product:', product);
         tempProductList.push(product);
@@ -71,6 +71,7 @@ const CartScreen = () => {
         setListProducts(item => [...item, ...tempProductList]);
         console.log('Temp product list:', tempProductList);
         setTotal(sum)
+        setListCarts(carts)
       });
      
   };
@@ -103,6 +104,7 @@ const CartScreen = () => {
               marginBottom={12}
               item={item}
               total={total}
+              quantity={userInfo.carts.filter((filtered:any )=> filtered.productRef == item.id)[0].quantity}
               //setTotal={setTotal}
             />
           )}
