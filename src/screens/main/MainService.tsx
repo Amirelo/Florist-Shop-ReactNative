@@ -56,7 +56,7 @@ export const updateCartQuantity = async (productID: string, action:string) => {
     }
   }) 
   : 
-  action == ''?
+  action == 'DECREMENT'?
   firestore().collection('users').doc(userEmail).update({
     carts:{
       productID: {
