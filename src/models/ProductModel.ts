@@ -1,5 +1,5 @@
 class ProductModel {
-  id: number | string;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -8,7 +8,7 @@ class ProductModel {
   categories: Array<string>;
   images: Array<string>;
   constructor(
-    id: number | string,
+    id: string,
     name: string,
     price: number,
     quantity: number,

@@ -7,6 +7,7 @@ class UserModel {
   orders?: [];
   promocodes?: [];
   favoriteProducts?: [];
+  carts?:[];
   constructor(
     email?: string,
     username?: string,
@@ -16,6 +17,7 @@ class UserModel {
     orders?: [],
     promocodes?: [],
     favoriteProducts?: [],
+    carts?: []
   ) {
     this.email = email;
     this.username = username;
@@ -25,6 +27,7 @@ class UserModel {
     this.orders = orders;
     this.promocodes = promocodes;
     this.favoriteProducts = favoriteProducts;
+    this.carts = carts;
   }
 
   setEmail?(email:string){

@@ -12,12 +12,13 @@ interface Props {
   item: ProductModel;
   total: number;
   setTotal: any;
-  setItemQuantity?: any;
+  //setItemQuantity?: any;
 }
 
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
   const [isAdd, setIsAdd] = React.useState(false);
+  console.log("ITEMCART:", props.item)
 
   React.useEffect(() => {
     isAdd == true
@@ -27,14 +28,14 @@ const ItemCart = (props: Props) => {
               props.item.price * quantity -
               props.item.price * (quantity - 1),
           ),
-          props.setItemQuantity(quantity),
+          //props.setItemQuantity(quantity),
         ]
       : [
           props.setTotal(
             props.total +
               props.item.price * quantity -
               props.item.price * (quantity + 1),
-            props.setItemQuantity(quantity),
+           // props.setItemQuantity(quantity),
           ),
         ];
   }, [quantity]);

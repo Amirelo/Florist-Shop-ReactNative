@@ -7,7 +7,7 @@ import {
   OptionsPanel,
 } from '../../../components/molecules';
 import {CustomButton, ItemRow} from '../../../components/atoms';
-import {ProductModel} from '../../../models';
+import {ProductModel, UserModel} from '../../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faGripVertical,
@@ -41,6 +41,8 @@ const ExploreScreen = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+
+  
 
 
   const onFilterPressed = () => {
@@ -101,7 +103,7 @@ const ExploreScreen = () => {
     setListProducts(products);
     setFilteredList(products);
   };
-
+  
   // Run at the beginning
   React.useEffect(() => {
     waitForData();

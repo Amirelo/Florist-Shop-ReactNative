@@ -8,7 +8,8 @@ import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getProductByID} from '../MainService';
 
 const CartScreen = () => {
   // Initial
@@ -21,10 +22,13 @@ const CartScreen = () => {
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
+  const [listCarts, setListCarts] = React.useState<any>()
 
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+
+  const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
   const promoList = Array<PromocodeModel>();
   var promo = new PromocodeModel(
@@ -37,26 +41,7 @@ const CartScreen = () => {
     false,
   );
   promoList.push(promo);
-  promo = new PromocodeModel(
-    2,
-    'Winter sale',
-    'All items',
-    '-',
-    15,
-    'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
-    true,
-  );
-  promoList.push(promo);
-  promo = new PromocodeModel(
-    3,
-    'Autumn sale',
-    'All items',
-    '%',
-    15,
-    'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg',
-    true,
-  );
-  promoList.push(promo);
+
   promo = new PromocodeModel(
     4,
     'Spring sale',
@@ -68,15 +53,9 @@ const CartScreen = () => {
   );
   promoList.push(promo);
 
-  var cartList = new Array<CartModel>();
-  var cart = new CartModel(1, 3, 1);
-  cartList.push(cart);
-  cart = new CartModel(2, 2, 2);
-  cartList.push(cart);
-
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
-    navigation.navigate('CartDeli', {carts: cartList, total: total});
+    navigation.navigate('CartDeli', {carts: listCarts, total: total});
   };
 
   // Open option panel (promocodes)
@@ -90,8 +69,26 @@ const CartScreen = () => {
     setSelectedPromo(item);
   };
 
+  const waitForData = async () => {
+    const carts: Array<any> = userInfo.carts;
+    const tempProductList: any = [];
+    console.log('User carts:', carts);
+    carts.forEach(async (cart: any) => {
+      console.log('Cart:', cart);
+      console.log('Product Ref:', cart.productRef[0]);
+      var product = await getProductByID(cart.productRef);
+      console.log('Retreive cart product:', product);
+      tempProductList.push(product);
+      setListProducts(item => [... item,...tempProductList]);
+      console.log('Temp product list:',tempProductList)
+    });
+    // Get products
+  };
+
+
   // Count total price
   React.useEffect(() => {
+    waitForData();
     var sum = 0;
     for (var i = 0; i < listProducts.length; i++) {
       sum += listProducts[i].price * 1;
@@ -115,23 +112,20 @@ const CartScreen = () => {
           scrollEnabled={true}
           showsVerticalScrollIndicator={false}
           data={listProducts}
-          keyExtractor={item => item.id.toString()}
+          key={'#'}
+          keyExtractor={item => item.id}
           renderItem={({item}) => (
             <ItemCart
               marginBottom={12}
               item={item}
               total={total}
               setTotal={setTotal}
-              setItemQuantity={(quantity: number) =>
-                cartList
-                  .filter(filterItem => filterItem.productID == item.id)[0]
-                  .setQuantity(quantity)
-              }
+              
             />
           )}
         />
 
-        <Divider marginBottom={20}/>
+        <Divider marginBottom={20} />
 
         <CustomButton
           onPressed={onPromocodePressed}

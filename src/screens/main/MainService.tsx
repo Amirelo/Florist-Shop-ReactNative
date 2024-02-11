@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import {CategoryModel, ProductModel} from '../../models';
 
 // Get all categories from server
-const getCategories = async () => {
+export const getCategories = async () => {
   const snapshot = await firestore().collection('categories').get();
   return snapshot.docs.map(
     doc => new CategoryModel(doc.id, doc.data().name, doc.data().image),
@@ -10,7 +10,7 @@ const getCategories = async () => {
 };
 
 // Get all products from server
-const getProducts = async () => {
+export const getProducts = async () => {
   const snapshot = await firestore().collection('products').get();
   return snapshot.docs.map(
     doc =>
@@ -27,4 +27,8 @@ const getProducts = async () => {
   );
 };
 
-export {getCategories, getProducts};
+export const getProductByID = async (id: string) => {
+  const data = (await firestore().collection('products').doc(id).get()).data();
+  console.log("SERVICE GET PRODUCT:", data)
+  return data
+};
