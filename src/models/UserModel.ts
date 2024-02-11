@@ -1,14 +1,35 @@
-class UserModel{
-    id:number|string;
-    fullname: string;
-    email: string;
-    themePref: string;
-    langPref: string;
-    constructor(id:number|string,fullname: string,email: string,themePref: string,langPref: string){
-        this.id = id
-        this.fullname = fullname
-        this.email = email
-        this.themePref = themePref
-        this.langPref = langPref
-    }
+class UserModel {
+  email?: string;
+  username?: string;
+  themePref?: string;
+  langPref?: string;
+  addresses?: [];
+  orders?: [];
+  promocodes?: [];
+  favoriteProducts?: [];
+  constructor(
+    email?: string,
+    username?: string,
+    themePref?: string,
+    langPref?: string,
+    addresses?: [],
+    orders?: [],
+    promocodes?: [],
+    favoriteProducts?: [],
+  ) {
+    this.email = email;
+    this.username = username;
+    this.themePref = themePref;
+    this.langPref = langPref;
+    this.addresses = addresses;
+    this.orders = orders;
+    this.promocodes = promocodes;
+    this.favoriteProducts = favoriteProducts;
+  }
+
+  setEmail?(email:string){
+    this.email = email;
+  }
 }
+
+export default UserModel;

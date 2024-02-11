@@ -55,6 +55,9 @@ export const SaveUserFirestore = async (email: string) => {
       language: '',
       theme: '',
       image: 'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
+      orders: [],
+      addresses:[],
+      promocodes:[]
     })
     .then(() => {
       return true;

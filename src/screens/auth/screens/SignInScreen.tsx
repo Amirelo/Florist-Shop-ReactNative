@@ -14,11 +14,17 @@ import {authorizeLogin} from '../../../redux/actions/LoginAction';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {changeLanguage} from '../../../redux/actions/PreferenceAction';
-import {SignInWithGoogle, checkIsSignIn, passwordLogin} from '../AuthService';
+import {
+  SignInWithGoogle,
+  checkIsSignIn,
+  getUserInfo,
+  passwordLogin,
+} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { UserModel } from '../../../models';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -69,25 +75,44 @@ const SignInScreen = () => {
 
   // Login if all check pass
   const handleLogin = async () => {
-    checkFields()
-      ? (await checkAccount())
-        ? [console.log('Login Successful'), dispatch(authorizeLogin(email))]
-        : console.log('Invalid username or password')
-      : console.log('Fields cannot be empty');
+    if (checkFields()) {
+      if (await checkAccount()) {
+        console.log('Login Successful');
+        const userInfo: UserModel =
+          (await getUserInfo(email)) ?? new UserModel();
+          console.log(userInfo)
+        dispatch(authorizeLogin(email, userInfo));
+      } else {
+        console.log('Invalid username or password');
+      }
+    } else {
+      console.log('Fields cannot be empty');
+    }
   };
 
   // Sign in with google
   const onGooglePressed = async () => {
-    (await SignInWithGoogle())
-      ? dispatch(authorizeLogin((await GoogleSignin.signIn()).user.email))
-      : console.log('Login failed');
+    if (await SignInWithGoogle()) {
+      const userInfo: UserModel = (await getUserInfo(email)) ?? new UserModel();
+      dispatch(
+        authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
+      );
+    } else {
+      console.log('Login failed');
+    }
   };
 
   // Check if user already sign in with google
   const checkSavedUser = async () => {
-    (await checkIsSignIn())
-      ? dispatch(authorizeLogin((await GoogleSignin.signIn()).user.email))
-      : console.log('No user found');
+    if (await checkIsSignIn()) {
+      const userInfo: UserModel = (await getUserInfo(email)) ?? new UserModel();
+      
+      dispatch(
+        authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
+      );
+    } else {
+      console.log('No previous Sign In session');
+    }
   };
 
   // Navigate to Home Screen if user found

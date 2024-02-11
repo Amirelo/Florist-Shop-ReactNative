@@ -21,6 +21,7 @@ const AccountScreen = () => {
   );
   // User email
   const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const userInfo = useSelector((store:any) => store.isLoggedIn.userInfo);
 
   // Get User Info
   const getInfo = async () => {
@@ -47,7 +48,8 @@ const AccountScreen = () => {
   };
 
   React.useEffect(()=>{
-    console.log(userEmail)
+    console.log('User Email:',userEmail)
+    console.log('User Info', userInfo)
     getInfo()
   },[])
 

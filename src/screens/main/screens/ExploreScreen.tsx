@@ -42,6 +42,7 @@ const ExploreScreen = () => {
     (store: any) => store.preference.language,
   );
 
+
   const onFilterPressed = () => {
     navigation.navigate('Filter');
   };

@@ -4,6 +4,7 @@ import OrderModel from './OrderModel';
 import AddressModel from './AddressModel';
 import PromocodeModel from './PromocodeModel';
 import CartModel from './CartModel';
+import UserModel from './UserModel';
 
 export {
   CategoryModel,
@@ -12,4 +13,5 @@ export {
   AddressModel,
   PromocodeModel,
   CartModel,
+  UserModel
 };
