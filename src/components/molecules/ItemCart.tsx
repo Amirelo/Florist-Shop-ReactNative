@@ -11,10 +11,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   item: ProductModel;
-  total: number;
   quantity:number;
-  //setTotal: any;
-  //setItemQuantity?: any;
 }
 
 const ItemCart = (props: Props) => {
@@ -26,25 +23,9 @@ const ItemCart = (props: Props) => {
     setQuantity(props.quantity)
   },[])
 
-  // React.useEffect(() => {
-  //   isAdd == true
-  //     ? [
-  //         props.setTotal(
-  //           props.total +
-  //             props.item.price * quantity -
-  //             props.item.price * (quantity - 1),
-  //         ),
-  //         //props.setItemQuantity(quantity),
-  //       ]
-  //     : [
-  //         props.setTotal(
-  //           props.total +
-  //             props.item.price * quantity -
-  //             props.item.price * (quantity + 1),
-  //           // props.setItemQuantity(quantity),
-  //         ),
-  //       ];
-  // }, [quantity]);
+  React.useEffect(()=>{
+    props.quantity = quantity
+  },[quantity])
 
   return (
     <View

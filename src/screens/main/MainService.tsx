@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import {CategoryModel, ProductModel} from '../../models';
+import { useSelector } from 'react-redux';
 
 // Get all categories from server
 export const getCategories = async () => {
@@ -42,3 +43,26 @@ export const getProductByID = async (id: string) => {
   console.log('SERVICE GET PRODUCT:', res);
   return res;
 };
+
+export const updateCartQuantity = async (productID: string, action:string) => {
+  const userEmail = useSelector((store:any) => store.isLoggedIn.userEmail)
+  const path = 'carts.' + productID+'.quantity'
+  action == 'INCREMENT' ?
+  firestore().collection('users').doc(userEmail).update({
+    carts:{
+      productID: {
+        quantity: firestore.FieldValue.increment(1)
+      }
+    }
+  }) 
+  : 
+  action == ''?
+  firestore().collection('users').doc(userEmail).update({
+    carts:{
+      productID: {
+        quantity: firestore.FieldValue.increment(-1)
+      }
+    }
+  }) 
+  : console.log("SERVICE - Action not found")
+}

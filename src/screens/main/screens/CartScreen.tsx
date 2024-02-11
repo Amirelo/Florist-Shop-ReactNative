@@ -59,6 +59,7 @@ const CartScreen = () => {
 
       var sum = 0;
       setListProducts([])
+      setTotal(0)
       // Get Products
       carts.forEach(async (cart: any) => {
         console.log('Cart:', cart);
@@ -70,10 +71,10 @@ const CartScreen = () => {
         console.log("Sum of products price:", sum)
         setListProducts(item => [...item, ...tempProductList]);
         console.log('Temp product list:', tempProductList);
-        setTotal(sum)
+        setTotal(prev => prev +sum)
+        console.log("Cart total:", total)
         setListCarts(carts)
       });
-     
   };
 
   // Count total price
@@ -103,9 +104,7 @@ const CartScreen = () => {
             <ItemCart
               marginBottom={12}
               item={item}
-              total={total}
               quantity={userInfo.carts.filter((filtered:any )=> filtered.productRef == item.id)[0].quantity}
-              //setTotal={setTotal}
             />
           )}
         />
@@ -150,7 +149,7 @@ const CartScreen = () => {
             )}
           />
           <CustomButton onPressed={() => setSelectedPromo(undefined)}>
-            <CustomText type="subTitle">Cancel</CustomText>
+            <CustomText color={themes['defaultTheme'].errorcolor} type="subTitle">Cancel</CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (
