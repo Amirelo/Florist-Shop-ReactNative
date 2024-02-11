@@ -34,6 +34,7 @@ const ExploreScreen = () => {
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
+  const [sortText, setSortText] = React.useState('')
   const [panelActive, setPanelActive] = React.useState(false);
 
   // Saved language
@@ -57,19 +58,25 @@ const ExploreScreen = () => {
 
   // Sort products by selected options
   const onSortOptionSelected = (type: string) => {
+    var text = ''
     console.log('Sort pressed');
     type == 'NAME_ASC' ? (
-      filteredList.sort((a, b) => a.name.localeCompare(b.name))
+      filteredList.sort((a, b) => a.name.localeCompare(b.name)),
+      text = 'Name Asc'
     ) : type == 'NAME_DESC' ? (
-      filteredList.sort((a, b) => b.name.localeCompare(a.name))
+      filteredList.sort((a, b) => b.name.localeCompare(a.name)),
+      text = 'Name Desc'
     ) : type == 'PRICE_ASC' ? (
-      filteredList.sort((a, b) => a.price - b.price)
+      filteredList.sort((a, b) => a.price - b.price),
+      text = 'Price Asc'
     ) : type == 'PRICE_DESC' ? (
-      filteredList.sort((a, b) => b.price - a.price)
+      filteredList.sort((a, b) => b.price - a.price),
+      text = 'Price Desc'
     ) : (
       <></>
     );
     setFilteredList(filteredList);
+    setSortText(text)
     setPanelActive(false);
   };
 
@@ -122,7 +129,7 @@ const ExploreScreen = () => {
             <ItemRow justifyContent="center">
               <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
               <CustomText type="subTitle">
-                {lang[langPref]['text_sort']}
+                {sortText ? sortText : lang[langPref]['text_sort']}
               </CustomText>
             </ItemRow>
           </CustomButton>

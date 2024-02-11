@@ -16,9 +16,7 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 
 const ProfileScreen = () => {
   // Fields
-  const [userImage, setUserImage] = React.useState(
-    'https://images.pexels.com/photos/19899425/pexels-photo-19899425/free-photo-of-mt-machhapuchree.jpeg',
-  );
+  const [userImage, setUserImage] = React.useState('');
   const [user, setUser] = React.useState<
     FirebaseFirestoreTypes.DocumentData | undefined
   >({});
@@ -90,6 +88,7 @@ const ProfileScreen = () => {
     }
     if (route.params?.user) {
       setUser(route.params.user);
+      setUserImage(route.params.user.image)
     }
   }, []);
 
