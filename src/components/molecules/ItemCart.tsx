@@ -5,6 +5,7 @@ import {QuantityCounter} from '.';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import {ProductModel} from '../../models';
+import {priceFormat} from '../../utils/Utils';
 
 interface Props {
   marginTop?: number;
@@ -18,7 +19,7 @@ interface Props {
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
   const [isAdd, setIsAdd] = React.useState(false);
-  console.log("ITEMCART:", props.item)
+  console.log('ITEMCART:', props.item);
 
   React.useEffect(() => {
     isAdd == true
@@ -35,7 +36,7 @@ const ItemCart = (props: Props) => {
             props.total +
               props.item.price * quantity -
               props.item.price * (quantity + 1),
-           // props.setItemQuantity(quantity),
+            // props.setItemQuantity(quantity),
           ),
         ];
   }, [quantity]);
@@ -53,9 +54,9 @@ const ItemCart = (props: Props) => {
           <FontAwesomeIcon size={16} icon={faEllipsisVertical} />
         </View>
         <View style={styles.row}>
-          <CustomText type="subTitle">{`$${
-            props.item.price * quantity
-          }`}</CustomText>
+          <CustomText type="subTitle">
+            {priceFormat(props.item.price * quantity, 'en')}
+          </CustomText>
           <QuantityCounter
             quantity={quantity}
             setQuantity={setQuantity}
