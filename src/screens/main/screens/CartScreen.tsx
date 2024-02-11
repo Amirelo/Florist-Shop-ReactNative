@@ -124,7 +124,7 @@ const CartScreen = () => {
           <CustomText type="title">{lang[langPref]['text_total']}</CustomText>
           <CustomText type="title">
             {selectedPromo
-              ? priceFormat((total * selectedPromo.amount) / 100, 'en')
+              ? priceFormat((total * (100 - selectedPromo.amount)) / 100, 'en')
               : priceFormat(total, 'en')
             }
           </CustomText>
