@@ -19,7 +19,7 @@ const CartScreen = () => {
   // Fields
   const [total, setTotal] = React.useState(0);
   const [promoActive, setPromoActive] = React.useState(false);
-  const [productAtive, setProductActive] = React.useState(false);
+  const [productActive, setProductActive] = React.useState(false);
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [selectedProduct, setSelectedProduct] = React.useState<ProductModel>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
@@ -66,7 +66,7 @@ const CartScreen = () => {
 
     const tempProductList: any = [];
     console.log('User carts:', carts);
-
+    setListCarts(carts);
     var sum = 0;
     setListProducts([]);
     setTotal(0);
@@ -83,7 +83,7 @@ const CartScreen = () => {
       console.log('Temp product list:', tempProductList);
       setTotal(prev => prev + sum);
       console.log('Cart total:', total);
-      setListCarts(carts);
+      
     });
   };
 
@@ -116,10 +116,7 @@ const CartScreen = () => {
               item={item}
               onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
-                listCarts
-                  ? listCarts.filter(filterItem => filterItem.id == item.id)[0]
-                      .quantity
-                  : -10
+                  listCarts.filter(filterItem => filterItem.id == item.id)[0]!.quantity
               }
               onQuantityChanged={(amount: number) => {
                 setTotal(prev => prev + item.price * amount);
@@ -177,7 +174,7 @@ const CartScreen = () => {
       ) : (
         <></>
       )}
-      {selectedProduct ? (
+      {productActive && selectedProduct ? (
         <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
           <CustomButton>
             <CustomText type="subTitle" color={'red'} fontWeight="bold">
