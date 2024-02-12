@@ -10,6 +10,7 @@ import {priceFormat} from '../../utils/Utils';
 interface Props {
   marginTop?: number;
   marginBottom?: number;
+  onQuantityChanged?: any;
   item: ProductModel;
   quantity:number;
 }
@@ -48,6 +49,7 @@ const ItemCart = (props: Props) => {
             setQuantity={setQuantity}
             maxQuantity={props.item.quantity}
             setIsAdd={setIsAdd}
+            onChanged={(amount:number)=>{props.onQuantityChanged(amount)}}
           />
         </View>
       </View>

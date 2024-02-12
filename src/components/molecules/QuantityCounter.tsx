@@ -8,6 +8,7 @@ interface Props {
   quantity: number;
   setQuantity: any;
   setIsAdd?: any;
+  onChanged?: any;
   maxQuantity: number;
 }
 
@@ -15,13 +16,12 @@ const QuantityCounter = (props: Props) => {
   const onChangeQuantityPressed = (amount: number) => {
     props.quantity + amount > 0 &&
     props.quantity + amount <= props.maxQuantity ? (
-      props.setQuantity(props.quantity + amount)
+      props.setQuantity(props.quantity + amount),
+      props.onChanged(amount)
     ) : (
       <></>
     );
-    props.setIsAdd ?
-    amount == -1 ? props.setIsAdd(false) : props.setIsAdd(true)
-    : ''
+    
   };
 
   return (

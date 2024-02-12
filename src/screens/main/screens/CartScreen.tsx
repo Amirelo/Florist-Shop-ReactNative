@@ -10,7 +10,7 @@ import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {getProductByID} from '../MainService';
-import { priceFormat } from '../../../utils/Utils';
+import {priceFormat} from '../../../utils/Utils';
 
 const CartScreen = () => {
   // Initial
@@ -49,32 +49,32 @@ const CartScreen = () => {
   };
 
   const waitForData = async () => {
-      // Get Promocodes
-      console.log('User Promocodes:', userInfo.promocodes);
-      setListPromos(userInfo.promocodes);
+    // Get Promocodes
+    console.log('User Promocodes:', userInfo.promocodes);
+    setListPromos(userInfo.promocodes);
 
-      const carts: Array<any> = userInfo.carts;
-      const tempProductList: any = [];
-      console.log('User carts:', carts);
+    const carts: Array<any> = userInfo.carts;
+    const tempProductList: any = [];
+    console.log('User carts:', carts);
 
-      var sum = 0;
-      setListProducts([])
-      setTotal(0)
-      // Get Products
-      carts.forEach(async (cart: any) => {
-        console.log('Cart:', cart);
-        console.log('Product Ref:', cart.productRef);
-        var product = await getProductByID(cart.productRef);
-        console.log('Retreive cart product:', product);
-        tempProductList.push(product);
-        sum += product!.price * cart.quantity
-        console.log("Sum of products price:", sum)
-        setListProducts(item => [...item, ...tempProductList]);
-        console.log('Temp product list:', tempProductList);
-        setTotal(prev => prev +sum)
-        console.log("Cart total:", total)
-        setListCarts(carts)
-      });
+    var sum = 0;
+    setListProducts([]);
+    setTotal(0);
+    // Get Products
+    carts.forEach(async (cart: any) => {
+      console.log('Cart:', cart);
+      console.log('Product Ref:', cart.productRef);
+      var product = await getProductByID(cart.productRef);
+      console.log('Retreive cart product:', product);
+      tempProductList.push(product);
+      sum += product!.price * cart.quantity;
+      console.log('Sum of products price:', sum);
+      setListProducts(item => [...item, ...tempProductList]);
+      console.log('Temp product list:', tempProductList);
+      setTotal(prev => prev + sum);
+      console.log('Cart total:', total);
+      setListCarts(carts);
+    });
   };
 
   // Count total price
@@ -104,7 +104,14 @@ const CartScreen = () => {
             <ItemCart
               marginBottom={12}
               item={item}
-              quantity={userInfo.carts.filter((filtered:any )=> filtered.productRef == item.id)[0].quantity}
+              quantity={
+                userInfo.carts.filter(
+                  (filtered: any) => filtered.productRef == item.id,
+                )[0].quantity
+              }
+              onQuantityChanged={(amount: number) => {
+                setTotal(prev => prev + item.price * amount);
+              }}
             />
           )}
         />
@@ -126,8 +133,7 @@ const CartScreen = () => {
           <CustomText type="title">
             {selectedPromo
               ? priceFormat((total * (100 - selectedPromo.amount)) / 100, 'en')
-              : priceFormat(total, 'en')
-            }
+              : priceFormat(total, 'en')}
           </CustomText>
         </ItemRow>
 
@@ -149,7 +155,11 @@ const CartScreen = () => {
             )}
           />
           <CustomButton onPressed={() => setSelectedPromo(undefined)}>
-            <CustomText color={themes['defaultTheme'].errorcolor} type="subTitle">Cancel</CustomText>
+            <CustomText
+              color={themes['defaultTheme'].errorcolor}
+              type="subTitle">
+              Cancel
+            </CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (

@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import {CategoryModel, ProductModel} from '../../models';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
 
 // Get all categories from server
 export const getCategories = async () => {
@@ -44,25 +45,43 @@ export const getProductByID = async (id: string) => {
   return res;
 };
 
-export const updateCartQuantity = async (productID: string, action:string) => {
-  const userEmail = useSelector((store:any) => store.isLoggedIn.userEmail)
-  const path = 'carts.' + productID+'.quantity'
-  action == 'INCREMENT' ?
-  firestore().collection('users').doc(userEmail).update({
-    carts:{
-      productID: {
-        quantity: firestore.FieldValue.increment(1)
-      }
-    }
-  }) 
-  : 
-  action == 'DECREMENT'?
-  firestore().collection('users').doc(userEmail).update({
-    carts:{
-      productID: {
-        quantity: firestore.FieldValue.increment(-1)
-      }
-    }
-  }) 
-  : console.log("SERVICE - Action not found")
-}
+export const updateCartQuantity = async (productID: string, action: string) => {
+  const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const path = 'carts.' + productID + '.quantity';
+  action == 'INCREMENT'
+    ? firestore()
+        .collection('users')
+        .doc(userEmail)
+        .update({
+          carts: {
+            productID: {
+              quantity: firestore.FieldValue.increment(1),
+            },
+          },
+        })
+    : action == 'DECREMENT'
+    ? firestore()
+        .collection('users')
+        .doc(userEmail)
+        .update({
+          carts: {
+            productID: {
+              quantity: firestore.FieldValue.increment(-1),
+            },
+          },
+        })
+    : console.log('SERVICE - Action not found');
+};
+
+export const cartListener = () => {
+  const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('users')
+      .doc(userEmail)
+      .onSnapshot(documentSnapshot => {
+        console.log('User data changed:', documentSnapshot.data());
+      });
+      return ()=> subscriber();
+  }, [userEmail]);
+};
