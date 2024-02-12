@@ -44,7 +44,7 @@ const ItemProductBig = (props: Props) => {
           <RatingStars totalRating={props.product.totalRating} />
         </View>
         {/* Product Price */}
-        <CustomText type="title">{priceFormat(props.product.price, props.langPref)}</CustomText>
+        <CustomText type="title">{priceFormat(props.product.price, 'en')}</CustomText>
       </View>
     </CustomButton>
   );

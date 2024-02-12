@@ -48,7 +48,7 @@ const ItemProductLong = (props: Props) => {
           <View style={styles.rating}>
             {/* Product Price */}
             <CustomText type="title" color={themes['defaultTheme'].errorcolor}>
-              {priceFormat(props.product.price, props.langPref)}
+              {priceFormat(props.product.price, 'en')}
             </CustomText>
             {/* Rating Stars */}
             <RatingStars totalRating={props.product.totalRating} />
