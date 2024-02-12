@@ -37,7 +37,7 @@ const AccountScreen = () => {
     setUser(info);
     console.log('User:', info);
 
-    const orders = await getUserOrders(userEmail);
+    const orders: Array<OrderModel> = await getUserOrders(userEmail);
     console.log('User orders:',orders)
     setUserOrders(orders)
   };

@@ -14,7 +14,8 @@ class OrderModel {
   status: string;
   quantity: number;
   discountRef: string;
-  productPrices: number;
+  productsPrice: number;
+  productsQuantity: number;
   total: number;
   orderDate: string;
   products: Array<any>;
@@ -23,7 +24,8 @@ class OrderModel {
     status: string,
     quantity: number,
     discountRef: string,
-    productPrices: number,
+    productsPrice: number,
+    productsQuantity: number,
     total: number,
     orderDate: string,
     products: Array<any>,
@@ -32,7 +34,8 @@ class OrderModel {
     this.status = status;
     this.quantity = quantity;
     this.discountRef = discountRef;
-    this.productPrices = productPrices;
+    this.productsPrice = productsPrice;
+    this.productsQuantity = productsQuantity;
     this.total = total;
     this.orderDate = orderDate;
     this.products = products;

@@ -45,20 +45,28 @@ export const getProductByID = async (id: string) => {
   return res;
 };
 
-export const getUserOrders = async(email:string) => {
-  const querySnapshot = await firestore().collection('users').doc(email).collection('orders').get();
-  return querySnapshot.docs.map(snapshot => new OrderModel(
-    snapshot.id,
-    snapshot.data().status,
-    snapshot.data().quantity,
-    snapshot.data().discountRef,
-    snapshot.data().productPrices,
-    snapshot.data().total,
-    snapshot.data().orderDate,
-    snapshot.data().products
-
-  ))
-}
+export const getUserOrders = async (email: string) => {
+  const querySnapshot = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('orders')
+    .get();
+  console.log('SERVICE GET USER ORDERS:', querySnapshot.docs);
+  return querySnapshot.docs.map(
+    snapshot =>
+      new OrderModel(
+        snapshot.id,
+        snapshot.data().status,
+        snapshot.data().quantity,
+        snapshot.data().discountRef,
+        snapshot.data().productPrices,
+        snapshot.data().productsQuantity,
+        snapshot.data().total,
+        snapshot.data().orderDate,
+        snapshot.data().products,
+      ),
+  );
+};
 
 export const updateCartQuantity = async (productID: string, action: string) => {
   const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
@@ -97,6 +105,6 @@ export const cartListener = () => {
       .onSnapshot(documentSnapshot => {
         console.log('User data changed:', documentSnapshot.data());
       });
-      return ()=> subscriber();
+    return () => subscriber();
   }, [userEmail]);
 };
