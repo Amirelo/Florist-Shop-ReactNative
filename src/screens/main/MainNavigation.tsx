@@ -91,6 +91,7 @@ const MainTab = () => {
       />
       <tab.Screen
         options={{
+          headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon size={size} color={color} icon={faCompass} />
@@ -102,6 +103,7 @@ const MainTab = () => {
       />
       <tab.Screen
         options={{
+          headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (
             <FontAwesomeIcon size={size} color={color} icon={faCartShopping} />
@@ -114,6 +116,7 @@ const MainTab = () => {
 
       <tab.Screen
         options={{
+          headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (
             <FontAwesomeIcon size={size} color={color} icon={faUser} />
