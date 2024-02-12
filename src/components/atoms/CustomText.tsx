@@ -1,5 +1,5 @@
 import React from 'react';
-import {ColorValue, StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
+import {ColorValue, FlexStyle, StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
 
 interface Props {
   children: String;
@@ -12,6 +12,7 @@ interface Props {
   textTransform?: TextStyle['textTransform'];
   maxLines?: number;
   fontWeight?: TextStyle['fontWeight'];
+  alignSelf?: FlexStyle['alignSelf'];
 }
 
 const CustomText = (props: Props) => {
@@ -27,7 +28,8 @@ const CustomText = (props: Props) => {
             marginBottom: props.marginBottom,
             marginRight: props.marginRight,
             textTransform: props.textTransform,
-            fontWeight: props.fontWeight
+            fontWeight: props.fontWeight,
+            alignSelf: props.alignSelf,
           },
           styles[selectedType],
           props.style,

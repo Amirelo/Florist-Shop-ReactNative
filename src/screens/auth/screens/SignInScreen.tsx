@@ -7,6 +7,7 @@ import {
   CustomButton,
   CustomImage,
   CustomText,
+  Divider,
   ItemRow,
 } from '../../../components/atoms';
 import {useDispatch, useSelector} from 'react-redux';
@@ -24,7 +25,7 @@ import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import { UserModel } from '../../../models';
+import {UserModel} from '../../../models';
 
 const SignInScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -80,7 +81,7 @@ const SignInScreen = () => {
         console.log('Login Successful');
         const userInfo: UserModel =
           (await getUserInfo(email)) ?? new UserModel();
-          console.log(userInfo)
+        console.log(userInfo);
         dispatch(authorizeLogin(email, userInfo));
       } else {
         console.log('Invalid username or password');
@@ -106,7 +107,7 @@ const SignInScreen = () => {
   const checkSavedUser = async () => {
     if (await checkIsSignIn()) {
       const userInfo: UserModel = (await getUserInfo(email)) ?? new UserModel();
-      
+
       dispatch(
         authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
       );
@@ -148,27 +149,44 @@ const SignInScreen = () => {
           hidden={true}
         />
 
-        <TextButton marginBottom={20} onPressed={onForgotPasswordPressed}>
+        {/* Button: Change Password */}
+        <TextButton
+          alignSelf="flex-end"
+          marginBottom={20}
+          fontSize="subTitle"
+          onPressed={onForgotPasswordPressed}
+          textDecorationLine="underline">
           {lang[langPref]['signin_forgot']}
         </TextButton>
 
+        {/* Button: Sign In */}
         <TextButton type="primary" onPressed={handleLogin} marginBottom={20}>
           {lang[langPref]['buttonLogin']}
         </TextButton>
 
-        <TextButton
-          onPressed={onSignUpPressed}
-          fontSize="subTitle"
-          marginBottom={20}>
-          {lang[langPref]['signin_no_account']}
-        </TextButton>
+        <CustomText marginBottom={20} type="subTitle" alignSelf="center">
+          Or Sign In with
+        </CustomText>
+
+        {/* Google Sign In */}
         <SocialButton
           icon={faGoogle}
           onPressed={onGooglePressed}
-          marginBottom={10}>
+          marginBottom={20}>
           {lang[langPref]['buttonGoogleSignIn']}
         </SocialButton>
+
+        {/* Button: Go to Sign Up */}
+        <TextButton
+          alignSelf="center"
+          textDecorationLine="underline"
+          onPressed={onSignUpPressed}
+          fontSize="subTitle"
+          marginBottom={10}>
+          {lang[langPref]['signin_no_account']}
+        </TextButton>
       </View>
+      {/* Option Panel: change language */}
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
           <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>

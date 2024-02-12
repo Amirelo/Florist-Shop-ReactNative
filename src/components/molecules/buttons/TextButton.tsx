@@ -1,4 +1,4 @@
-import {ColorValue, StyleSheet} from 'react-native';
+import {ColorValue, FlexStyle, StyleSheet, TextStyle} from 'react-native';
 import {CustomButton, CustomText} from '../../atoms';
 import themes from '../../../themes/themes';
 
@@ -15,7 +15,9 @@ interface Props {
     | 'subHeader'
     | 'normal'
     | undefined;
-  backgroundColor?:ColorValue;
+  backgroundColor?: ColorValue;
+  textDecorationLine?: TextStyle['textDecorationLine'];
+  alignSelf?: FlexStyle['alignSelf'];
   marginBottom?: number;
   marginTop?: number;
 }
@@ -26,11 +28,20 @@ const TextButton = (props: Props) => {
     <CustomButton
       style={[
         styles[selectedStyle],
-        {marginTop: props.marginTop, marginBottom: props.marginBottom,
-        backgroundColor: props.backgroundColor ? props.backgroundColor : props.type == 'primary' ? themes['defaultTheme'].primaryColor : ''},
+        {
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          backgroundColor: props.backgroundColor
+            ? props.backgroundColor
+            : props.type == 'primary'
+            ? themes['defaultTheme'].primaryColor
+            : '',
+            alignSelf: props.alignSelf
+        },
       ]}
       onPressed={props.onPressed}>
       <CustomText
+        style={{textDecorationLine: props.textDecorationLine}}
         color={selectedStyle == 'tertiary' ? 'black' : 'white'}
         type={
           props.fontSize
