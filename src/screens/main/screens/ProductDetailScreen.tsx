@@ -6,6 +6,7 @@ import {
   CustomText,
   RatingStars,
   ItemRow,
+  Divider,
 } from '../../../components/atoms';
 import {ProductModel} from '../../../models';
 import {QuantityCounter} from '../../../components/molecules';
@@ -16,6 +17,8 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {deviceWidth, priceFormat} from '../../../utils/Utils';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
+import {TextButton} from '../../../components/molecules/buttons';
+import {AddCart} from '../MainService';
 
 const ProductDetailScreen = () => {
   // Initial
@@ -24,9 +27,8 @@ const ProductDetailScreen = () => {
   // Fields
   const [quantity, setQuantity] = React.useState(1);
   const [product, setProduct] = React.useState<ProductModel>(
-    new ProductModel(-10, '', -10, -10, '', -10, [], []),
+    new ProductModel('', '', -10, -10, '', -10, [], []),
   );
-
   const [priceString, setPriceString] = React.useState<string>();
   const [price, setPrice] = React.useState<number>();
 
@@ -34,6 +36,11 @@ const ProductDetailScreen = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
+
+  const onAddToCartPressed = async () => {
+    await AddCart(product.id, quantity, email);
+  };
 
   // Check quantity changed
   React.useEffect(() => {
@@ -45,7 +52,7 @@ const ProductDetailScreen = () => {
     if (route.params?.item) {
       var data: ProductModel = route.params.item;
       setProduct(data);
-      var formatedPrice = priceFormat(data.price, langPref);
+      var formatedPrice = priceFormat(data.price, 'en');
       setPrice(data.price);
       setPriceString(formatedPrice);
     }
@@ -64,10 +71,11 @@ const ProductDetailScreen = () => {
             overflow: 'hidden',
             marginBottom: 20,
           }}>
-            {/* Product Image List */}
+          {/* Product Image List */}
           <FlatList
             horizontal={true}
             data={product!.images}
+            showsHorizontalScrollIndicator={false}
             snapToInterval={deviceWidth}
             decelerationRate={'fast'}
             keyExtractor={item => item}
@@ -87,7 +95,9 @@ const ProductDetailScreen = () => {
           </ItemRow>
 
           <ItemRow marginBottom={6}>
-            <CustomText type="subTitle">{lang[langPref]['text_availability']}</CustomText>
+            <CustomText type="subTitle">
+              {lang[langPref]['text_availability']}
+            </CustomText>
             {/* Product Status */}
             <CustomText
               type="subTitle"
@@ -96,19 +106,24 @@ const ProductDetailScreen = () => {
                   ? themes['defaultTheme'].primaryColor
                   : themes['defaultTheme'].errorcolor
               }>
-              {product!.quantity > 0 ? lang[langPref]['text_availability_instock'] : lang[langPref]['text_availability_none']}
+              {product!.quantity > 0
+                ? lang[langPref]['text_availability_instock']
+                : lang[langPref]['text_availability_none']}
             </CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={30}>
-            <CustomText type="subTitle">{lang[langPref]['text_rating']}</CustomText>
+            <CustomText type="subTitle">
+              {lang[langPref]['text_rating']}
+            </CustomText>
             {/* Rating Stars */}
             <RatingStars totalRating={product!.totalRating} />
           </ItemRow>
-          <View style={styles.line}></View>
 
           <ItemRow marginBottom={24}>
-            <CustomText type="title">{lang[langPref]['text_quantity']}</CustomText>
+            <CustomText type="title">
+              {lang[langPref]['text_quantity']}
+            </CustomText>
             {/* Change Quantity */}
             <QuantityCounter
               maxQuantity={product!.quantity}
@@ -117,18 +132,22 @@ const ProductDetailScreen = () => {
             />
           </ItemRow>
 
+          <Divider marginBottom={20} />
+
           <ItemRow marginBottom={34}>
             <CustomText type="header">
               {lang[langPref]['text_total']}
             </CustomText>
             {/* Total Price */}
             <CustomText type="header">
-              {price ? priceFormat(price * quantity, langPref) : ''}
+              {price ? priceFormat(price * quantity, 'en') : ''}
             </CustomText>
           </ItemRow>
         </View>
         {/* Order Button */}
-        <CustomButton style={{alignSelf: 'center', marginBottom: 30}}>
+        <CustomButton
+          style={{alignSelf: 'center', marginBottom: 30}}
+          onPressed={onAddToCartPressed}>
           <View
             style={{
               width: 205,
@@ -140,9 +159,18 @@ const ProductDetailScreen = () => {
               borderRadius: 7,
             }}>
             <FontAwesomeIcon color="white" icon={faCartShopping} />
-            <CustomText color={'white'}>{lang[langPref]['buttonAddToCart']}</CustomText>
+            <CustomText color={'white'}>
+              {lang[langPref]['buttonAddToCart']}
+            </CustomText>
           </View>
         </CustomButton>
+
+        {/* Review button */}
+        <TextButton
+          type="primary"
+          backgroundColor={themes['defaultTheme'].warnColor}>
+          Product Reviews
+        </TextButton>
       </View>
     </ScrollView>
   );
@@ -153,9 +181,5 @@ export default ProductDetailScreen;
 const styles = StyleSheet.create({
   body: {
     paddingHorizontal: 16,
-  },
-  line: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 30,
   },
 });

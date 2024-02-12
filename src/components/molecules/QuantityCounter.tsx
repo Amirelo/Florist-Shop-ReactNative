@@ -17,7 +17,7 @@ const QuantityCounter = (props: Props) => {
     props.quantity + amount > 0 &&
     props.quantity + amount <= props.maxQuantity ? (
       props.setQuantity(props.quantity + amount),
-      props.onChanged(amount)
+      props.onChanged ? props.onChanged(amount) : ''
     ) : (
       <></>
     );

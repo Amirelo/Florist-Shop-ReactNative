@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import {CategoryModel, OrderModel, ProductModel} from '../../models';
+import {CartModel, CategoryModel, OrderModel, ProductModel} from '../../models';
 import {useSelector} from 'react-redux';
 import {useEffect} from 'react';
 
@@ -29,6 +29,7 @@ export const getProducts = async () => {
   );
 };
 
+// Get product by product ID
 export const getProductByID = async (id: string) => {
   const doc = await firestore().collection('products').doc(id).get();
   const res = new ProductModel(
@@ -45,6 +46,7 @@ export const getProductByID = async (id: string) => {
   return res;
 };
 
+// Get User Order by Email
 export const getUserOrders = async (email: string) => {
   const querySnapshot = await firestore()
     .collection('users')
@@ -68,6 +70,34 @@ export const getUserOrders = async (email: string) => {
   );
 };
 
+// Add product id to cart
+export const AddCart = async (
+  productRef: string,
+  quantity: number,
+  email: string,
+) => {
+  const res = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('carts')
+    .doc(productRef)
+    .set({
+      quantity: quantity,
+    })
+    .then(() => console.log('SERVICE: Add product to carts successful'))
+    .catch(error => console.log('SERVICE: error saving cart:', error));
+};
+
+export const getCart = async (email: string) => {
+  const snapshots = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('carts')
+    .get();
+  return snapshots.docs.map(doc => new CartModel(doc.id, doc.data().quantity));
+};
+
+// Update Cart Quantity (not tested)
 export const updateCartQuantity = async (productID: string, action: string) => {
   const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
   const path = 'carts.' + productID + '.quantity';
@@ -96,6 +126,7 @@ export const updateCartQuantity = async (productID: string, action: string) => {
     : console.log('SERVICE - Action not found');
 };
 
+// Listener for change (Not Tested)
 export const cartListener = () => {
   const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
   useEffect(() => {

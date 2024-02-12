@@ -9,7 +9,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import {getProductByID} from '../MainService';
+import {getCart, getProductByID} from '../MainService';
 import {priceFormat} from '../../../utils/Utils';
 
 const CartScreen = () => {
@@ -23,12 +23,14 @@ const CartScreen = () => {
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
-  const [listCarts, setListCarts] = React.useState<any>();
+  const [listCarts, setListCarts] = React.useState<Array<CartModel>>([]);
   const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>();
 
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+
+  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
@@ -53,7 +55,8 @@ const CartScreen = () => {
     console.log('User Promocodes:', userInfo.promocodes);
     setListPromos(userInfo.promocodes);
 
-    const carts: Array<any> = userInfo.carts;
+    const carts:Array<CartModel> = await getCart(email);
+
     const tempProductList: any = [];
     console.log('User carts:', carts);
 
@@ -63,8 +66,8 @@ const CartScreen = () => {
     // Get Products
     carts.forEach(async (cart: any) => {
       console.log('Cart:', cart);
-      console.log('Product Ref:', cart.productRef);
-      var product = await getProductByID(cart.productRef);
+      console.log('Product Ref:', cart.id);
+      var product = await getProductByID(cart.id);
       console.log('Retreive cart product:', product);
       tempProductList.push(product);
       sum += product!.price * cart.quantity;
@@ -105,9 +108,7 @@ const CartScreen = () => {
               marginBottom={12}
               item={item}
               quantity={
-                userInfo.carts.filter(
-                  (filtered: any) => filtered.productRef == item.id,
-                )[0].quantity
+                listCarts.filter(filterItem => filterItem.id == item.id)[0]?.quantity
               }
               onQuantityChanged={(amount: number) => {
                 setTotal(prev => prev + item.price * amount);
