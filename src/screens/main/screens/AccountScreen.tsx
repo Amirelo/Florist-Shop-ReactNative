@@ -50,7 +50,7 @@ const AccountScreen = () => {
 
   // Navigate to order screen
   const onTabPressed = (name: string) => {
-    navigation.navigate(name);
+    navigation.navigate(name, {user: user});
   };
 
   React.useEffect(() => {
