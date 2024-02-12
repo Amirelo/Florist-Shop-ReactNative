@@ -76,7 +76,8 @@ export const AddCart = async (
   quantity: number,
   email: string,
 ) => {
-  const res = await firestore()
+  if (await checkCart(email, productRef) == false){
+  await firestore()
     .collection('users')
     .doc(email)
     .collection('carts')
@@ -86,8 +87,12 @@ export const AddCart = async (
     })
     .then(() => console.log('SERVICE: Add product to carts successful'))
     .catch(error => console.log('SERVICE: error saving cart:', error));
+  } else{
+    console.log('Product already in cart')
+  }
 };
 
+// Get User Cart
 export const getCart = async (email: string) => {
   const snapshots = await firestore()
     .collection('users')
@@ -95,6 +100,23 @@ export const getCart = async (email: string) => {
     .collection('carts')
     .get();
   return snapshots.docs.map(doc => new CartModel(doc.id, doc.data().quantity));
+};
+
+// Check if product already in cart
+export const checkCart = async (email: string, productRef: string) => {
+  const res = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('carts')
+    .doc(productRef)
+    .get();
+  if (res.data()) {
+    console.log("SERVICE-CHECKCART: found cart")
+    return true;
+  } else {
+    console.log("SERVICE-CHECKCART: cart does not exist")
+    return false;
+  }
 };
 
 // Update Cart Quantity (not tested)
