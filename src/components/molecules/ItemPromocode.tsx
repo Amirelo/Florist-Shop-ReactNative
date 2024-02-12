@@ -9,7 +9,7 @@ interface Props {
 
 const ItemPromocode = (props: Props) => {
     const [sale, setSale] = React.useState('');
-    const [status, setStatus] = React.useState(props.item.status ? 'Active' : 'Expired')
+    const [status, setStatus] = React.useState(props.item.status == 'AVAILABLE' ? 'Active' : 'Expired')
 
     React.useEffect(()=>{
         const discount = props.item.effect == '%' ? 'get ' + props.item.amount +'% off' : 'price decrease by ' + props.item.amount
@@ -22,7 +22,7 @@ const ItemPromocode = (props: Props) => {
       <View>
         <CustomText type='title'>{props.item.title}</CustomText>
         <CustomText >{`All items ${sale}`}</CustomText>
-        <CustomText color={status == 'Active' ?'green' : 'red'}>{status}</CustomText>
+        <CustomText fontWeight='bold' color={status == 'Active' ?'green' : 'red'}>{status}</CustomText>
       </View>
     </View>
   );

@@ -6,7 +6,7 @@ class PromocodeModel {
   amount: number;
   image: string;
   endDate: string;
-  status: boolean;
+  status: string;
   constructor(
     id: string,
     title: string,
@@ -15,7 +15,7 @@ class PromocodeModel {
     amount: number,
     image: string,
     endDate: string,
-    status: boolean,
+    status: string,
   ) {
     this.id = id;
     this.title = title;

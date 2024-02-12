@@ -2,24 +2,26 @@ import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {PromocodeModel} from '../../../models';
 import {ItemPromocode} from '../../../components/molecules';
 import React from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
 const PromocodeScreen = () => {
   // Fields
-  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>()
-  
+  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>();
+
   // Initial
-  const route = useRoute<RouteProp<any>>()
+  const route = useRoute<RouteProp<any>>();
 
-  React.useEffect(()=>{
-    if (route.params?.user){
-      const user = route.params.user
-      const promocodes: Array<PromocodeModel> = user.promocodes
-      setListPromos(promocodes)
-      console.log('User Promocodes:', promocodes)
+  React.useEffect(() => {
+    if (route.params?.user) {
+      const user = route.params.user;
+      const promocodes: Array<PromocodeModel> = user.promocodes;
+      var sortedList = promocodes.sort((a: PromocodeModel, b: PromocodeModel) =>
+        a.endDate.localeCompare(b.endDate),
+      );
+      setListPromos(sortedList);
+      console.log('User Promocodes:', promocodes);
     }
-  },[])
-
+  }, []);
 
   return (
     <View style={styles.view}>
