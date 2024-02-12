@@ -8,7 +8,8 @@ import {getUserInfo, googleLogout} from '../../auth/AuthService';
 import lang from '../../../language/lang';
 import React from 'react';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {UserModel} from '../../../models';
+import {OrderModel, UserModel} from '../../../models';
+import { getUserOrders } from '../MainService';
 
 const AccountScreen = () => {
   // Navigation and dispatch
@@ -17,6 +18,7 @@ const AccountScreen = () => {
   const [user, setUser] = React.useState<
     FirebaseFirestoreTypes.DocumentData | undefined
   >({});
+  const [userOrders, setUserOrders] = React.useState<Array<OrderModel>>([])
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -34,6 +36,10 @@ const AccountScreen = () => {
       await getUserInfo(userEmail);
     setUser(info);
     console.log('User:', info);
+
+    const orders = await getUserOrders(userEmail);
+    console.log('User orders:',orders)
+    setUserOrders(orders)
   };
 
   // Logout on pressed
@@ -47,6 +53,10 @@ const AccountScreen = () => {
   const onUserTabPressed = () => {
     navigation.navigate('Profile', {email: userEmail, user: user});
   };
+
+  const onOrderTabPressed = () => {
+    navigation.navigate('Order', {userOrders: userOrders});
+  }
 
   // Navigate to order screen
   const onTabPressed = (name: string) => {
@@ -71,8 +81,8 @@ const AccountScreen = () => {
           onPressed={onUserTabPressed}
         />
         <ItemAccount
-          onPressed={() => onTabPressed('Order')}
-          amount={userInfo.orders!.length}
+          onPressed={() => onOrderTabPressed()}
+          amount={userOrders!.length}
           description={lang[langPref]['text_tab_order_description']}>
           {lang[langPref]['text_tab_order_title']}
         </ItemAccount>
