@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   main: {
     width: '100%',
     paddingTop: 16,
-    paddingBottom: 16,
+    paddingBottom: 32,
     borderTopEndRadius: 40,
     borderTopStartRadius: 40,
     bottom: 0,

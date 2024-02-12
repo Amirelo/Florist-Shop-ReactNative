@@ -19,7 +19,9 @@ const CartScreen = () => {
   // Fields
   const [total, setTotal] = React.useState(0);
   const [promoActive, setPromoActive] = React.useState(false);
+  const [productAtive, setProductActive] = React.useState(false);
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
+  const [selectedProduct, setSelectedProduct] = React.useState<ProductModel>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
@@ -44,6 +46,11 @@ const CartScreen = () => {
     setPromoActive(true);
   };
 
+  const onItemEllipsesPressed = (item: ProductModel) => {
+    setSelectedProduct(item);
+    setProductActive(true);
+  };
+
   // Saved selected promocodes into useState
   const onPromocodeSelected = (item: PromocodeModel) => {
     setPromoActive(false);
@@ -55,7 +62,7 @@ const CartScreen = () => {
     console.log('User Promocodes:', userInfo.promocodes);
     setListPromos(userInfo.promocodes);
 
-    const carts:Array<CartModel> = await getCart(email);
+    const carts: Array<CartModel> = await getCart(email);
 
     const tempProductList: any = [];
     console.log('User carts:', carts);
@@ -107,8 +114,12 @@ const CartScreen = () => {
             <ItemCart
               marginBottom={12}
               item={item}
+              onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
-                listCarts.filter(filterItem => filterItem.id == item.id)[0]?.quantity
+                listCarts
+                  ? listCarts.filter(filterItem => filterItem.id == item.id)[0]
+                      .quantity
+                  : -10
               }
               onQuantityChanged={(amount: number) => {
                 setTotal(prev => prev + item.price * amount);
@@ -160,6 +171,17 @@ const CartScreen = () => {
               color={themes['defaultTheme'].errorcolor}
               type="subTitle">
               Cancel
+            </CustomText>
+          </CustomButton>
+        </OptionsPanel>
+      ) : (
+        <></>
+      )}
+      {selectedProduct ? (
+        <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
+          <CustomButton>
+            <CustomText type="subTitle" color={'red'} fontWeight="bold">
+              Delete item
             </CustomText>
           </CustomButton>
         </OptionsPanel>

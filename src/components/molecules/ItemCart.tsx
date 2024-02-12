@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CustomImage, CustomText} from '../atoms';
+import {CustomButton, CustomImage, CustomText} from '../atoms';
 import {QuantityCounter} from '.';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   onQuantityChanged?: any;
+  onEllipsesPressed?: any;
   item: ProductModel;
   quantity:number;
 }
@@ -38,7 +39,9 @@ const ItemCart = (props: Props) => {
       <View style={styles.body}>
         <View style={[styles.row, {marginBottom: 8}]}>
           <CustomText type="title">{props.item.name}</CustomText>
+          <CustomButton onPressed={props.onEllipsesPressed}>
           <FontAwesomeIcon size={16} icon={faEllipsisVertical} />
+          </CustomButton>
         </View>
         <View style={styles.row}>
           <CustomText type="subTitle">
