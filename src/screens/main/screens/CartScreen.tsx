@@ -64,7 +64,6 @@ const CartScreen = () => {
 
     const carts: Array<CartModel> = await getCart(email);
 
-    const tempProductList: any = [];
     console.log('User carts:', carts);
     setListCarts(carts);
     var sum = 0;
@@ -76,11 +75,9 @@ const CartScreen = () => {
       console.log('Product Ref:', cart.id);
       var product = await getProductByID(cart.id);
       console.log('Retreive cart product:', product);
-      tempProductList.push(product);
       sum += product!.price * cart.quantity;
       console.log('Sum of products price:', sum);
-      setListProducts(item => [...item, ...tempProductList]);
-      console.log('Temp product list:', tempProductList);
+      setListProducts(item => [...item, product]);
       setTotal(prev => prev + sum);
       console.log('Cart total:', total);
       
