@@ -5,20 +5,27 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faColumns} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { OrderModel } from '../../../models';
+import { OrderModel, ProductModel } from '../../../models';
 import { ItemProduct, ItemProductLong } from '../../../components/molecules';
+import { getProductByID } from '../MainService';
 
 const OrderDetailScreen = () => {
   // Initial
   const route = useRoute<RouteProp<any>>();
   
   // Fields
-  const [item, setItem] = React.useState<OrderModel>();
+  const [order, setOrder] = React.useState<OrderModel>();
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>([]);
   
   // Get data from route
   React.useEffect(()=>{
     if (route.params?.data){
-      setItem(route.params.data)
+      setOrder(route.params.data)
+      route.params.data.products.forEach( async (item:any) => {
+        const product:ProductModel = await getProductByID(item.productRef)
+        setListProducts(prev => [...prev, product])
+      })
+
     } else{
       console.log("No item found")
     }
@@ -35,15 +42,15 @@ const OrderDetailScreen = () => {
         </ItemRow>
         <ItemRow marginBottom={8}>
           <CustomText>Order ID</CustomText>
-          <CustomText>{item ? item.id.toString() : ''}</CustomText>
+          <CustomText>{order ? order.id : ''}</CustomText>
         </ItemRow>
         <ItemRow marginBottom={8}>
           <CustomText>Order date</CustomText>
-          <CustomText>{item ? item.orderDate.toString() : ''}</CustomText>
+          <CustomText>{order ? order.orderDate : ''}</CustomText>
         </ItemRow>
         <ItemRow marginBottom={30}>
           <CustomText>Status</CustomText>
-          <CustomText>{item ? item.status : ''}</CustomText>
+          <CustomText>{order ? order.status : ''}</CustomText>
         </ItemRow>
 
         <ItemRow>
@@ -56,9 +63,9 @@ const OrderDetailScreen = () => {
         <FlatList
         style={{marginBottom: 20}}
         horizontal={true}
-        data={item? item.products : null}
+        data={listProducts}
         keyExtractor={item => item.name}
-        renderItem={({item}) => (<ItemProduct product={item}/>)}
+        renderItem={({item}) => (<ItemProduct langPref='en' product={item}/>)}
         />
 
         <ItemRow marginBottom={30}>
