@@ -47,7 +47,7 @@ const ItemProductLong = (props: Props) => {
           </CustomText>
           <View style={styles.rating}>
             {/* Product Price */}
-            <CustomText type="title" color={themes['defaultTheme'].errorcolor}>
+            <CustomText type="title" color={themes['defaultTheme'].primaryColor}>
               {priceFormat(props.product.price, 'en')}
             </CustomText>
             {/* Rating Stars */}
