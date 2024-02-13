@@ -40,8 +40,11 @@ const ProductDetailScreen = () => {
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   const onAddToCartPressed = async () => {
-    await AddCart(product.id, quantity, email);
-    navigation.navigate('Cart',{product: product, quantity: quantity});
+    if(await AddCart(product.id, quantity, email)){
+      navigation.navigate('Cart',{product: product, quantity: quantity});
+    } else{
+      navigation.navigate('Cart')
+    }
   };
 
   // Check quantity changed

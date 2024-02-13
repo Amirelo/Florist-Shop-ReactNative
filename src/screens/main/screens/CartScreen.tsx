@@ -111,8 +111,10 @@ const CartScreen = () => {
   React.useEffect(()=>{
     if(route.params?.product && route.params?.quantity){
       const cart: CartModel = new CartModel(route.params.product.id, route.params.quantity)
-      setListProducts([...listProducts, route.params.product])
-      setListCarts([...listCarts, cart])
+      if (!listCarts.includes(cart)) {
+        setListProducts([...listProducts, route.params.product])
+        setListCarts([...listCarts, cart])
+      }
     }
   }, [route])
 
@@ -194,7 +196,7 @@ const CartScreen = () => {
             <CustomText
               color={themes['defaultTheme'].errorcolor}
               type="subTitle">
-              Cancel
+              Reset
             </CustomText>
           </CustomButton>
         </OptionsPanel>

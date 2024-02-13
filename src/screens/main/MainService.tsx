@@ -77,7 +77,7 @@ export const AddCart = async (
   email: string,
 ) => {
   if ((await checkCart(email, productRef)) == false) {
-    await firestore()
+    return await firestore()
       .collection('users')
       .doc(email)
       .collection('carts')
@@ -85,8 +85,14 @@ export const AddCart = async (
       .set({
         quantity: quantity,
       })
-      .then(() => console.log('SERVICE: Add product to carts successful'))
-      .catch(error => console.log('SERVICE: error saving cart:', error));
+      .then(() => {
+        console.log('SERVICE: Add product to carts successful');
+        return true;
+      })
+      .catch(error => {
+        console.log('SERVICE: error saving cart:', error);
+        return false;
+      });
   } else {
     console.log('Product already in cart');
   }
