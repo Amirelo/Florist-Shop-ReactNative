@@ -27,9 +27,9 @@ const ItemUser = (props: Props) => {
       <View style={styles.body}>
         {/* User Image */}
         <CustomImage type="tabImage" marginRight={8} source={props.source!} />
-        <View>
+        <View style={{width:'70%'}}>
           {/* Email */}
-          <CustomText type="subTitle" marginBottom={4}>
+          <CustomText maxLines={1} type="subTitle" marginBottom={4}>
             {props.email + ''}
           </CustomText>
           {/* Username */}
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     alignItems: 'center',
+    width:'100%'
   },
   icon: {
     marginRight: 18,

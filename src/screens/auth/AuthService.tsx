@@ -51,13 +51,10 @@ export const SaveUserFirestore = async (email: string) => {
     // Set parameters
     .set({
       username: email.split('@')[0],
-      favoriteProducts: [],
-      language: '',
-      theme: '',
+      langPref: '',
+      themePref: '',
+      phoneNumber:'',
       image: 'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
-      orders: [],
-      addresses:[],
-      promocodes:[]
     })
     .then(() => {
       return true;

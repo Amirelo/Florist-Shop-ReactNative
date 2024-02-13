@@ -12,7 +12,6 @@ const orderStatus = [
 class OrderModel {
   id: string;
   status: string;
-  quantity: number;
   discountRef: string;
   productsPrice: number;
   productsQuantity: number;
@@ -22,7 +21,6 @@ class OrderModel {
   constructor(
     id: string,
     status: string,
-    quantity: number,
     discountRef: string,
     productsPrice: number,
     productsQuantity: number,
@@ -32,7 +30,6 @@ class OrderModel {
   ) {
     this.id = id;
     this.status = status;
-    this.quantity = quantity;
     this.discountRef = discountRef;
     this.productsPrice = productsPrice;
     this.productsQuantity = productsQuantity;

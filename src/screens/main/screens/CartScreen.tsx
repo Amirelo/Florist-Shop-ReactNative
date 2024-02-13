@@ -10,7 +10,6 @@ import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {
-  cartListener,
   deleteCartItem,
   getCart,
   getProductByID,

@@ -8,8 +8,17 @@ import {getUserInfo, googleLogout} from '../../auth/AuthService';
 import lang from '../../../language/lang';
 import React from 'react';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {OrderModel, UserModel} from '../../../models';
-import { getUserOrders } from '../MainService';
+import {
+  AddressModel,
+  OrderModel,
+  PromocodeModel,
+  UserModel,
+} from '../../../models';
+import {
+  getUserAddresses,
+  getUserOrders,
+  getUserPromoocodes,
+} from '../MainService';
 
 const AccountScreen = () => {
   // Navigation and dispatch
@@ -18,8 +27,13 @@ const AccountScreen = () => {
   const [user, setUser] = React.useState<
     FirebaseFirestoreTypes.DocumentData | undefined
   >({});
-  const [userOrders, setUserOrders] = React.useState<Array<OrderModel>>([])
-
+  const [userOrders, setUserOrders] = React.useState<Array<OrderModel>>([]);
+  const [userPromocodes, setUserPromocodes] = React.useState<
+    Array<PromocodeModel>
+  >([]);
+  const [userAddresses, setUserAddresses] = React.useState<Array<AddressModel>>(
+    [],
+  );
   // Saved language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
@@ -37,9 +51,20 @@ const AccountScreen = () => {
     setUser(info);
     console.log('User:', info);
 
+    // Get User Orders
     const orders: Array<OrderModel> = await getUserOrders(userEmail);
-    console.log('User orders:',orders)
-    setUserOrders(orders)
+    console.log('User orders:', orders);
+    setUserOrders(orders);
+
+    // Get User Promocodes
+    const promocodes: Array<PromocodeModel> = await getUserPromoocodes(
+      userEmail,
+    );
+    setUserPromocodes(promocodes);
+
+    // Get User Addresses
+    const addresses: Array<AddressModel> = await getUserAddresses(userEmail);
+    setUserAddresses(addresses);
   };
 
   // Logout on pressed
@@ -56,6 +81,10 @@ const AccountScreen = () => {
 
   const onOrderTabPressed = () => {
     navigation.navigate('Order', {userOrders: userOrders});
+  };
+
+  const onPromocodeTabPressed = () => {
+    navigation.navigate('Promocode', {data: userPromocodes})
   }
 
   // Navigate to order screen
@@ -75,26 +104,26 @@ const AccountScreen = () => {
         <ItemUser
           username={user!.username}
           email={userEmail}
-          source={user!.image}
+          source={user?.image ? user.image : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'}
           marginTop={40}
           marginBottom={12}
           onPressed={onUserTabPressed}
         />
         <ItemAccount
           onPressed={() => onOrderTabPressed()}
-          amount={userOrders!.length}
+          amount={userOrders.length}
           description={lang[langPref]['text_tab_order_description']}>
           {lang[langPref]['text_tab_order_title']}
         </ItemAccount>
         <ItemAccount
           onPressed={() => onTabPressed('Address')}
-          amount={userInfo.addresses!.length}
+          amount={userAddresses.length}
           description={lang[langPref]['text_tab_address_description']}>
           {lang[langPref]['text_tab_address_title']}
         </ItemAccount>
         <ItemAccount
           onPressed={() => onTabPressed('Promo')}
-          amount={userInfo.promocodes!.length}
+          amount={userPromocodes.length}
           description={lang[langPref]['text_tab_promocodes_description']}>
           {lang[langPref]['text_tab_promocodes_title']}
         </ItemAccount>

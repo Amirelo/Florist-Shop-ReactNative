@@ -1,5 +1,12 @@
 import firestore from '@react-native-firebase/firestore';
-import {CartModel, CategoryModel, OrderModel, ProductModel} from '../../models';
+import {
+  AddressModel,
+  CartModel,
+  CategoryModel,
+  OrderModel,
+  ProductModel,
+  PromocodeModel,
+} from '../../models';
 import {useSelector} from 'react-redux';
 import {useEffect} from 'react';
 
@@ -59,7 +66,6 @@ export const getUserOrders = async (email: string) => {
       new OrderModel(
         snapshot.id,
         snapshot.data().status,
-        snapshot.data().quantity,
         snapshot.data().discountRef,
         snapshot.data().productPrices,
         snapshot.data().productsQuantity,
@@ -165,15 +171,43 @@ export const deleteCartItem = async (productID: string, email: string) => {
     });
 };
 
-// Listener for change (Not Tested)
-export const cartListener = async (userEmail: string) => {
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('users')
-      .doc(userEmail)
-      .onSnapshot(documentSnapshot => {
-        console.log('User data changed:', documentSnapshot.data());
-      });
-    return () => subscriber();
-  }, [userEmail]);
+// Get User Addresses
+export const getUserAddresses = async (email: string) => {
+  const querySnapshot = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('addresses')
+    .get();
+  return querySnapshot.docs.map(snapshot => {
+    const data = snapshot.data();
+    return new AddressModel(
+      snapshot.id,
+      data.streetNumber,
+      data.street,
+      data.ward,
+      data.district,
+      data.city,
+    );
+  });
+};
+// Get User Promocodes
+export const getUserPromoocodes = async (email:string) => {
+  const querySnapshot = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('promocodes')
+    .get();
+  return querySnapshot.docs.map(snapshot => {
+    const data = snapshot.data();
+    return new PromocodeModel(
+      snapshot.id,
+      data.title,
+      data.description,
+      data.effect,
+      data.amount,
+      data.image,
+      data.endDate,
+      data.status,
+    );
+  });
 };

@@ -1,39 +1,64 @@
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {AddressModel, CartModel} from '../../../models';
 import {CustomButton, CustomText, Divider} from '../../../components/atoms';
 import themes from '../../../themes/themes';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
 import React from 'react';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import {faPhone} from '@fortawesome/free-solid-svg-icons';
+import {addressFormat} from '../../../utils/Utils';
+import { getUserAddresses } from '../MainService';
+import { useSelector } from 'react-redux';
 
 const CartDelivery = () => {
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
-  
+  const email = useSelector((store:any) => store.isLoggedIn.userEmail)
+
   // Fields
-  const addressList = new Array<AddressModel>();
   var cartList = Array<CartModel>();
   const [optionActive, setOptionActive] = React.useState(false);
-  const [addActive, setAddActive] = React.useState(false);
-  const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>(
-    new AddressModel('', '', '', '', '', ''),
-  );
-  
+  const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>();
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>([]);
+
   // Get total amount of price
-  var total = route.params?.total? route.params.total : 0;
+  var total = route.params?.total ? route.params.total : 0;
 
-// Get data from route
-    React.useEffect(()=>{
-      if (route.params?.carts){
-        cartList = route.params.carts
-      }
-    },[])
+  const getAddresses = async() =>{
+    const addresses:Array<AddressModel> = await getUserAddresses(email)
+    setListAddresses(addresses)
+  }
 
-    // Go to Cart Detail screen
+  // Get data from route
+  React.useEffect(() => {
+    getAddresses()
+    if (route.params?.carts) {
+      cartList = route.params.carts;
+    }
+  }, []);
+
+  // Go to Cart Detail screen
   const onContinuePressed = () => {
-    navigation.navigate('CartDetail', {carts: cartList, total: total, address: selectedAddress});
+    if (
+      phoneNumber != null &&
+      selectedAddress != null &&
+      phoneNumber.length == 10
+    ) {
+      navigation.navigate('CartDetail', {
+        carts: cartList,
+        total: total,
+        address: selectedAddress,
+      });
+    } else {
+      console.log('Fields cannot be empty');
+    }
   };
 
   // Show option panel (pick address)
@@ -42,8 +67,8 @@ const CartDelivery = () => {
   };
 
   const onAddAddressPressed = () => {
-    setAddActive(true);
-  }
+    navigation.navigate('AddressEdit');
+  };
 
   // Saved selected address into fields
   const onOptionPressed = (item: AddressModel) => {
@@ -51,75 +76,18 @@ const CartDelivery = () => {
     setOptionActive(false);
   };
 
-  // Update part of address
-  const onInfoChanged = (type: string, data: string) => {
-    const newAddress = new AddressModel(
-      '',
-      selectedAddress.streetNumber,
-      selectedAddress.street,
-      selectedAddress.ward,
-      selectedAddress.district,
-      selectedAddress.city,
-    );
-    console.log(type);
-    type == 'STREET'
-      ? newAddress.setStreet(data)
-      : type == 'STREETNUMBER'
-      ? newAddress.setStreetNumber(data)
-      : type == 'DISTRICT'
-      ? newAddress.setDistrict(data)
-      : type == 'WARD'
-      ? newAddress.setWard(data)
-      : newAddress.setCity(data);
-    setSelectedAddress(newAddress);
-  };
-
-  var address = new AddressModel(
-    1,
-    '42',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
-  address = new AddressModel(
-    2,
-    '41',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
-  address = new AddressModel(
-    3,
-    '40',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
   return (
     <View style={{height: '100%'}}>
       <View style={styles.view}>
+        <CustomInput placeholder="Phone number" onChangeText={setPhoneNumber} marginBottom={20} />
 
-        <CustomInput placeholder='Phone number' marginBottom={20}/>
-
-        <CustomText type='title' marginBottom={8}>Address</CustomText>
+        <CustomText type="title" marginBottom={8}>
+          Address
+        </CustomText>
 
         <CustomText marginBottom={12} type="subTitle">
           {selectedAddress
-            ? selectedAddress.streetNumber +
-              ' ' +
-              selectedAddress.street +
-              ', ' +
-              selectedAddress.ward +
-              ', ' +
-              selectedAddress.district +
-              ', ' +
-              selectedAddress.city
+            ? addressFormat(selectedAddress)
             : 'No address selected'}
         </CustomText>
         <Divider />
@@ -131,10 +99,12 @@ const CartDelivery = () => {
           Or
         </CustomText>
 
-        <CustomButton onPressed={onAddAddressPressed} style={styles.couponButton}>
+        <CustomButton
+          onPressed={onAddAddressPressed}
+          style={styles.couponButton}>
           <CustomText>Add New Address</CustomText>
         </CustomButton>
-       
+
         <CustomButton onPressed={onContinuePressed} style={styles.button}>
           <CustomText type="subTitle" color={'white'}>
             Continue
@@ -144,7 +114,7 @@ const CartDelivery = () => {
       {optionActive ? (
         <OptionsPanel setActive={setOptionActive} title="Address">
           <FlatList
-            data={addressList}
+            data={listAddresses}
             keyExtractor={item => item.id!.toString()}
             renderItem={({item}) => (
               <CustomButton onPressed={() => onOptionPressed(item)}>
@@ -166,35 +136,6 @@ const CartDelivery = () => {
       ) : (
         <></>
       )}
-      {addActive ?
-      <OptionsPanel title='New Address' setActive={setAddActive}>
-      <CustomInput
-          onChangeText={(text: string) => onInfoChanged('STREET', text)}
-          marginBottom={8}
-          placeholder="Street"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('STREETNUMBER', text)}
-          marginBottom={8}
-          placeholder="Street number"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('DISTRICT', text)}
-          marginBottom={8}
-          placeholder="District"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('WARD', text)}
-          marginBottom={8}
-          placeholder="Ward"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('CITY', text)}
-          marginBottom={20}
-          placeholder="City"></CustomInput>
-        <CustomButton onPressed={onContinuePressed} style={styles.button}>
-          <CustomText type="subTitle" color={'white'}>
-            Continue
-          </CustomText>
-        </CustomButton>
-      </OptionsPanel>
-      :<></>}
     </View>
   );
 };

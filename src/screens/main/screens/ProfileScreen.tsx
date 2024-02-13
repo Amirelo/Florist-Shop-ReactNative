@@ -98,7 +98,7 @@ const ProfileScreen = () => {
         <CustomButton onPressed={onImagePressed}>
           <CustomImage
             type="profile"
-            source={user!.image}
+            source={user?.image ? user.image : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'}
             marginTop={30}
             marginBottom={20}
           />

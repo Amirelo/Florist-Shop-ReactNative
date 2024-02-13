@@ -1,12 +1,12 @@
 class AddressModel{
-    id?: number|string;
+    id?: string;
     streetNumber?: string
     street?: string;
     ward?: string;
     district?: string;
     city?: string;
 
-    constructor(id?:number|string, streetNumber?: string ,street?: string ,ward?: string ,district?: string ,city?: string){
+    constructor(id?:string, streetNumber?: string ,street?: string ,ward?: string ,district?: string ,city?: string){
         this.id = id;
         this.streetNumber = streetNumber;
         this.street = street;

@@ -12,12 +12,11 @@ const PromocodeScreen = () => {
   const route = useRoute<RouteProp<any>>();
 
   React.useEffect(() => {
-    if (route.params?.user) {
-      const user = route.params.user;
-      const promocodes: Array<PromocodeModel> = user.promocodes;
-      var sortedList = promocodes.sort((a: PromocodeModel, b: PromocodeModel) =>
+    if (route.params?.data) {
+      const promocodes: Array<PromocodeModel> = route.params.data;
+      var sortedList = promocodes.length >0 ? promocodes.sort((a: PromocodeModel, b: PromocodeModel) =>
         a.endDate.localeCompare(b.endDate),
-      );
+      ) : promocodes
       setListPromos(sortedList);
       console.log('User Promocodes:', promocodes);
     }
