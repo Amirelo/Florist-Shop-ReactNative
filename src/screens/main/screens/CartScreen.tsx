@@ -9,8 +9,9 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import {getCart, getProductByID} from '../MainService';
+import {cartListener, getCart, getProductByID, updateCartQuantity} from '../MainService';
 import {priceFormat} from '../../../utils/Utils';
+import firestore from '@react-native-firebase/firestore';
 
 const CartScreen = () => {
   // Initial
@@ -57,6 +58,11 @@ const CartScreen = () => {
     setSelectedPromo(item);
   };
 
+  const onQuantityChanged = async(amount:number, item:ProductModel) =>{ 
+    setTotal(prev => prev + item.price * amount);
+    await updateCartQuantity(item.id, amount, email)
+  }
+
   const waitForData = async () => {
     // Get Promocodes
     console.log('User Promocodes:', userInfo.promocodes);
@@ -87,7 +93,18 @@ const CartScreen = () => {
   // Count total price
   React.useEffect(() => {
     waitForData();
+
   }, []);
+
+  React.useEffect(() => {
+    const subscriber = firestore()
+      .collection('users')
+      .doc(email).collection('carts').onSnapshot(documentSnapshot => {
+        console.log('User data changed:', documentSnapshot.docs)
+      })
+      
+    return () => subscriber();
+  }, [email]);
 
   return (
     <View style={{height: '100%'}}>
@@ -115,9 +132,7 @@ const CartScreen = () => {
               quantity={
                   listCarts.filter(filterItem => filterItem.id == item.id)[0]!.quantity
               }
-              onQuantityChanged={(amount: number) => {
-                setTotal(prev => prev + item.price * amount);
-              }}
+              onQuantityChanged={(amount: number) => onQuantityChanged(amount, item)}
             />
           )}
         />

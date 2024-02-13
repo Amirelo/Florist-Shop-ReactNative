@@ -76,19 +76,19 @@ export const AddCart = async (
   quantity: number,
   email: string,
 ) => {
-  if (await checkCart(email, productRef) == false){
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .collection('carts')
-    .doc(productRef)
-    .set({
-      quantity: quantity,
-    })
-    .then(() => console.log('SERVICE: Add product to carts successful'))
-    .catch(error => console.log('SERVICE: error saving cart:', error));
-  } else{
-    console.log('Product already in cart')
+  if ((await checkCart(email, productRef)) == false) {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .collection('carts')
+      .doc(productRef)
+      .set({
+        quantity: quantity,
+      })
+      .then(() => console.log('SERVICE: Add product to carts successful'))
+      .catch(error => console.log('SERVICE: error saving cart:', error));
+  } else {
+    console.log('Product already in cart');
   }
 };
 
@@ -111,46 +111,38 @@ export const checkCart = async (email: string, productRef: string) => {
     .doc(productRef)
     .get();
   if (res.data()) {
-    console.log("SERVICE-CHECKCART: found cart")
+    console.log('SERVICE-CHECKCART: found cart');
     return true;
   } else {
-    console.log("SERVICE-CHECKCART: cart does not exist")
+    console.log('SERVICE-CHECKCART: cart does not exist');
     return false;
   }
 };
 
 // Update Cart Quantity (not tested)
-export const updateCartQuantity = async (productID: string, action: string) => {
-  const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
-  const path = 'carts.' + productID + '.quantity';
-  action == 'INCREMENT'
-    ? firestore()
-        .collection('users')
-        .doc(userEmail)
-        .update({
-          carts: {
-            productID: {
-              quantity: firestore.FieldValue.increment(1),
-            },
-          },
-        })
-    : action == 'DECREMENT'
-    ? firestore()
-        .collection('users')
-        .doc(userEmail)
-        .update({
-          carts: {
-            productID: {
-              quantity: firestore.FieldValue.increment(-1),
-            },
-          },
-        })
-    : console.log('SERVICE - Action not found');
+export const updateCartQuantity = async (
+  productID: string,
+  amount: number,
+  userEmail: string,
+) => {
+  firestore()
+    .collection('users')
+    .doc(userEmail)
+    .collection('carts')
+    .doc(productID)
+    .update({
+      quantity: firestore.FieldValue.increment(amount),
+    })
+    .then(() => {
+      console.log('Update Cart Quantity success');
+    })
+    .catch((error: any) => {
+      console.log('Update Cart Quantity Error:', error);
+    });
 };
 
 // Listener for change (Not Tested)
-export const cartListener = () => {
-  const userEmail = useSelector((store: any) => store.isLoggedIn.userEmail);
+export const cartListener = async (userEmail: string) => {
   useEffect(() => {
     const subscriber = firestore()
       .collection('users')

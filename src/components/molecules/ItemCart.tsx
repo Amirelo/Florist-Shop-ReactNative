@@ -18,7 +18,6 @@ interface Props {
 
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
-  const [isAdd, setIsAdd] = React.useState(false);
   console.log('ITEMCART:', props.item);
 
   React.useEffect(() => {
@@ -51,7 +50,6 @@ const ItemCart = (props: Props) => {
             quantity={quantity}
             setQuantity={setQuantity}
             maxQuantity={props.item.quantity}
-            setIsAdd={setIsAdd}
             onChanged={(amount:number)=>{props.onQuantityChanged(amount)}}
           />
         </View>
