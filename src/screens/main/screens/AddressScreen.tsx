@@ -1,51 +1,39 @@
 import {FlatList, StyleSheet, View} from 'react-native';
 import {ItemAddress} from '../../../components/molecules';
 import {AddressModel} from '../../../models';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import React from 'react';
 
 const AddressScreen = () => {
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
-  
-  const addressList = new Array<AddressModel>();
-  
-   // Navigate to Address Edit Screen with address detail
+  const route = useRoute<RouteProp<any>>();
+
+  // Fields
+  const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>(
+    [],
+  );
+
+  // Navigate to Address Edit Screen with address detail
   const onEditPressed = (item: AddressModel) => {
     navigation.navigate('AddressEdit', {item: item});
   };
 
-  var address = new AddressModel(
-    1,
-    '42',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
-  address = new AddressModel(
-    2,
-    '41',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
-  address = new AddressModel(
-    3,
-    '40',
-    'No Trang Long',
-    'Tan Son Nhi',
-    'Binh Thanh',
-    'HCM',
-  );
-  addressList.push(address);
+  React.useEffect(() => {
+    if (route.params?.data) {
+      setListAddresses(route.params.data);
+    }
+  }, []);
 
   return (
     <View style={styles.view}>
       <FlatList
-        data={addressList}
+        data={listAddresses}
         style={{marginTop: 30}}
         contentContainerStyle={{gap: 16}}
         keyExtractor={item => item.id!.toString()}
