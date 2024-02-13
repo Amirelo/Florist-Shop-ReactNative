@@ -13,7 +13,12 @@ import {QuantityCounter} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {deviceWidth, priceFormat} from '../../../utils/Utils';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -40,10 +45,10 @@ const ProductDetailScreen = () => {
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   const onAddToCartPressed = async () => {
-    if(await AddCart(product.id, quantity, email)){
-      navigation.navigate('Cart',{product: product, quantity: quantity});
-    } else{
-      navigation.navigate('Cart')
+    if (await AddCart(product.id, quantity, email)) {
+      navigation.navigate('Cart', {product: product, quantity: quantity});
+    } else {
+      navigation.navigate('Cart');
     }
   };
 
@@ -148,34 +153,19 @@ const ProductDetailScreen = () => {
               {price ? priceFormat(price * quantity, 'en') : ''}
             </CustomText>
           </ItemRow>
-        </View>
-        {/* Order Button */}
-        <CustomButton
-          style={{alignSelf: 'center', marginBottom: 30}}
-          onPressed={onAddToCartPressed}>
-          <View
-            style={{
-              width: 205,
-              height: 60,
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              backgroundColor: themes['defaultTheme'].primaryColor,
-              borderRadius: 7,
-            }}>
-            <FontAwesomeIcon color="white" icon={faCartShopping} />
-            <CustomText color={'white'}>
-              {lang[langPref]['buttonAddToCart']}
-            </CustomText>
-          </View>
-        </CustomButton>
 
-        {/* Review button */}
-        <TextButton
-          type="primary"
-          backgroundColor={themes['defaultTheme'].warnColor}>
-          Product Reviews
-        </TextButton>
+          {/* Order Button */}
+          <TextButton type="primary" onPressed={onAddToCartPressed} marginBottom={20}>
+            Add to Cart
+          </TextButton>
+
+          {/* Review button */}
+          <TextButton
+            type="primary"
+            backgroundColor={themes['defaultTheme'].warnColor} marginBottom={20}>
+            Product Reviews
+          </TextButton>
+        </View>
       </View>
     </ScrollView>
   );
