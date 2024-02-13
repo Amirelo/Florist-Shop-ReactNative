@@ -9,7 +9,13 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import {cartListener, getCart, getProductByID, updateCartQuantity} from '../MainService';
+import {
+  cartListener,
+  deleteCartItem,
+  getCart,
+  getProductByID,
+  updateCartQuantity,
+} from '../MainService';
 import {priceFormat} from '../../../utils/Utils';
 import firestore from '@react-native-firebase/firestore';
 
@@ -47,21 +53,26 @@ const CartScreen = () => {
     setPromoActive(true);
   };
 
-  const onItemEllipsesPressed = (item: ProductModel) => {
-    setSelectedProduct(item);
-    setProductActive(true);
-  };
-
   // Saved selected promocodes into useState
   const onPromocodeSelected = (item: PromocodeModel) => {
     setPromoActive(false);
     setSelectedPromo(item);
   };
 
-  const onQuantityChanged = async(amount:number, item:ProductModel) =>{ 
+  const onItemDeletePressed = async () => {
+    setProductActive(false);
+    await deleteCartItem(selectedProduct!.id, email);
+  };
+
+  const onItemEllipsesPressed = (item: ProductModel) => {
+    setSelectedProduct(item);
+    setProductActive(true);
+  };
+
+  const onQuantityChanged = async (amount: number, item: ProductModel) => {
     setTotal(prev => prev + item.price * amount);
-    await updateCartQuantity(item.id, amount, email)
-  }
+    await updateCartQuantity(item.id, amount, email);
+  };
 
   const waitForData = async () => {
     // Get Promocodes
@@ -86,23 +97,23 @@ const CartScreen = () => {
       setListProducts(item => [...item, product]);
       setTotal(prev => prev + sum);
       console.log('Cart total:', total);
-      
     });
   };
 
   // Count total price
   React.useEffect(() => {
     waitForData();
-
   }, []);
 
   React.useEffect(() => {
     const subscriber = firestore()
       .collection('users')
-      .doc(email).collection('carts').onSnapshot(documentSnapshot => {
-        console.log('User data changed:', documentSnapshot.docs)
-      })
-      
+      .doc(email)
+      .collection('carts')
+      .onSnapshot(documentSnapshot => {
+        console.log('User data changed:', documentSnapshot.docs);
+      });
+
     return () => subscriber();
   }, [email]);
 
@@ -130,9 +141,12 @@ const CartScreen = () => {
               item={item}
               onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
-                  listCarts.filter(filterItem => filterItem.id == item.id)[0]!.quantity
+                listCarts.filter(filterItem => filterItem.id == item.id)[0]!
+                  .quantity
               }
-              onQuantityChanged={(amount: number) => onQuantityChanged(amount, item)}
+              onQuantityChanged={(amount: number) =>
+                onQuantityChanged(amount, item)
+              }
             />
           )}
         />
@@ -188,7 +202,7 @@ const CartScreen = () => {
       )}
       {productActive && selectedProduct ? (
         <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
-          <CustomButton>
+          <CustomButton onPressed={onItemDeletePressed}>
             <CustomText type="subTitle" color={'red'} fontWeight="bold">
               Delete item
             </CustomText>

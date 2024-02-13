@@ -119,7 +119,7 @@ export const checkCart = async (email: string, productRef: string) => {
   }
 };
 
-// Update Cart Quantity (not tested)
+// Update Cart Quantity
 export const updateCartQuantity = async (
   productID: string,
   amount: number,
@@ -139,6 +139,22 @@ export const updateCartQuantity = async (
     .catch((error: any) => {
       console.log('Update Cart Quantity Error:', error);
     });
+};
+
+// Delete cart
+export const deleteCartItem = async (productID: string, email: string) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('carts')
+    .doc(productID)
+    .delete()
+    .then(() => {
+      console.log('SERVICE -Cart Item delete: successful');
+    })
+    .catch((error: any) =>
+      console.log('SERVICE - Cart Item Delete error:', error),
+    );
 };
 
 // Listener for change (Not Tested)
