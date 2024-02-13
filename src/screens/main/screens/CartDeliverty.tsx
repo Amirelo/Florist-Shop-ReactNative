@@ -5,6 +5,7 @@ import {CustomButton, CustomText, Divider} from '../../../components/atoms';
 import themes from '../../../themes/themes';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
 import React from 'react';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
 const CartDelivery = () => {
   // Navigation
@@ -15,6 +16,7 @@ const CartDelivery = () => {
   const addressList = new Array<AddressModel>();
   var cartList = Array<CartModel>();
   const [optionActive, setOptionActive] = React.useState(false);
+  const [addActive, setAddActive] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>(
     new AddressModel('', '', '', '', '', ''),
   );
@@ -38,6 +40,10 @@ const CartDelivery = () => {
   const onSelectPressed = () => {
     setOptionActive(true);
   };
+
+  const onAddAddressPressed = () => {
+    setAddActive(true);
+  }
 
   // Saved selected address into fields
   const onOptionPressed = (item: AddressModel) => {
@@ -98,6 +104,11 @@ const CartDelivery = () => {
   return (
     <View style={{height: '100%'}}>
       <View style={styles.view}>
+
+        <CustomInput placeholder='Phone number' marginBottom={20}/>
+
+        <CustomText type='title' marginBottom={8}>Address</CustomText>
+
         <CustomText marginBottom={12} type="subTitle">
           {selectedAddress
             ? selectedAddress.streetNumber +
@@ -120,26 +131,10 @@ const CartDelivery = () => {
           Or
         </CustomText>
 
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('STREET', text)}
-          marginBottom={8}
-          placeholder="Street"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('STREETNUMBER', text)}
-          marginBottom={8}
-          placeholder="Street number"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('DISTRICT', text)}
-          marginBottom={8}
-          placeholder="District"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('WARD', text)}
-          marginBottom={8}
-          placeholder="Ward"></CustomInput>
-        <CustomInput
-          onChangeText={(text: string) => onInfoChanged('CITY', text)}
-          marginBottom={20}
-          placeholder="City"></CustomInput>
+        <CustomButton onPressed={onAddAddressPressed} style={styles.couponButton}>
+          <CustomText>Add New Address</CustomText>
+        </CustomButton>
+       
         <CustomButton onPressed={onContinuePressed} style={styles.button}>
           <CustomText type="subTitle" color={'white'}>
             Continue
@@ -171,6 +166,35 @@ const CartDelivery = () => {
       ) : (
         <></>
       )}
+      {addActive ?
+      <OptionsPanel title='New Address' setActive={setAddActive}>
+      <CustomInput
+          onChangeText={(text: string) => onInfoChanged('STREET', text)}
+          marginBottom={8}
+          placeholder="Street"></CustomInput>
+        <CustomInput
+          onChangeText={(text: string) => onInfoChanged('STREETNUMBER', text)}
+          marginBottom={8}
+          placeholder="Street number"></CustomInput>
+        <CustomInput
+          onChangeText={(text: string) => onInfoChanged('DISTRICT', text)}
+          marginBottom={8}
+          placeholder="District"></CustomInput>
+        <CustomInput
+          onChangeText={(text: string) => onInfoChanged('WARD', text)}
+          marginBottom={8}
+          placeholder="Ward"></CustomInput>
+        <CustomInput
+          onChangeText={(text: string) => onInfoChanged('CITY', text)}
+          marginBottom={20}
+          placeholder="City"></CustomInput>
+        <CustomButton onPressed={onContinuePressed} style={styles.button}>
+          <CustomText type="subTitle" color={'white'}>
+            Continue
+          </CustomText>
+        </CustomButton>
+      </OptionsPanel>
+      :<></>}
     </View>
   );
 };

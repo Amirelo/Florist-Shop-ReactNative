@@ -43,6 +43,7 @@ const TextButton = (props: Props) => {
       <CustomText
         style={{textDecorationLine: props.textDecorationLine}}
         color={selectedStyle == 'tertiary' ? 'black' : 'white'}
+        fontWeight={selectedStyle == 'tertiary' ? 'normal' : 'bold'}
         type={
           props.fontSize
             ? props.fontSize

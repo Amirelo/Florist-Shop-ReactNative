@@ -1,27 +1,31 @@
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText, Divider} from '../atoms';
 import React from 'react';
 
 interface Props {
   children: any;
   title: string;
-  setActive:any;
+  setActive: any;
 }
 
 const OptionsPanel = (props: Props) => {
-    const onBackgroundPressed = () => {
-        props.setActive(false)
-    }
+  const onBackgroundPressed = () => {
+    props.setActive(false);
+  };
 
   return (
     <View style={styles.view}>
-      <CustomButton onPressed={onBackgroundPressed} style={styles.back}></CustomButton>
+      <CustomButton
+        onPressed={onBackgroundPressed}
+        style={styles.back}></CustomButton>
       <View style={styles.main}>
         <CustomText type="title" marginBottom={20}>
           {props.title}
         </CustomText>
-        <Divider width={'90%'} marginBottom={20}/>
-        {props.children}
+        <Divider width={'90%'} marginBottom={20} />
+        <View style={{width: '90%'}}>
+          <ScrollView scrollEnabled={true}>{props.children}</ScrollView>
+        </View>
       </View>
     </View>
   );
