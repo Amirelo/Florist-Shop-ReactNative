@@ -41,7 +41,7 @@ const ProductDetailScreen = () => {
 
   const onAddToCartPressed = async () => {
     await AddCart(product.id, quantity, email);
-    navigation.goBack();
+    navigation.navigate('Cart',{product: product, quantity: quantity});
   };
 
   // Check quantity changed

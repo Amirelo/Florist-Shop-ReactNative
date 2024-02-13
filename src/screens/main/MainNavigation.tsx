@@ -78,6 +78,7 @@ const MainTab = () => {
     <tab.Navigator initialRouteName="Home">
       <tab.Screen
         options={{
+          tabBarLabel: lang[langPref]['bottomTab_home'],
           headerShown: false,
           headerTitle: lang['en'].appBarHome,
           headerTitleAlign: 'center',
@@ -86,11 +87,12 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={lang[langPref]['bottomTab_home']}
+        name={'Home'}
         component={HomeScreen}
       />
       <tab.Screen
         options={{
+          tabBarLabel: lang[langPref]['bottomTab_explore'],
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({color, size}) => (
@@ -98,11 +100,12 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={lang[langPref]['bottomTab_explore']}
+        name={'Explore'}
         component={ExploreScreen}
       />
       <tab.Screen
         options={{
+          tabBarLabel: lang[langPref]['bottomTab_cart'],
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (
@@ -110,12 +113,13 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={lang[langPref]['bottomTab_cart']}
+        name={'Cart'}
         component={CartScreen}
       />
 
       <tab.Screen
         options={{
+          tabBarLabel: lang[langPref]['bottomTab_account'],
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (
@@ -123,7 +127,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={lang[langPref]['bottomTab_account']}
+        name={'Account'}
         component={AccountScreen}
       />
     </tab.Navigator>

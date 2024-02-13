@@ -134,10 +134,10 @@ export const updateCartQuantity = async (
       quantity: firestore.FieldValue.increment(amount),
     })
     .then(() => {
-      console.log('Update Cart Quantity success');
+      console.log('SERVICE - Update Cart Quantity success');
     })
     .catch((error: any) => {
-      console.log('Update Cart Quantity Error:', error);
+      console.log('SERVICE - Update Cart Quantity Error:', error);
     });
 };
 

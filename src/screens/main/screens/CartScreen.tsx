@@ -5,7 +5,7 @@ import {ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -22,6 +22,7 @@ import firestore from '@react-native-firebase/firestore';
 const CartScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
+  const route = useRoute<RouteProp<any>>();
 
   // Fields
   const [total, setTotal] = React.useState(0);
@@ -61,7 +62,10 @@ const CartScreen = () => {
 
   const onItemDeletePressed = async () => {
     setProductActive(false);
-    await deleteCartItem(selectedProduct!.id, email);
+    if(await deleteCartItem(selectedProduct!.id, email)){
+      setListProducts(listProducts.filter(productItem => productItem.id != selectedProduct!.id))
+      setListCarts(listCarts.filter(cartItem => cartItem.id != selectedProduct!.id))
+    }
   };
 
   const onItemEllipsesPressed = (item: ProductModel) => {
@@ -75,16 +79,16 @@ const CartScreen = () => {
   };
 
   const waitForData = async () => {
+    setListProducts([]);
+    setListCarts([])
     // Get Promocodes
     console.log('User Promocodes:', userInfo.promocodes);
     setListPromos(userInfo.promocodes);
-
     const carts: Array<CartModel> = await getCart(email);
 
     console.log('User carts:', carts);
     setListCarts(carts);
     var sum = 0;
-    setListProducts([]);
     setTotal(0);
     // Get Products
     carts.forEach(async (cart: any) => {
@@ -101,19 +105,16 @@ const CartScreen = () => {
   };
 
   React.useEffect(() => {
-    const subscriber = firestore()
-      .collection('users')
-      .doc(email)
-      .collection('carts')
-      .onSnapshot(documentSnapshot => {
-        console.log('User data changed:', documentSnapshot.docs);
-        console.log('Document length:', documentSnapshot.docs.length)
-        console.log('list carts length:', listCarts.length)
-        if (documentSnapshot.docs.length != listCarts.length) waitForData();
-      });
+    waitForData()
+  }, []);
 
-    return () => subscriber();
-  }, [email]);
+  React.useEffect(()=>{
+    if(route.params?.product && route.params?.quantity){
+      const cart: CartModel = new CartModel(route.params.product.id, route.params.quantity)
+      setListProducts([...listProducts, route.params.product])
+      setListCarts([...listCarts, cart])
+    }
+  }, [route])
 
   return (
     <View style={{height: '100%'}}>
@@ -139,8 +140,10 @@ const CartScreen = () => {
               item={item}
               onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
+                listCarts.filter(filterItem => filterItem.id == item.id)[0] ? 
                 listCarts.filter(filterItem => filterItem.id == item.id)[0]
                   .quantity
+                  : -10
               }
               onQuantityChanged={(amount: number) =>
                 onQuantityChanged(amount, item)
