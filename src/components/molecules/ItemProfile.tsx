@@ -9,18 +9,27 @@ interface Props {
   icon: IconProp;
   title: string;
   data: string;
+  viewOnly?: boolean;
   marginTop?: number;
   marginBottom?: number;
-  onPressed?(): void;
+  onPressed?(data: string): void;
 }
 
 const ItemProfile = (props: Props) => {
   return (
     <CustomButton
-    onPressed={props.onPressed}
+      onPressed={() =>
+        props.onPressed != undefined ? props.onPressed(props.data) : undefined
+      }
       style={[
         styles.view,
-        {marginTop: props.marginTop, marginBottom: props.marginBottom},
+        {
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          backgroundColor: props.viewOnly
+            ? themes['defaultTheme'].textSecondaryColor
+            : 'white',
+        },
       ]}>
       <View style={styles.body}>
         <FontAwesomeIcon

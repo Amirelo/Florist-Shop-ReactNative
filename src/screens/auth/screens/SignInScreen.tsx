@@ -94,7 +94,8 @@ const SignInScreen = () => {
   // Sign in with google
   const onGooglePressed = async () => {
     if (await SignInWithGoogle()) {
-      const userInfo: UserModel = (await getUserInfo(email)) ?? new UserModel();
+      const userInfo: UserModel = (await getUserInfo(email));
+      console.log('Login successful:', userInfo)
       dispatch(
         authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
       );
@@ -106,8 +107,9 @@ const SignInScreen = () => {
   // Check if user already sign in with google
   const checkSavedUser = async () => {
     if (await checkIsSignIn()) {
-      const userInfo: UserModel = (await getUserInfo(email)) ?? new UserModel();
-
+      const currentUser = await GoogleSignin.getCurrentUser()
+      console.log('Current user:', currentUser?.user.email)
+      const userInfo: UserModel = (await getUserInfo(currentUser!.user.email))
       dispatch(
         authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
       );

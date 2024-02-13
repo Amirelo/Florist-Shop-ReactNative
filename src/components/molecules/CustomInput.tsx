@@ -9,6 +9,7 @@ import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 interface Props {
   placeholder?: string;
   hidden?: boolean;
+  value?:string;
   onChangeText?(text: string): void;
   children?: string;
   marginTop?: number;
@@ -30,7 +31,7 @@ const CustomInput = (props: Props) => {
         props.icon ? styles.view : null,
       ]}>
       {props.icon == null ? (
-        <CustomText type="title" marginBottom={12}>
+        <CustomText textTransform='capitalize' type="title" marginBottom={12}>
           {props.placeholder + ''}
         </CustomText>
       ) : (
@@ -40,6 +41,7 @@ const CustomInput = (props: Props) => {
       <TextInput
         secureTextEntry={secure}
         placeholder={props.placeholder}
+        value={props.value}
         onChangeText={props.onChangeText}
         style={[props.icon ? styles.input : styles.viewUpdate]}>
         {props.children}

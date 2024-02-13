@@ -13,6 +13,7 @@ import {CameraOptions, launchCamera} from 'react-native-image-picker';
 import React from 'react';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import { useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
   // Fields
@@ -28,9 +29,11 @@ const ProfileScreen = () => {
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const userInfo = useSelector((store:any) => store.isLoggedIn.userInfo)
 
-  const onProfileTabPressed = (type: string) => {
-    navigation.navigate('UpdateInfo', {type: type});
+  const onProfileTabPressed = (type: string, data: string) => {
+    console.log('data:', data)
+    navigation.navigate('UpdateInfo', {type: type, data:data});
   };
 
   // Show option menu when image pressed
@@ -88,8 +91,9 @@ const ProfileScreen = () => {
     }
     if (route.params?.user) {
       setUser(route.params.user);
-      setUserImage(route.params.user.image)
+      setUserImage(route.params.user.image);
     }
+    console.log('User info:', userInfo)
   }, []);
 
   return (
@@ -98,31 +102,36 @@ const ProfileScreen = () => {
         <CustomButton onPressed={onImagePressed}>
           <CustomImage
             type="profile"
-            source={user?.image ? user.image : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'}
+            source={
+              user?.image
+                ? user.image
+                : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
+            }
             marginTop={30}
             marginBottom={20}
           />
         </CustomButton>
         <ItemProfile
-          title="Username"
-          data={user!.username}
-          icon={faUser}
-          marginBottom={12}
-          onPressed={() => onProfileTabPressed('USERNAME')}
-        />
-        <ItemProfile
           title="Email"
           data={email}
           icon={faEnvelope}
           marginBottom={12}
-          onPressed={() => onProfileTabPressed('EMAIL')}
+          viewOnly={true}
         />
+        <ItemProfile
+          title="Username"
+          data={user!.username}
+          icon={faUser}
+          marginBottom={12}
+          onPressed={(data) => onProfileTabPressed('USERNAME',data)}
+        />
+
         <ItemProfile
           title="Phone Number"
           data={user!.phoneNumber}
           icon={faPhone}
           marginBottom={12}
-          onPressed={() => onProfileTabPressed('PHONE')}
+          onPressed={(data) => onProfileTabPressed('PHONENUMBER',data)}
         />
 
         <ItemProfile
@@ -130,7 +139,6 @@ const ProfileScreen = () => {
           data="**********"
           icon={faLock}
           marginBottom={12}
-          onPressed={() => onProfileTabPressed('PASSWORD')}
         />
       </View>
       {active ? (

@@ -1,6 +1,7 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { UserModel } from '../../models';
 
 // Config for signing in with Google
 GoogleSignin.configure({
@@ -53,8 +54,9 @@ export const SaveUserFirestore = async (email: string) => {
       username: email.split('@')[0],
       langPref: '',
       themePref: '',
-      phoneNumber:'',
-      image: 'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
+      phoneNumber: '',
+      image:
+        'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
     })
     .then(() => {
       return true;
@@ -136,6 +138,62 @@ export const sendPasswordChangeEmail = async (email: string) => {
 
 // Get user info
 export const getUserInfo = async (email: string) => {
-  const data = (await firestore().collection('users').doc(email).get()).data();
-  return data;
+  const doc = await firestore().collection('users').doc(email).get();
+  const data = doc.data()
+  console.log('SERVICE - Get User Info:', doc)
+  const user = new UserModel(doc.id, data!.username, data!.themePref,data!.langPref)
+  return user;
+};
+
+export const updateUserInfo = async (
+  type: string,
+  data: string,
+  email: string,
+) => {
+  type == 'USERNAME'
+    ? await updateUsername(email, data)
+    : type == 'PHONENUMBER'
+    ? await updatePhoneNumber(email, data)
+    : type == 'IMAGE'
+    ? await updateImage(email, data)
+    : console.log('Update action not found');
+};
+
+export const updateUsername = async (email: string, data: string) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .update({
+      username: data,
+    })
+    .then(() => {
+      console.log('Update username successful');
+    })
+    .catch(error => console.log('Update username error:', error));
+};
+
+export const updatePhoneNumber = async (email: string, data: string) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .update({
+      phoneNumber: data,
+    })
+    .then(() => {
+      console.log('Update username successful');
+    })
+    .catch(error => console.log('Update username error:', error));
+};
+
+export const updateImage = async (email: string, data: string) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .update({
+      image: data,
+    })
+    .then(() => {
+      console.log('Update username successful');
+    })
+    .catch(error => console.log('Update username error:', error));
 };
