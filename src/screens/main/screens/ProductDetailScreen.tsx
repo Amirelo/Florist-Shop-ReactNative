@@ -13,7 +13,7 @@ import {QuantityCounter} from '../../../components/molecules';
 import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {deviceWidth, priceFormat} from '../../../utils/Utils';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -23,6 +23,7 @@ import {AddCart} from '../MainService';
 const ProductDetailScreen = () => {
   // Initial
   const route = useRoute<RouteProp<any>>();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   // Fields
   const [quantity, setQuantity] = React.useState(1);
@@ -40,6 +41,7 @@ const ProductDetailScreen = () => {
 
   const onAddToCartPressed = async () => {
     await AddCart(product.id, quantity, email);
+    navigation.goBack();
   };
 
   // Check quantity changed

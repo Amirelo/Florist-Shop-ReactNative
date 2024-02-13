@@ -1,18 +1,17 @@
-import { ProductModel } from ".";
+import {ProductModel} from '.';
 
 class CartModel {
-    id: string| number;
-    quantity: number;
-    
-    constructor(id: string | number ,quantity: number){
-        this.id = id;
-        this.quantity = quantity;
-    }
+  id: string;
+  quantity: number;
 
-    setQuantity (quantity:number){
-        this.quantity = quantity;
-    }
+  constructor(id: string, quantity: number) {
+    this.id = id;
+    this.quantity = quantity;
+  }
 
+  setQuantity(quantity: number) {
+    this.quantity = quantity;
+  }
 }
 
 export default CartModel;

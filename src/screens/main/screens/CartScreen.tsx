@@ -100,11 +100,6 @@ const CartScreen = () => {
     });
   };
 
-  // Count total price
-  React.useEffect(() => {
-    waitForData();
-  }, []);
-
   React.useEffect(() => {
     const subscriber = firestore()
       .collection('users')
@@ -112,6 +107,9 @@ const CartScreen = () => {
       .collection('carts')
       .onSnapshot(documentSnapshot => {
         console.log('User data changed:', documentSnapshot.docs);
+        console.log('Document length:', documentSnapshot.docs.length)
+        console.log('list carts length:', listCarts.length)
+        if (documentSnapshot.docs.length != listCarts.length) waitForData();
       });
 
     return () => subscriber();
@@ -141,7 +139,7 @@ const CartScreen = () => {
               item={item}
               onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
-                listCarts.filter(filterItem => filterItem.id == item.id)[0]!
+                listCarts.filter(filterItem => filterItem.id == item.id)[0]
                   .quantity
               }
               onQuantityChanged={(amount: number) =>
