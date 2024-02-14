@@ -107,8 +107,8 @@ const ProfileScreen = () => {
           <CustomImage
             type="profile"
             source={
-              user
-                ? user.image!
+              userImage
+                ? userImage
                 : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
             }
             marginTop={30}
