@@ -5,15 +5,18 @@ import React from 'react';
 import {useRoute} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import {updateUserInfo} from '../../auth/AuthService';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { ReduxUpdateUser } from '../../../redux/actions/LoginAction';
 const UpdateInfoScreen = () => {
   // Fields
   const [title, setTitle] = React.useState('');
   const [data, setData] = React.useState('');
 
   // Initial
+  const dispatch = useDispatch();
   const route = useRoute<any>();
   const email: string = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
   // Get data from route
   React.useEffect(() => {
@@ -27,6 +30,8 @@ const UpdateInfoScreen = () => {
 
   const onUpdatepressed = async () => {
     await updateUserInfo(title, data, email);
+    dispatch(ReduxUpdateUser(title, data))
+    console.log('Update completed:', userInfo)
   };
 
   return (

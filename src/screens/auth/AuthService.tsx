@@ -141,7 +141,7 @@ export const getUserInfo = async (email: string) => {
   const doc = await firestore().collection('users').doc(email).get();
   const data = doc.data()
   console.log('SERVICE - Get User Info:', doc)
-  const user = new UserModel(doc.id, data!.username, data!.themePref,data!.langPref)
+  const user = new UserModel(doc.id, data!.username, data!.image, data!.phoneNumber, data!.themePref,data!.langPref)
   return user;
 };
 

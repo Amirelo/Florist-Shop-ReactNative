@@ -1,6 +1,8 @@
 export const LOGIN_AUTHORIZE = 'AUTHORIZE';
 export const LOGOUT = 'LOGOUT';
 
+export const UPDATE_USERNAME = 'UPDATEUSERNAME';
+
 export const LANG_CHANGE = 'CHANGELANGUAGE';
 export const THEME_CHANGE = 'CHANGETHEME';
 

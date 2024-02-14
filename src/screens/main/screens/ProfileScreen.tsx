@@ -13,14 +13,13 @@ import {CameraOptions, launchCamera} from 'react-native-image-picker';
 import React from 'react';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+import {UserModel} from '../../../models';
 
 const ProfileScreen = () => {
   // Fields
   const [userImage, setUserImage] = React.useState('');
-  const [user, setUser] = React.useState<
-    FirebaseFirestoreTypes.DocumentData | undefined
-  >({});
+  const [user, setUser] = React.useState<UserModel>();
   const [email, setEmail] = React.useState('');
 
   // Set to display option menu for image
@@ -29,11 +28,11 @@ const ProfileScreen = () => {
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
-  const userInfo = useSelector((store:any) => store.isLoggedIn.userInfo)
+  const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
   const onProfileTabPressed = (type: string, data: string) => {
-    console.log('data:', data)
-    navigation.navigate('UpdateInfo', {type: type, data:data});
+    console.log('data:', data);
+    navigation.navigate('UpdateInfo', {type: type, data: data});
   };
 
   // Show option menu when image pressed
@@ -93,8 +92,13 @@ const ProfileScreen = () => {
       setUser(route.params.user);
       setUserImage(route.params.user.image);
     }
-    console.log('User info:', userInfo)
+    console.log('User info:', userInfo);
   }, []);
+
+  React.useEffect(() => {
+    console.log('User info changed')
+    setUser(userInfo);
+  }, [userInfo]);
 
   return (
     <View style={styles.view}>
@@ -103,8 +107,8 @@ const ProfileScreen = () => {
           <CustomImage
             type="profile"
             source={
-              user?.image
-                ? user.image
+              user
+                ? user.image!
                 : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
             }
             marginTop={30}
@@ -120,18 +124,18 @@ const ProfileScreen = () => {
         />
         <ItemProfile
           title="Username"
-          data={user!.username}
+          data={user ? user.username! : ''}
           icon={faUser}
           marginBottom={12}
-          onPressed={(data) => onProfileTabPressed('USERNAME',data)}
+          onPressed={data => onProfileTabPressed('USERNAME', data)}
         />
 
         <ItemProfile
           title="Phone Number"
-          data={user!.phoneNumber}
+          data={user ? user.phoneNumber! : ''}
           icon={faPhone}
           marginBottom={12}
-          onPressed={(data) => onProfileTabPressed('PHONENUMBER',data)}
+          onPressed={data => onProfileTabPressed('PHONENUMBER', data)}
         />
 
         <ItemProfile
