@@ -36,10 +36,10 @@ export default (state = initialState, action: any) => {
         userInfo: {
           email: state.userInfo.email,
           username: action.payload.data,
-          image: state.userInfo.email,
-          phoneNumber: state.userInfo.email,
-          themePref: state.userInfo.email,
-          langPref: state.userInfo.email,
+          image: state.userInfo.image,
+          phoneNumber: state.userInfo.phoneNumber,
+          themePref: state.userInfo.themePref,
+          langPref: state.userInfo.langPref,
         },
       };
     default:
