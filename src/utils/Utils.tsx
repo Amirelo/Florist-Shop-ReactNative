@@ -23,11 +23,11 @@ export const dateFormat = (date: string) => {
 export const addressFormat = (address: AddressModel) => {
   return (
     address.streetNumber +
-    ' ' +
+    ' đường ' +
     address.street +
-    ', ' +
+    ', Q.' +
     address.ward +
-    ', ' +
+    ', P.' +
     address.district +
     ', ' +
     address.city

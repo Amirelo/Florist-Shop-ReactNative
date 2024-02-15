@@ -2,50 +2,57 @@ import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText, Divider, ItemRow} from '../atoms';
 import {AddressModel} from '../../models';
 import themes from '../../themes/themes';
+import {TextButton} from './buttons';
+import {addressFormat} from '../../utils/Utils';
 
 interface Props {
   item: AddressModel;
-  onPressed?(): void; 
+  onEditPressed?(): void;
+  onDeletePressed?(): void;
 }
 
 const ItemAddress = (props: Props) => {
   return (
     <View style={styles.view}>
-      <CustomText type={'subTitle'} marginBottom={12}>
-        {props.item.streetNumber +
-          ' ' +
-          props.item.street +
-          ', ' +
-          props.item.ward +
-          ', ' +
-          props.item.district +
-          ', ' +
-          props.item.city}
+      <CustomText type={'subTitle'} marginBottom={12} fontWeight="bold">
+        {addressFormat(props.item)}
       </CustomText>
-      <Divider/>
+      <Divider marginBottom={8} />
 
       <ItemRow marginBottom={8}>
         <CustomText>Street Number</CustomText>
-        <CustomText>{props.item.streetNumber}</CustomText>
+        <CustomText>{props.item.streetNumber + ''}</CustomText>
       </ItemRow>
-      <Divider/>
+      <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
         <CustomText>Street</CustomText>
-        <CustomText>{props.item.street}</CustomText>
+        <CustomText>{props.item.street + ''}</CustomText>
       </ItemRow>
-      <Divider/>
+      <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
         <CustomText>Ward</CustomText>
-        <CustomText>{props.item.ward}</CustomText>
+        <CustomText>{props.item.ward + ''}</CustomText>
       </ItemRow>
-      <Divider/>
+      <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
         <CustomText>City</CustomText>
-        <CustomText>{props.item.city}</CustomText>
+        <CustomText>{props.item.city + ''}</CustomText>
       </ItemRow>
-      <CustomButton onPressed={props.onPressed} style={styles.button}>
-        <CustomText color={'white'} type='subTitle'>Edit</CustomText>
-      </CustomButton>
+      <ItemRow marginBottom={0}>
+        <TextButton
+          alignSelf="baseline"
+          type="primary"
+          backgroundColor={'red'}
+          onPressed={props.onDeletePressed}>
+          Delete
+        </TextButton>
+        <TextButton
+          alignSelf="baseline"
+          type="primary"
+          onPressed={props.onEditPressed}>
+          Edit
+        </TextButton>
+      </ItemRow>
     </View>
   );
 };
@@ -59,10 +66,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   button: {
-    alignSelf:'flex-end',
+    alignSelf: 'flex-end',
     backgroundColor: themes['defaultTheme'].primaryColor,
     paddingVertical: 8,
-    paddingHorizontal:16,
-    borderRadius: 7
+    paddingHorizontal: 16,
+    borderRadius: 7,
   },
 });

@@ -49,7 +49,7 @@ const MainNavigation = () => {
         <Stack.Screen name="Order" component={OrderScreen} />
         <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
         <Stack.Screen name="Address" component={AddressScreen} />
-        <Stack.Screen name="AddressEdit" component={AddressEdit} />
+        <Stack.Screen options={{title: 'Edit Address'}} name="AddressEdit" component={AddressEdit} />
         <Stack.Screen name="Promo" component={PromocodeScreen} />
         <Stack.Screen name="About" component={AboutUsScreen} />
         <Stack.Screen name="Filter" component={ProductFilterScreen} />

@@ -1,11 +1,13 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View, ViewStyle} from 'react-native';
 import {CustomButton, CustomText, Divider} from '../atoms';
 import React from 'react';
+import { height } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 interface Props {
   children: any;
   title: string;
   setActive: any;
+  maxHeight?: ViewStyle['maxHeight'];
 }
 
 const OptionsPanel = (props: Props) => {
@@ -18,7 +20,7 @@ const OptionsPanel = (props: Props) => {
       <CustomButton
         onPressed={onBackgroundPressed}
         style={styles.back}></CustomButton>
-      <View style={styles.main}>
+      <View style={[styles.main, {height: props.maxHeight}]}>
         <CustomText type="title" marginBottom={20}>
           {props.title}
         </CustomText>
@@ -48,7 +50,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
   },
   back: {

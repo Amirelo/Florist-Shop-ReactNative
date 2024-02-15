@@ -23,7 +23,7 @@ interface Props {
 }
 
 const TextButton = (props: Props) => {
-  const selectedStyle = props.type ? props.type : 'tertiary';
+  const selectedStyle = props.type ? props.type : 'none';
   return (
     <CustomButton
       style={[
@@ -35,15 +35,26 @@ const TextButton = (props: Props) => {
             ? props.backgroundColor
             : props.type == 'primary'
             ? themes['defaultTheme'].primaryColor
+            : props.type == 'tertiary'
+            ? 'white'
             : '',
-            alignSelf: props.alignSelf
+          alignSelf: props.alignSelf,
+          width: props.alignSelf ? '30%' : null
         },
       ]}
       onPressed={props.onPressed}>
       <CustomText
         style={{textDecorationLine: props.textDecorationLine}}
-        color={selectedStyle == 'tertiary' ? 'black' : 'white'}
-        fontWeight={selectedStyle == 'tertiary' ? 'normal' : 'bold'}
+        color={
+          selectedStyle == 'none' || selectedStyle == 'tertiary'
+            ? 'black'
+            : 'white'
+        }
+        fontWeight={
+          selectedStyle == 'none' || selectedStyle == 'tertiary'
+            ? 'normal'
+            : 'bold'
+        }
         type={
           props.fontSize
             ? props.fontSize
@@ -66,5 +77,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tertiary: {},
+  tertiary: {
+    height: 48,
+    borderWidth: 1,
+    borderRadius: 7,
+    backgroundColor: 'white',
+    borderColor: themes['defaultTheme'].textSecondaryColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  none: {},
 });

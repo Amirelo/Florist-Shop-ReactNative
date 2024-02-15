@@ -57,6 +57,7 @@ const AccountScreen = () => {
 
     // Get User Addresses
     const addresses: Array<AddressModel> = await getUserAddresses(userEmail);
+    console.log(addresses)
     setUserAddresses(addresses);
   };
 
@@ -79,6 +80,10 @@ const AccountScreen = () => {
   const onPromocodeTabPressed = () => {
     navigation.navigate('Promo', {data: userPromocodes});
   };
+
+  const onAddressTabPressed = () => {
+    navigation.navigate('Address', {data: userAddresses});
+  }
 
   // Navigate to order screen
   const onTabPressed = (name: string) => {
@@ -121,7 +126,7 @@ const AccountScreen = () => {
           {lang[langPref]['text_tab_order_title']}
         </ItemAccount>
         <ItemAccount
-          onPressed={() => onTabPressed('Address')}
+          onPressed={() => onAddressTabPressed()}
           amount={userAddresses.length}
           description={lang[langPref]['text_tab_address_description']}>
           {lang[langPref]['text_tab_address_title']}

@@ -188,8 +188,49 @@ export const getUserAddresses = async (email: string) => {
     );
   });
 };
+
+// Add new address
+export const AddNewUserAddress = async (
+  email: string,
+  address: AddressModel,
+) => {
+  const res = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('addresses')
+    .add({
+      streetNumber: address.streetNumber,
+      street: address.street,
+      ward: address.ward,
+      district: address.district,
+      city: address.city,
+    })
+    .then(() => {
+      console.log('SERVICE - Add new Adress: Success');
+    })
+    .catch(error => {
+      console.log('SERVICE - Error Add new Adress:', error);
+    });
+};
+
+// Delete User Address
+export const deleteUserAddress = async (email: string, addressID: string) => {
+  const res = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('addresses')
+    .doc(addressID)
+    .delete()
+    .then(() => {
+      console.log('SERVICE - User Address Delete: Success');
+    })
+    .catch(error => {
+      console.log('SERVICE - User Address Delete Fail: ', error);
+    });
+};
+
 // Get User Promocodes
-export const getUserPromoocodes = async (email:string) => {
+export const getUserPromoocodes = async (email: string) => {
   const querySnapshot = await firestore()
     .collection('users')
     .doc(email)
