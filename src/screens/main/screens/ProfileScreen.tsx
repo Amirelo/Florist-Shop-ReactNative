@@ -39,6 +39,7 @@ const ProfileScreen = () => {
     navigation.navigate('UpdateInfo', {type: type, data: data});
   };
 
+
   // Show option menu when image pressed
   const onImagePressed = () => {
     setActive(true);
@@ -89,7 +90,7 @@ const ProfileScreen = () => {
       }
     });
   };
-
+ 
   React.useEffect(() => {
     if (route.params?.email) {
       setEmail(route.params.email);
@@ -150,6 +151,7 @@ const ProfileScreen = () => {
           data="**********"
           icon={faLock}
           marginBottom={12}
+          onPressed={() => onProfileTabPressed('EMAIL', '')}
         />
       </View>
       {active ? (
