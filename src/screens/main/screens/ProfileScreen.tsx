@@ -13,9 +13,11 @@ import {CameraOptions, launchCamera} from 'react-native-image-picker';
 import React from 'react';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {UserModel} from '../../../models';
-import { updateUserInfo } from '../../auth/AuthService';
+import { updateImage, updateUserInfo } from '../../auth/AuthService';
+import { UPDATE_USER_PROFILE_PICTURE } from '../../../constants/AppConstants';
+import { ReduxUpdateUser } from '../../../redux/actions/LoginAction';
 
 const ProfileScreen = () => {
   // Fields
@@ -29,6 +31,7 @@ const ProfileScreen = () => {
 
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch();
   const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
   const onProfileTabPressed = (type: string, data: string) => {
@@ -51,8 +54,8 @@ const ProfileScreen = () => {
       cropping: true,
     }).then(async (image) => {
       console.log(image);
-      setUserImage(image.path);
-      await updateUserInfo('IMAGE', image.path, email)
+      const picture = await updateImage(email, image.path)
+      dispatch(ReduxUpdateUser('IMAGE', picture))
     });
   };
 
@@ -100,6 +103,7 @@ const ProfileScreen = () => {
   React.useEffect(() => {
     console.log('User info changed')
     setUser(userInfo);
+    setUserImage(userInfo.image)
   }, [userInfo]);
 
   return (

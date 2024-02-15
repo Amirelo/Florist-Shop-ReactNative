@@ -182,22 +182,26 @@ export const updatePhoneNumber = async (email: string, data: string) => {
       phoneNumber: data,
     })
     .then(() => {
-      console.log('Update username successful');
+      console.log('Update phone number successful');
     })
-    .catch(error => console.log('Update username error:', error));
+    .catch(error => console.log('Update phone number error:', error));
 };
 
 export const updateImage = async (email: string, data: string) => {
   const reference = storage().ref(email+'.png')
   await reference.putFile(data)
+  const url = await reference.getDownloadURL()
+  console.log(url)
   await firestore()
     .collection('users')
     .doc(email)
     .update({
-      image: email+'.png',
+      image: url,
     })
     .then(() => {
-      console.log('Update username successful');
+      console.log('Update image successful');
     })
-    .catch(error => console.log('Update username error:', error));
+    .catch(error => console.log('Update image error:', error));
+
+    return url;
 };

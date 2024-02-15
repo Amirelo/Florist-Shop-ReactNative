@@ -2,6 +2,7 @@ import {
   LOGIN_AUTHORIZE,
   LOGOUT,
   UPDATE_USERNAME,
+  UPDATE_USER_PROFILE_PICTURE,
 } from '../../constants/AppConstants';
 import {UserModel} from '../../models';
 
@@ -25,6 +26,12 @@ export const ReduxUpdateUser = (actionType: string, data: string) => {
       type: UPDATE_USERNAME,
       payload: {data: data},
     };
+  }
+  if (actionType == 'IMAGE'){
+    return {
+      type:UPDATE_USER_PROFILE_PICTURE,
+      payload: {data: data}
+    }
   }
   return {
     type: UPDATE_USERNAME,

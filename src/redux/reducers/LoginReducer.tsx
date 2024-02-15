@@ -2,6 +2,7 @@ import {
   LOGIN_AUTHORIZE,
   LOGOUT,
   UPDATE_USERNAME,
+  UPDATE_USER_PROFILE_PICTURE,
 } from '../../constants/AppConstants';
 import {UserModel} from '../../models';
 const initialState = {
@@ -37,6 +38,19 @@ export default (state = initialState, action: any) => {
           email: state.userInfo.email,
           username: action.payload.data,
           image: state.userInfo.image,
+          phoneNumber: state.userInfo.phoneNumber,
+          themePref: state.userInfo.themePref,
+          langPref: state.userInfo.langPref,
+        },
+      };
+
+    case UPDATE_USER_PROFILE_PICTURE:
+      return {
+        ...state,
+        userInfo: {
+          email: state.userInfo.email,
+          username: state.userInfo.username,
+          image: action.payload.data,
           phoneNumber: state.userInfo.phoneNumber,
           themePref: state.userInfo.themePref,
           langPref: state.userInfo.langPref,

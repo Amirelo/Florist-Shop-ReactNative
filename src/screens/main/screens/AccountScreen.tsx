@@ -24,9 +24,7 @@ const AccountScreen = () => {
   // Navigation and dispatch
   const navigation = useNavigation<NavigationProp<any>>();
   const dispatch = useDispatch();
-  const [user, setUser] = React.useState<
-    FirebaseFirestoreTypes.DocumentData | undefined
-  >({});
+  const [user, setUser] = React.useState<UserModel>();
   const [userOrders, setUserOrders] = React.useState<Array<OrderModel>>([]);
   const [userPromocodes, setUserPromocodes] = React.useState<
     Array<PromocodeModel>
@@ -46,11 +44,6 @@ const AccountScreen = () => {
 
   // Get User Info
   const getInfo = async () => {
-    const info: FirebaseFirestoreTypes.DocumentData | undefined =
-      await getUserInfo(userEmail);
-    setUser(info);
-    console.log('User:', info);
-
     // Get User Orders
     const orders: Array<OrderModel> = await getUserOrders(userEmail);
     console.log('User orders:', orders);
@@ -97,6 +90,10 @@ const AccountScreen = () => {
     console.log('User Info', userInfo);
     getInfo();
   }, []);
+
+  React.useEffect(()=>{
+    setUser(userInfo)
+  },[userInfo])
 
   return (
     <ScrollView>
