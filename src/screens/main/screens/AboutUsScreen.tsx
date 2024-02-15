@@ -21,12 +21,12 @@ const AboutUsScreen = () => {
         </ItemRow>
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Phone:</CustomText>
-          <CustomText type="subTitle">(+84) 582 814 653</CustomText>
+          <CustomText type="subTitle">Phone Num:</CustomText>
+          <CustomText type="subTitle">(+84) 58 281 4653</CustomText>
         </ItemRow>
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Technologies:</CustomText>
+          <CustomText type="subTitle">Frontend:</CustomText>
           <CustomText type="subTitle">React Native (TypeScript)</CustomText>
         </ItemRow>
         <Divider marginBottom={12} />
@@ -34,6 +34,9 @@ const AboutUsScreen = () => {
           <CustomText type="subTitle">Backend:</CustomText>
           <CustomText type="subTitle">Firebase</CustomText>
         </ItemRow>
+        <Divider marginBottom={12} />
+        <CustomText type='subTitle'>I am looking for Intern/Fresher Mobile Developer Job (Full-Time, on-site)</CustomText>
+      
       </View>
     </View>
   );

@@ -45,7 +45,10 @@ const CartScreen = () => {
 
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
-    navigation.navigate('CartDeli', {carts: listCarts, total: total});
+    console.log('CartScreen - passing route - carts:', listCarts)
+    console.log('CartScreen - passing route - products:', listProducts)
+    console.log('CartScreen - passing route - total:', total)
+    navigation.navigate('CartDeli', {carts: listCarts, products: listProducts, total: total});
   };
 
   // Open option panel (promocodes)
@@ -182,6 +185,7 @@ const CartScreen = () => {
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
           <FlatList
             data={listPromos}
+            scrollEnabled={false}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <CustomButton onPressed={() => onPromocodeSelected(item)}>

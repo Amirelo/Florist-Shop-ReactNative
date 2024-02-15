@@ -44,6 +44,11 @@ const HomeScreen = () => {
     setListProducts(products);
   };
 
+  // On Need Help Card Pressed
+  const onHelpCardPressed = () => {
+    navigation.navigate('About')
+  }
+
   // Load data first time screen is load
   React.useEffect(() => {
     waitForData();
@@ -57,7 +62,7 @@ const HomeScreen = () => {
         <View style={[styles.view]}>
           <CardHelp
             title={'Welcome!'}
-            height={'20%'}
+            height={200}
             backgroundImage={IMAGE_HOME_HEADER}
             marginBottom={24}
           />
@@ -67,6 +72,7 @@ const HomeScreen = () => {
             description={lang[langPref]['home_card_description']}
             icon={faCalendarDay}
             marginBottom={24}
+            onPressed={onHelpCardPressed}
           />
           <FlatList
             style={{marginBottom: 32}}

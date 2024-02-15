@@ -20,6 +20,10 @@ const OrderScreen = () => {
     navigation.navigate('OrderDetail', {data: data});
   };
 
+  const onShoppingPressed = () => {
+    navigation.navigate('Home')
+  }
+
   React.useEffect(()=> {
     if(route.params?.userOrders){
       setListOrders(route.params.userOrders)
@@ -39,7 +43,7 @@ const OrderScreen = () => {
       />:
       <>
       <CustomText type='title' alignSelf='center' marginBottom={20}>Empty cart</CustomText>
-      <TextButton type='primary'>Start Shopping now</TextButton>
+      <TextButton type='primary' onPressed={onShoppingPressed}>Start Shopping now</TextButton>
       </>}
     </View>
   );

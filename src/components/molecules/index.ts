@@ -13,6 +13,7 @@ import OptionsPanel from './OptionsPanel';
 import ItemOrder from './ItemOrder';
 import ItemAddress from './ItemAddress';
 import ItemPromocode from './ItemPromocode';
+import ItemCartDetail from './ItemCartDetail';
 
 export {
   CardHelp,
@@ -30,4 +31,5 @@ export {
   ItemOrder,
   ItemAddress,
   ItemPromocode,
+  ItemCartDetail,
 };
