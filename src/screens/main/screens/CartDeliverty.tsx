@@ -79,7 +79,7 @@ const CartDelivery = () => {
   return (
     <View style={{height: '100%'}}>
       <View style={styles.view}>
-        <CustomInput placeholder="Phone number" onChangeText={setPhoneNumber} marginBottom={20} />
+        <CustomInput placeholder="Phone number" onChangeText={setPhoneNumber} keyboardType='numeric' marginBottom={20} />
 
         <CustomText type="title" marginBottom={8}>
           Address

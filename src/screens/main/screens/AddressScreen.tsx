@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
     paddingTop: 20,
+    flex:1
   },
 });

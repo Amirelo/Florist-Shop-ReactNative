@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {KeyboardType, KeyboardTypeOptions, StyleSheet, TextInput, View} from 'react-native';
 import themes from '../../themes/themes';
 import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -15,6 +15,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   icon?: IconProp;
+  keyboardType?: KeyboardType
 }
 
 const CustomInput = (props: Props) => {
@@ -39,6 +40,7 @@ const CustomInput = (props: Props) => {
       )}
 
       <TextInput
+        keyboardType={props.keyboardType}
         secureTextEntry={secure}
         placeholder={props.placeholder}
         value={props.value}

@@ -194,7 +194,7 @@ export const AddNewUserAddress = async (
   email: string,
   address: AddressModel,
 ) => {
-  const res = await firestore()
+  await firestore()
     .collection('users')
     .doc(email)
     .collection('addresses')
@@ -210,6 +210,28 @@ export const AddNewUserAddress = async (
     })
     .catch(error => {
       console.log('SERVICE - Error Add new Adress:', error);
+    });
+};
+
+// Add new address
+export const EditUserAddress = async (email: string, address: AddressModel) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('addresses')
+    .doc(address.id)
+    .set({
+      streetNumber: address.streetNumber,
+      street: address.street,
+      ward: address.ward,
+      district: address.district,
+      city: address.city,
+    })
+    .then(() => {
+      console.log('SERVICE - Edit Adress: Success');
+    })
+    .catch(error => {
+      console.log('SERVICE - Error Edit Adress:', error);
     });
 };
 

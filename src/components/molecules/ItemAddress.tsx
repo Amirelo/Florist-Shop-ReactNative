@@ -20,25 +20,25 @@ const ItemAddress = (props: Props) => {
       <Divider marginBottom={8} />
 
       <ItemRow marginBottom={8}>
-        <CustomText>Street Number</CustomText>
+        <CustomText type='subTitle'>Street Number</CustomText>
         <CustomText>{props.item.streetNumber + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText>Street</CustomText>
+        <CustomText type='subTitle'>Street</CustomText>
         <CustomText>{props.item.street + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText>Ward</CustomText>
+        <CustomText type='subTitle'>Ward</CustomText>
         <CustomText>{props.item.ward + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
-      <ItemRow marginBottom={8}>
-        <CustomText>City</CustomText>
+      <ItemRow marginBottom={12}>
+        <CustomText type='subTitle'>City</CustomText>
         <CustomText>{props.item.city + ''}</CustomText>
       </ItemRow>
-      <ItemRow marginBottom={0}>
+      <ItemRow marginBottom={4}>
         <TextButton
           alignSelf="baseline"
           type="primary"

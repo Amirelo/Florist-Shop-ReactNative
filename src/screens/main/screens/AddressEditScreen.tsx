@@ -13,7 +13,7 @@ import {AddressModel} from '../../../models';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 import * as road from '../../../data/roads.json';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import {AddNewUserAddress} from '../MainService';
+import {AddNewUserAddress, EditUserAddress} from '../MainService';
 import {useSelector} from 'react-redux';
 
 const AddressEdit = () => {
@@ -316,6 +316,20 @@ const AddressEdit = () => {
     }
   };
 
+  const checkFields = () => {
+    if (
+      streetNumber.length > 0 &&
+      streetName.length > 0 &&
+      ward.length > 0 &&
+      district.length > 0
+    ) {
+      console.log('No Empty Fields');
+      return true;
+    }
+    console.log('Fields cannot be empty');
+    return false;
+  };
+
   const onAddPressed = async () => {
     if (checkFields()) {
       const address = new AddressModel(
@@ -331,18 +345,19 @@ const AddressEdit = () => {
     }
   };
 
-  const checkFields = () => {
-    if (
-      streetNumber.length > 0 &&
-      streetName.length > 0 &&
-      ward.length > 0 &&
-      district.length > 0
-    ) {
-      console.log('No Empty Fields');
-      return true;
+  const onEditPressed = async () => {
+    if (checkFields()) {
+      const address = new AddressModel(
+        '',
+        streetNumber,
+        streetName,
+        ward,
+        district,
+        'HCM City',
+      );
+      await EditUserAddress(email, address);
+      navigation.goBack();
     }
-    console.log('Fields cannot be empty');
-    return false;
   };
 
   // Get data from route
@@ -408,7 +423,7 @@ const AddressEdit = () => {
           placeholder="Street number"></CustomInput>
 
         {route.params?.item ? (
-          <TextButton type="primary">Edit Address</TextButton>
+          <TextButton type="primary" onPressed={onEditPressed}>Edit Address</TextButton>
         ) : (
           <TextButton type="primary" onPressed={onAddPressed}>
             Add New Address
