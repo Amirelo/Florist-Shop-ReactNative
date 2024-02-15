@@ -93,12 +93,20 @@ const SignInScreen = () => {
 
   // Sign in with google
   const onGooglePressed = async () => {
-    if (await SignInWithGoogle()) {
-      const userInfo: UserModel = (await getUserInfo(email));
-      console.log('Login successful:', userInfo)
-      dispatch(
-        authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
-      );
+    const email = await SignInWithGoogle()
+    if (email) {
+      console.log('Sign in success with email:', email)
+      const userInfo = (await getUserInfo(email));
+      if (userInfo != null) {
+        dispatch(
+          authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
+          );
+          console.log('Login successful:', userInfo)
+
+      } else{
+        GoogleSignin.signOut();
+        console.log('Fail to get user info')
+      }
     } else {
       console.log('Login failed');
     }
@@ -109,9 +117,9 @@ const SignInScreen = () => {
     if (await checkIsSignIn()) {
       const currentUser = await GoogleSignin.getCurrentUser()
       console.log('Current user:', currentUser?.user.email)
-      const userInfo: UserModel = (await getUserInfo(currentUser!.user.email))
+      const userInfo = (await getUserInfo(currentUser!.user.email))
       dispatch(
-        authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
+        authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo!),
       );
     } else {
       console.log('No previous Sign In session');

@@ -1,5 +1,6 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import { UserModel } from '../../models';
 
@@ -94,26 +95,21 @@ export const passwordSignUp = async (email: string, password: string) => {
 // Sign In with google
 export const SignInWithGoogle = async () => {
   try {
-    var isSignedUp = false;
     // Get user email
     const userEmail = (await GoogleSignin.signIn()).user.email;
     console.log('user info:', userEmail);
 
     // Get all user
-    await firestore()
+    const user = await firestore()
       .collection('users')
+      .doc(userEmail)
       .get()
-      .then(querySnapshot => {
-        // Check whether user data is in Firestore
-        querySnapshot.forEach(document => {
-          document.id == userEmail ? (isSignedUp = true) : '';
-        });
-      });
+      
+      // Sign Up if user data not in Firestore
+      user.data() ? console.log('User Found') : await SaveUserFirestore(userEmail);
 
-    // Sign Up if user data not in Firestore
-    isSignedUp ? '' : SaveUserFirestore(userEmail);
 
-    return true;
+    return userEmail;
   } catch (error: any) {
     console.log('error', error.code);
     return false;
@@ -140,9 +136,15 @@ export const sendPasswordChangeEmail = async (email: string) => {
 export const getUserInfo = async (email: string) => {
   const doc = await firestore().collection('users').doc(email).get();
   const data = doc.data()
-  console.log('SERVICE - Get User Info:', doc)
-  const user = new UserModel(doc.id, data!.username, data!.image, data!.phoneNumber, data!.themePref,data!.langPref)
-  return user;
+  console.log('SERVICE - Get User Info:', data)
+  if (data){
+    console.log('User Info found')
+    console.log('Username:', data.username)
+    const user = new UserModel(doc.id, data.username, data.image, data.phoneNumber, data.themePref,data.langPref)
+    return user;
+  }
+  console.log('User not found')
+  return null
 };
 
 export const updateUserInfo = async (
@@ -186,11 +188,13 @@ export const updatePhoneNumber = async (email: string, data: string) => {
 };
 
 export const updateImage = async (email: string, data: string) => {
+  const reference = storage().ref(email+'.png')
+  await reference.putFile(data)
   await firestore()
     .collection('users')
     .doc(email)
     .update({
-      image: data,
+      image: email+'.png',
     })
     .then(() => {
       console.log('Update username successful');

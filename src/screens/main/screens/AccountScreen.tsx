@@ -102,7 +102,7 @@ const AccountScreen = () => {
     <ScrollView>
       <View style={styles.body}>
         <ItemUser
-          username={user!.username}
+          username={userInfo.username}
           email={userEmail}
           source={user?.image ? user.image : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'}
           marginTop={40}

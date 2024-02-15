@@ -7,8 +7,6 @@ import {
   ProductModel,
   PromocodeModel,
 } from '../../models';
-import {useSelector} from 'react-redux';
-import {useEffect} from 'react';
 
 // Get all categories from server
 export const getCategories = async () => {

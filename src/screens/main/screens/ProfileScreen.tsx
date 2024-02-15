@@ -15,6 +15,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {UserModel} from '../../../models';
+import { updateUserInfo } from '../../auth/AuthService';
 
 const ProfileScreen = () => {
   // Fields
@@ -48,9 +49,10 @@ const ProfileScreen = () => {
       height: 100,
       mediaType: 'photo',
       cropping: true,
-    }).then(image => {
+    }).then(async (image) => {
       console.log(image);
       setUserImage(image.path);
+      await updateUserInfo('IMAGE', image.path, email)
     });
   };
 
