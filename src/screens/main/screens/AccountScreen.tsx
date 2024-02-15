@@ -77,12 +77,16 @@ const AccountScreen = () => {
   };
 
   const onPromocodeTabPressed = () => {
-    navigation.navigate('Promocode', {data: userPromocodes})
-  }
+    navigation.navigate('Promo', {data: userPromocodes});
+  };
 
   // Navigate to order screen
   const onTabPressed = (name: string) => {
     navigation.navigate(name, {user: user});
+  };
+
+  const onChangePasswordPressed = () => {
+    navigation.navigate('UpdateInfo', {type: 'EMAIL', data: ''});
   };
 
   React.useEffect(() => {
@@ -91,9 +95,9 @@ const AccountScreen = () => {
     getInfo();
   }, []);
 
-  React.useEffect(()=>{
-    setUser(userInfo)
-  },[userInfo])
+  React.useEffect(() => {
+    setUser(userInfo);
+  }, [userInfo]);
 
   return (
     <ScrollView>
@@ -101,7 +105,11 @@ const AccountScreen = () => {
         <ItemUser
           username={userInfo.username}
           email={userEmail}
-          source={user?.image ? user.image : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'}
+          source={
+            user?.image
+              ? user.image
+              : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
+          }
           marginTop={40}
           marginBottom={12}
           onPressed={onUserTabPressed}
@@ -119,7 +127,7 @@ const AccountScreen = () => {
           {lang[langPref]['text_tab_address_title']}
         </ItemAccount>
         <ItemAccount
-          onPressed={() => onTabPressed('Promo')}
+          onPressed={onPromocodeTabPressed}
           amount={userPromocodes.length}
           description={lang[langPref]['text_tab_promocodes_description']}>
           {lang[langPref]['text_tab_promocodes_title']}
@@ -136,6 +144,7 @@ const AccountScreen = () => {
           {lang[langPref]['text_tab_about_title']}
         </ItemAccount>
         <ItemAccount
+          onPressed={onChangePasswordPressed}
           color={themes['defaultTheme'].errorcolor}
           description={lang[langPref]['text_tab_changePass_description']}>
           {lang[langPref]['text_tab_changePass_title']}

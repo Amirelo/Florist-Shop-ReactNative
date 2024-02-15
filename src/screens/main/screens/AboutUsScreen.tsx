@@ -27,7 +27,7 @@ const AboutUsScreen = () => {
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
           <CustomText type="subTitle">Technologies:</CustomText>
-          <CustomText type="subTitle">React Native</CustomText>
+          <CustomText type="subTitle">React Native (TypeScript)</CustomText>
         </ItemRow>
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
