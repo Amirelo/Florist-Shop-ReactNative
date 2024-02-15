@@ -15,9 +15,9 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
 import {UserModel} from '../../../models';
-import { updateImage, updateUserInfo } from '../../auth/AuthService';
-import { UPDATE_USER_PROFILE_PICTURE } from '../../../constants/AppConstants';
-import { ReduxUpdateUser } from '../../../redux/actions/LoginAction';
+import {updateImage, updateUserInfo} from '../../auth/AuthService';
+import {UPDATE_USER_PROFILE_PICTURE} from '../../../constants/AppConstants';
+import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
 
 const ProfileScreen = () => {
   // Fields
@@ -52,10 +52,10 @@ const ProfileScreen = () => {
       height: 100,
       mediaType: 'photo',
       cropping: true,
-    }).then(async (image) => {
+    }).then(async image => {
       console.log(image);
-      const picture = await updateImage(email, image.path)
-      dispatch(ReduxUpdateUser('IMAGE', picture))
+      const picture = await updateImage(email, image.path);
+      dispatch(ReduxUpdateUser('IMAGE', picture));
     });
   };
 
@@ -79,8 +79,9 @@ const ProfileScreen = () => {
             width: 100,
             height: 100,
             mediaType: 'photo',
-          }).then(image => {
-            setUserImage(image.path);
+          }).then(async image => {
+            const picture = await updateImage(email, image.path);
+            dispatch(ReduxUpdateUser('IMAGE', picture));
           })
         ) : (
           <></>
@@ -101,9 +102,9 @@ const ProfileScreen = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log('User info changed')
+    console.log('User info changed');
     setUser(userInfo);
-    setUserImage(userInfo.image)
+    setUserImage(userInfo.image);
   }, [userInfo]);
 
   return (
