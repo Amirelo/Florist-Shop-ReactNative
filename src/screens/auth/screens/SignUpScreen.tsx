@@ -1,13 +1,18 @@
 import {StyleSheet, View} from 'react-native';
 import {CustomInput} from '../../../components/molecules';
-import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faBackspace,
+  faEnvelope,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import themes from '../../../themes/themes';
 import {CustomImage, CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {passwordSignUp} from '../AuthService';
 import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
-import {TextButton} from '../../../components/molecules/buttons';
+import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 
@@ -35,6 +40,10 @@ const SignUpScreen = () => {
         ? true
         : false;
     return status;
+  };
+
+  const onBackButtonPressed = () => {
+    navigation.goBack();
   };
 
   // Sign up on press
@@ -65,9 +74,18 @@ const SignUpScreen = () => {
         />
       </View>
       <View style={styles.body}>
-        <CustomText marginBottom={30} type="title">
-          {lang[langPref]['signup_title']}
-        </CustomText>
+        <View
+          style={{
+            marginBottom: 30,
+            flexDirection: 'row',
+            gap: 8,
+            alignItems: 'center',
+          }}>
+          <ImageButton icon={faArrowLeft} onPressed={onBackButtonPressed} />
+          <CustomText type="title" fontWeight="bold">
+            {lang[langPref]['signup_title']}
+          </CustomText>
+        </View>
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
@@ -82,7 +100,7 @@ const SignUpScreen = () => {
           hidden={true}
         />
         <CustomInput
-          marginBottom={12}
+          marginBottom={20}
           onChangeText={setConfirmPassword}
           placeholder={lang[langPref]['edConPass']}
           icon={faLock}
@@ -96,7 +114,12 @@ const SignUpScreen = () => {
           {lang[langPref]['buttonSignUp']}
         </TextButton>
 
-        <TextButton onPressed={onGoBackPressed} fontSize="subTitle">
+        <TextButton
+          onPressed={onGoBackPressed}
+          textDecorationLine="underline"
+          fontSize="subTitle"
+          alignSelf="center"
+          marginBottom={20}>
           {lang[langPref]['signup_have_account']}
         </TextButton>
       </View>
@@ -107,9 +130,7 @@ const SignUpScreen = () => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-  },
+  view: {},
   orderButton: {
     marginBottom: 20,
     height: 48,

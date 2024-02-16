@@ -14,7 +14,7 @@ const en = {
   buttonLogin: 'Sign In',
   buttonSignUp: 'Sign Up',
   buttonChangePass: 'Change Password',
-  buttonVerify: 'Verify',
+  buttonVerify: 'Send Email',
   buttonGoBack_long: 'Click here to go back',
   buttonGoogleSignIn :'Sign In with Google',
   buttonPlaceOrder: 'Place Order',
@@ -27,13 +27,16 @@ const en = {
   bottomTab_cart: 'Cart',
   bottomTab_account:'Account',
 
-  // text
+  // Login
   signin_title : 'Sign In',
   signin_forgot: 'Forgot Password',
   signin_no_account: "Don't have an account? Sign Up",
   signup_title : 'Sign Up',
   signup_have_account: 'Already have an account? Sign In',
   changePass_title: 'Change Password',
+
+  // Verify Email Screen
+  verify_title: 'Password Change',
 
   // Home:
   home_popular:'Popular',

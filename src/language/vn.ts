@@ -33,6 +33,9 @@ const vn = {
   signup_have_account: 'Quay lại đăng nhập',
   changePass_title: 'Đổi mật khẩu',
 
+  // Verify Email Screen
+  verify_title: 'Password Change',
+
   // Home:
   home_popular:'Sản phẩm nổi bật',
   home_card_title: 'Cần trợ giúp?',
