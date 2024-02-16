@@ -5,7 +5,12 @@ import {ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
 import themes from '../../../themes/themes';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -25,15 +30,12 @@ const CartScreen = () => {
 
   // Fields
   const [total, setTotal] = React.useState(0);
-  const [promoActive, setPromoActive] = React.useState(false);
   const [productActive, setProductActive] = React.useState(false);
-  const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [selectedProduct, setSelectedProduct] = React.useState<ProductModel>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
   const [listCarts, setListCarts] = React.useState<Array<CartModel>>([]);
-  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>();
 
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
@@ -45,28 +47,27 @@ const CartScreen = () => {
 
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
-    console.log('CartScreen - passing route - carts:', listCarts)
-    console.log('CartScreen - passing route - products:', listProducts)
-    console.log('CartScreen - passing route - total:', total)
-    navigation.navigate('CartDeli', {carts: listCarts, products: listProducts, total: total});
-  };
-
-  // Open option panel (promocodes)
-  const onPromocodePressed = () => {
-    setPromoActive(true);
-  };
-
-  // Saved selected promocodes into useState
-  const onPromocodeSelected = (item: PromocodeModel) => {
-    setPromoActive(false);
-    setSelectedPromo(item);
+    console.log('CartScreen - passing route - carts:', listCarts);
+    console.log('CartScreen - passing route - products:', listProducts);
+    console.log('CartScreen - passing route - total:', total);
+    navigation.navigate('CartDeli', {
+      carts: listCarts,
+      products: listProducts,
+      total: total,
+    });
   };
 
   const onItemDeletePressed = async () => {
     setProductActive(false);
-    if(await deleteCartItem(selectedProduct!.id, email)){
-      setListProducts(listProducts.filter(productItem => productItem.id != selectedProduct!.id))
-      setListCarts(listCarts.filter(cartItem => cartItem.id != selectedProduct!.id))
+    if (await deleteCartItem(selectedProduct!.id, email)) {
+      setListProducts(
+        listProducts.filter(
+          productItem => productItem.id != selectedProduct!.id,
+        ),
+      );
+      setListCarts(
+        listCarts.filter(cartItem => cartItem.id != selectedProduct!.id),
+      );
     }
   };
 
@@ -82,10 +83,7 @@ const CartScreen = () => {
 
   const waitForData = async () => {
     setListProducts([]);
-    setListCarts([])
-    // Get Promocodes
-    console.log('User Promocodes:', userInfo.promocodes);
-    setListPromos(userInfo.promocodes);
+    setListCarts([]);
     const carts: Array<CartModel> = await getCart(email);
 
     console.log('User carts:', carts);
@@ -107,18 +105,26 @@ const CartScreen = () => {
   };
 
   React.useEffect(() => {
-    waitForData()
+    waitForData();
   }, []);
 
-  React.useEffect(()=>{
-    if(route.params?.product && route.params?.quantity){
-      const cart: CartModel = new CartModel(route.params.product.id, route.params.quantity)
+  React.useEffect(() => {
+    if (route.params?.product && route.params?.quantity) {
+      const cart: CartModel = new CartModel(
+        route.params.product.id,
+        route.params.quantity,
+      );
       if (!listCarts.includes(cart)) {
-        setListProducts([...listProducts, route.params.product])
-        setListCarts([...listCarts, cart])
+        setListProducts([...listProducts, route.params.product]);
+        setListCarts([...listCarts, cart]);
+      }
+      if (route.params?.action && route.params.action == 'Order') {
+        setListProducts([]);
+        setListCarts([]);
+        setTotal(0);
       }
     }
-  }, [route])
+  }, [route]);
 
   return (
     <View style={{height: '100%'}}>
@@ -144,9 +150,9 @@ const CartScreen = () => {
               item={item}
               onEllipsesPressed={() => onItemEllipsesPressed(item)}
               quantity={
-                listCarts.filter(filterItem => filterItem.id == item.id)[0] ? 
                 listCarts.filter(filterItem => filterItem.id == item.id)[0]
-                  .quantity
+                  ? listCarts.filter(filterItem => filterItem.id == item.id)[0]
+                      .quantity
                   : -10
               }
               onQuantityChanged={(amount: number) =>
@@ -158,54 +164,10 @@ const CartScreen = () => {
 
         <Divider marginBottom={20} />
 
-        <CustomButton
-          onPressed={onPromocodePressed}
-          style={styles.couponButton}>
-          <CustomText>
-            {selectedPromo
-              ? selectedPromo.title
-              : lang[langPref]['text_find_promocodes']}
-          </CustomText>
-        </CustomButton>
-
-        <ItemRow marginBottom={20}>
-          <CustomText type="title">{lang[langPref]['text_total']}</CustomText>
-          <CustomText type="title">
-            {selectedPromo
-              ? priceFormat((total * (100 - selectedPromo.amount)) / 100, 'en')
-              : priceFormat(total, 'en')}
-          </CustomText>
-        </ItemRow>
-
         <TextButton onPressed={onBuyPressed} type="primary">
           {lang[langPref]['buttonPlaceOrder']}
         </TextButton>
       </View>
-      {promoActive ? (
-        <OptionsPanel setActive={setPromoActive} title="Promocodes">
-          <FlatList
-            data={listPromos}
-            scrollEnabled={false}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <CustomButton onPressed={() => onPromocodeSelected(item)}>
-                <CustomText type="subTitle" marginBottom={12}>
-                  {item.title}
-                </CustomText>
-              </CustomButton>
-            )}
-          />
-          <CustomButton onPressed={() => setSelectedPromo(undefined)}>
-            <CustomText
-              color={themes['defaultTheme'].errorcolor}
-              type="subTitle">
-              Reset
-            </CustomText>
-          </CustomButton>
-        </OptionsPanel>
-      ) : (
-        <></>
-      )}
       {productActive && selectedProduct ? (
         <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
           <CustomButton onPressed={onItemDeletePressed}>
@@ -226,17 +188,6 @@ export default CartScreen;
 const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
-  },
-  couponButton: {
-    marginTop: 20,
-    marginBottom: 20,
-    height: 48,
-    borderWidth: 1,
-    borderRadius: 7,
-    backgroundColor: 'white',
-    borderColor: themes['defaultTheme'].textSecondaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   orderButton: {
     marginBottom: 20,

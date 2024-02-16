@@ -2,6 +2,7 @@ import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {
   AddressModel,
   CartModel,
+  OrderModel,
   ProductModel,
   PromocodeModel,
 } from '../../../models';
@@ -27,7 +28,7 @@ import {
 } from '@react-navigation/native';
 import {addressFormat, priceFormat} from '../../../utils/Utils';
 import {TextButton} from '../../../components/molecules/buttons';
-import {getUserPromoocodes} from '../MainService';
+import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
 import {useSelector} from 'react-redux';
 
 const CartDetail = () => {
@@ -38,7 +39,9 @@ const CartDetail = () => {
   // Fields
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [total, setTotal] = React.useState(0);
+  const [totalQuantity, setTotalQuantity] = React.useState(0);
   const [address, setAddress] = React.useState<AddressModel>();
+  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [cartList, setCartList] = React.useState<Array<CartModel>>([]);
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
@@ -61,9 +64,27 @@ const CartDetail = () => {
   };
 
   // Navigate home on pressed
-  const onOrderPressed = () => {
-    console.log('Pressed');
-    navigation.navigate('Home');
+  const onOrderPressed = async () => {
+    const totalPrice = selectedPromo
+      ? total * (1 - selectedPromo.amount / 100)
+      : total;
+    const userOrder = new OrderModel(
+      '',
+      'PENDING',
+      selectedPromo ? selectedPromo.id : '',
+      total,
+      totalQuantity,
+      totalPrice,
+      '',
+      cartList,
+      addressFormat(address!),
+      phoneNumber,
+    );
+    const addOrderRes = await AddUserOrder(userOrder, email);
+    if (addOrderRes) {
+      await deleteCart(email);
+      navigation.navigate('Cart', {action: 'Order'});
+    }
   };
 
   // Get promo
@@ -76,8 +97,12 @@ const CartDetail = () => {
   React.useEffect(() => {
     getPromocodes();
     if (route.params?.carts) {
+      setTotalQuantity(0);
       setCartList(route.params.carts);
       console.log('Route - carts:', route.params.carts);
+      cartList.forEach(item => {
+        setTotalQuantity(prev => prev + item.quantity);
+      });
     }
     if (route.params?.total) {
       setTotal(route.params.total);
@@ -90,6 +115,10 @@ const CartDetail = () => {
     if (route.params?.products) {
       setListProducts(route.params.products);
       console.log('Route - products:', route.params.products);
+    }
+    if (route.params?.phoneNumber) {
+      setPhoneNumber(route.params.phoneNumber);
+      console.log('Route - phone number:', route.params.phoneNumber);
     }
   }, []);
 
@@ -104,7 +133,7 @@ const CartDetail = () => {
             borderRadius: 7,
             marginBottom: 30,
           }}>
-          <CustomText fontWeight='bold' marginBottom={20} type="title">
+          <CustomText fontWeight="bold" marginBottom={20} type="title">
             Delivery Information
           </CustomText>
           <CustomText type="subTitle">
@@ -119,7 +148,9 @@ const CartDetail = () => {
             borderRadius: 7,
             marginBottom: 30,
           }}>
-          <CustomText type="title" fontWeight='bold'>Products' Detail</CustomText>
+          <CustomText type="title" fontWeight="bold">
+            Products' Detail
+          </CustomText>
           <FlatList
             horizontal={true}
             scrollEnabled={listProducts.length > 2}
@@ -144,45 +175,62 @@ const CartDetail = () => {
             )}
           />
         </View>
-        <View style={{borderWidth:1, padding: 12, borderRadius:7, marginBottom:30}}>
-        <CustomText marginBottom={20} type="title" fontWeight='bold'>
-          Payment
-        </CustomText>
-
-        <ItemRow marginBottom={20}>
-          <CustomText type="title">Products price:</CustomText>
-          <CustomText type="title" color={'green'} fontWeight='bold'>{priceFormat(total, 'en')}</CustomText>
-        </ItemRow>
-
-        <Divider marginBottom={20} />
-
-        <TextButton
-          type="tertiary"
-          marginBottom={20}
-          onPressed={onPromocodePressed}>
-          Select coupon
-        </TextButton>
-
-        <ItemRow marginBottom={20}>
-          <CustomText type="title">Discount:</CustomText>
-          <CustomText type="title">
-            {selectedPromo ? selectedPromo.effect : 'None selected'}
+        <View
+          style={{
+            borderWidth: 1,
+            padding: 12,
+            borderRadius: 7,
+            marginBottom: 30,
+          }}>
+          <CustomText marginBottom={20} type="title" fontWeight="bold">
+            Payment
           </CustomText>
-        </ItemRow>
 
-        <ItemRow marginBottom={20}>
-          <CustomText type="title">Total</CustomText>
-          <CustomText type="title">{total.toString()}</CustomText>
-        </ItemRow>
+          <ItemRow marginBottom={20}>
+            <CustomText type="title">Products price:</CustomText>
+            <CustomText type="title" color={'green'} fontWeight="bold">
+              {priceFormat(total, 'en')}
+            </CustomText>
+          </ItemRow>
+
+          <Divider marginBottom={20} />
+
+          <TextButton
+            type="tertiary"
+            marginBottom={20}
+            onPressed={onPromocodePressed}>
+            Select coupon
+          </TextButton>
+
+          <ItemRow marginBottom={20}>
+            <CustomText type="title">Discount:</CustomText>
+            <CustomText type="title">
+              {selectedPromo ? selectedPromo.effect : 'None selected'}
+            </CustomText>
+          </ItemRow>
+
+          <ItemRow marginBottom={20}>
+            <CustomText type="title">Total</CustomText>
+            <CustomText type="title">{priceFormat(total, 'en')}</CustomText>
+          </ItemRow>
         </View>
-        <View style={{borderWidth:1, padding: 12, borderRadius:7, marginBottom:30}}>
-        <CustomText type='title' fontWeight='bold' marginBottom={20}>Payment Method</CustomText>
-        <CustomText marginBottom={20} type="subTitle">
-          Cash payment
-        </CustomText>
+        <View
+          style={{
+            borderWidth: 1,
+            padding: 12,
+            borderRadius: 7,
+            marginBottom: 30,
+          }}>
+          <CustomText type="title" fontWeight="bold" marginBottom={20}>
+            Payment Method
+          </CustomText>
+          <CustomText marginBottom={20} type="subTitle">
+            Cash payment
+          </CustomText>
         </View>
-        <TextButton type='primary' onPressed={onOrderPressed} marginBottom={20}>Order</TextButton>
-       
+        <TextButton type="primary" onPressed={onOrderPressed} marginBottom={20}>
+          Order
+        </TextButton>
       </View>
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">

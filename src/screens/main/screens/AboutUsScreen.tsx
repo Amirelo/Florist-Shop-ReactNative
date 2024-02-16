@@ -32,7 +32,7 @@ const AboutUsScreen = () => {
         <Divider marginBottom={12} />
         <ItemRow marginBottom={12}>
           <CustomText type="subTitle">Backend:</CustomText>
-          <CustomText type="subTitle">Firebase</CustomText>
+          <CustomText type="subTitle">Firebase (Firestore)</CustomText>
         </ItemRow>
         <Divider marginBottom={12} />
         <CustomText type='subTitle'>I am looking for Intern/Fresher Mobile Developer Job (Full-Time, on-site)</CustomText>

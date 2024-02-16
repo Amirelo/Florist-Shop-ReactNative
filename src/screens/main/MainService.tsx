@@ -70,8 +70,46 @@ export const getUserOrders = async (email: string) => {
         snapshot.data().total,
         snapshot.data().orderDate,
         snapshot.data().products,
+        snapshot.data().address,
+        snapshot.data().phoneNumber
       ),
   );
+};
+
+// Add Order
+export const AddUserOrder = async (order: OrderModel, email: string) => {
+  var currentdate = new Date();
+  var year = currentdate.getFullYear();
+  var month = currentdate.getMonth() + 1 <10 ? '0' + (currentdate.getMonth()+1) : currentdate.getMonth()+1;
+  var day = currentdate.getDay() < 10 ? '0' + currentdate.getDay() : currentdate.getDay();
+  var date:string = year.toString() + month.toString() + day.toString()
+  console.log('SERVICE - Add User Order - current date:', date)
+  console.log('SERVICE - Add User Order - order:', order)
+
+
+  return await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('orders')
+    .add({
+      status: 'PENDING',
+      discountRef: order.discountRef,
+      productsPrice: order.productsPrice,
+      productsQuantity: order.productsQuantity,
+      total: order.total,
+      orderDate: date,
+      products: order.products,
+      address: order.address,
+      phoneNumber: order.phoneNumber
+    })
+    .then(() => {
+      console.log('SERVICE - Add User Order: success');
+      return true;
+    })
+    .catch(error => {
+      console.log('SERVICE - Add User Order:', error);
+      return false;
+    });
 };
 
 // Add product id to cart
@@ -167,6 +205,25 @@ export const deleteCartItem = async (productID: string, email: string) => {
       console.log('SERVICE - Cart Item Delete error:', error);
       return false;
     });
+};
+
+// Delete all cart item
+export const deleteCart = async (email: string) => {
+  try{
+  const carts = await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('carts')
+    .get();
+  carts.docs.forEach(item => {
+    item.ref.delete();
+  });
+  console.log('SERVICE - Delete Cart: Success')
+  return true
+} catch(error){
+  console.log('SERVICE - Delete Cart Error:', error)
+  return false
+}
 };
 
 // Get User Addresses

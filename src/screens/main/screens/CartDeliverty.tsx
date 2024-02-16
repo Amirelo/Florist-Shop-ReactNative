@@ -14,6 +14,7 @@ import {faPhone} from '@fortawesome/free-solid-svg-icons';
 import {addressFormat} from '../../../utils/Utils';
 import {getUserAddresses} from '../MainService';
 import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore'
 
 const CartDelivery = () => {
   // Navigation
@@ -22,16 +23,16 @@ const CartDelivery = () => {
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   // Fields
-  
+
   const [optionActive, setOptionActive] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>();
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>(
     [],
   );
-  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>()
-  const [listCarts, setListCarts] = React.useState<Array<CartModel>>()
-  const [total, setTotal] = React.useState(0)
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>();
+  const [listCarts, setListCarts] = React.useState<Array<CartModel>>();
+  const [total, setTotal] = React.useState(0);
 
   // Get total price
 
@@ -46,12 +47,15 @@ const CartDelivery = () => {
     if (route.params?.carts) {
       setListCarts(route.params.carts);
     }
-    if (route.params?.products){
-      console.log('CartDelivery - route found - products:', route.params.products)
-      setListProducts(route.params.products)
+    if (route.params?.products) {
+      console.log(
+        'CartDelivery - route found - products:',
+        route.params.products,
+      );
+      setListProducts(route.params.products);
     }
-    if (route.params?.total){
-      setTotal(route.params.total)
+    if (route.params?.total) {
+      setTotal(route.params.total);
     }
   }, []);
 
@@ -62,15 +66,17 @@ const CartDelivery = () => {
       selectedAddress != null &&
       phoneNumber.length == 10
     ) {
-      console.log('CartDelivery - passing route - carts:', listCarts)
-      console.log('CartDelivery - passing route - total:', total)
-      console.log('CartDelivery - passing route - products:', listProducts)
-      console.log('CartDelivery - passing route - address:', selectedAddress)
+      console.log('CartDelivery - passing route - carts:', listCarts);
+      console.log('CartDelivery - passing route - total:', total);
+      console.log('CartDelivery - passing route - products:', listProducts);
+      console.log('CartDelivery - passing route - address:', selectedAddress);
+      console.log('CartDelivery - passing route - phone number:', phoneNumber);
       navigation.navigate('CartDetail', {
         carts: listCarts,
         total: total,
         products: listProducts,
         address: selectedAddress,
+        phoneNumber: phoneNumber,
       });
     } else {
       console.log('Fields cannot be empty');
@@ -91,6 +97,27 @@ const CartDelivery = () => {
     setSelectedAddress(item);
     setOptionActive(false);
   };
+
+  React.useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(email)
+      .collection('addresses')
+      .onSnapshot(querySnapshot => {
+        setListAddresses([]);
+        querySnapshot.docs.map(item => {
+          const address = new AddressModel(
+            item.id,
+            item.data().streetNumber,
+            item.data().street,
+            item.data().ward,
+            item.data().district,
+            item.data().city,
+          );
+          setListAddresses(prev => [...prev, address]);
+        });
+      });
+  }, []);
 
   return (
     <View style={{height: '100%'}}>

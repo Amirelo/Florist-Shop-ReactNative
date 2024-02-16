@@ -1,4 +1,4 @@
-import {ProductModel} from '.';
+import {CartModel, ProductModel} from '.';
 
 const orderStatus = [
   'PENDING',
@@ -17,7 +17,9 @@ class OrderModel {
   productsQuantity: number;
   total: number;
   orderDate: string;
-  products: Array<any>;
+  products: Array<CartModel>;
+  address: string;
+  phoneNumber:string;
   constructor(
     id: string,
     status: string,
@@ -26,7 +28,9 @@ class OrderModel {
     productsQuantity: number,
     total: number,
     orderDate: string,
-    products: Array<any>,
+    products: Array<CartModel>,
+    address:string,
+    phoneNumber: string
   ) {
     this.id = id;
     this.status = status;
@@ -36,6 +40,8 @@ class OrderModel {
     this.total = total;
     this.orderDate = orderDate;
     this.products = products;
+    this.address = address;
+    this.phoneNumber = phoneNumber;
   }
 }
 
