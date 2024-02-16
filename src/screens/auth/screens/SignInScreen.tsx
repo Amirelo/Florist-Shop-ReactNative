@@ -217,6 +217,7 @@ export default SignInScreen;
 
 const styles = StyleSheet.create({
   view: {
+    height:'100%'
   },
   body: {
     justifyContent: 'center',
