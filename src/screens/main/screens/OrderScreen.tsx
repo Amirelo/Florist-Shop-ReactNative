@@ -21,7 +21,7 @@ const OrderScreen = () => {
   };
 
   const onShoppingPressed = () => {
-    navigation.navigate('Home')
+    navigation.navigate('Explore')
   }
 
   React.useEffect(()=> {

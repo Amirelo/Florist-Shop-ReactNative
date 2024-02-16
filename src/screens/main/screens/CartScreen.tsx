@@ -57,6 +57,10 @@ const CartScreen = () => {
     });
   };
 
+  const onShoppingPressed = () => {
+    navigation.navigate('Explore');
+  };
+
   const onItemDeletePressed = async () => {
     setProductActive(false);
     if (await deleteCartItem(selectedProduct!.id, email)) {
@@ -128,46 +132,58 @@ const CartScreen = () => {
 
   return (
     <View style={{height: '100%'}}>
-      <View style={styles.view}>
-        {/* Cart Item List */}
-        <FlatList
-          style={{
-            marginTop: 30,
-            marginBottom: 20,
-            height: '50%',
-            borderWidth: 1,
-            borderColor: themes['defaultTheme'].primaryColor,
-            borderRadius: 7,
-          }}
-          scrollEnabled={true}
-          showsVerticalScrollIndicator={false}
-          data={listProducts}
-          key={'#'}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <ItemCart
-              marginBottom={12}
-              item={item}
-              onEllipsesPressed={() => onItemEllipsesPressed(item)}
-              quantity={
-                listCarts.filter(filterItem => filterItem.id == item.id)[0]
-                  ? listCarts.filter(filterItem => filterItem.id == item.id)[0]
-                      .quantity
-                  : -10
-              }
-              onQuantityChanged={(amount: number) =>
-                onQuantityChanged(amount, item)
-              }
-            />
-          )}
-        />
+      {listCarts.length > 0 ? (
+        <View style={styles.view}>
+          {/* Cart Item List */}
+          <FlatList
+            style={{
+              marginTop: 30,
+              marginBottom: 20,
+              height: '50%',
+              borderWidth: 1,
+              borderColor: themes['defaultTheme'].primaryColor,
+              borderRadius: 7,
+            }}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            data={listProducts}
+            key={'#'}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <ItemCart
+                marginBottom={12}
+                item={item}
+                onEllipsesPressed={() => onItemEllipsesPressed(item)}
+                quantity={
+                  listCarts.filter(filterItem => filterItem.id == item.id)[0]
+                    ? listCarts.filter(
+                        filterItem => filterItem.id == item.id,
+                      )[0].quantity
+                    : -10
+                }
+                onQuantityChanged={(amount: number) =>
+                  onQuantityChanged(amount, item)
+                }
+              />
+            )}
+          />
 
-        <Divider marginBottom={20} />
+          <Divider marginBottom={20} />
 
-        <TextButton onPressed={onBuyPressed} type="primary">
-          {lang[langPref]['buttonPlaceOrder']}
-        </TextButton>
-      </View>
+          <TextButton onPressed={onBuyPressed} type="primary">
+            {lang[langPref]['buttonPlaceOrder']}
+          </TextButton>
+        </View>
+      ) : (
+        <View style={{justifyContent:'center', height:'100%', paddingHorizontal:16}}>
+          <CustomText type="title" alignSelf="center" marginBottom={20}>
+            Empty cart
+          </CustomText>
+          <TextButton type="primary" onPressed={onShoppingPressed}>
+            Start Shopping now
+          </TextButton>
+        </View>
+      )}
       {productActive && selectedProduct ? (
         <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
           <CustomButton onPressed={onItemDeletePressed}>
@@ -188,6 +204,7 @@ export default CartScreen;
 const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
+    marginTop: 20,
   },
   orderButton: {
     marginBottom: 20,
