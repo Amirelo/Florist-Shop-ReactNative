@@ -51,7 +51,7 @@ const TextButton = (props: Props) => {
             : 'white'
         }
         fontWeight={
-          selectedStyle == 'none' || selectedStyle == 'tertiary'
+          selectedStyle == 'none'
             ? 'normal'
             : 'bold'
         }

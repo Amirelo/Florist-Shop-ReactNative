@@ -7,7 +7,6 @@ import {logout} from '../../../redux/actions/LoginAction';
 import {getUserInfo, googleLogout} from '../../auth/AuthService';
 import lang from '../../../language/lang';
 import React from 'react';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {
   AddressModel,
   OrderModel,

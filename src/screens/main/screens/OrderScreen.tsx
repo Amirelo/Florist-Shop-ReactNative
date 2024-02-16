@@ -2,18 +2,26 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {ItemOrder} from '../../../components/molecules';
 import OrderModel from '../../../models/OrderModel';
 import {ProductModel} from '../../../models';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React from 'react';
-import { CustomText } from '../../../components/atoms';
-import { TextButton } from '../../../components/molecules/buttons';
+import {CustomText} from '../../../components/atoms';
+import {TextButton} from '../../../components/molecules/buttons';
+import firestore from '@react-native-firebase/firestore';
+import {useSelector} from 'react-redux';
 
 const OrderScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   // Fields
-  const [listOrders, setListOrders] = React.useState<Array<OrderModel>>([])
+  const [listOrders, setListOrders] = React.useState<Array<OrderModel>>([]);
 
   // Navigate to Order Detail Screen with data
   const onDetailPressed = (data: OrderModel) => {
@@ -21,30 +29,63 @@ const OrderScreen = () => {
   };
 
   const onShoppingPressed = () => {
-    navigation.navigate('Explore')
-  }
+    navigation.navigate('Explore');
+  };
 
-  React.useEffect(()=> {
-    if(route.params?.userOrders){
-      setListOrders(route.params.userOrders)
-      console.log("Route:", route.params.userOrders)
+  React.useEffect(() => {
+    if (route.params?.userOrders) {
+      setListOrders(route.params.userOrders);
+      console.log('Route:', route.params.userOrders);
     }
-  },[])
+  }, []);
+
+  React.useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(email)
+      .collection('orders')
+      .onSnapshot(querySnapshot => {
+        setListOrders([]);
+        querySnapshot.docs.map(doc => {
+          const info = doc.data();
+          const order = new OrderModel(
+            doc.id,
+            info.status,
+            info.discountRef,
+            info.productsPrice,
+            info.productsQuantity,
+            info.total,
+            info.orderDate,
+            info.products,
+            info.address,
+            info.phoneNumber,
+          );
+          setListOrders(prev => [...prev, order]);
+        });
+      });
+  }, []);
 
   return (
     <View style={styles.view}>
-      {listOrders.length>0 ?
-      <FlatList
-        data={listOrders}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <ItemOrder onPressed={() => onDetailPressed(item)} item={item} />
-        )}
-      />:
-      <>
-      <CustomText type='title' alignSelf='center' marginBottom={20}>Empty cart</CustomText>
-      <TextButton type='primary' onPressed={onShoppingPressed}>Start Shopping now</TextButton>
-      </>}
+      {listOrders.length > 0 ? (
+        <FlatList
+          data={listOrders}
+          contentContainerStyle={{gap: 16}}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <ItemOrder onPressed={() => onDetailPressed(item)} item={item} />
+          )}
+        />
+      ) : (
+        <>
+          <CustomText type="title" alignSelf="center" marginBottom={20}>
+            Empty cart
+          </CustomText>
+          <TextButton type="primary" onPressed={onShoppingPressed}>
+            Start Shopping now
+          </TextButton>
+        </>
+      )}
     </View>
   );
 };
