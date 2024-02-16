@@ -39,7 +39,7 @@ const TextButton = (props: Props) => {
             ? 'white'
             : '',
           alignSelf: props.alignSelf,
-          width: props.alignSelf ? '30%' : null
+          width: props.alignSelf ? 'auto' : null
         },
       ]}
       onPressed={props.onPressed}>

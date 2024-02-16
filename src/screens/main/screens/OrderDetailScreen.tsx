@@ -10,8 +10,17 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faColumns} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {OrderModel, ProductModel, PromocodeModel} from '../../../models';
-import {ItemProduct, ItemProductLong} from '../../../components/molecules';
+import {
+  CartModel,
+  OrderModel,
+  ProductModel,
+  PromocodeModel,
+} from '../../../models';
+import {
+  ItemCartDetail,
+  ItemProduct,
+  ItemProductLong,
+} from '../../../components/molecules';
 import {getProductByID} from '../MainService';
 import {TextButton} from '../../../components/molecules/buttons';
 import {priceFormat} from '../../../utils/Utils';
@@ -34,7 +43,8 @@ const OrderDetailScreen = () => {
     if (route.params?.data) {
       setOrder(route.params.data);
       route.params.data.products.forEach(async (item: any) => {
-        const product: ProductModel = await getProductByID(item.productRef);
+        console.log('item found:', item);
+        const product: ProductModel = await getProductByID(item.id);
         setListProducts(prev => [...prev, product]);
       });
     } else {
@@ -80,7 +90,17 @@ const OrderDetailScreen = () => {
             data={listProducts}
             keyExtractor={item => item.name}
             renderItem={({item}) => (
-              <ItemProduct langPref="en" product={item} />
+              <ItemCartDetail
+                langPref="en"
+                product={item}
+                cart={
+                  order
+                    ? order.products.filter(
+                        (cart: CartModel) => cart.id == item.id,
+                      )[0]
+                    : undefined
+                }
+              />
             )}
           />
         </View>
@@ -116,15 +136,13 @@ const OrderDetailScreen = () => {
             </CustomText>
           </ItemRow>
         </View>
-        <TextButton type="primary" backgroundColor={'red'} marginBottom={20}>
-          Cancel Order
-        </TextButton>
-        <TextButton
-          type="primary"
-          marginBottom={30}
-          backgroundColor={themes['defaultTheme'].warnColor}>
-          See Reviews
-        </TextButton>
+        {order?.status == 'PENDING' ? (
+          <TextButton type="primary" backgroundColor={'red'} marginBottom={20}>
+            Cancel Order
+          </TextButton>
+        ) : (
+          <></>
+        )}
       </View>
     </ScrollView>
   );
@@ -150,9 +168,9 @@ const styles = StyleSheet.create({
     backgroundColor: themes['defaultTheme'].primaryColor,
   },
   general: {
-    backgroundColor: 'white',
-    marginBottom: 30,
+    borderWidth: 1,
     borderRadius: 7,
+    marginBottom: 30,
     padding: 12,
   },
 });

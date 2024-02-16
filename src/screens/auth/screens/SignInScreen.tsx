@@ -217,15 +217,6 @@ export default SignInScreen;
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
-  },
-  orderButton: {
-    marginBottom: 20,
-    height: 48,
-    borderRadius: 7,
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   body: {
     justifyContent: 'center',
