@@ -1,5 +1,12 @@
 import React from 'react';
-import {ColorValue, FlexStyle, StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
+import {
+  ColorValue,
+  FlexStyle,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+} from 'react-native';
 
 interface Props {
   children: String;
@@ -19,22 +26,23 @@ const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
   return (
     <Text
-    numberOfLines={props.maxLines ? props.maxLines : 10}
-      style={
-        [
-          {
-            color: props.color ? props.color : '#000000',
-            marginTop: props.marginTop,
-            marginBottom: props.marginBottom,
-            marginRight: props.marginRight,
-            textTransform: props.textTransform,
-            fontWeight: props.fontWeight,
-            alignSelf: props.alignSelf,
-          },
-          styles[selectedType],
-          props.style,
-        ] 
-      }>
+      numberOfLines={props.maxLines ? props.maxLines : 10}
+      style={[
+        {
+          color: props.color ? props.color : '#000000',
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          marginRight: props.marginRight,
+          textTransform: props.textTransform,
+          alignSelf: props.alignSelf,
+          fontFamily:
+            props.fontWeight == 'bold'
+              ? 'DancingScript-Bold'
+              : 'DancingScript-Regular',
+        },
+        styles[selectedType],
+        props.style,
+      ]}>
       {props.children}
     </Text>
   );
@@ -52,7 +60,7 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 30,
   },
-  bigTitle:{
+  bigTitle: {
     fontSize: 24,
   },
   title: {

@@ -139,7 +139,7 @@ const SignInScreen = () => {
 
       <View style={styles.body}>
         <ItemRow marginBottom={30}>
-          <CustomText type="title">{lang[langPref]['signin_title']}</CustomText>
+          <CustomText type="title" fontWeight='bold'>{lang[langPref]['signin_title']}</CustomText>
 
           <CustomButton onPressed={onLanguagePressed}>
             <CustomText type="subTitle">{`Language: ` + langPref}</CustomText>
