@@ -7,6 +7,7 @@ import {
   RatingStars,
   ItemRow,
   Divider,
+  CustomView,
 } from '../../../components/atoms';
 import {ProductModel} from '../../../models';
 import {QuantityCounter} from '../../../components/molecules';
@@ -43,6 +44,9 @@ const ProductDetailScreen = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+
+    const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   const onAddToCartPressed = async () => {
@@ -71,12 +75,13 @@ const ProductDetailScreen = () => {
 
   return (
     <ScrollView>
-      <View>
+      <CustomView type='fullscreen'>
         <View
           style={{
             width: '100%',
             height: 350,
             borderWidth: 1,
+            borderTopWidth:0,
             borderBottomLeftRadius: 40,
             borderBottomRightRadius: 40,
             overflow: 'hidden',
@@ -93,14 +98,14 @@ const ProductDetailScreen = () => {
             renderItem={({item}) => <CustomImage source={item} type="detail" />}
           />
         </View>
-        <View style={styles.body}>
+        <CustomView type='body'>
           <ItemRow marginBottom={6}>
             {/* Product Name */}
             <CustomText type="subHeader">{product!.name}</CustomText>
             {/* Product Price */}
             <CustomText
               type="subHeader"
-              color={themes['defaultTheme'].primaryColor}>
+              color={themes[currentTheme].primaryColor}>
               {priceString + ''}
             </CustomText>
           </ItemRow>
@@ -114,8 +119,8 @@ const ProductDetailScreen = () => {
               type="subTitle"
               color={
                 product!.quantity > 0
-                  ? themes['defaultTheme'].primaryColor
-                  : themes['defaultTheme'].errorcolor
+                  ? themes[currentTheme].primaryColor
+                  : themes[currentTheme].errorcolor
               }>
               {product!.quantity > 0
                 ? lang[langPref]['text_availability_instock']
@@ -163,11 +168,11 @@ const ProductDetailScreen = () => {
           {/* Review button */}
           <TextButton
             type="primary"
-            backgroundColor={themes['defaultTheme'].warnColor} marginBottom={20}>
+            backgroundColor={themes[currentTheme].warnColor} marginBottom={20}>
             Product Reviews
           </TextButton>
-        </View>
-      </View>
+        </CustomView>
+      </CustomView>
     </ScrollView>
   );
 };

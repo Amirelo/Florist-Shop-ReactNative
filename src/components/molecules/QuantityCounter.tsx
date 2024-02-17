@@ -3,6 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
+import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   quantity: number;
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const QuantityCounter = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+
   const onChangeQuantityPressed = (amount: number) => {
     props.quantity + amount > 0 &&
     props.quantity + amount <= props.maxQuantity ? (
@@ -24,13 +28,13 @@ const QuantityCounter = (props: Props) => {
   };
 
   return (
-    <View style={styles.view}>
+    <View style={[styles.view,{backgroundColor: themes[currentTheme].primaryColor}]}>
       <CustomButton
         style={styles.button}
         onPressed={() => onChangeQuantityPressed(-1)}>
         <FontAwesomeIcon icon={faMinus} />
       </CustomButton>
-      <View style={styles.text}>
+      <View style={[styles.text, {backgroundColor: themes[currentTheme].tertiaryColor}]}>
         <CustomText type="subTitle">{props.quantity + ''}</CustomText>
       </View>
       <CustomButton
@@ -47,7 +51,6 @@ export default QuantityCounter;
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    backgroundColor: '#818A9820',
     alignItems: 'center',
     borderRadius: 7,
   },
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    backgroundColor: 'white',
+    
     borderRadius: 7,
     width: 50,
     height: 30,

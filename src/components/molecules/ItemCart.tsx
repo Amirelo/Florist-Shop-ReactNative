@@ -42,7 +42,7 @@ const ItemCart = (props: Props) => {
         <View style={[styles.row, {marginBottom: 8}]}>
           <CustomText type="title">{props.item.name}</CustomText>
           <CustomButton onPressed={props.onEllipsesPressed}>
-          <FontAwesomeIcon size={16} icon={faEllipsisVertical} />
+          <FontAwesomeIcon  color={themes[currentTheme].textColor} size={16} icon={faEllipsisVertical} />
           </CustomButton>
         </View>
         <View style={styles.row}>
