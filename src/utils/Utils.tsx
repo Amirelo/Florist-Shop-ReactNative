@@ -8,7 +8,7 @@ export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   if(langPref == 'vn') {
     var formattingPrice = price.toString()
     while (formattingPrice.length>3) {
-      result = result +'.'+ formattingPrice.substring(formattingPrice.length-3, formattingPrice.length)
+      result = formattingPrice.substring(formattingPrice.length-3, formattingPrice.length) + '.' +result
       formattingPrice = formattingPrice.slice(0, formattingPrice.length-3)
       console.log(formattingPrice)
     }
