@@ -11,6 +11,7 @@ import {getCategories, getProducts} from '../MainService';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
 import {
   IMAGE_HOME_HEADER,
+  NAVIGATION_BOTTOM_TAB_EXPLORE,
   NAVIGATION_MAIN_ABOUTUS,
   NAVIGATION_MAIN_PRODUCT_DETAIL,
 } from '../../../constants/AppConstants';
@@ -32,9 +33,11 @@ const HomeScreen = () => {
     (store: any) => store.preference.language,
   );
 
-    const onCategoryPressed = (name:string) => {
-      navigation.navigate(NAVIGATION_MAIN_PRODUCT_DETAIL, {data: {listCategories: [name]}});
-    }
+  const onCategoryPressed = (name: string) => {
+    navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE, {
+      data: {listCategories: [name]},
+    });
+  };
 
   // Navigate to Product Detail Screen with item
   const onProductPressed = (item: ProductModel) => {
@@ -43,11 +46,18 @@ const HomeScreen = () => {
 
   // Load data from server
   const waitForData = async () => {
-    const categories: Array<CategoryModel> = (await getCategories()).slice(0,3);
+    const categories: Array<CategoryModel> = (await getCategories()).slice(
+      0,
+      3,
+    );
     console.log('category list: ', categories);
-    setListCategories(categories.slice(0,3));
-    const more = new CategoryModel('1','See More','https://images.pexels.com/photos/15387083/pexels-photo-15387083/free-photo-of-letters-on-dice.jpeg')
-    setListCategories([...categories, more])
+    setListCategories(categories.slice(0, 3));
+    const more = new CategoryModel(
+      '1',
+      'See More',
+      'https://images.pexels.com/photos/15387083/pexels-photo-15387083/free-photo-of-letters-on-dice.jpeg',
+    );
+    setListCategories([...categories, more]);
 
     const products: Array<ProductModel> = await getProducts();
     console.log('product list: ', products);
@@ -85,7 +95,9 @@ const HomeScreen = () => {
             onPressed={onHelpCardPressed}
           />
 
-          <CustomText type='title' marginBottom={20}>Search by occasions</CustomText>
+          <CustomText type="title" marginBottom={20}>
+            Search by occasions
+          </CustomText>
 
           <FlatList
             style={{marginBottom: 32}}
@@ -96,7 +108,12 @@ const HomeScreen = () => {
             horizontal={true}
             data={listCategories}
             keyExtractor={item => item.name}
-            renderItem={({item}) => <ItemCategory category={item} onPressed={(name) => onCategoryPressed(name)} />}
+            renderItem={({item}) => (
+              <ItemCategory
+                category={item}
+                onPressed={name => onCategoryPressed(name)}
+              />
+            )}
           />
 
           <CustomText type="title" marginBottom={24}>

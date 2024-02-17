@@ -8,12 +8,12 @@ interface Props {
   //marginTop?: number;
   //marginBottom?: number;
   category: CategoryModel;
-  onPressed?(name:string): void;
+  onPressed(name: string): void;
 }
 
 const ItemCategory = (props: Props) => {
   return (
-    <CustomButton>
+    <CustomButton onPressed={() => props.onPressed(props.category.name)}>
       <View
         style={
           [
