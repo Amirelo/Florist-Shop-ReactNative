@@ -1,24 +1,34 @@
 import React from 'react';
-import {KeyboardType, KeyboardTypeOptions, StyleSheet, TextInput, View} from 'react-native';
+import {
+  KeyboardType,
+  KeyboardTypeOptions,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import themes from '../../themes/themes';
 import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux';
 
 interface Props {
   placeholder?: string;
   hidden?: boolean;
-  value?:string;
+  value?: string;
   onChangeText?(text: string): void;
   children?: string;
   marginTop?: number;
   marginBottom?: number;
   icon?: IconProp;
-  keyboardType?: KeyboardType
+  keyboardType?: KeyboardType;
 }
 
 const CustomInput = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   const [secure, setSecure] = React.useState(props.hidden);
 
   const onSecurePressed = () => {
@@ -28,11 +38,18 @@ const CustomInput = (props: Props) => {
   return (
     <View
       style={[
-        {marginTop: props.marginTop, marginBottom: props.marginBottom},
+        {
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          borderColor: props.icon
+            ? themes[currentTheme].textSecondaryColor
+            : '',
+          backgroundColor: props.icon ? themes[currentTheme].tertiaryColor : '',
+        },
         props.icon ? styles.view : null,
       ]}>
       {props.icon == null ? (
-        <CustomText textTransform='capitalize' type="title" marginBottom={12}>
+        <CustomText textTransform="capitalize" type="title" marginBottom={12}>
           {props.placeholder + ''}
         </CustomText>
       ) : (
@@ -45,7 +62,19 @@ const CustomInput = (props: Props) => {
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={props.onChangeText}
-        style={[props.icon ? styles.input : styles.viewUpdate]}>
+        placeholderTextColor={themes[currentTheme].textSecondaryColor}
+        style={[
+          props.icon
+            ? styles.input
+            : [
+                styles.viewUpdate,
+                {
+                  borderColor: themes[currentTheme].textSecondaryColor,
+                  backgroundColor: themes[currentTheme].tertiaryColor,
+                },
+              ],
+          {color: themes[currentTheme].textColor},
+        ]}>
         {props.children}
       </TextInput>
       {props.hidden ? (
@@ -65,15 +94,11 @@ const styles = StyleSheet.create({
   viewUpdate: {
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: themes['defaultTheme'].textSecondaryColor,
-    backgroundColor: 'white',
     paddingStart: 20,
   },
   view: {
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: themes['defaultTheme'].textSecondaryColor,
-    backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -90,5 +115,6 @@ const styles = StyleSheet.create({
   input: {
     paddingStart: 38,
     width: '100%',
+    fontSize: 16,
   },
 });

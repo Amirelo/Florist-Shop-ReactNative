@@ -27,7 +27,11 @@ import {getProducts} from '../MainService';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {priceFormat} from '../../../utils/Utils';
-import { NAVIGATION_MAIN_PRODUCT_DETAIL, NAVIGATION_MAIN_PRODUCT_FILTER } from '../../../constants/AppConstants';
+import {
+  NAVIGATION_MAIN_PRODUCT_DETAIL,
+  NAVIGATION_MAIN_PRODUCT_FILTER,
+} from '../../../constants/AppConstants';
+import themes from '../../../themes/themes';
 
 const ExploreScreen = () => {
   // Initial
@@ -48,6 +52,10 @@ const ExploreScreen = () => {
   // Saved language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
+  );
+
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
   );
 
   const onFilterPressed = () => {
@@ -122,13 +130,13 @@ const ExploreScreen = () => {
           item.price > filterData.minPrice && item.price < filterData.maxPrice,
       );
 
-      setFilteredList(newList)
+      setFilteredList(newList);
     }
   }, [route]);
 
   return (
-    <CustomView type='viewWithOptions'>
-      <CustomView type='body'>
+    <CustomView type="viewWithOptions">
+      <CustomView type="body">
         <CustomInput
           onChangeText={text => onSearch(text)}
           icon={faSearch}
@@ -138,7 +146,11 @@ const ExploreScreen = () => {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <CustomButton onPressed={onFilterPressed} flex={1}>
             <ItemRow justifyContent="flex-start">
-              <FontAwesomeIcon style={{marginRight: 4}} icon={faSliders} />
+              <FontAwesomeIcon
+                color={themes[currentTheme].textColor}
+                style={{marginRight: 4}}
+                icon={faSliders}
+              />
               <CustomText type="subTitle">
                 {lang[langPref]['text_filter']}
               </CustomText>
@@ -147,7 +159,11 @@ const ExploreScreen = () => {
 
           <CustomButton onPressed={onSortPressed} flex={1}>
             <ItemRow justifyContent="center">
-              <FontAwesomeIcon style={{marginRight: 4}} icon={faSort} />
+              <FontAwesomeIcon
+                color={themes[currentTheme].textColor}
+                style={{marginRight: 4}}
+                icon={faSort}
+              />
               <CustomText type="subTitle">
                 {sortText ? sortText : lang[langPref]['text_sort']}
               </CustomText>
@@ -157,6 +173,7 @@ const ExploreScreen = () => {
           <CustomButton onPressed={onDisplayPressed} flex={1}>
             <ItemRow justifyContent="flex-end">
               <FontAwesomeIcon
+                color={themes[currentTheme].textColor}
                 style={{marginRight: 4}}
                 icon={isColumn ? faSquareFull : faGripVertical}
               />
@@ -236,4 +253,3 @@ const ExploreScreen = () => {
 };
 
 export default ExploreScreen;
-
