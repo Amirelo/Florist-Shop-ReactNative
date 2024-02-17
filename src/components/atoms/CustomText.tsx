@@ -26,7 +26,7 @@ const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
 
   // Leave empty if using default font
-  const font = 'DancingScript';
+  const font = '';
   return (
     <Text
       numberOfLines={props.maxLines ? props.maxLines : 10}
