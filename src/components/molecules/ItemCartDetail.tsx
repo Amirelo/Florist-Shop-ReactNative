@@ -44,7 +44,7 @@ const ItemCartDetail = (props: Props) => {
         </View>
         {/* Product Price */}
         <CustomText color={themes['defaultTheme'].primaryColor} type="subTitle">
-          {priceFormat(props.product.price, 'en')}
+          {priceFormat(props.product.price, 'vn')}
         </CustomText>
 
         <ItemRow marginBottom={4}>
@@ -57,7 +57,7 @@ const ItemCartDetail = (props: Props) => {
           <CustomText>Total:</CustomText>
           <CustomText>
             {props.cart
-              ? priceFormat(props.product.price * props.cart.quantity, 'en')
+              ? priceFormat(props.product.price * props.cart.quantity, 'vn')
               : '0'}
           </CustomText>
         </ItemRow>

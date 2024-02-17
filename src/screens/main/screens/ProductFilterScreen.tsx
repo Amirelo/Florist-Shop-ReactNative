@@ -7,10 +7,13 @@ import {getCategories} from '../MainService';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const ProductFilterScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
+
   const [minPrice, setMinPrice] = React.useState('0');
-  const [maxPrice, setMaxPrice] = React.useState('500000');
+  const [maxPrice, setMaxPrice] = React.useState('');
   const [listCategories, setListCategories] = React.useState<
     Array<CategoryModel>
   >([]);
@@ -63,12 +66,32 @@ const ProductFilterScreen = () => {
     }
   };
 
+  const onApplyPressed = () => {
+    var min = 0;
+    var max = 1000000;
+    if (Number(minPrice) > 0) {
+      min = Number(minPrice);
+    }
+    if (maxPrice != '') {
+      max = Number(maxPrice);
+    }
+
+    navigation.navigate('Explore', {
+      data: {
+        minPrice: min,
+        maxPrice: max,
+        categories: selectedCategories,
+        colors: selectedColors,
+      },
+    });
+  };
+
   const onClearPressed = () => {
     setMinPrice('0');
     setMaxPrice('');
     setSelectedCategories([]);
     setSelectedColors([]);
-    setCleaCkb(prev => !prev)
+    setCleaCkb(prev => !prev);
   };
 
   React.useEffect(() => {
@@ -99,6 +122,7 @@ const ProductFilterScreen = () => {
             placeholder="Minimum Price"
             keyboardType="numeric"></CustomInput>
           <CustomInput
+            value={maxPrice}
             onChangeText={setMaxPrice}
             placeholder="Maximum Price"
             keyboardType="numeric"></CustomInput>
@@ -157,7 +181,7 @@ const ProductFilterScreen = () => {
           )}
         />
       </View>
-      <TextButton type="primary" marginBottom={20}>
+      <TextButton type="primary" marginBottom={20} onPressed={onApplyPressed}>
         Apply
       </TextButton>
       <TextButton

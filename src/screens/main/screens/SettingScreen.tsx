@@ -43,7 +43,7 @@ const SettingScreen = () => {
           <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>
             <CustomText marginBottom={20}>Tiếng Việt</CustomText>
           </CustomButton>
-          <CustomButton onPressed={() => onLanguageOptionPressed('en')}>
+          <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>
             <CustomText marginBottom={20}>English</CustomText>
           </CustomButton>
         </OptionsPanel>

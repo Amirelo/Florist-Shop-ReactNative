@@ -45,7 +45,7 @@ const ItemProduct = (props: Props) => {
           {/* Product Price */}
           <CustomText
             color={themes['defaultTheme'].primaryColor}
-            type="subTitle">{priceFormat(props.product.price, 'en')}</CustomText>
+            type="subTitle">{priceFormat(props.product.price, 'vn')}</CustomText>
             {/* Buy Icon */}
           <FontAwesomeIcon
             color={themes['defaultTheme'].primaryColor}

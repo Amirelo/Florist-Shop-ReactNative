@@ -21,6 +21,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {getProducts} from '../MainService';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
+import { priceFormat } from '../../../utils/Utils';
 
 const ExploreScreen = () => {
   // Initial
@@ -151,6 +152,7 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
         </View>
+        <CustomText>{priceFormat(1053593, 'vn')}</CustomText>
         {isColumn == false ? (
           <FlatList
             columnWrapperStyle={{

@@ -31,7 +31,7 @@ const ItemOrder = (props: Props) => {
       <View style={styles.divider} />
       <ItemRow marginBottom={12}>
         <CustomText>Price</CustomText>
-        <CustomText>{priceFormat(props.item.total, 'en')}</CustomText>
+        <CustomText>{priceFormat(props.item.total, 'vn')}</CustomText>
       </ItemRow>
       <CustomButton onPressed={props.onPressed} style={styles.button}>
         <CustomText type='subTitle' color={'white'}>See details</CustomText>

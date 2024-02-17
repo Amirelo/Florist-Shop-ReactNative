@@ -111,7 +111,7 @@ const OrderDetailScreen = () => {
               <ItemRow marginBottom={8}>
                 <CustomText type="subTitle">Price:</CustomText>
                 <CustomText type="subTitle">
-                  {order ? priceFormat(order.total, 'en') : ''}
+                  {order ? priceFormat(order.total, 'vn') : ''}
                 </CustomText>
               </ItemRow>
 
@@ -132,7 +132,7 @@ const OrderDetailScreen = () => {
           <ItemRow marginBottom={8}>
             <CustomText type="title">Total:</CustomText>
             <CustomText type="title">
-              {order ? priceFormat(order.total, 'en') : ''}
+              {order ? priceFormat(order.total, 'vn') : ''}
             </CustomText>
           </ItemRow>
         </View>

@@ -4,10 +4,18 @@ import {Dimensions} from 'react-native';
 import {AddressModel} from '../models';
 
 export const priceFormat = (price: number, langPref: keyof typeof lang) => {
-  var result;
-  langPref == 'vn'
-    ? (result = price.toFixed(2) + 'đ')
-    : (result = '$' + (price * 0.000041).toFixed(2));
+  var result = '';
+  if(langPref == 'vn') {
+    var formattingPrice = price.toString()
+    while (formattingPrice.length>3) {
+      result = result +'.'+ formattingPrice.substring(formattingPrice.length-3, formattingPrice.length)
+      formattingPrice = formattingPrice.slice(0, formattingPrice.length-3)
+      console.log(formattingPrice)
+    }
+    result = formattingPrice + result + 'đ'
+  } else if (langPref == 'en') {
+    result = '$' + (price * 0.000041).toFixed(2)
+  }
   console.log('Price Format Result:', result);
   return result;
 };

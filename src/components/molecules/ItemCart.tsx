@@ -44,7 +44,7 @@ const ItemCart = (props: Props) => {
         </View>
         <View style={styles.row}>
           <CustomText type="subTitle">
-            {priceFormat(props.item.price * quantity, 'en')}
+            {priceFormat(props.item.price * quantity, 'vn')}
           </CustomText>
           <QuantityCounter
             quantity={quantity}

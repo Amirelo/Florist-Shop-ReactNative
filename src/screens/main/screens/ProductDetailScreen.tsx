@@ -62,7 +62,7 @@ const ProductDetailScreen = () => {
     if (route.params?.item) {
       var data: ProductModel = route.params.item;
       setProduct(data);
-      var formatedPrice = priceFormat(data.price, 'en');
+      var formatedPrice = priceFormat(data.price, 'vn');
       setPrice(data.price);
       setPriceString(formatedPrice);
     }
@@ -150,7 +150,7 @@ const ProductDetailScreen = () => {
             </CustomText>
             {/* Total Price */}
             <CustomText type="header">
-              {price ? priceFormat(price * quantity, 'en') : ''}
+              {price ? priceFormat(price * quantity, 'vn') : ''}
             </CustomText>
           </ItemRow>
 
