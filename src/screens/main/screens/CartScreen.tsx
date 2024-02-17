@@ -22,7 +22,10 @@ import {
 } from '../MainService';
 import {priceFormat} from '../../../utils/Utils';
 import firestore from '@react-native-firebase/firestore';
-import { NAVIGATION_BOTTOM_TAB_EXPLORE, NAVIGATION_MAIN_CART_DELIVERY } from '../../../constants/AppConstants';
+import {
+  NAVIGATION_BOTTOM_TAB_EXPLORE,
+  NAVIGATION_MAIN_CART_DELIVERY,
+} from '../../../constants/AppConstants';
 
 const CartScreen = () => {
   // Initial
@@ -169,6 +172,11 @@ const CartScreen = () => {
             )}
           />
 
+          <ItemRow marginBottom={10}>
+            <CustomText type='title'>Total Price:</CustomText>
+            <CustomText type='title'>{priceFormat(total, 'vn')}</CustomText>
+          </ItemRow>
+
           <Divider marginBottom={20} />
 
           <TextButton onPressed={onBuyPressed} type="primary">
@@ -176,7 +184,12 @@ const CartScreen = () => {
           </TextButton>
         </View>
       ) : (
-        <View style={{justifyContent:'center', height:'100%', paddingHorizontal:16}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            height: '100%',
+            paddingHorizontal: 16,
+          }}>
           <CustomText type="title" alignSelf="center" marginBottom={20}>
             Empty cart
           </CustomText>

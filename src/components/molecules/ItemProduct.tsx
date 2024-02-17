@@ -7,6 +7,7 @@ import themes from '../../themes/themes';
 import {ProductModel} from '../../models';
 import { priceFormat } from '../../utils/Utils';
 import lang from '../../language/lang';
+import { useSelector } from 'react-redux';
 
 interface Props {
   product: ProductModel;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const ItemProduct = (props: Props) => {
+  const currentThemes: keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <CustomButton
       onPressed={props.onPressed}
@@ -26,6 +28,7 @@ const ItemProduct = (props: Props) => {
           {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
+            backgroundColor: themes[currentThemes].tertiaryColor,
           },
         ] as ViewStyle
       }>
@@ -44,11 +47,11 @@ const ItemProduct = (props: Props) => {
         <View style={styles.body}>
           {/* Product Price */}
           <CustomText
-            color={themes['defaultTheme'].primaryColor}
+            color={themes[currentThemes].primaryColor}
             type="subTitle">{priceFormat(props.product.price, 'vn')}</CustomText>
             {/* Buy Icon */}
           <FontAwesomeIcon
-            color={themes['defaultTheme'].primaryColor}
+            color={themes[currentThemes].primaryColor}
             icon={solid.faCartShopping}
           />
         </View>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     padding: 12,
     borderRadius: 14,
-    backgroundColor: themes['defaultTheme'].tertiaryColor,
+    
   },
   body: {
     flexDirection: 'row',

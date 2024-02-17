@@ -7,6 +7,8 @@ import {
   Text,
   TextStyle,
 } from 'react-native';
+import { useSelector } from 'react-redux';
+import themes from '../../themes/themes';
 
 interface Props {
   children: String;
@@ -24,6 +26,7 @@ interface Props {
 
 const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
+  const currentTheme:keyof typeof themes = useSelector((store:any)=> store.preference.theme)
 
   // Leave empty if using default font
   const font = '';
@@ -32,7 +35,7 @@ const CustomText = (props: Props) => {
       numberOfLines={props.maxLines ? props.maxLines : 10}
       style={[
         {
-          color: props.color ? props.color : '#000000',
+          color: props.color ? props.color : themes[currentTheme].textColor,
           marginTop: props.marginTop,
           marginBottom: props.marginBottom,
           marginRight: props.marginRight,

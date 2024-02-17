@@ -4,6 +4,6 @@ export const changeLanguage = (data: string) => {
   return {type: LANG_CHANGE, payload: {data: data}};
 };
 
-export const changeTheme = () => {
-  return {type: THEME_CHANGE};
+export const changeTheme = (data: string) => {
+  return {type: THEME_CHANGE, payload: {data: data}};
 };
