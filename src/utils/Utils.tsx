@@ -8,11 +8,11 @@ export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   if(langPref == 'vn') {
     var formattingPrice = price.toString()
     while (formattingPrice.length>3) {
-      result = formattingPrice.substring(formattingPrice.length-3, formattingPrice.length) + '.' +result
+      result = formattingPrice.substring(formattingPrice.length-3, formattingPrice.length) + (result.length>0 ? '.' : '') +result
       formattingPrice = formattingPrice.slice(0, formattingPrice.length-3)
       console.log(formattingPrice)
     }
-    result = formattingPrice + result + 'đ'
+    result = formattingPrice +'.' + result + 'đ'
   } else if (langPref == 'en') {
     result = '$' + (price * 0.000041).toFixed(2)
   }
