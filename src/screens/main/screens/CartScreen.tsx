@@ -1,6 +1,11 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText, Divider} from '../../../components/atoms';
+import {
+  CustomButton,
+  CustomText,
+  CustomView,
+  Divider,
+} from '../../../components/atoms';
 import {ItemCart, OptionsPanel} from '../../../components/molecules';
 import {ItemRow} from '../../../components/atoms';
 import {CartModel, ProductModel, PromocodeModel} from '../../../models';
@@ -135,9 +140,9 @@ const CartScreen = () => {
   }, [route]);
 
   return (
-    <View style={{height: '100%'}}>
+    <CustomView type={'fullscreen'}>
       {listCarts.length > 0 ? (
-        <View style={styles.view}>
+        <CustomView type="body">
           {/* Cart Item List */}
           <FlatList
             style={{
@@ -173,8 +178,8 @@ const CartScreen = () => {
           />
 
           <ItemRow marginBottom={10}>
-            <CustomText type='title'>Total Price:</CustomText>
-            <CustomText type='title'>{priceFormat(total, 'vn')}</CustomText>
+            <CustomText type="title">Total Price:</CustomText>
+            <CustomText type="title">{priceFormat(total, 'vn')}</CustomText>
           </ItemRow>
 
           <Divider marginBottom={20} />
@@ -182,7 +187,7 @@ const CartScreen = () => {
           <TextButton onPressed={onBuyPressed} type="primary">
             {lang[langPref]['buttonPlaceOrder']}
           </TextButton>
-        </View>
+        </CustomView>
       ) : (
         <View
           style={{
@@ -209,7 +214,7 @@ const CartScreen = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 

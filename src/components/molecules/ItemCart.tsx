@@ -6,6 +6,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import {ProductModel} from '../../models';
 import {priceFormat} from '../../utils/Utils';
+import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   marginTop?: number;
@@ -18,7 +20,8 @@ interface Props {
 
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
-  console.log('ITEMCART:', props.item);
+
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
 
   React.useEffect(() => {
     setQuantity(props.quantity)
@@ -32,7 +35,7 @@ const ItemCart = (props: Props) => {
     <View
       style={[
         styles.view,
-        {marginTop: props.marginTop, marginBottom: props.marginBottom},
+        {marginTop: props.marginTop, marginBottom: props.marginBottom,backgroundColor: themes[currentTheme].tertiaryColor},
       ]}>
       <CustomImage type="cart" marginRight={8} source={props.item.images[0]} />
       <View style={styles.body}>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     padding: 14,
-    backgroundColor: 'white',
+    
     borderRadius: 7,
   },
   body: {

@@ -6,7 +6,8 @@ interface Props {
   type?: keyof typeof styles;
   children: any;
   justifyContent?: ViewStyle['justifyContent'];
-  marignBottom?: ViewStyle['marginBottom']
+  marignBottom?: ViewStyle['marginBottom'];
+  backgroundColor?: ViewStyle['backgroundColor'];
 }
 
 const CustomView = (props: Props) => {
@@ -19,7 +20,7 @@ const CustomView = (props: Props) => {
       style={[
         selectedstyle,
         {
-          backgroundColor: themes[currentTheme].bgColor,
+          backgroundColor: props.backgroundColor ? props.backgroundColor : themes[currentTheme].bgColor,
           justifyContent: props.justifyContent,
           marginBottom: props.marignBottom
         },
@@ -58,4 +59,8 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
+  itemPadding:{
+    padding:12,
+    borderRadius:7
+  }
 });

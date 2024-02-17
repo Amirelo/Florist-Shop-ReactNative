@@ -1,12 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
+import {CustomText, CustomImage, RatingStars, CustomButton, CustomView} from '../atoms';
 import themes from '../../themes/themes';
 import {ProductModel} from '../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import lang from '../../language/lang';
 import {priceFormat} from '../../utils/Utils';
+import {useSelector} from 'react-redux';
 
 interface Props {
   product: ProductModel;
@@ -17,13 +18,19 @@ interface Props {
 }
 
 const ItemProductLong = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
+    <CustomView type='itemPadding' backgroundColor={themes[currentTheme].tertiaryColor}>
     <CustomButton
       onPressed={props.onPressed}
       style={
         [
-          styles.view,
-          {marginTop: props.marginTop, marginBottom: props.marginBottom},
+          {
+            marginTop: props.marginTop,
+            marginBottom: props.marginBottom,
+          },
         ] as ViewStyle
       }>
       <View style={styles.body}>
@@ -38,7 +45,7 @@ const ItemProductLong = (props: Props) => {
           <CustomText
             type="bigTitle"
             maxLines={1}
-            color={themes['defaultTheme'].primaryColor}>
+            color={themes[currentTheme].primaryColor}>
             {props.product.name}
           </CustomText>
           {/* Produt Description */}
@@ -47,7 +54,9 @@ const ItemProductLong = (props: Props) => {
           </CustomText>
           <View style={styles.rating}>
             {/* Product Price */}
-            <CustomText type="title" color={themes['defaultTheme'].primaryColor}>
+            <CustomText
+              type="title"
+              color={themes[currentTheme].primaryColor}>
               {priceFormat(props.product.price, 'en')}
             </CustomText>
             {/* Rating Stars */}
@@ -57,12 +66,13 @@ const ItemProductLong = (props: Props) => {
           <FontAwesomeIcon
             style={{alignSelf: 'flex-end'}}
             size={18}
-            color={themes['defaultTheme'].primaryColor}
+            color={themes[currentTheme].primaryColor}
             icon={faShoppingCart}
           />
         </View>
       </View>
     </CustomButton>
+    </CustomView>
   );
 };
 
@@ -71,7 +81,6 @@ export default ItemProductLong;
 const styles = StyleSheet.create({
   view: {
     padding: 12,
-    backgroundColor: themes['defaultTheme'].tertiaryColor,
   },
   rating: {
     flexDirection: 'row',
