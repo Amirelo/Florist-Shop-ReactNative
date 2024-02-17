@@ -42,9 +42,9 @@ const CustomText = (props: Props) => {
             props.fontWeight == 'bold' ? font + '-Bold' : font + '-Regular',
           fontWeight: font.length > 0 ? undefined : props.fontWeight,
           fontSize: selectedType
-            ? font == 'DancingScript'
-              ? styles[selectedType].fontSize + 5
-              : styles[selectedType].fontSize 
+            // ? font == 'DancingScript'
+              // ? styles[selectedType].fontSize + 5
+              ? styles[selectedType].fontSize 
             : styles['normal'].fontSize,
         },
         props.style,
