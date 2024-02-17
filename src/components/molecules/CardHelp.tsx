@@ -4,6 +4,7 @@ import {StyleSheet, View, ViewStyle} from 'react-native';
 import {faCalendarDays} from '@fortawesome/free-regular-svg-icons';
 import themes from '../../themes/themes';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {useSelector} from 'react-redux';
 
 interface Props {
   title: string;
@@ -17,12 +18,20 @@ interface Props {
 }
 
 const CardHelp = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <CustomButton onPressed={props.onPressed}>
       <View
         style={
           [
-            props.backgroundImage ? '' : styles.view,
+            props.backgroundImage
+              ? ''
+              : [
+                  styles.view,
+                  {backgroundColor: themes[currentTheme].primaryColor},
+                ],
             {
               marginTop: props.marginTop,
               marginBottom: props.marginBottom,
@@ -39,16 +48,16 @@ const CardHelp = (props: Props) => {
         )}
         <View style={styles.body}>
           <View>
-            <CustomText type="big" color={'#ffffff'}>
+            <CustomText type="big" color={themes[currentTheme].tertiaryColor}>
               {props.title ? props.title : ''}
             </CustomText>
-            <CustomText type="subTitle" color={'#ffffff'}>
+            <CustomText type="subTitle" color={themes[currentTheme].tertiaryColor}>
               {props.description ? props.description : ''}
             </CustomText>
           </View>
 
           {props.icon ? (
-            <FontAwesomeIcon color="white" size={39} icon={props.icon} />
+            <FontAwesomeIcon color={themes[currentTheme].tertiaryColor} size={39} icon={props.icon} />
           ) : (
             <></>
           )}
@@ -62,7 +71,6 @@ export default CardHelp;
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: themes['defaultTheme'].primaryColor,
     borderRadius: 7,
     borderBottomLeftRadius: 0,
   },

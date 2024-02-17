@@ -18,6 +18,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
+import CustomView from '../../../components/atoms/CustomView';
 
 const HomeScreen = () => {
   // Navigation
@@ -77,9 +78,8 @@ const HomeScreen = () => {
   return (
     <SafeAreaView>
       <ScrollView
-        contentContainerStyle={{paddingBottom: 50}}
         showsVerticalScrollIndicator={false}>
-        <View style={[styles.view]}>
+        <CustomView type='body'>
           <CardHelp
             title={'Welcome!'}
             height={200}
@@ -136,17 +136,10 @@ const HomeScreen = () => {
               />
             )}
           />
-        </View>
+        </CustomView>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-  },
-});
