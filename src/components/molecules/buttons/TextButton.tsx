@@ -1,6 +1,7 @@
 import {ColorValue, FlexStyle, StyleSheet, TextStyle} from 'react-native';
 import {CustomButton, CustomText} from '../../atoms';
 import themes from '../../../themes/themes';
+import {useSelector} from 'react-redux';
 
 interface Props {
   children: string;
@@ -23,23 +24,27 @@ interface Props {
 }
 
 const TextButton = (props: Props) => {
+  const currentThemes: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   const selectedStyle = props.type ? props.type : 'none';
   return (
     <CustomButton
       style={[
         styles[selectedStyle],
         {
+          borderColor: props.type == 'tertiary' ? themes[currentThemes].textSecondaryColor :'',
           marginTop: props.marginTop,
           marginBottom: props.marginBottom,
           backgroundColor: props.backgroundColor
             ? props.backgroundColor
             : props.type == 'primary'
-            ? themes['defaultTheme'].primaryColor
+            ? themes[currentThemes].primaryColor
             : props.type == 'tertiary'
-            ? 'white'
+            ? themes[currentThemes].bgColor
             : '',
           alignSelf: props.alignSelf,
-          width: props.alignSelf && props.type=='primary' ? '30%' : null
+          width: props.alignSelf && props.type == 'primary' ? '30%' : null,
         },
       ]}
       onPressed={props.onPressed}>
@@ -47,14 +52,10 @@ const TextButton = (props: Props) => {
         style={{textDecorationLine: props.textDecorationLine}}
         color={
           selectedStyle == 'none' || selectedStyle == 'tertiary'
-            ? 'black'
-            : 'white'
+            ? themes[currentThemes].textColor
+            : themes[currentThemes].bgColor
         }
-        fontWeight={
-          selectedStyle == 'none'
-            ? 'normal'
-            : 'bold'
-        }
+        fontWeight={selectedStyle == 'none' ? 'normal' : 'bold'}
         type={
           props.fontSize
             ? props.fontSize
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 7,
     backgroundColor: 'white',
-    borderColor: themes['defaultTheme'].textSecondaryColor,
+    
     alignItems: 'center',
     justifyContent: 'center',
   },

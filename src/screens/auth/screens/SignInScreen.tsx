@@ -7,6 +7,7 @@ import {
   CustomButton,
   CustomImage,
   CustomText,
+  CustomView,
   Divider,
   ItemRow,
 } from '../../../components/atoms';
@@ -132,12 +133,12 @@ const SignInScreen = () => {
   }, []);
 
   return (
-    <View style={styles.view}>
-      <View style={{position: 'absolute', width: '100%', height: '100%'}}>
+    <CustomView type='viewWithOptions'>
+      <CustomView type='backgroundImage'>
         <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
-      </View>
+      </CustomView>
 
-      <View style={styles.body}>
+      <CustomView type='authCard'>
         <ItemRow marginBottom={30}>
           <CustomText type="title" fontWeight='bold'>{lang[langPref]['signin_title']}</CustomText>
 
@@ -195,7 +196,7 @@ const SignInScreen = () => {
           marginBottom={10}>
           {lang[langPref]['signin_no_account']}
         </TextButton>
-      </View>
+      </CustomView>
       {/* Option Panel: change language */}
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
@@ -209,7 +210,7 @@ const SignInScreen = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 
@@ -220,11 +221,6 @@ const styles = StyleSheet.create({
     height:'100%'
   },
   body: {
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 7,
-    marginTop: '30%',
-    marginHorizontal: 16,
+    
   },
 });

@@ -53,7 +53,12 @@ const CustomInput = (props: Props) => {
           {props.placeholder + ''}
         </CustomText>
       ) : (
-        <FontAwesomeIcon style={styles.icon} size={18} icon={props.icon} />
+        <FontAwesomeIcon
+          color={themes[currentTheme].textColor}
+          style={styles.icon}
+          size={18}
+          icon={props.icon}
+        />
       )}
 
       <TextInput

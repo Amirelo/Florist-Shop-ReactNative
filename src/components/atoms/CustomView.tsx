@@ -1,10 +1,11 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 import {useSelector} from 'react-redux';
 import themes from '../../themes/themes';
 
 interface Props {
-  type: keyof typeof styles;
+  type?: keyof typeof styles;
   children: any;
+  justifyContent?: ViewStyle['justifyContent'];
 }
 
 const CustomView = (props: Props) => {
@@ -12,7 +13,18 @@ const CustomView = (props: Props) => {
     (store: any) => store.preference.theme,
   );
   const selectedstyle = props.type ? styles[props.type] : {};
-  return <View style={[selectedstyle, {backgroundColor: themes[currentTheme].bgColor}]}>{props.children}</View>;
+  return (
+    <View
+      style={[
+        selectedstyle,
+        {
+          backgroundColor: themes[currentTheme].bgColor,
+          justifyContent: props.justifyContent,
+        },
+      ]}>
+      {props.children}
+    </View>
+  );
 };
 
 export default CustomView;
@@ -24,5 +36,16 @@ const styles = StyleSheet.create({
   },
   viewWithOptions: {
     flex: 1,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  authCard: {
+    padding: 16,
+    borderRadius: 7,
+    marginHorizontal: 16,
+    marginTop:'30%'
   },
 });
