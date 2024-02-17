@@ -24,6 +24,9 @@ interface Props {
 
 const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
+
+  // Leave empty if using default font
+  const font = 'DancingScript';
   return (
     <Text
       numberOfLines={props.maxLines ? props.maxLines : 10}
@@ -36,11 +39,14 @@ const CustomText = (props: Props) => {
           textTransform: props.textTransform,
           alignSelf: props.alignSelf,
           fontFamily:
-            props.fontWeight == 'bold'
-              ? 'DancingScript-Bold'
-              : 'DancingScript-Regular',
+            props.fontWeight == 'bold' ? font + '-Bold' : font + '-Regular',
+          fontWeight: font.length > 0 ? undefined : props.fontWeight,
+          fontSize: selectedType
+            ? font == 'DancingScript'
+              ? styles[selectedType].fontSize + 5
+              : styles[selectedType].fontSize 
+            : styles['normal'].fontSize,
         },
-        styles[selectedType],
         props.style,
       ]}>
       {props.children}
