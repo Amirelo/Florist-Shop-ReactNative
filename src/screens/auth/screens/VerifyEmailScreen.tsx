@@ -12,7 +12,7 @@ import {
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import {CustomText} from '../../../components/atoms';
+import {CustomText, CustomView} from '../../../components/atoms';
 
 const VerifyEmailScreen = () => {
   // Navigation
@@ -44,11 +44,11 @@ const VerifyEmailScreen = () => {
   };
 
   return (
-    <View>
-      <View style={{position: 'absolute', width: '100%', height: '100%'}}>
+    <CustomView>
+      <CustomView type={'backgroundImage'}>
         <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
-      </View>
-      <View style={styles.body}>
+      </CustomView>
+      <CustomView type='authCard'>
         <View
           style={{
             marginBottom: 30,
@@ -71,8 +71,8 @@ const VerifyEmailScreen = () => {
         <TextButton type="primary" onPressed={onSendEmailPressed}>
           {lang[langPref]['buttonVerify']}
         </TextButton>
-      </View>
-    </View>
+      </CustomView>
+    </CustomView>
   );
 };
 

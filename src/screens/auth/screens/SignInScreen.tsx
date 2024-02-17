@@ -133,7 +133,7 @@ const SignInScreen = () => {
   }, []);
 
   return (
-    <CustomView type='viewWithOptions'>
+    <CustomView type={'fullscreen'}>
       <CustomView type='backgroundImage'>
         <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
       </CustomView>

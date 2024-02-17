@@ -6,6 +6,7 @@ interface Props {
   type?: keyof typeof styles;
   children: any;
   justifyContent?: ViewStyle['justifyContent'];
+  marignBottom?: ViewStyle['marginBottom']
 }
 
 const CustomView = (props: Props) => {
@@ -20,6 +21,7 @@ const CustomView = (props: Props) => {
         {
           backgroundColor: themes[currentTheme].bgColor,
           justifyContent: props.justifyContent,
+          marginBottom: props.marignBottom
         },
       ]}>
       {props.children}
@@ -30,6 +32,9 @@ const CustomView = (props: Props) => {
 export default CustomView;
 
 const styles = StyleSheet.create({
+    fullscreen:{
+        flex:1
+    },
   body: {
     paddingHorizontal: 16,
     paddingTop: 20,
@@ -46,6 +51,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 7,
     marginHorizontal: 16,
-    marginTop:'30%'
+    marginTop: '30%',
+  },
+  itemRow: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
   },
 });

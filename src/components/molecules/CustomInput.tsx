@@ -84,7 +84,11 @@ const CustomInput = (props: Props) => {
       </TextInput>
       {props.hidden ? (
         <CustomButton style={styles.iconEnd} onPressed={onSecurePressed}>
-          <FontAwesomeIcon size={18} icon={secure ? faEye : faEyeSlash} />
+          <FontAwesomeIcon
+            color={themes[currentTheme].textColor}
+            size={18}
+            icon={secure ? faEye : faEyeSlash}
+          />
         </CustomButton>
       ) : (
         <></>

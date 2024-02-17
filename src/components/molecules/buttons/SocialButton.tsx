@@ -4,6 +4,7 @@ import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {useSelector} from 'react-redux';
 
 interface Props {
   children: string;
@@ -14,17 +15,24 @@ interface Props {
 }
 
 const SocialButton = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <CustomButton
       style={[
         styles.primary,
-        {marginTop: props.marginTop, marginBottom: props.marginBottom},
+        {marginTop: props.marginTop, marginBottom: props.marginBottom,
+        borderColor: themes[currentTheme].textSecondaryColor},
       ]}
       onPressed={props.onPressed}>
-      <FontAwesomeIcon style={styles.icon} size={24} icon={props.icon} />
-      <CustomText type={'subTitle'}>
-        {props.children}
-      </CustomText>
+      <FontAwesomeIcon
+        color={themes[currentTheme].textColor}
+        style={styles.icon}
+        size={24}
+        icon={props.icon}
+      />
+      <CustomText type={'subTitle'}>{props.children}</CustomText>
     </CustomButton>
   );
 };
@@ -37,11 +45,11 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 7,
     alignItems: 'center',
-    flexDirection:'row',
-    justifyContent:'center'
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
-  icon:{
-    position:'absolute',
-    start:12
-  }
+  icon: {
+    position: 'absolute',
+    start: 12,
+  },
 });

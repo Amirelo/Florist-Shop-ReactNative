@@ -1,10 +1,15 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomText} from '../../../components/atoms';
+import {CustomText, CustomView} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React from 'react';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const ActionCompleteScreen = () => {
   // Initial
@@ -12,8 +17,8 @@ const ActionCompleteScreen = () => {
   const route = useRoute<RouteProp<any>>();
 
   // Fields
-  const [title, setTitle] = React.useState('')
-  const [description, setDescription] = React.useState('')
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -27,39 +32,36 @@ const ActionCompleteScreen = () => {
 
   // Get data from route
   React.useEffect(() => {
-    if(route.params?.title){
-        setTitle(route.params.title)
+    if (route.params?.title) {
+      setTitle(route.params.title);
     }
-    if(route.params?.description){
-        setDescription(route.params.description)
+    if (route.params?.description) {
+      setDescription(route.params.description);
     }
   }, []);
 
   return (
-    <View style={styles.view}>
-        <View style={styles.body}>
-      <CustomText marginBottom={20} type="title">
-        {title}
-      </CustomText>
-      <CustomText marginBottom={30} type="subTitle">
-        {description}
-      </CustomText>
-      </View>
-      <TextButton onPressed={onGoBackPressed} type="primary">
-        {lang[langPref]['buttonGoBack_long']}
-      </TextButton>
-    </View>
+    <CustomView type={'fullscreen'}>
+      <CustomView type={'authCard'}>
+        <CustomText alignSelf="center" marginBottom={20} type="title">
+          {title}
+        </CustomText>
+        <CustomText alignSelf="center" marginBottom={30} type="subTitle">
+          {description}
+        </CustomText>
+        <TextButton onPressed={onGoBackPressed} type="primary">
+          {lang[langPref]['buttonGoBack_long']}
+        </TextButton>
+      </CustomView>
+    </CustomView>
   );
 };
 
 export default ActionCompleteScreen;
 
 const styles = StyleSheet.create({
-    view:{
-        paddingHorizontal: 16,
-        paddingTop: 30
-    },
-    body:{
-        alignItems:'center'
-    }
-})
+  view: {
+    paddingHorizontal: 16,
+    paddingTop: 30,
+  },
+});

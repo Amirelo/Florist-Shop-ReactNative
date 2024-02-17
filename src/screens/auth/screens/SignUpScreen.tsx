@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {CustomInput} from '../../../components/molecules';
 import {
   faArrowLeft,
@@ -8,10 +8,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import themes from '../../../themes/themes';
-import {CustomImage, CustomText} from '../../../components/atoms';
+import {CustomImage, CustomText, CustomView} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {passwordSignUp} from '../AuthService';
-import {IMAGE_AUTH_BACKGROUND, NAVIGATION_AUTH_ACTIONCOMPLETE} from '../../../constants/AppConstants';
+import {
+  IMAGE_AUTH_BACKGROUND,
+  NAVIGATION_AUTH_ACTIONCOMPLETE,
+} from '../../../constants/AppConstants';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -65,27 +68,21 @@ const SignUpScreen = () => {
   };
 
   return (
-    <View style={styles.view}>
-      <View style={{position: 'absolute', width: '100%', height: '100%'}}>
+    <CustomView>
+      <CustomView type={'backgroundImage'}>
         <CustomImage
           type="background"
           resizeMode="cover"
           source={IMAGE_AUTH_BACKGROUND}
         />
-      </View>
-      <View style={styles.body}>
-        <View
-          style={{
-            marginBottom: 30,
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center',
-          }}>
+      </CustomView>
+      <CustomView type={'authCard'}>
+        <CustomView type={'itemRow'} marignBottom={20}>
           <ImageButton icon={faArrowLeft} onPressed={onBackButtonPressed} />
           <CustomText type="title" fontWeight="bold">
             {lang[langPref]['signup_title']}
           </CustomText>
-        </View>
+        </CustomView>
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
@@ -122,23 +119,14 @@ const SignUpScreen = () => {
           marginBottom={20}>
           {lang[langPref]['signup_have_account']}
         </TextButton>
-      </View>
-    </View>
+      </CustomView>
+    </CustomView>
   );
 };
 
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
-  view: {},
-  orderButton: {
-    marginBottom: 20,
-    height: 48,
-    borderRadius: 7,
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   body: {
     justifyContent: 'center',
     backgroundColor: '#ffffff',
