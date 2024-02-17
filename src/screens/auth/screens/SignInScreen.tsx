@@ -21,7 +21,7 @@ import {
   getUserInfo,
   passwordLogin,
 } from '../AuthService';
-import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import {IMAGE_AUTH_BACKGROUND, NAVIGATION_AUTH_SIGNUP, NAVIGATION_AUTH_VERIFY} from '../../../constants/AppConstants';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -60,12 +60,12 @@ const SignInScreen = () => {
 
   // Navigate to sign up
   const onSignUpPressed = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate(NAVIGATION_AUTH_SIGNUP);
   };
 
   // Navigate to Verify screen
   const onForgotPasswordPressed = () => {
-    navigation.navigate('Verify');
+    navigation.navigate(NAVIGATION_AUTH_VERIFY);
   };
 
   // Check if user exist (for sign in with email and password)

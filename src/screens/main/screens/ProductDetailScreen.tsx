@@ -24,6 +24,7 @@ import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {TextButton} from '../../../components/molecules/buttons';
 import {AddCart} from '../MainService';
+import { NAVIGATION_MAIN_CART } from '../../../constants/AppConstants';
 
 const ProductDetailScreen = () => {
   // Initial
@@ -46,9 +47,9 @@ const ProductDetailScreen = () => {
 
   const onAddToCartPressed = async () => {
     if (await AddCart(product.id, quantity, email)) {
-      navigation.navigate('Cart', {product: product, quantity: quantity});
+      navigation.navigate(NAVIGATION_MAIN_CART, {product: product, quantity: quantity});
     } else {
-      navigation.navigate('Cart');
+      navigation.navigate(NAVIGATION_MAIN_CART);
     }
   };
 

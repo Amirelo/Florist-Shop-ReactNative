@@ -22,6 +22,7 @@ import {
 } from '../MainService';
 import {priceFormat} from '../../../utils/Utils';
 import firestore from '@react-native-firebase/firestore';
+import { NAVIGATION_BOTTOM_TAB_EXPLORE, NAVIGATION_MAIN_CART_DELIVERY } from '../../../constants/AppConstants';
 
 const CartScreen = () => {
   // Initial
@@ -50,7 +51,7 @@ const CartScreen = () => {
     console.log('CartScreen - passing route - carts:', listCarts);
     console.log('CartScreen - passing route - products:', listProducts);
     console.log('CartScreen - passing route - total:', total);
-    navigation.navigate('CartDeli', {
+    navigation.navigate(NAVIGATION_MAIN_CART_DELIVERY, {
       carts: listCarts,
       products: listProducts,
       total: total,
@@ -58,7 +59,7 @@ const CartScreen = () => {
   };
 
   const onShoppingPressed = () => {
-    navigation.navigate('Explore');
+    navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE);
   };
 
   const onItemDeletePressed = async () => {

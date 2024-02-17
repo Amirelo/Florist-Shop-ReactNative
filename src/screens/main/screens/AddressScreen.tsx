@@ -14,6 +14,7 @@ import TextButton from '../../../components/molecules/buttons/TextButton';
 import {useSelector} from 'react-redux';
 import {deleteUserAddress} from '../MainService';
 import { addressFormat } from '../../../utils/Utils';
+import { NAVIGATION_MAIN_ADDRESS_EDIT } from '../../../constants/AppConstants';
 
 const AddressScreen = () => {
   // Navigation
@@ -29,7 +30,7 @@ const AddressScreen = () => {
 
   // Navigate to Address Edit Screen with address detail
   const onEditPressed = (item: AddressModel) => {
-    navigation.navigate('AddressEdit', {item: item});
+    navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT, {item: item});
   };
 
   const onDeletePressed = (item: AddressModel) => {
@@ -41,7 +42,7 @@ const AddressScreen = () => {
   };
 
   const onAddNewPressed = () => {
-    navigation.navigate('AddressEdit');
+    navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT);
   };
 
   React.useEffect(() => {

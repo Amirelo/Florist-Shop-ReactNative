@@ -11,7 +11,7 @@ import themes from '../../../themes/themes';
 import {CustomImage, CustomText} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {passwordSignUp} from '../AuthService';
-import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import {IMAGE_AUTH_BACKGROUND, NAVIGATION_AUTH_ACTIONCOMPLETE} from '../../../constants/AppConstants';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -51,7 +51,7 @@ const SignUpScreen = () => {
     checkFields()
       ? [
           passwordSignUp(email, password),
-          navigation.navigate('Complete', {
+          navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
             title: 'Verification email sent',
             description: 'You need to verify email before you can Sign In',
           }),

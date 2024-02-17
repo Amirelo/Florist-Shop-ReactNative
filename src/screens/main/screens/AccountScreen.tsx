@@ -18,6 +18,7 @@ import {
   getUserOrders,
   getUserPromoocodes,
 } from '../MainService';
+import { NAVIGATION_MAIN_ABOUTUS, NAVIGATION_MAIN_ADDRESS, NAVIGATION_MAIN_ORDER, NAVIGATION_MAIN_PROFILE, NAVIGATION_MAIN_PROMOCODES, NAVIGATION_MAIN_SETTINGS, NAVIGATION_MAIN_UPDATE_INFO } from '../../../constants/AppConstants';
 
 const AccountScreen = () => {
   // Navigation and dispatch
@@ -69,19 +70,19 @@ const AccountScreen = () => {
 
   // Navigate to profile screen when UserTab pressed
   const onUserTabPressed = () => {
-    navigation.navigate('Profile', {email: userEmail, user: user});
+    navigation.navigate(NAVIGATION_MAIN_PROFILE, {email: userEmail, user: user});
   };
 
   const onOrderTabPressed = () => {
-    navigation.navigate('Order', {userOrders: userOrders});
+    navigation.navigate(NAVIGATION_MAIN_ORDER, {userOrders: userOrders});
   };
 
   const onPromocodeTabPressed = () => {
-    navigation.navigate('Promo', {data: userPromocodes});
+    navigation.navigate(NAVIGATION_MAIN_PROMOCODES, {data: userPromocodes});
   };
 
   const onAddressTabPressed = () => {
-    navigation.navigate('Address', {data: userAddresses});
+    navigation.navigate(NAVIGATION_MAIN_ADDRESS, {data: userAddresses});
   }
 
   // Navigate to order screen
@@ -90,7 +91,7 @@ const AccountScreen = () => {
   };
 
   const onChangePasswordPressed = () => {
-    navigation.navigate('UpdateInfo', {type: 'EMAIL', data: ''});
+    navigation.navigate(NAVIGATION_MAIN_UPDATE_INFO, {type: 'EMAIL', data: ''});
   };
 
   React.useEffect(() => {
@@ -138,12 +139,12 @@ const AccountScreen = () => {
         </ItemAccount>
 
         <ItemAccount
-          onPressed={() => onTabPressed('Settings')}
+          onPressed={() => onTabPressed(NAVIGATION_MAIN_SETTINGS)}
           description={lang[langPref]['text_tab_setting_description']}>
           {lang[langPref]['text_tab_setting_title']}
         </ItemAccount>
         <ItemAccount
-          onPressed={() => onTabPressed('About')}
+          onPressed={() => onTabPressed(NAVIGATION_MAIN_ABOUTUS)}
           description={lang[langPref]['text_tab_about_description']}>
           {lang[langPref]['text_tab_about_title']}
         </ItemAccount>

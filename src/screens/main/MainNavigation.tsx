@@ -30,6 +30,25 @@ import lang from '../../language/lang';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductDetailScreen from './screens/ProductDetailScreen';
 import {useSelector} from 'react-redux';
+import {
+  NAVIGATION_BOTTOM_TAB_ACCOUNT,
+  NAVIGATION_BOTTOM_TAB_CART,
+  NAVIGATION_BOTTOM_TAB_EXPLORE,
+  NAVIGATION_BOTTOM_TAB_HOME,
+  NAVIGATION_MAIN_ABOUTUS,
+  NAVIGATION_MAIN_ADDRESS,
+  NAVIGATION_MAIN_ADDRESS_EDIT,
+  NAVIGATION_MAIN_CART_DELIVERY,
+  NAVIGATION_MAIN_CART_DETAIL,
+  NAVIGATION_MAIN_ORDER,
+  NAVIGATION_MAIN_ORDER_DETAIL,
+  NAVIGATION_MAIN_PRODUCT_DETAIL,
+  NAVIGATION_MAIN_PRODUCT_FILTER,
+  NAVIGATION_MAIN_PROFILE,
+  NAVIGATION_MAIN_PROMOCODES,
+  NAVIGATION_MAIN_SETTINGS,
+  NAVIGATION_MAIN_UPDATE_INFO,
+} from '../../constants/AppConstants';
 
 const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,27 +62,68 @@ const MainNavigation = () => {
           name="hometab"
           component={MainTab}
         />
-        <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="UpdateInfo" component={UpdateInfoScreen} />
-        <Stack.Screen name="Order" component={OrderScreen} />
-        <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
-        <Stack.Screen name="Address" component={AddressScreen} />
-        <Stack.Screen options={{title: 'Edit Address'}} name="AddressEdit" component={AddressEdit} />
-        <Stack.Screen name="Promo" component={PromocodeScreen} />
-        <Stack.Screen name="About" component={AboutUsScreen} />
-        <Stack.Screen name="Filter" component={ProductFilterScreen} />
         <Stack.Screen
-          name="CartDeli"
+          options={{title: 'Product Details'}}
+          name={NAVIGATION_MAIN_PRODUCT_DETAIL}
+          component={ProductDetailScreen}
+        />
+        <Stack.Screen
+        options={{title: 'Profile'}}
+          name={NAVIGATION_MAIN_PROFILE}
+          component={ProfileScreen}
+        />
+        <Stack.Screen
+        options={{title: 'Update User Info'}}
+          name={NAVIGATION_MAIN_UPDATE_INFO}
+          component={UpdateInfoScreen}
+        />
+        <Stack.Screen
+        options={{title: 'Orders'}} name={NAVIGATION_MAIN_ORDER} component={OrderScreen} />
+        <Stack.Screen
+        options={{title: 'Order Details'}}
+          name={NAVIGATION_MAIN_ORDER_DETAIL}
+          component={OrderDetailScreen}
+        />
+        <Stack.Screen
+        options={{title: 'Address'}}
+          name={NAVIGATION_MAIN_ADDRESS}
+          component={AddressScreen}
+        />
+        <Stack.Screen
+          options={{title: 'Edit Address'}}
+          name={NAVIGATION_MAIN_ADDRESS_EDIT}
+          component={AddressEdit}
+        />
+        <Stack.Screen
+        options={{title: 'Promocodes'}}
+          name={NAVIGATION_MAIN_PROMOCODES}
+          component={PromocodeScreen}
+        />
+        <Stack.Screen
+        options={{title: 'About Us'}}
+          name={NAVIGATION_MAIN_ABOUTUS}
+          component={AboutUsScreen}
+        />
+        <Stack.Screen
+        options={{title: 'Product Filter'}}
+          name={NAVIGATION_MAIN_PRODUCT_FILTER}
+          component={ProductFilterScreen}
+        />
+        <Stack.Screen
           options={{title: 'Cart Delivery'}}
+          name={NAVIGATION_MAIN_CART_DELIVERY}
           component={CartDelivery}
         />
         <Stack.Screen
-          name="CartDetail"
           options={{title: 'Cart Detail'}}
+          name={NAVIGATION_MAIN_CART_DETAIL}
           component={CartDetail}
         />
-        <Stack.Screen name="Settings" component={SettingScreen} />
+        <Stack.Screen
+        options={{title: 'Settings'}}
+          name={NAVIGATION_MAIN_SETTINGS}
+          component={SettingScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -75,7 +135,7 @@ const MainTab = () => {
     (store: any) => store.preference.language,
   );
   return (
-    <tab.Navigator initialRouteName="Home">
+    <tab.Navigator initialRouteName={NAVIGATION_BOTTOM_TAB_HOME}>
       <tab.Screen
         options={{
           tabBarLabel: lang[langPref]['bottomTab_home'],
@@ -87,7 +147,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={'Home'}
+        name={NAVIGATION_BOTTOM_TAB_HOME}
         component={HomeScreen}
       />
       <tab.Screen
@@ -100,7 +160,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={'Explore'}
+        name={NAVIGATION_BOTTOM_TAB_EXPLORE}
         component={ExploreScreen}
       />
       <tab.Screen
@@ -113,7 +173,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={'Cart'}
+        name={NAVIGATION_BOTTOM_TAB_CART}
         component={CartScreen}
       />
 
@@ -127,7 +187,7 @@ const MainTab = () => {
           ),
           tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
         }}
-        name={'Account'}
+        name={NAVIGATION_BOTTOM_TAB_ACCOUNT}
         component={AccountScreen}
       />
     </tab.Navigator>

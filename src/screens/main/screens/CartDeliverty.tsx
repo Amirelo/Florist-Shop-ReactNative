@@ -15,6 +15,7 @@ import {addressFormat} from '../../../utils/Utils';
 import {getUserAddresses} from '../MainService';
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore'
+import { NAVIGATION_MAIN_ADDRESS_EDIT, NAVIGATION_MAIN_CART_DETAIL } from '../../../constants/AppConstants';
 
 const CartDelivery = () => {
   // Navigation
@@ -71,7 +72,7 @@ const CartDelivery = () => {
       console.log('CartDelivery - passing route - products:', listProducts);
       console.log('CartDelivery - passing route - address:', selectedAddress);
       console.log('CartDelivery - passing route - phone number:', phoneNumber);
-      navigation.navigate('CartDetail', {
+      navigation.navigate(NAVIGATION_MAIN_CART_DETAIL, {
         carts: listCarts,
         total: total,
         products: listProducts,
@@ -89,7 +90,7 @@ const CartDelivery = () => {
   };
 
   const onAddAddressPressed = () => {
-    navigation.navigate('AddressEdit');
+    navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT);
   };
 
   // Saved selected address into fields

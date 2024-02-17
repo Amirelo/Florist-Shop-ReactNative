@@ -13,6 +13,7 @@ import {CustomText} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
+import { NAVIGATION_BOTTOM_TAB_EXPLORE, NAVIGATION_MAIN_ORDER_DETAIL } from '../../../constants/AppConstants';
 
 const OrderScreen = () => {
   // Initial
@@ -25,11 +26,11 @@ const OrderScreen = () => {
 
   // Navigate to Order Detail Screen with data
   const onDetailPressed = (data: OrderModel) => {
-    navigation.navigate('OrderDetail', {data: data});
+    navigation.navigate(NAVIGATION_MAIN_ORDER_DETAIL, {data: data});
   };
 
   const onShoppingPressed = () => {
-    navigation.navigate('Explore');
+    navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE);
   };
 
   React.useEffect(() => {

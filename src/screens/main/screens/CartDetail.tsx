@@ -30,6 +30,7 @@ import {addressFormat, priceFormat} from '../../../utils/Utils';
 import {TextButton} from '../../../components/molecules/buttons';
 import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
 import {useSelector} from 'react-redux';
+import { NAVIGATION_MAIN_CART } from '../../../constants/AppConstants';
 
 const CartDetail = () => {
   // initial
@@ -83,7 +84,7 @@ const CartDetail = () => {
     const addOrderRes = await AddUserOrder(userOrder, email);
     if (addOrderRes) {
       await deleteCart(email);
-      navigation.navigate('Cart', {action: 'Order'});
+      navigation.navigate(NAVIGATION_MAIN_CART, {action: 'Order'});
     }
   };
 

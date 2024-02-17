@@ -27,6 +27,7 @@ import {getProducts} from '../MainService';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
 import {priceFormat} from '../../../utils/Utils';
+import { NAVIGATION_MAIN_PRODUCT_DETAIL, NAVIGATION_MAIN_PRODUCT_FILTER } from '../../../constants/AppConstants';
 
 const ExploreScreen = () => {
   // Initial
@@ -50,7 +51,7 @@ const ExploreScreen = () => {
   );
 
   const onFilterPressed = () => {
-    navigation.navigate('Filter');
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_FILTER);
   };
 
   // Change product display mode
@@ -95,7 +96,7 @@ const ExploreScreen = () => {
 
   // Navigate to Product Detail Screen on item pressed
   const onProductPressed = (item: ProductModel) => {
-    navigation.navigate('ProductDetail', {item: item});
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_DETAIL, {item: item});
   };
 
   // Get data from server

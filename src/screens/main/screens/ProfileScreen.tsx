@@ -16,7 +16,7 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
 import {UserModel} from '../../../models';
 import {updateImage, updateUserInfo} from '../../auth/AuthService';
-import {UPDATE_USER_PROFILE_PICTURE} from '../../../constants/AppConstants';
+import {NAVIGATION_MAIN_UPDATE_INFO, UPDATE_USER_PROFILE_PICTURE} from '../../../constants/AppConstants';
 import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
 
 const ProfileScreen = () => {
@@ -36,7 +36,7 @@ const ProfileScreen = () => {
 
   const onProfileTabPressed = (type: string, data: string) => {
     console.log('data:', data);
-    navigation.navigate('UpdateInfo', {type: type, data: data});
+    navigation.navigate(NAVIGATION_MAIN_UPDATE_INFO, {type: type, data: data});
   };
 
 

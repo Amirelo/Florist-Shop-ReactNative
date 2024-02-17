@@ -9,7 +9,7 @@ import ProductModel from '../../../models/ProductModel';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {getCategories, getProducts} from '../MainService';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
-import {IMAGE_HOME_HEADER} from '../../../constants/AppConstants';
+import {IMAGE_HOME_HEADER, NAVIGATION_MAIN_ABOUTUS, NAVIGATION_MAIN_PRODUCT_DETAIL} from '../../../constants/AppConstants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
@@ -30,7 +30,7 @@ const HomeScreen = () => {
 
   // Navigate to Product Detail Screen with item
   const onProductPressed = (item: ProductModel) => {
-    navigation.navigate('ProductDetail', {item: item});
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_DETAIL, {item: item});
   };
 
   // Load data from server
@@ -46,7 +46,7 @@ const HomeScreen = () => {
 
   // On Need Help Card Pressed
   const onHelpCardPressed = () => {
-    navigation.navigate('About')
+    navigation.navigate(NAVIGATION_MAIN_ABOUTUS)
   }
 
   // Load data first time screen is load

@@ -5,16 +5,19 @@ import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 import {sendPasswordChangeEmail} from '../AuthService';
 import CustomImage from '../../../components/atoms/CustomImage';
-import { IMAGE_AUTH_BACKGROUND } from '../../../constants/AppConstants';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  IMAGE_AUTH_BACKGROUND,
+  NAVIGATION_AUTH_ACTIONCOMPLETE,
+} from '../../../constants/AppConstants';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
-import { CustomText } from '../../../components/atoms';
+import {useSelector} from 'react-redux';
+import {CustomText} from '../../../components/atoms';
 
 const VerifyEmailScreen = () => {
   // Navigation
-  const navigation = useNavigation<NavigationProp<any>>()
-  
+  const navigation = useNavigation<NavigationProp<any>>();
+
   // Fields
   const [email, setEmail] = useState('');
 
@@ -26,7 +29,13 @@ const VerifyEmailScreen = () => {
   // Send email and navigate to Action Complete Screen when finish
   const onSendEmailPressed = () => {
     email != ''
-      ? [sendPasswordChangeEmail(email), navigation.navigate('Complete', {title: 'Email Sent', description:'Please check your email for password change'})]
+      ? [
+          sendPasswordChangeEmail(email),
+          navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
+            title: 'Email Sent',
+            description: 'Please check your email for password change',
+          }),
+        ]
       : console.log('Fields cannot be empty');
   };
 
@@ -40,7 +49,7 @@ const VerifyEmailScreen = () => {
         <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
       </View>
       <View style={styles.body}>
-      <View
+        <View
           style={{
             marginBottom: 30,
             flexDirection: 'row',

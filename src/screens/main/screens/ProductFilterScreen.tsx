@@ -8,6 +8,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NAVIGATION_BOTTOM_TAB_EXPLORE } from '../../../constants/AppConstants';
 
 const ProductFilterScreen = () => {
   // Initial
@@ -79,7 +80,7 @@ const ProductFilterScreen = () => {
       max = Number(maxPrice);
     }
 
-    navigation.navigate('Explore', {
+    navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE, {
       filter: {
         minPrice: min,
         maxPrice: max,
