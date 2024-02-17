@@ -10,8 +10,10 @@ import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const ProductFilterScreen = () => {
+  // Initial
   const navigation = useNavigation<NavigationProp<any>>();
 
+  // Fields
   const [minPrice, setMinPrice] = React.useState('0');
   const [maxPrice, setMaxPrice] = React.useState('');
   const [listCategories, setListCategories] = React.useState<
@@ -20,18 +22,17 @@ const ProductFilterScreen = () => {
   const [selectedCategories, setSelectedCategories] = React.useState<
     Array<string>
   >([]);
-
   const [selectedColors, setSelectedColors] = React.useState<Array<string>>([]);
-
   const listFlowerColors = ['White', 'Red', 'Blue', 'Yellow', 'Purple', 'Pink'];
-
   const [clearCkb, setCleaCkb] = React.useState(false);
 
+  // Get categories from server
   const getCategory = async () => {
     const categories = await getCategories();
     setListCategories(categories);
   };
 
+  // Add category to selected list
   const onCategoryItemPressed = (title: string, status: boolean) => {
     console.log('Category Item Pressed:', title, status);
     if (selectedCategories.includes(title)) {
@@ -49,6 +50,7 @@ const ProductFilterScreen = () => {
     }
   };
 
+  // Add color to selected list
   const onColorItemPressed = (title: string, status: boolean) => {
     console.log('Category Item Pressed:', title, status);
     if (selectedColors.includes(title)) {
@@ -66,6 +68,7 @@ const ProductFilterScreen = () => {
     }
   };
 
+  // Pass data back to ExploreScreen
   const onApplyPressed = () => {
     var min = 0;
     var max = 1000000;
@@ -77,7 +80,7 @@ const ProductFilterScreen = () => {
     }
 
     navigation.navigate('Explore', {
-      data: {
+      filter: {
         minPrice: min,
         maxPrice: max,
         categories: selectedCategories,
@@ -86,6 +89,7 @@ const ProductFilterScreen = () => {
     });
   };
 
+  // Clear fields on pressed 
   const onClearPressed = () => {
     setMinPrice('0');
     setMaxPrice('');

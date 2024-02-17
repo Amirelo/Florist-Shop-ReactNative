@@ -17,15 +17,21 @@ import {
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import {CustomText} from '../../../components/atoms';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {getProducts} from '../MainService';
 import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import { priceFormat } from '../../../utils/Utils';
+import {priceFormat} from '../../../utils/Utils';
 
 const ExploreScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
+  const route = useRoute<RouteProp<any>>();
 
   // Fields
   const [isColumn, setIsColumn] = React.useState(false);
@@ -35,16 +41,13 @@ const ExploreScreen = () => {
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
-  const [sortText, setSortText] = React.useState('')
+  const [sortText, setSortText] = React.useState('');
   const [panelActive, setPanelActive] = React.useState(false);
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
-
-  
-
 
   const onFilterPressed = () => {
     navigation.navigate('Filter');
@@ -62,25 +65,23 @@ const ExploreScreen = () => {
 
   // Sort products by selected options
   const onSortOptionSelected = (type: string) => {
-    var text = ''
+    var text = '';
     console.log('Sort pressed');
     type == 'NAME_ASC' ? (
-      filteredList.sort((a, b) => a.name.localeCompare(b.name)),
-      text = 'Name Asc'
+      (filteredList.sort((a, b) => a.name.localeCompare(b.name)),
+      (text = 'Name Asc'))
     ) : type == 'NAME_DESC' ? (
-      filteredList.sort((a, b) => b.name.localeCompare(a.name)),
-      text = 'Name Desc'
+      (filteredList.sort((a, b) => b.name.localeCompare(a.name)),
+      (text = 'Name Desc'))
     ) : type == 'PRICE_ASC' ? (
-      filteredList.sort((a, b) => a.price - b.price),
-      text = 'Price Asc'
+      (filteredList.sort((a, b) => a.price - b.price), (text = 'Price Asc'))
     ) : type == 'PRICE_DESC' ? (
-      filteredList.sort((a, b) => b.price - a.price),
-      text = 'Price Desc'
+      (filteredList.sort((a, b) => b.price - a.price), (text = 'Price Desc'))
     ) : (
       <></>
     );
     setFilteredList(filteredList);
-    setSortText(text)
+    setSortText(text);
     setPanelActive(false);
   };
 
@@ -104,11 +105,25 @@ const ExploreScreen = () => {
     setListProducts(products);
     setFilteredList(products);
   };
-  
+
   // Run at the beginning
   React.useEffect(() => {
     waitForData();
   }, []);
+
+  React.useEffect(() => {
+    if (route.params?.filter) {
+      var filterData: any = [];
+      console.log('Filter found:', route.params.filter);
+      filterData = route.params.filter;
+      const newList = listProducts.filter(
+        item =>
+          item.price > filterData.minPrice && item.price < filterData.maxPrice,
+      );
+
+      setFilteredList(newList)
+    }
+  }, [route]);
 
   return (
     <View style={{flex: 1}}>
@@ -152,7 +167,6 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
         </View>
-        <CustomText>{priceFormat(1053593, 'vn')}</CustomText>
         {isColumn == false ? (
           <FlatList
             columnWrapperStyle={{
