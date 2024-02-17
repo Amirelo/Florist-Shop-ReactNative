@@ -27,6 +27,22 @@ const en = {
   bottomTab_cart: 'Cart',
   bottomTab_account:'Account',
 
+  // Main Navigation
+  nav_main_prod_details: 'Product Details',
+  nav_main_prod_filter:'Product Filter',
+  nav_main_profile: 'Profile',
+  nav_main_update_info: 'Update User Information',
+  nav_main_order: 'User Orders',
+  nav_main_order_details:'Order Details',
+  nav_main_address:'User Address',
+  nav_main_address_edit:'Edit Address',
+  nav_main_promocodes:'User Promocodes',
+  nav_main_about: 'About Developer',
+  nav_main_cart:'Cart',
+  nav_main_cart_delivery:'Cart Delivery Info',
+  nav_main_cart_details:'Cart Details',
+  nav_main_settings:'Settings',
+
   // Login
   signin_title : 'Sign In',
   signin_forgot: 'Forgot Password',

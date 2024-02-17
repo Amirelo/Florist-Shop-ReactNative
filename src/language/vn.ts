@@ -25,6 +25,22 @@ const vn = {
   bottomTab_cart: 'Giỏ Hàng',
   bottomTab_account:'Tài Khoản',
 
+ // Main Navigation
+ nav_main_prod_details: 'Thông tin sản phẩm',
+ nav_main_prod_filter:'Lọc sản phẩm',
+ nav_main_profile: 'Thông tin người dùng',
+ nav_main_update_info: 'Cập nhật thông tin',
+ nav_main_order: 'Lịch sử mua hàng',
+ nav_main_order_details:'Đơn hàng chi tiết',
+ nav_main_address:'Địa chỉ người dùng',
+ nav_main_address_edit:'Cập nhật địa chỉ',
+ nav_main_promocodes:'Mã khuyến mãi',
+ nav_main_about: 'Về chúng tôi',
+ nav_main_cart:'Giỏ hàng',
+ nav_main_cart_delivery:'Thông tin giao hàng',
+ nav_main_cart_details:'Chi tiết giỏ hàng',
+ nav_main_settings:'Cài đặt',
+
   // Login
   signin_title : 'Đăng Nhập',
   signin_forgot: 'Đổi mật khẩu',
