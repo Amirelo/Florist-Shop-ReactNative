@@ -3,6 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomImage, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   source?: string;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const ItemUser = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <CustomButton
     onPressed={props.onPressed}
@@ -22,6 +25,7 @@ const ItemUser = (props: Props) => {
         {
           marginTop: props.marginTop,
           marginBottom: props.marginBottom ? props.marginBottom : 12,
+          backgroundColor: themes[currentTheme].tertiaryColor,
         },
       ]}>
       <View style={styles.body}>
@@ -36,7 +40,7 @@ const ItemUser = (props: Props) => {
           <CustomText>{props.username + ''}</CustomText>
         </View>
       </View>
-      <FontAwesomeIcon icon={faChevronRight} />
+      <FontAwesomeIcon color={themes[currentTheme].textColor} icon={faChevronRight} />
     </CustomButton>
   );
 };
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     height: 94,
     borderRadius: 7,
     padding: 16,
-    backgroundColor: 'white',
+    
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     alignItems: 'center',
-    width:'100%'
+    width:'95%',
   },
   icon: {
     marginRight: 18,

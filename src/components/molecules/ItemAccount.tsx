@@ -4,6 +4,7 @@ import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   children: string;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const ItemAccount = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+
   return (
     <CustomButton
       onPressed={props.onPressed}
@@ -25,6 +28,7 @@ const ItemAccount = (props: Props) => {
         {
           marginTop: props.marginTop,
           marginBottom: props.marginBottom ? props.marginBottom : 12,
+          backgroundColor: themes[currentTheme].tertiaryColor,
         },
       ]}>
       <View style={styles.body}>
@@ -37,7 +41,7 @@ const ItemAccount = (props: Props) => {
             : props.description}
         </CustomText>
       </View>
-      <FontAwesomeIcon icon={faChevronRight} />
+      <FontAwesomeIcon color={themes[currentTheme].textColor} icon={faChevronRight} />
     </CustomButton>
   );
 };
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     height: 72,
     borderRadius: 7,
     padding: 16,
-    backgroundColor: 'white',
+    
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

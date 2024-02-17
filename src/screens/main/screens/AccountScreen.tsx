@@ -18,7 +18,17 @@ import {
   getUserOrders,
   getUserPromoocodes,
 } from '../MainService';
-import { NAVIGATION_MAIN_ABOUTUS, NAVIGATION_MAIN_ADDRESS, NAVIGATION_MAIN_ORDER, NAVIGATION_MAIN_PROFILE, NAVIGATION_MAIN_PROMOCODES, NAVIGATION_MAIN_SETTINGS, NAVIGATION_MAIN_UPDATE_INFO } from '../../../constants/AppConstants';
+import {
+  NAVIGATION_MAIN_ABOUTUS,
+  NAVIGATION_MAIN_ADDRESS,
+  NAVIGATION_MAIN_ORDER,
+  NAVIGATION_MAIN_PROFILE,
+  NAVIGATION_MAIN_PROMOCODES,
+  NAVIGATION_MAIN_SETTINGS,
+  NAVIGATION_MAIN_UPDATE_INFO,
+} from '../../../constants/AppConstants';
+import {CustomView} from '../../../components/atoms';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AccountScreen = () => {
   // Navigation and dispatch
@@ -57,7 +67,7 @@ const AccountScreen = () => {
 
     // Get User Addresses
     const addresses: Array<AddressModel> = await getUserAddresses(userEmail);
-    console.log(addresses)
+    console.log(addresses);
     setUserAddresses(addresses);
   };
 
@@ -70,7 +80,10 @@ const AccountScreen = () => {
 
   // Navigate to profile screen when UserTab pressed
   const onUserTabPressed = () => {
-    navigation.navigate(NAVIGATION_MAIN_PROFILE, {email: userEmail, user: user});
+    navigation.navigate(NAVIGATION_MAIN_PROFILE, {
+      email: userEmail,
+      user: user,
+    });
   };
 
   const onOrderTabPressed = () => {
@@ -83,7 +96,7 @@ const AccountScreen = () => {
 
   const onAddressTabPressed = () => {
     navigation.navigate(NAVIGATION_MAIN_ADDRESS, {data: userAddresses});
-  }
+  };
 
   // Navigate to order screen
   const onTabPressed = (name: string) => {
@@ -105,70 +118,65 @@ const AccountScreen = () => {
   }, [userInfo]);
 
   return (
-    <ScrollView>
-      <View style={styles.body}>
-        <ItemUser
-          username={userInfo.username}
-          email={userEmail}
-          source={
-            user?.image
-              ? user.image
-              : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
-          }
-          marginTop={40}
-          marginBottom={12}
-          onPressed={onUserTabPressed}
-        />
-        <ItemAccount
-          onPressed={() => onOrderTabPressed()}
-          amount={userOrders.length}
-          description={lang[langPref]['text_tab_order_description']}>
-          {lang[langPref]['text_tab_order_title']}
-        </ItemAccount>
-        <ItemAccount
-          onPressed={() => onAddressTabPressed()}
-          amount={userAddresses.length}
-          description={lang[langPref]['text_tab_address_description']}>
-          {lang[langPref]['text_tab_address_title']}
-        </ItemAccount>
-        <ItemAccount
-          onPressed={onPromocodeTabPressed}
-          amount={userPromocodes.length}
-          description={lang[langPref]['text_tab_promocodes_description']}>
-          {lang[langPref]['text_tab_promocodes_title']}
-        </ItemAccount>
+    <CustomView type="fullscreen">
+      <ScrollView>
+        <CustomView type="body">
+          <ItemUser
+            username={userInfo.username}
+            email={userEmail}
+            source={
+              user?.image
+                ? user.image
+                : 'https://images.pexels.com/photos/19933488/pexels-photo-19933488/free-photo-of-a-pastry-with-a-cup-of-coffee-on-a-table.jpeg'
+            }
+            marginBottom={12}
+            onPressed={onUserTabPressed}
+          />
+          <ItemAccount
+            onPressed={() => onOrderTabPressed()}
+            amount={userOrders.length}
+            description={lang[langPref]['text_tab_order_description']}>
+            {lang[langPref]['text_tab_order_title']}
+          </ItemAccount>
+          <ItemAccount
+            onPressed={() => onAddressTabPressed()}
+            amount={userAddresses.length}
+            description={lang[langPref]['text_tab_address_description']}>
+            {lang[langPref]['text_tab_address_title']}
+          </ItemAccount>
+          <ItemAccount
+            onPressed={onPromocodeTabPressed}
+            amount={userPromocodes.length}
+            description={lang[langPref]['text_tab_promocodes_description']}>
+            {lang[langPref]['text_tab_promocodes_title']}
+          </ItemAccount>
 
-        <ItemAccount
-          onPressed={() => onTabPressed(NAVIGATION_MAIN_SETTINGS)}
-          description={lang[langPref]['text_tab_setting_description']}>
-          {lang[langPref]['text_tab_setting_title']}
-        </ItemAccount>
-        <ItemAccount
-          onPressed={() => onTabPressed(NAVIGATION_MAIN_ABOUTUS)}
-          description={lang[langPref]['text_tab_about_description']}>
-          {lang[langPref]['text_tab_about_title']}
-        </ItemAccount>
-        <ItemAccount
-          onPressed={onChangePasswordPressed}
-          color={themes['defaultTheme'].errorcolor}
-          description={lang[langPref]['text_tab_changePass_description']}>
-          {lang[langPref]['text_tab_changePass_title']}
-        </ItemAccount>
-        <ItemAccount
-          onPressed={onLogoutPressed}
-          color={themes['defaultTheme'].errorcolor}
-          description={lang[langPref]['text_tab_logout_description']}>
-          {lang[langPref]['text_tab_logout_title']}
-        </ItemAccount>
-      </View>
-    </ScrollView>
+          <ItemAccount
+            onPressed={() => onTabPressed(NAVIGATION_MAIN_SETTINGS)}
+            description={lang[langPref]['text_tab_setting_description']}>
+            {lang[langPref]['text_tab_setting_title']}
+          </ItemAccount>
+          <ItemAccount
+            onPressed={() => onTabPressed(NAVIGATION_MAIN_ABOUTUS)}
+            description={lang[langPref]['text_tab_about_description']}>
+            {lang[langPref]['text_tab_about_title']}
+          </ItemAccount>
+          <ItemAccount
+            onPressed={onChangePasswordPressed}
+            color={themes['defaultTheme'].errorcolor}
+            description={lang[langPref]['text_tab_changePass_description']}>
+            {lang[langPref]['text_tab_changePass_title']}
+          </ItemAccount>
+          <ItemAccount
+            onPressed={onLogoutPressed}
+            color={themes['defaultTheme'].errorcolor}
+            description={lang[langPref]['text_tab_logout_description']}>
+            {lang[langPref]['text_tab_logout_title']}
+          </ItemAccount>
+        </CustomView>
+      </ScrollView>
+    </CustomView>
   );
 };
 
 export default AccountScreen;
-
-const styles = StyleSheet.create({
-  body: {
-    paddingHorizontal: 16,
-  },
-});
