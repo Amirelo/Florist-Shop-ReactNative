@@ -6,7 +6,7 @@ import {
   ItemProductLong,
   OptionsPanel,
 } from '../../../components/molecules';
-import {CustomButton, ItemRow} from '../../../components/atoms';
+import {CustomButton, CustomView, ItemRow} from '../../../components/atoms';
 import {ProductModel, UserModel} from '../../../models';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -127,8 +127,8 @@ const ExploreScreen = () => {
   }, [route]);
 
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.view}>
+    <CustomView type='viewWithOptions'>
+      <CustomView type='body'>
         <CustomInput
           onChangeText={text => onSearch(text)}
           icon={faSearch}
@@ -204,7 +204,7 @@ const ExploreScreen = () => {
             )}
           />
         )}
-      </View>
+      </CustomView>
       {panelActive ? (
         <OptionsPanel title="Sort" setActive={setPanelActive}>
           <CustomButton onPressed={() => onSortOptionSelected('NAME_ASC')}>
@@ -231,16 +231,9 @@ const ExploreScreen = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 
 export default ExploreScreen;
 
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    flex: 1,
-  },
-});
