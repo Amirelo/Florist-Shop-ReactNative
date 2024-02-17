@@ -44,7 +44,9 @@ export const NAVIGATION_MAIN_ORDER_DETAIL = 'User Order Detail';
 
 // Default Images
 export const IMAGE_AUTH_BACKGROUND = 'https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg';
+
 export const IMAGE_HOME_HEADER = 'https://images.pexels.com/photos/1458282/pexels-photo-1458282.jpeg';
+export const IMAGE_HOME_HEADER_DARK = 'https://images.pexels.com/photos/4041428/pexels-photo-4041428.jpeg'
 
 export const IMAGE_ORDER_PENDING = 'https://images.pexels.com/photos/2419256/pexels-photo-2419256.jpeg';
 export const IMAGE_ORDER_DELIVERING = 'https://images.pexels.com/photos/8988448/pexels-photo-8988448.jpeg';

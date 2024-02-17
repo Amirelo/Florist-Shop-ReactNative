@@ -12,7 +12,7 @@ interface Props {
   icon?: IconProp;
   marginTop?: number;
   marginBottom?: number;
-  backgroundImage?: string;
+  backgroundImage?: Array<string>;
   height?: ViewStyle['height'];
   onPressed?(): void;
 }
@@ -41,7 +41,7 @@ const CardHelp = (props: Props) => {
         }>
         {props.backgroundImage ? (
           <View style={[styles.backgroundView]}>
-            <CustomImage type="match_parent" source={props.backgroundImage} />
+            <CustomImage type="match_parent" source={currentTheme == 'dark' ? props.backgroundImage[1] : props.backgroundImage[0]} />
           </View>
         ) : (
           <></>

@@ -11,6 +11,7 @@ import {getCategories, getProducts} from '../MainService';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
 import {
   IMAGE_HOME_HEADER,
+  IMAGE_HOME_HEADER_DARK,
   NAVIGATION_BOTTOM_TAB_EXPLORE,
   NAVIGATION_MAIN_ABOUTUS,
   NAVIGATION_MAIN_PRODUCT_DETAIL,
@@ -83,7 +84,7 @@ const HomeScreen = () => {
           <CardHelp
             title={'Welcome!'}
             height={200}
-            backgroundImage={IMAGE_HOME_HEADER}
+            backgroundImage={[IMAGE_HOME_HEADER, IMAGE_HOME_HEADER_DARK]}
             marginBottom={24}
           />
 
