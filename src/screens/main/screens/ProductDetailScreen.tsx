@@ -123,14 +123,14 @@ const ProductDetailScreen = () => {
                   : themes[currentTheme].errorcolor
               }>
               {product!.quantity > 0
-                ? lang[langPref]['text_availability_instock']
-                : lang[langPref]['text_availability_none']}
+                ? lang[langPref].text_availability_instock
+                : lang[langPref].text_availability_none}
             </CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={30}>
             <CustomText type="subTitle">
-              {lang[langPref]['text_rating']}
+              {lang[langPref].text_rating}
             </CustomText>
             {/* Rating Stars */}
             <RatingStars totalRating={product!.totalRating} />
@@ -138,7 +138,7 @@ const ProductDetailScreen = () => {
 
           <ItemRow marginBottom={24}>
             <CustomText type="title">
-              {lang[langPref]['text_quantity']}
+              {lang[langPref].text_quantity}
             </CustomText>
             {/* Change Quantity */}
             <QuantityCounter
@@ -152,7 +152,7 @@ const ProductDetailScreen = () => {
 
           <ItemRow marginBottom={34}>
             <CustomText type="header">
-              {lang[langPref]['text_total']}
+              {lang[langPref].text_total}
             </CustomText>
             {/* Total Price */}
             <CustomText type="header">
@@ -162,14 +162,14 @@ const ProductDetailScreen = () => {
 
           {/* Order Button */}
           <TextButton type="primary" onPressed={onAddToCartPressed} marginBottom={20}>
-            Add to Cart
+            {lang[langPref].buttonAddToCart}
           </TextButton>
 
           {/* Review button */}
           <TextButton
             type="primary"
             backgroundColor={themes[currentTheme].warnColor} marginBottom={20}>
-            Product Reviews
+            {lang[langPref].buttonSeeReviews}
           </TextButton>
         </CustomView>
       </CustomView>

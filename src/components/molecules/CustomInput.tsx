@@ -23,6 +23,7 @@ interface Props {
   marginBottom?: number;
   icon?: IconProp;
   keyboardType?: KeyboardType;
+  flex?:number;
 }
 
 const CustomInput = (props: Props) => {
@@ -45,6 +46,7 @@ const CustomInput = (props: Props) => {
             ? themes[currentTheme].textSecondaryColor
             : '',
           backgroundColor: props.icon ? themes[currentTheme].tertiaryColor : '',
+          flex: props.flex
         },
         props.icon ? styles.view : null,
       ]}>

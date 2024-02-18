@@ -25,6 +25,7 @@ import {
   NAVIGATION_MAIN_CART_DETAIL,
 } from '../../../constants/AppConstants';
 import {TextButton} from '../../../components/molecules/buttons';
+import lang from '../../../language/lang';
 
 const CartDelivery = () => {
   // Navigation
@@ -50,6 +51,8 @@ const CartDelivery = () => {
     const addresses: Array<AddressModel> = await getUserAddresses(email);
     setListAddresses(addresses);
   };
+
+  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
 
   // Get data from route
   React.useEffect(() => {
@@ -133,20 +136,20 @@ const CartDelivery = () => {
     <CustomView type="fullscreen">
       <CustomView type="body">
         <CustomInput
-          placeholder="Phone number"
+          placeholder={lang[langPref].edPhone}
           onChangeText={setPhoneNumber}
           keyboardType="numeric"
           marginBottom={20}
         />
 
         <CustomText type="title" marginBottom={8}>
-          Address
+          {lang[langPref].text_address}
         </CustomText>
 
         <CustomText marginBottom={12} type="subTitle">
           {selectedAddress
             ? addressFormat(selectedAddress)
-            : 'No address selected'}
+            : lang[langPref].text_address_none}
         </CustomText>
         <Divider />
 
@@ -154,21 +157,21 @@ const CartDelivery = () => {
           type="tertiary"
           onPressed={onSelectPressed}
           marginBottom={20}>
-          Select Address
+          {lang[langPref].buttonSelectAddress}
         </TextButton>
 
         <CustomText alignSelf='center' type="subTitle" marginBottom={20}>
-          Or
+          {lang[langPref].text_or}
         </CustomText>
 
         <TextButton
           type="tertiary"
           onPressed={onAddAddressPressed}
           marginBottom={20}>
-          Add New Address
+          {lang[langPref].buttonNewAddress}
         </TextButton>
 
-            <TextButton type='primary' onPressed={onContinuePressed}>Continue</TextButton>
+            <TextButton type='primary' onPressed={onContinuePressed}>{lang[langPref].buttonContinue}</TextButton>
       </CustomView>
       {optionActive ? (
         <OptionsPanel setActive={setOptionActive} title="Address">

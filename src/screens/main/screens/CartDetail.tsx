@@ -32,6 +32,7 @@ import {TextButton} from '../../../components/molecules/buttons';
 import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
 import {useSelector} from 'react-redux';
 import { NAVIGATION_MAIN_CART } from '../../../constants/AppConstants';
+import lang from '../../../language/lang';
 
 const CartDetail = () => {
   // initial
@@ -39,6 +40,7 @@ const CartDetail = () => {
   const route = useRoute<RouteProp<any>>();
 
   const currentTheme: keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const langPref : keyof typeof lang = useSelector((store:any) => store.preference.language)
 
   // Fields
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
@@ -139,7 +141,7 @@ const CartDetail = () => {
             marginBottom: 30,
           }}>
           <CustomText fontWeight="bold" marginBottom={20} type="title">
-            Delivery Information
+            {lang[langPref].text_delivery_info}
           </CustomText>
           <CustomText type="subTitle">
             {address ? addressFormat(address) : ''}
@@ -155,7 +157,7 @@ const CartDetail = () => {
             marginBottom: 30,
           }}>
           <CustomText type="title" fontWeight="bold">
-            Products' Detail
+          {lang[langPref].text_product_detail}
           </CustomText>
           <FlatList
             horizontal={true}
@@ -176,7 +178,7 @@ const CartDetail = () => {
                       )[0]
                     : undefined
                 }
-                langPref="en"
+                langPref="vn"
               />
             )}
           />
@@ -190,13 +192,13 @@ const CartDetail = () => {
             marginBottom: 30,
           }}>
           <CustomText marginBottom={20} type="title" fontWeight="bold">
-            Payment
+          {lang[langPref].text_payment}
           </CustomText>
 
           <ItemRow marginBottom={20}>
-            <CustomText type="title">Products price:</CustomText>
+            <CustomText type="title">{lang[langPref].text_products_price}</CustomText>
             <CustomText type="title">
-              {priceFormat(total, 'en')}
+              {priceFormat(total, 'vn')}
             </CustomText>
           </ItemRow>
 
@@ -206,19 +208,19 @@ const CartDetail = () => {
             type="tertiary"
             marginBottom={20}
             onPressed={onPromocodePressed}>
-            Select coupon
+            {lang[langPref].buttonSelectPromo}
           </TextButton>
 
           <ItemRow marginBottom={20}>
             <CustomText type="title">Discount:</CustomText>
             <CustomText type="title">
-              {selectedPromo ? selectedPromo.effect : 'None selected'}
+              {selectedPromo ? selectedPromo.effect : lang[langPref].text_discount_none}
             </CustomText>
           </ItemRow>
 
           <ItemRow marginBottom={20}>
-            <CustomText type="title">Total</CustomText>
-            <CustomText type="title" fontWeight='bold'  color={themes[currentTheme].primaryColor}>{priceFormat(total, 'en')}</CustomText>
+            <CustomText type="title">{lang[langPref].text_total}</CustomText>
+            <CustomText type="title" fontWeight='bold'  color={themes[currentTheme].primaryColor}>{priceFormat(total, 'vn')}</CustomText>
           </ItemRow>
         </View>
         <View
@@ -230,14 +232,14 @@ const CartDetail = () => {
             marginBottom: 30,
           }}>
           <CustomText type="title" fontWeight="bold" marginBottom={20}>
-            Payment Method
+            {lang[langPref].text_paymentMethod}
           </CustomText>
           <CustomText marginBottom={20} type="subTitle">
-            Cash payment
+            {lang[langPref].text_paymentMethod_cash}
           </CustomText>
         </View>
         <TextButton type="primary" onPressed={onOrderPressed} marginBottom={20}>
-          Order
+          {lang[langPref].buttonOrder}
         </TextButton>
       </CustomView>
       {promoActive ? (
@@ -256,13 +258,14 @@ const CartDetail = () => {
               )}
             />
           ) : (
-            <CustomText>No promocodes available</CustomText>
+            <CustomText type='subTitle'>{lang[langPref].text_discount_none}</CustomText>
           )}
           <CustomButton onPressed={() => setSelectedPromo(undefined)}>
             <CustomText
-              color={themes['defaultTheme'].errorcolor}
+            
+              color={themes[currentTheme].errorcolor}
               type="subTitle">
-              Reset
+              {lang[langPref].text_discount_reset}
             </CustomText>
           </CustomButton>
         </OptionsPanel>
@@ -274,18 +277,3 @@ const CartDetail = () => {
 };
 
 export default CartDetail;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-  },
-  orderButton: {
-    marginBottom: 20,
-    height: 48,
-    borderRadius: 7,
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

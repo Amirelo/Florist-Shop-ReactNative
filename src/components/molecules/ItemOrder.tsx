@@ -6,6 +6,7 @@ import OrderModel from '../../models/OrderModel';
 import {priceFormat} from '../../utils/Utils';
 import {useSelector} from 'react-redux';
 import {TextButton} from './buttons';
+import lang from '../../language/lang';
 
 interface Props {
   marginTop?: number;
@@ -18,6 +19,7 @@ const ItemOrder = (props: Props) => {
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
+  const langPref: keyof typeof lang = useSelector((store:any) => store.preference.language)
   return (
     <View
       style={[
@@ -30,24 +32,24 @@ const ItemOrder = (props: Props) => {
         },
       ]}>
       <ItemRow marginBottom={8}>
-        <CustomText>{`ID: ${props.item.id}`}</CustomText>
+        <CustomText>{lang[langPref].text_id +' '+ props.item.id}</CustomText>
         <CustomText>{props.item.orderDate}</CustomText>
       </ItemRow>
 
       <ItemRow marginBottom={8}>
-        <CustomText>{`Number of items: ${props.item.productsQuantity}`}</CustomText>
-        <CustomText>{`Status: ${props.item.status.toLowerCase()}`}</CustomText>
+        <CustomText>{lang[langPref].text_num_items+' '+ props.item.productsQuantity}</CustomText>
+        <CustomText>{lang[langPref].text_status+' '+ props.item.status.toLowerCase()}</CustomText>
       </ItemRow>
       <View style={styles.divider} />
       <ItemRow marginBottom={12}>
-        <CustomText>Price</CustomText>
+        <CustomText>{lang[langPref].text_price}</CustomText>
         <CustomText>{priceFormat(props.item.total, 'vn')}</CustomText>
       </ItemRow>
       <TextButton
         alignSelf="flex-end"
         type="primary"
         onPressed={props.onPressed}>
-        See Details
+        {lang[langPref].buttonSeeDetail}
       </TextButton>
     </View>
   );

@@ -30,7 +30,7 @@ const OptionsPanel = (props: Props) => {
         </CustomText>
         <Divider width={'90%'} marginBottom={20} />
         <View style={{width: '90%'}}>
-          <ScrollView scrollEnabled={true} contentContainerStyle={{alignItems:'center'}}>{props.children}</ScrollView>
+          <ScrollView scrollEnabled={true} contentContainerStyle={{alignItems:'center', gap:16}}>{props.children}</ScrollView>
         </View>
       </View>
     </View>

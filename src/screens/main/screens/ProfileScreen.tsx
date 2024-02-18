@@ -18,6 +18,7 @@ import {UserModel} from '../../../models';
 import {updateImage, updateUserInfo} from '../../auth/AuthService';
 import {NAVIGATION_MAIN_UPDATE_INFO, UPDATE_USER_PROFILE_PICTURE} from '../../../constants/AppConstants';
 import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
+import lang from '../../../language/lang';
 
 const ProfileScreen = () => {
   // Fields
@@ -33,6 +34,8 @@ const ProfileScreen = () => {
   const route = useRoute<RouteProp<any>>();
   const dispatch = useDispatch();
   const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
+
+  const langPref: keyof typeof lang = useSelector((store:any) => store.preference.language)
 
   const onProfileTabPressed = (type: string, data: string) => {
     console.log('data:', data);
@@ -124,14 +127,14 @@ const ProfileScreen = () => {
           />
         </CustomButton>
         <ItemProfile
-          title="Email"
+          title={lang[langPref].edEmail}
           data={email}
           icon={faEnvelope}
           marginBottom={12}
           viewOnly={true}
         />
         <ItemProfile
-          title="Username"
+          title={lang[langPref].edUsername}
           data={user ? user.username! : ''}
           icon={faUser}
           marginBottom={12}
@@ -139,7 +142,7 @@ const ProfileScreen = () => {
         />
 
         <ItemProfile
-          title="Phone Number"
+          title={lang[langPref].edPhone}
           data={user ? user.phoneNumber! : ''}
           icon={faPhone}
           marginBottom={12}
@@ -147,7 +150,7 @@ const ProfileScreen = () => {
         />
 
         <ItemProfile
-          title="Password"
+          title={lang[langPref].edPass}
           data="**********"
           icon={faLock}
           marginBottom={12}
@@ -155,12 +158,12 @@ const ProfileScreen = () => {
         />
       </CustomView>
       {active ? (
-        <OptionsPanel title="Select picture" setActive={setActive}>
+        <OptionsPanel title={lang[langPref].option_title_userimg} setActive={setActive}>
           <CustomButton onPressed={onStoragePressed}>
-            <CustomText marginBottom={20}>Storage</CustomText>
+            <CustomText type='subTitle'>{lang[langPref].option_storage}</CustomText>
           </CustomButton>
           <CustomButton onPressed={onCameraPressed}>
-            <CustomText marginBottom={20}>Camera</CustomText>
+            <CustomText type='subTitle'>{lang[langPref].option_camera}</CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (

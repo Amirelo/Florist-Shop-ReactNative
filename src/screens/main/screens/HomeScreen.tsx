@@ -82,22 +82,22 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}>
         <CustomView type='body'>
           <CardHelp
-            title={'Welcome!'}
+            title={lang[langPref].home_header}
             height={200}
             backgroundImage={[IMAGE_HOME_HEADER, IMAGE_HOME_HEADER_DARK]}
             marginBottom={24}
           />
 
           <CardHelp
-            title={lang[langPref]['home_card_title']}
-            description={lang[langPref]['home_card_description']}
+            title={lang[langPref].home_card_title}
+            description={lang[langPref].home_card_description}
             icon={faCalendarDay}
             marginBottom={24}
             onPressed={onHelpCardPressed}
           />
 
           <CustomText type="title" marginBottom={20}>
-            Search by occasions
+            {lang[langPref].home_occasions}
           </CustomText>
 
           <FlatList

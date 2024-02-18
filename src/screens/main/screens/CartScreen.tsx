@@ -178,7 +178,7 @@ const CartScreen = () => {
           />
 
           <ItemRow marginBottom={10}>
-            <CustomText type="title">Total Price:</CustomText>
+            <CustomText type="title">{lang[langPref].text_total+':'}</CustomText>
             <CustomText type="title">{priceFormat(total, 'vn')}</CustomText>
           </ItemRow>
 
@@ -207,7 +207,7 @@ const CartScreen = () => {
         <OptionsPanel title={selectedProduct.name} setActive={setProductActive}>
           <CustomButton onPressed={onItemDeletePressed}>
             <CustomText type="subTitle" color={'red'} fontWeight="bold">
-              Delete item
+              {lang[langPref].option_delete_cart}
             </CustomText>
           </CustomButton>
         </OptionsPanel>

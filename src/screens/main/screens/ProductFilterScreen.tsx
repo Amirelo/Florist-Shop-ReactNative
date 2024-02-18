@@ -8,8 +8,9 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import { NAVIGATION_BOTTOM_TAB_EXPLORE } from '../../../constants/AppConstants';
-import { useSelector } from 'react-redux';
+import {NAVIGATION_BOTTOM_TAB_EXPLORE} from '../../../constants/AppConstants';
+import {useSelector} from 'react-redux';
+import lang from '../../../language/lang';
 
 const ProductFilterScreen = () => {
   // Initial
@@ -28,7 +29,12 @@ const ProductFilterScreen = () => {
   const listFlowerColors = ['White', 'Red', 'Blue', 'Yellow', 'Purple', 'Pink'];
   const [clearCkb, setCleaCkb] = React.useState(false);
 
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Get categories from server
   const getCategory = async () => {
@@ -93,7 +99,7 @@ const ProductFilterScreen = () => {
     });
   };
 
-  // Clear fields on pressed 
+  // Clear fields on pressed
   const onClearPressed = () => {
     setMinPrice('0');
     setMaxPrice('');
@@ -112,97 +118,101 @@ const ProductFilterScreen = () => {
   }, []);
 
   return (
-    <CustomView type='fullscreen'>
-    <CustomView type='body'>
-      <CustomText type="title" marginBottom={10}>
-        Price Range
-      </CustomText>
-      <View
-        style={{
-          borderRadius: 7,
-          borderWidth: 1,
-          borderColor:themes[currentTheme].textSecondaryColor,
-          padding: 12,
-          marginBottom: 20,
-        }}>
-        <ItemRow>
-          <CustomInput
-            value={minPrice}
-            onChangeText={setMinPrice}
-            placeholder="Minimum Price"
-            keyboardType="numeric"></CustomInput>
-          <CustomInput
-            value={maxPrice}
-            onChangeText={setMaxPrice}
-            placeholder="Maximum Price"
-            keyboardType="numeric"></CustomInput>
-        </ItemRow>
-      </View>
-      <CustomText type="title" marginBottom={10}>
-        Occasion
-      </CustomText>
-      <View
-        style={{
-          borderRadius: 7,
-          borderWidth: 1,
-          borderColor:themes[currentTheme].textSecondaryColor,
-          padding: 12,
-          marginBottom: 20,
-        }}>
-        <FlatList
-          columnWrapperStyle={{marginBottom: 8}}
-          numColumns={3}
-          data={listCategories}
-          key={'#'}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <ItemPick
-              isClear={clearCkb}
-              onPressed={(title, status) =>
-                onCategoryItemPressed(title, status)
-              }>
-              {item.name}
-            </ItemPick>
-          )}
-        />
-      </View>
-      <CustomText type="title" marginBottom={10}>
-        Color
-      </CustomText>
-      <View
-        style={{
-          borderRadius: 7,
-          borderWidth: 1,
-          borderColor:themes[currentTheme].textSecondaryColor,
-          padding: 12,
-          marginBottom: 20,
-        }}>
-        {/* Flower color */}
-        <FlatList
-          columnWrapperStyle={{marginBottom: 8}}
-          numColumns={3}
-          data={listFlowerColors}
-          key={'#'}
-          keyExtractor={item => item}
-          renderItem={({item}) => (
-            <ItemPick
-              isClear={clearCkb}
-              onPressed={(title, status) => onColorItemPressed(title, status)}>
-              {item}
-            </ItemPick>
-          )}
-        />
-      </View>
-      <TextButton type="primary" marginBottom={20} onPressed={onApplyPressed}>
-        Apply
-      </TextButton>
-      <TextButton
-        type="primary"
-        backgroundColor={themes['defaultTheme'].warnColor}
-        onPressed={onClearPressed}>
-        Clear
-      </TextButton>
-    </CustomView>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
+        <CustomText type="title" marginBottom={10}>
+          {lang[langPref].text_price_range}
+        </CustomText>
+        <View
+          style={{
+            borderRadius: 7,
+            borderWidth: 1,
+            borderColor: themes[currentTheme].textSecondaryColor,
+            padding: 12,
+            marginBottom: 20,
+          }}>
+          <ItemRow>
+            <CustomInput
+              flex={1}
+              value={minPrice}
+              onChangeText={setMinPrice}
+              placeholder={lang[langPref].text_price_min}
+              keyboardType="numeric"></CustomInput>
+            <CustomInput
+              flex={1}
+              value={maxPrice}
+              onChangeText={setMaxPrice}
+              placeholder={lang[langPref].text_price_max}
+              keyboardType="numeric"></CustomInput>
+          </ItemRow>
+        </View>
+        <CustomText type="title" marginBottom={10}>
+          {lang[langPref].text_occasion}
+        </CustomText>
+        <View
+          style={{
+            borderRadius: 7,
+            borderWidth: 1,
+            borderColor: themes[currentTheme].textSecondaryColor,
+            padding: 12,
+            marginBottom: 20,
+          }}>
+          <FlatList
+            columnWrapperStyle={{marginBottom: 8}}
+            numColumns={3}
+            data={listCategories}
+            key={'#'}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <ItemPick
+                isClear={clearCkb}
+                onPressed={(title, status) =>
+                  onCategoryItemPressed(title, status)
+                }>
+                {item.name}
+              </ItemPick>
+            )}
+          />
+        </View>
+        <CustomText type="title" marginBottom={10}>
+          {lang[langPref].text_color}
+        </CustomText>
+        <View
+          style={{
+            borderRadius: 7,
+            borderWidth: 1,
+            borderColor: themes[currentTheme].textSecondaryColor,
+            padding: 12,
+            marginBottom: 20,
+          }}>
+          {/* Flower color */}
+          <FlatList
+            columnWrapperStyle={{marginBottom: 8}}
+            numColumns={3}
+            data={listFlowerColors}
+            key={'#'}
+            keyExtractor={item => item}
+            renderItem={({item}) => (
+              <ItemPick
+                isClear={clearCkb}
+                onPressed={(title, status) =>
+                  onColorItemPressed(title, status)
+                }>
+                {item}
+              </ItemPick>
+            )}
+          />
+        </View>
+        <TextButton type="primary" marginBottom={20} onPressed={onApplyPressed}>
+          {lang[langPref].buttonApply}
+        </TextButton>
+        <TextButton
+          type="primary"
+          backgroundColor={themes['defaultTheme'].warnColor}
+          onPressed={onClearPressed}>
+          {lang[langPref].buttonClear}
+        </TextButton>
+      </CustomView>
     </CustomView>
   );
 };

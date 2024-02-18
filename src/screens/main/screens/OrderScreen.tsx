@@ -17,12 +17,14 @@ import {
   NAVIGATION_BOTTOM_TAB_EXPLORE,
   NAVIGATION_MAIN_ORDER_DETAIL,
 } from '../../../constants/AppConstants';
+import lang from '../../../language/lang';
 
 const OrderScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const langPref: keyof typeof lang = useSelector((store:any) => store.preference.language)
 
   // Fields
   const [listOrders, setListOrders] = React.useState<Array<OrderModel>>([]);
@@ -84,10 +86,10 @@ const OrderScreen = () => {
         ) : (
           <>
             <CustomText type="title" alignSelf="center" marginBottom={20}>
-              Empty cart
+              {lang[langPref].text_cart_empty}
             </CustomText>
             <TextButton type="primary" onPressed={onShoppingPressed}>
-              Start Shopping now
+            {lang[langPref].buttonShopping}
             </TextButton>
           </>
         )}
