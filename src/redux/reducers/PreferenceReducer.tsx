@@ -1,9 +1,10 @@
-import { LANG_CHANGE, THEME_CHANGE } from "../../constants/AppConstants"
+import { FONT_CHANGE, LANG_CHANGE, THEME_CHANGE } from "../../constants/AppConstants"
 import lang from "../../language/lang"
 
 const initialState = {
     language: 'en',
-    theme: 'defaultTheme'
+    theme: 'defaultTheme',
+    font: '',
 }
 
 export default (state = initialState, action:any) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action:any) => {
             return{
                 ...state,
                 theme: action.payload.data
+            }
+        case FONT_CHANGE:
+            return{
+                ...state,
+                font: action.payload.data
             }
         default:
             return state;

@@ -25,11 +25,12 @@ interface Props {
 }
 
 const CustomText = (props: Props) => {
+  const allowFont = ['','Inter','DancingScript']
+
   const selectedType = props.type ? props.type : 'normal';
   const currentTheme:keyof typeof themes = useSelector((store:any)=> store.preference.theme)
+  const currentFont: keyof typeof allowFont = useSelector((store:any) => store.preference.font)
 
-  // Leave empty if using default font
-  const font = '';
   return (
     <Text
       numberOfLines={props.maxLines ? props.maxLines : 10}
@@ -42,13 +43,13 @@ const CustomText = (props: Props) => {
           textTransform: props.textTransform,
           alignSelf: props.alignSelf,
           fontFamily:
-            props.fontWeight == 'bold' ? font + '-Bold' : font + '-Regular',
-          fontWeight: font.length > 0 ? undefined : props.fontWeight,
+            props.fontWeight == 'bold' ? currentFont.toString() + '-Bold' : currentFont.toString() + '-Regular',
+          fontWeight: currentFont.toString().length > 0 ? undefined : props.fontWeight,
           fontSize: selectedType
-            // ? font == 'DancingScript'
-              // ? styles[selectedType].fontSize + 5
-              ? styles[selectedType].fontSize 
-            : styles['normal'].fontSize,
+             ? currentFont.toString() == 'DancingScript'
+               ? styles[selectedType].fontSize + 5
+              : styles[selectedType].fontSize 
+            : styles['normal'].fontSize
         },
         props.style,
       ]}>

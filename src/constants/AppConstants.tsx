@@ -7,6 +7,7 @@ export const UPDATE_USER_PROFILE_PICTURE = 'UPDATEUSERPROFILEPICTURE';
 
 export const LANG_CHANGE = 'CHANGELANGUAGE';
 export const THEME_CHANGE = 'CHANGETHEME';
+export const FONT_CHANGE = 'CHANGEFONT';
 
 // Bottom tabs
 export const NAVIGATION_BOTTOM_TAB_HOME = 'Home';
