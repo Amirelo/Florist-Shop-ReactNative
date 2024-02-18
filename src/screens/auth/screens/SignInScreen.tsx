@@ -8,7 +8,6 @@ import {
   CustomImage,
   CustomText,
   CustomView,
-  Divider,
   ItemRow,
 } from '../../../components/atoms';
 import {useDispatch, useSelector} from 'react-redux';
@@ -125,6 +124,7 @@ const SignInScreen = () => {
     } else {
       console.log('No previous Sign In session');
     }
+    
   };
 
   // Navigate to Home Screen if user found
