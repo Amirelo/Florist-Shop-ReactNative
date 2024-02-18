@@ -28,7 +28,7 @@ const QuantityCounter = (props: Props) => {
   };
 
   return (
-    <View style={[styles.view,{backgroundColor: themes[currentTheme].primaryColor}]}>
+    <View style={[styles.view,{backgroundColor: themes[currentTheme].secondaryColor}]}>
       <CustomButton
         style={styles.button}
         onPressed={() => onChangeQuantityPressed(-1)}>

@@ -1,6 +1,12 @@
 const en = {
   appTitle: 'Flora',
 
+  text_language: 'Language',
+  text_theme: 'Theme',
+
+  theme_default:'Light',
+  theme_dark:'Dark',
+
   // Text Input
   edEmail: 'Email',
   edPass: 'Password',
@@ -27,10 +33,14 @@ const en = {
   buttonContinue: 'Continue',
   buttonSelectAddress: 'Select Address',
   buttonNewAddress: 'Add New Address',
-  buttonSelectPromo:'Select Promocode',
+  buttonEditAddress: 'Edit Address',
+  buttonSelectPromo: 'Select Promocode',
   buttonOrder: 'Order',
-  buttonSeeDetail:'See Details',
-  buttonShopping:'Start Shopping Now',
+  buttonSeeDetail: 'See Details',
+  buttonShopping: 'Start Shopping Now',
+  buttonCancelOrder: 'Cancel Order',
+  buttonDelete: 'Delete',
+  buttonEdit: 'Edit',
 
   // Options
   option_delete_cart: 'Delete Item',
@@ -140,17 +150,36 @@ const en = {
   text_payment: 'Payment',
   text_products_price: 'Products price:',
   text_discount: 'Discount',
-  text_discount_none:'None selected', 
-  text_discount_reset:'Reset',
+  text_discount_none: 'None selected',
+  text_discount_reset: 'Reset',
   text_paymentMethod: 'Payment Method',
   text_paymentMethod_cash: 'Cash',
 
   // Order
   text_id: 'ID:',
-  text_num_items:'Number of items:',
-  text_status:'Status:',
+  text_num_items: 'Number of items:',
+  text_status: 'Status:',
   text_price: 'Price:',
   text_cart_empty: 'Empty Cart',
+  text_general_info: 'General Information',
+  text_date: 'Order date:',
+
+  // Address
+  text_street_number: 'Number',
+  text_street: 'Street:',
+  text_ward: 'Ward:',
+  text_district: 'District:',
+  text_city: 'City:',
+
+  // Promocode
+  text_promos_none: 'No Available Promocodes',
+
+  // About
+  text_creator:'Creator:',
+  text_graduate:'Graduate From:',
+  text_major:'Major:',
+  text_creator_phone:'Phone Number:',
+  text_creator_description:'I am looking for Intern/Fresher Mobile Developer Job (Full-Time, on-site, HCM City',
 };
 
 export default en;

@@ -1,5 +1,7 @@
 import {DimensionValue, StyleSheet} from 'react-native';
 import {View} from 'react-native';
+import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   paddingHorizontal?: number;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const Divider = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <View
       style={[
@@ -15,7 +18,9 @@ const Divider = (props: Props) => {
         {
           paddingHorizontal: props.paddingHorizontal,
           marginBottom: props.marginBottom,
-          width: props.width
+          width: props.width,
+          borderColor: themes[currentTheme].textColor
+
         },
       ]}
     />

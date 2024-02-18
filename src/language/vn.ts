@@ -1,6 +1,12 @@
 const vn = {
   appTitle: 'Flora',
 
+  text_language: 'Ngôn ngữ',
+  text_theme: 'Giao diện',
+
+  theme_default:'Sáng',
+  theme_dark:'Tối',
+
   edEmail: 'Email',
   edPass: 'Mật khẩu',
   edConPass: 'Xác nhận mật khẩu',
@@ -26,10 +32,14 @@ const vn = {
   buttonContinue:'Tiếp tục',
   buttonSelectAddress: 'Chọn địa chỉ',
   buttonNewAddress: 'Thêm địa chỉ mới',
+  buttonEditAddress:'Sửa địa chỉ',
   buttonSelectPromo:'Chọn mã khuyến mãi',
   buttonOrder: 'Đặt hàng',
   buttonSeeDetail:'Chi tiết',
   buttonShopping:'Tới mua sắm',
+  buttonCancelOrder:'Hủy đơn hàng',
+  buttonDelete:'Xóa',
+  buttonEdit:'Sửa',
 
   // Options
   option_delete_cart: 'Xóa sản phẩm',
@@ -149,6 +159,27 @@ const vn = {
   text_status:'Trạng thái:',
   text_price: 'Đơn giá:',
   text_cart_empty: 'Giỏ hàng trống',
+  text_general_info:'Thông tin chung',
+  text_date:'Ngày đặt hàng:',
+
+  // Address
+  text_street_number: 'Số:',
+  text_street:'Tên đường:',
+  text_ward:'Phường:',
+  text_district:'Quận:',
+  text_city:'Thành phố:',
+
+  // Promocode
+  text_promos_none:'Không có mã khuyến mãi có thể sử dụng',
+
+  // About
+  text_creator:'Người làm app:',
+  text_graduate:'Tốt nghiệp từ:',
+  text_major:'Chuyên ngành:',
+  text_creator_phone:'Số điện thoại:',
+  text_creator_description:'Hiện đang tìm việc Intern/Fresher Mobile Developer (toàn thời gian, TP. HCM)',
+
+
 };
 
 export default vn;

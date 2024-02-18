@@ -15,6 +15,7 @@ import * as road from '../../../data/roads.json';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {AddNewUserAddress, EditUserAddress} from '../MainService';
 import {useSelector} from 'react-redux';
+import lang from '../../../language/lang';
 
 const AddressEdit = () => {
   const locationHCM = {
@@ -282,6 +283,7 @@ const AddressEdit = () => {
   const route = useRoute<RouteProp<any>>();
   const navigation = useNavigation<NavigationProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const langPref:keyof typeof lang  = useSelector((store:any) => store.preference.language)
 
   const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
 
@@ -377,7 +379,7 @@ const AddressEdit = () => {
     <CustomView type='fullscreen'>
       <CustomView type='itemPadding'>
         <CustomText type="title" marginBottom={8}>
-          City
+          {lang[langPref].text_city}
         </CustomText>
         <TextButton
           type="tertiary"
@@ -387,27 +389,27 @@ const AddressEdit = () => {
         </TextButton>
 
         <CustomText type="title" marginBottom={8}>
-          District
+        {lang[langPref].text_district}
         </CustomText>
         <TextButton
           type="tertiary"
           marginBottom={12}
           onPressed={() => onOptionButtonPressed('DISTRICT')}>
-          {district ? 'District ' + district : 'District'}
+          {district}
         </TextButton>
 
         <CustomText type="title" marginBottom={8}>
-          Ward
+        {lang[langPref].text_ward}
         </CustomText>
         <TextButton
           type="tertiary"
           marginBottom={12}
           onPressed={() => onOptionButtonPressed('WARD')}>
-          {ward ? 'Ward ' + ward : 'Ward'}
+          {ward}
         </TextButton>
 
         <CustomText type="title" marginBottom={8}>
-          Street
+        {lang[langPref].text_street}
         </CustomText>
         <TextButton
           type="tertiary"
@@ -415,20 +417,20 @@ const AddressEdit = () => {
           onPressed={() => {
             onOptionButtonPressed('STREETNAME');
           }}>
-          {streetName ? 'Street ' + streetName : 'Street'}
+          {streetName}
         </TextButton>
 
         <CustomInput
           value={streetNumber}
           onChangeText={setStreetNumber}
           marginBottom={40}
-          placeholder="Street number"></CustomInput>
+          placeholder={lang[langPref].text_street_number}></CustomInput>
 
         {route.params?.item ? (
-          <TextButton type="primary" onPressed={onEditPressed}>Edit Address</TextButton>
+          <TextButton type="primary" onPressed={onEditPressed}>{lang[langPref].buttonEditAddress}</TextButton>
         ) : (
           <TextButton type="primary" onPressed={onAddPressed}>
-            Add New Address
+            {lang[langPref].buttonNewAddress}
           </TextButton>
         )}
       </CustomView>

@@ -5,6 +5,7 @@ import themes from '../../themes/themes';
 import {TextButton} from './buttons';
 import {addressFormat} from '../../utils/Utils';
 import {useSelector} from 'react-redux';
+import lang from '../../language/lang';
 
 interface Props {
   item: AddressModel;
@@ -16,6 +17,7 @@ const ItemAddress = (props: Props) => {
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
+  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
   return (
     <CustomView
       type={'itemPadding'}
@@ -26,37 +28,37 @@ const ItemAddress = (props: Props) => {
       <Divider marginBottom={8} />
 
       <ItemRow marginBottom={8}>
-        <CustomText type="subTitle">Street Number</CustomText>
+        <CustomText type="subTitle">{lang[langPref].text_street_number}</CustomText>
         <CustomText>{props.item.streetNumber + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText type="subTitle">Street</CustomText>
+        <CustomText type="subTitle">{lang[langPref].text_street}</CustomText>
         <CustomText>{props.item.street + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText type="subTitle">Ward</CustomText>
+        <CustomText type="subTitle">{lang[langPref].text_ward}</CustomText>
         <CustomText>{props.item.ward + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={12}>
-        <CustomText type="subTitle">City</CustomText>
+        <CustomText type="subTitle">{lang[langPref].text_city}</CustomText>
         <CustomText>{props.item.city + ''}</CustomText>
       </ItemRow>
       <ItemRow>
         <TextButton
           alignSelf="flex-start"
           type="primary"
-          backgroundColor={'red'}
+          backgroundColor={themes[currentTheme].errorcolor}
           onPressed={props.onDeletePressed}>
-          Delete
+          {lang[langPref].buttonDelete}
         </TextButton>
         <TextButton
           alignSelf="flex-end"
           type="primary"
           onPressed={props.onEditPressed}>
-          Edit
+          {lang[langPref].buttonEdit}
         </TextButton>
       </ItemRow>
     </CustomView>

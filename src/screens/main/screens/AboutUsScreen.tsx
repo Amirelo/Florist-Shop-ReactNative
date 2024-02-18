@@ -7,11 +7,13 @@ import {
 } from '../../../components/atoms';
 import themes from '../../../themes/themes';
 import {useSelector} from 'react-redux';
+import lang from '../../../language/lang';
 
 const AboutUsScreen = () => {
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
+  const langPref: keyof typeof lang = useSelector((store:any) => store.preference.language)
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
@@ -19,22 +21,22 @@ const AboutUsScreen = () => {
           type="itemPadding"
           backgroundColor={themes[currentTheme].tertiaryColor}>
           <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">Creator:</CustomText>
+            <CustomText type="subTitle">{lang[langPref].text_creator}</CustomText>
             <CustomText type="subTitle">Trần Vũ Minh Đăng</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />
           <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">Undergraduate from:</CustomText>
+            <CustomText type="subTitle">{lang[langPref].text_graduate}</CustomText>
             <CustomText type="subTitle">FPT Polytechnic</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />
           <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">Major:</CustomText>
+            <CustomText type="subTitle">{lang[langPref].text_major}</CustomText>
             <CustomText type="subTitle">Computer Science</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />
           <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">Phone Num:</CustomText>
+            <CustomText type="subTitle">{lang[langPref].text_creator_phone}</CustomText>
             <CustomText type="subTitle">(+84) 58 281 4653</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />
@@ -49,8 +51,7 @@ const AboutUsScreen = () => {
           </ItemRow>
           <Divider marginBottom={12} />
           <CustomText type="subTitle">
-            I am looking for Intern/Fresher Mobile Developer Job (Full-Time,
-            on-site, HCM City)
+          {lang[langPref].text_creator_description}
           </CustomText>
         </CustomView>
       </CustomView>

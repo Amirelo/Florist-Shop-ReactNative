@@ -24,12 +24,16 @@ import {
 } from '../../../components/molecules';
 import {getProductByID} from '../MainService';
 import {TextButton} from '../../../components/molecules/buttons';
-import {priceFormat} from '../../../utils/Utils';
+import {dateFormat, priceFormat} from '../../../utils/Utils';
 import {useSelector} from 'react-redux';
+import lang from '../../../language/lang';
 
 const OrderDetailScreen = () => {
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
+  );
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
   );
   // Initial
   const route = useRoute<RouteProp<any>>();
@@ -67,20 +71,20 @@ const OrderDetailScreen = () => {
               {borderColor: themes[currentTheme].textSecondaryColor},
             ]}>
             <CustomText marginBottom={20} type="title">
-              General Info
+              {lang[langPref].text_general_info}
             </CustomText>
             <ItemRow marginBottom={8}>
-              <CustomText>Order ID</CustomText>
+              <CustomText>{lang[langPref].text_id}</CustomText>
               <CustomText>{order ? order.id : ''}</CustomText>
             </ItemRow>
             <Divider marginBottom={8} />
             <ItemRow marginBottom={8}>
-              <CustomText>Order date</CustomText>
-              <CustomText>{order ? order.orderDate : ''}</CustomText>
+              <CustomText>{lang[langPref].text_date}</CustomText>
+              <CustomText>{order ? dateFormat(order.orderDate) : ''}</CustomText>
             </ItemRow>
             <Divider marginBottom={8} />
             <ItemRow>
-              <CustomText>Status</CustomText>
+              <CustomText>{lang[langPref].text_status}</CustomText>
               <CustomText
                 textTransform="capitalize"
                 fontWeight="bold"
@@ -99,7 +103,7 @@ const OrderDetailScreen = () => {
               {borderColor: themes[currentTheme].textSecondaryColor},
             ]}>
             <CustomText marginBottom={20} type="title">
-              Products
+              {lang[langPref].text_product_detail}
             </CustomText>
 
             <FlatList
@@ -131,7 +135,9 @@ const OrderDetailScreen = () => {
             {promocode ? (
               <>
                 <ItemRow marginBottom={8}>
-                  <CustomText type="subTitle">Price:</CustomText>
+                  <CustomText type="subTitle">
+                    {lang[langPref].text_price}
+                  </CustomText>
                   <CustomText type="subTitle">
                     {order ? priceFormat(order.total, 'vn') : ''}
                   </CustomText>
@@ -140,7 +146,9 @@ const OrderDetailScreen = () => {
                 <Divider marginBottom={8} />
 
                 <ItemRow marginBottom={8}>
-                  <CustomText type="subTitle">Coupon:</CustomText>
+                  <CustomText type="subTitle">
+                    {lang[langPref].text_discount}
+                  </CustomText>
                   <CustomText type="subTitle">
                     {order ? order?.discountRef : ''}
                   </CustomText>
@@ -152,7 +160,7 @@ const OrderDetailScreen = () => {
               <></>
             )}
             <ItemRow marginBottom={8}>
-              <CustomText type="title">Total:</CustomText>
+              <CustomText type="title">{lang[langPref].text_total}</CustomText>
               <CustomText type="title">
                 {order ? priceFormat(order.total, 'vn') : ''}
               </CustomText>
@@ -163,7 +171,7 @@ const OrderDetailScreen = () => {
               type="primary"
               backgroundColor={themes[currentTheme].errorcolor}
               marginBottom={20}>
-              Cancel Order
+              {lang[langPref].buttonCancelOrder}
             </TextButton>
           ) : (
             <></>

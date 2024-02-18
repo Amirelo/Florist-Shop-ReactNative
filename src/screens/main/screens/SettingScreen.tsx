@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText, CustomView} from '../../../components/atoms';
+import {CustomButton, CustomText, CustomView, Divider} from '../../../components/atoms';
 import {OptionsPanel} from '../../../components/molecules';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -50,13 +50,13 @@ const SettingScreen = () => {
   return (
     <CustomView type='fullscreen'>
       <CustomView type='body'>
-        <CustomText type='title' marginBottom={12}>Language</CustomText>
+        <CustomText type='title' marginBottom={12}>{lang[langPref].text_language}</CustomText>
         <TextButton type="tertiary" marginBottom={20} onPressed={onLanguagePressed}>
           {langPref == 'vn' ? 'Tiếng Việt' :'English'}
         </TextButton>
-        <CustomText type='title' marginBottom={12}>Theme</CustomText>
+        <CustomText type='title' marginBottom={12}>{lang[langPref].text_theme}</CustomText>
         <TextButton type="tertiary" onPressed={onThemePressed}>
-          {themePref == 'defaultTheme' ? 'Light' : 'Dark'}
+          {themePref == 'defaultTheme' ? lang[langPref].theme_default : lang[langPref].theme_dark}
         </TextButton>
       </CustomView>
       {languageOptionActive ? (
@@ -75,10 +75,10 @@ const SettingScreen = () => {
 {themeOptionActive ? (
         <OptionsPanel setActive={setThemeOptionActive} title="Language">
           <CustomButton onPressed={() => onthemeOptionPressed('defaultTheme')}>
-            <CustomText marginBottom={20}>Light</CustomText>
+            <CustomText type='subTitle'>{lang[langPref].theme_default}</CustomText>
           </CustomButton>
           <CustomButton onPressed={() => onthemeOptionPressed('dark')}>
-            <CustomText marginBottom={20}>Dark</CustomText>
+            <CustomText type='subTitle'>{lang[langPref].theme_dark}</CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (

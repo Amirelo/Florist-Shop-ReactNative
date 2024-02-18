@@ -3,7 +3,7 @@ import {CustomButton, CustomText, ItemRow} from '../atoms';
 import themes from '../../themes/themes';
 import React from 'react';
 import OrderModel from '../../models/OrderModel';
-import {priceFormat} from '../../utils/Utils';
+import {dateFormat, priceFormat} from '../../utils/Utils';
 import {useSelector} from 'react-redux';
 import {TextButton} from './buttons';
 import lang from '../../language/lang';
@@ -33,7 +33,7 @@ const ItemOrder = (props: Props) => {
       ]}>
       <ItemRow marginBottom={8}>
         <CustomText>{lang[langPref].text_id +' '+ props.item.id}</CustomText>
-        <CustomText>{props.item.orderDate}</CustomText>
+        <CustomText>{dateFormat(props.item.orderDate)}</CustomText>
       </ItemRow>
 
       <ItemRow marginBottom={8}>

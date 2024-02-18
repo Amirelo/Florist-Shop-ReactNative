@@ -16,11 +16,14 @@ import {deleteUserAddress} from '../MainService';
 import {addressFormat} from '../../../utils/Utils';
 import {NAVIGATION_MAIN_ADDRESS_EDIT} from '../../../constants/AppConstants';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import lang from '../../../language/lang';
 
 const AddressScreen = () => {
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+
+  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
 
   // Fields
   const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>(
@@ -84,7 +87,7 @@ const AddressScreen = () => {
           type="primary"
           onPressed={onAddNewPressed}
           marginBottom={20}>
-          Add New Address
+          {lang[langPref].buttonNewAddress}
         </TextButton>
         {listAddresses.length > 0 ? (
           <FlatList
