@@ -2,7 +2,7 @@ import React from 'react';
 import themes from '../../../themes/themes';
 import {StyleSheet, View} from 'react-native';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
-import {CustomButton, CustomText} from '../../../components/atoms';
+import {CustomButton, CustomText, CustomView} from '../../../components/atoms';
 import {
   NavigationProp,
   RouteProp,
@@ -283,6 +283,8 @@ const AddressEdit = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+
   const onOptionButtonPressed = (type: string) => {
     switch (type) {
       case 'DISTRICT':
@@ -372,15 +374,15 @@ const AddressEdit = () => {
   }, []);
 
   return (
-    <View style={{height: '100%'}}>
-      <View style={styles.view}>
+    <CustomView type='fullscreen'>
+      <CustomView type='itemPadding'>
         <CustomText type="title" marginBottom={8}>
           City
         </CustomText>
         <TextButton
           type="tertiary"
           marginBottom={12}
-          backgroundColor={'lightgray'}>
+          backgroundColor={themes[currentTheme].textSecondaryColor}>
           Ho Chi Minh City
         </TextButton>
 
@@ -429,7 +431,7 @@ const AddressEdit = () => {
             Add New Address
           </TextButton>
         )}
-      </View>
+      </CustomView>
       {/* District Option */}
       {districtActive ? (
         <OptionsPanel
@@ -516,7 +518,7 @@ const AddressEdit = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 

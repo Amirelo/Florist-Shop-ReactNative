@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText} from '../../../components/atoms';
+import {CustomButton, CustomText, CustomView} from '../../../components/atoms';
 import {OptionsPanel} from '../../../components/molecules';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -48,15 +48,17 @@ const SettingScreen = () => {
   }
 
   return (
-    <View style={styles.view}>
-      <View style={styles.body}>
+    <CustomView type='fullscreen'>
+      <CustomView type='body'>
+        <CustomText type='title' marginBottom={12}>Language</CustomText>
         <TextButton type="tertiary" marginBottom={20} onPressed={onLanguagePressed}>
-          {`Language: ` + langPref}
+          {langPref == 'vn' ? 'Tiếng Việt' :'English'}
         </TextButton>
+        <CustomText type='title' marginBottom={12}>Theme</CustomText>
         <TextButton type="tertiary" onPressed={onThemePressed}>
-          {`Theme: ` + themePref}
+          {themePref == 'defaultTheme' ? 'Light' : 'Dark'}
         </TextButton>
-      </View>
+      </CustomView>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
           <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>
@@ -73,16 +75,16 @@ const SettingScreen = () => {
 {themeOptionActive ? (
         <OptionsPanel setActive={setThemeOptionActive} title="Language">
           <CustomButton onPressed={() => onthemeOptionPressed('defaultTheme')}>
-            <CustomText marginBottom={20}>Default</CustomText>
+            <CustomText marginBottom={20}>Light</CustomText>
           </CustomButton>
           <CustomButton onPressed={() => onthemeOptionPressed('dark')}>
-            <CustomText marginBottom={20}>Dark Theme</CustomText>
+            <CustomText marginBottom={20}>Dark</CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 export default SettingScreen;

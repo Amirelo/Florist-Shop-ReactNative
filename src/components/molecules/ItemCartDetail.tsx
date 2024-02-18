@@ -7,6 +7,7 @@ import themes from '../../themes/themes';
 import {CartModel, ProductModel} from '../../models';
 import {priceFormat} from '../../utils/Utils';
 import lang from '../../language/lang';
+import { useSelector } from 'react-redux';
 
 interface Props {
   product: ProductModel;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const ItemCartDetail = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <CustomButton
       onPressed={props.onPressed}
@@ -27,6 +29,7 @@ const ItemCartDetail = (props: Props) => {
           {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
+            backgroundColor: themes[currentTheme].tertiaryColor
           },
         ] as ViewStyle
       }>
@@ -43,7 +46,7 @@ const ItemCartDetail = (props: Props) => {
           <CustomText type="title">{props.product.name}</CustomText>
         </View>
         {/* Product Price */}
-        <CustomText color={themes['defaultTheme'].primaryColor} type="subTitle">
+        <CustomText type="subTitle">
           {priceFormat(props.product.price, 'vn')}
         </CustomText>
 
@@ -55,7 +58,7 @@ const ItemCartDetail = (props: Props) => {
         </ItemRow>
         <ItemRow marginBottom={4}>
           <CustomText>Total:</CustomText>
-          <CustomText>
+          <CustomText  color={themes[currentTheme].primaryColor}>
             {props.cart
               ? priceFormat(props.product.price * props.cart.quantity, 'vn')
               : '0'}
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     padding: 12,
     borderRadius: 14,
-    backgroundColor: themes['defaultTheme'].tertiaryColor,
+    
   },
   body: {
     flexDirection: 'row',

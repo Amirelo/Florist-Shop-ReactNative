@@ -1,4 +1,4 @@
-import {StyleSheet, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewProps, ViewStyle} from 'react-native';
 import {useSelector} from 'react-redux';
 import themes from '../../themes/themes';
 
@@ -8,6 +8,7 @@ interface Props {
   justifyContent?: ViewStyle['justifyContent'];
   marignBottom?: ViewStyle['marginBottom'];
   backgroundColor?: ViewStyle['backgroundColor'];
+  style?: StyleProp<ViewStyle>;
 }
 
 const CustomView = (props: Props) => {
@@ -20,10 +21,13 @@ const CustomView = (props: Props) => {
       style={[
         selectedstyle,
         {
-          backgroundColor: props.backgroundColor ? props.backgroundColor : themes[currentTheme].bgColor,
+          backgroundColor: props.backgroundColor
+            ? props.backgroundColor
+            : themes[currentTheme].bgColor,
           justifyContent: props.justifyContent,
-          marginBottom: props.marignBottom
+          marginBottom: props.marignBottom,
         },
+        props.style,
       ]}>
       {props.children}
     </View>
@@ -33,9 +37,9 @@ const CustomView = (props: Props) => {
 export default CustomView;
 
 const styles = StyleSheet.create({
-    fullscreen:{
-        flex:1
-    },
+  fullscreen: {
+    flex: 1,
+  },
   body: {
     paddingHorizontal: 16,
     paddingTop: 20,
@@ -59,8 +63,8 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
-  itemPadding:{
-    padding:12,
-    borderRadius:7
-  }
+  itemPadding: {
+    padding: 12,
+    borderRadius: 7,
+  },
 });

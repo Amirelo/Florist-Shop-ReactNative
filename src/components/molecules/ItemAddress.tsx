@@ -1,9 +1,10 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText, Divider, ItemRow} from '../atoms';
+import {CustomButton, CustomText, CustomView, Divider, ItemRow} from '../atoms';
 import {AddressModel} from '../../models';
 import themes from '../../themes/themes';
 import {TextButton} from './buttons';
 import {addressFormat} from '../../utils/Utils';
+import {useSelector} from 'react-redux';
 
 interface Props {
   item: AddressModel;
@@ -12,33 +13,38 @@ interface Props {
 }
 
 const ItemAddress = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
-    <View style={styles.view}>
+    <CustomView
+      type={'itemPadding'}
+      backgroundColor={themes[currentTheme].tertiaryColor}>
       <CustomText type={'subTitle'} marginBottom={12} fontWeight="bold">
         {addressFormat(props.item)}
       </CustomText>
       <Divider marginBottom={8} />
 
       <ItemRow marginBottom={8}>
-        <CustomText type='subTitle'>Street Number</CustomText>
+        <CustomText type="subTitle">Street Number</CustomText>
         <CustomText>{props.item.streetNumber + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText type='subTitle'>Street</CustomText>
+        <CustomText type="subTitle">Street</CustomText>
         <CustomText>{props.item.street + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={8}>
-        <CustomText type='subTitle'>Ward</CustomText>
+        <CustomText type="subTitle">Ward</CustomText>
         <CustomText>{props.item.ward + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />
       <ItemRow marginBottom={12}>
-        <CustomText type='subTitle'>City</CustomText>
+        <CustomText type="subTitle">City</CustomText>
         <CustomText>{props.item.city + ''}</CustomText>
       </ItemRow>
-      <ItemRow marginBottom={4}>
+      <ItemRow>
         <TextButton
           alignSelf="baseline"
           type="primary"
@@ -53,7 +59,7 @@ const ItemAddress = (props: Props) => {
           Edit
         </TextButton>
       </ItemRow>
-    </View>
+    </CustomView>
   );
 };
 

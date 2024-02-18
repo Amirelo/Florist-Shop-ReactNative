@@ -1,44 +1,60 @@
 import {StyleSheet, View} from 'react-native';
-import {CustomText, Divider, ItemRow} from '../../../components/atoms';
+import {
+  CustomText,
+  CustomView,
+  Divider,
+  ItemRow,
+} from '../../../components/atoms';
+import themes from '../../../themes/themes';
+import {useSelector} from 'react-redux';
 
 const AboutUsScreen = () => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
-    <View style={styles.view}>
-      <View style={styles.tab}>
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Creator:</CustomText>
-          <CustomText type="subTitle">Trần Vũ Minh Đăng</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Undergraduate from:</CustomText>
-          <CustomText type="subTitle">FPT Polytechnic</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Major:</CustomText>
-          <CustomText type="subTitle">Computer Science</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Phone Num:</CustomText>
-          <CustomText type="subTitle">(+84) 58 281 4653</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Frontend:</CustomText>
-          <CustomText type="subTitle">React Native (TypeScript)</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <ItemRow marginBottom={12}>
-          <CustomText type="subTitle">Backend:</CustomText>
-          <CustomText type="subTitle">Firebase (Firestore)</CustomText>
-        </ItemRow>
-        <Divider marginBottom={12} />
-        <CustomText type='subTitle'>I am looking for Intern/Fresher Mobile Developer Job (Full-Time, on-site)</CustomText>
-      
-      </View>
-    </View>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
+        <CustomView
+          type="itemPadding"
+          backgroundColor={themes[currentTheme].tertiaryColor}>
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Creator:</CustomText>
+            <CustomText type="subTitle">Trần Vũ Minh Đăng</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Undergraduate from:</CustomText>
+            <CustomText type="subTitle">FPT Polytechnic</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Major:</CustomText>
+            <CustomText type="subTitle">Computer Science</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Phone Num:</CustomText>
+            <CustomText type="subTitle">(+84) 58 281 4653</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Frontend:</CustomText>
+            <CustomText type="subTitle">React Native (TypeScript)</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <ItemRow marginBottom={12}>
+            <CustomText type="subTitle">Backend:</CustomText>
+            <CustomText type="subTitle">Firebase (Firestore)</CustomText>
+          </ItemRow>
+          <Divider marginBottom={12} />
+          <CustomText type="subTitle">
+            I am looking for Intern/Fresher Mobile Developer Job (Full-Time,
+            on-site, HCM City)
+          </CustomText>
+        </CustomView>
+      </CustomView>
+    </CustomView>
   );
 };
 

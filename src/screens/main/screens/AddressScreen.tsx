@@ -9,12 +9,13 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import React from 'react';
-import {CustomText} from '../../../components/atoms';
+import {CustomText, CustomView} from '../../../components/atoms';
 import TextButton from '../../../components/molecules/buttons/TextButton';
 import {useSelector} from 'react-redux';
 import {deleteUserAddress} from '../MainService';
-import { addressFormat } from '../../../utils/Utils';
-import { NAVIGATION_MAIN_ADDRESS_EDIT } from '../../../constants/AppConstants';
+import {addressFormat} from '../../../utils/Utils';
+import {NAVIGATION_MAIN_ADDRESS_EDIT} from '../../../constants/AppConstants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AddressScreen = () => {
   // Navigation
@@ -35,9 +36,12 @@ const AddressScreen = () => {
 
   const onDeletePressed = (item: AddressModel) => {
     Alert.alert(
-      'Delete address: '+addressFormat(item),
+      'Delete address: ' + addressFormat(item),
       'Are you sure you want to delete? This action cannot be redo',
-      [{text: 'Delete', onPress: () => deleteUserAddress(email, item.id+'')},{text: 'Cancel', onPress: () => console.log('Pressed')}],
+      [
+        {text: 'Delete', onPress: () => deleteUserAddress(email, item.id + '')},
+        {text: 'Cancel', onPress: () => console.log('Pressed')},
+      ],
     );
   };
 
@@ -74,36 +78,40 @@ const AddressScreen = () => {
   }, []);
 
   return (
-    <View style={styles.view}>
-      <TextButton type="primary" onPressed={onAddNewPressed}>
-        Add New Address
-      </TextButton>
-      {listAddresses.length > 0 ? (
-        <FlatList
-          data={listAddresses}
-          style={{paddingTop: 30, marginTop: 20}}
-          contentContainerStyle={{gap: 16}}
-          keyExtractor={item => item.id!.toString()}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <ItemAddress
-              item={item}
-              onEditPressed={() => onEditPressed(item)}
-              onDeletePressed={() => onDeletePressed(item)}
-            />
-          )}
-        />
-      ) : (
-        <>
-          <CustomText type="title" alignSelf="center" marginBottom={20}>
-            No Address
-          </CustomText>
-          <TextButton type="primary" onPressed={onAddNewPressed}>
-            Add New Address
-          </TextButton>
-        </>
-      )}
-    </View>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
+        <TextButton
+          type="primary"
+          onPressed={onAddNewPressed}
+          marginBottom={20}>
+          Add New Address
+        </TextButton>
+        {listAddresses.length > 0 ? (
+          <FlatList
+            data={listAddresses}
+            contentContainerStyle={{gap: 16}}
+            keyExtractor={item => item.id!}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <ItemAddress
+                item={item}
+                onEditPressed={() => onEditPressed(item)}
+                onDeletePressed={() => onDeletePressed(item)}
+              />
+            )}
+          />
+        ) : (
+          <>
+            <CustomText type="title" alignSelf="center" marginBottom={20}>
+              No Address
+            </CustomText>
+            <TextButton type="primary" onPressed={onAddNewPressed}>
+              Add New Address
+            </TextButton>
+          </>
+        )}
+      </CustomView>
+    </CustomView>
   );
 };
 
@@ -113,6 +121,6 @@ const styles = StyleSheet.create({
   view: {
     paddingHorizontal: 16,
     paddingTop: 20,
-    flex:1
+    flex: 1,
   },
 });

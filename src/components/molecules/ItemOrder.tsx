@@ -3,7 +3,9 @@ import {CustomButton, CustomText, ItemRow} from '../atoms';
 import themes from '../../themes/themes';
 import React from 'react';
 import OrderModel from '../../models/OrderModel';
-import { priceFormat } from '../../utils/Utils';
+import {priceFormat} from '../../utils/Utils';
+import {useSelector} from 'react-redux';
+import {TextButton} from './buttons';
 
 interface Props {
   marginTop?: number;
@@ -13,11 +15,19 @@ interface Props {
 }
 
 const ItemOrder = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <View
       style={[
         styles.view,
-        {marginTop: props.marginTop, marginBottom: props.marginBottom},
+        {
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          backgroundColor: themes[currentTheme].tertiaryColor,
+          borderColor: themes[currentTheme].textSecondaryColor
+        },
       ]}>
       <ItemRow marginBottom={8}>
         <CustomText>{`ID: ${props.item.id}`}</CustomText>
@@ -33,9 +43,12 @@ const ItemOrder = (props: Props) => {
         <CustomText>Price</CustomText>
         <CustomText>{priceFormat(props.item.total, 'vn')}</CustomText>
       </ItemRow>
-      <CustomButton onPressed={props.onPressed} style={styles.button}>
-        <CustomText type='subTitle' color={'white'}>See details</CustomText>
-      </CustomButton>
+      <TextButton
+        alignSelf="flex-end"
+        type="primary"
+        onPressed={props.onPressed}>
+        See Details
+      </TextButton>
     </View>
   );
 };
@@ -44,20 +57,18 @@ export default ItemOrder;
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: 'white',
     padding: 12,
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: 'gray',
   },
   divider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 16,
   },
-  button:{
-    padding:12,
+  button: {
+    padding: 12,
     borderRadius: 7,
-    alignSelf:'flex-end',
+    alignSelf: 'flex-end',
     backgroundColor: themes['defaultTheme'].primaryColor,
-  }
+  },
 });

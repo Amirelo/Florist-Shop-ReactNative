@@ -2,6 +2,7 @@ import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
 import {
   CustomButton,
   CustomText,
+  CustomView,
   Divider,
   ItemRow,
 } from '../../../components/atoms';
@@ -24,8 +25,12 @@ import {
 import {getProductByID} from '../MainService';
 import {TextButton} from '../../../components/molecules/buttons';
 import {priceFormat} from '../../../utils/Utils';
+import {useSelector} from 'react-redux';
 
 const OrderDetailScreen = () => {
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   // Initial
   const route = useRoute<RouteProp<any>>();
 
@@ -53,98 +58,119 @@ const OrderDetailScreen = () => {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.view}>
-        <View style={styles.general}>
-          <CustomText marginBottom={20} type="title">
-            General Info
-          </CustomText>
-          <ItemRow marginBottom={8}>
-            <CustomText>Order ID</CustomText>
-            <CustomText>{order ? order.id : ''}</CustomText>
-          </ItemRow>
-          <Divider marginBottom={8} />
-          <ItemRow marginBottom={8}>
-            <CustomText>Order date</CustomText>
-            <CustomText>{order ? order.orderDate : ''}</CustomText>
-          </ItemRow>
-          <Divider marginBottom={8} />
-          <ItemRow>
-            <CustomText>Status</CustomText>
-            <CustomText
-              textTransform="capitalize"
-              fontWeight="bold"
-              color={order?.status == 'COMPLETED' ? 'green' : 'red'}>
-              {order ? order.status : ''}
+    <CustomView type="fullscreen">
+      <ScrollView>
+        <CustomView type="body">
+          <View
+            style={[
+              styles.general,
+              {borderColor: themes[currentTheme].textSecondaryColor},
+            ]}>
+            <CustomText marginBottom={20} type="title">
+              General Info
             </CustomText>
-          </ItemRow>
-        </View>
-        <View style={styles.general}>
-          <CustomText marginBottom={20} type="title">
-            Products
-          </CustomText>
+            <ItemRow marginBottom={8}>
+              <CustomText>Order ID</CustomText>
+              <CustomText>{order ? order.id : ''}</CustomText>
+            </ItemRow>
+            <Divider marginBottom={8} />
+            <ItemRow marginBottom={8}>
+              <CustomText>Order date</CustomText>
+              <CustomText>{order ? order.orderDate : ''}</CustomText>
+            </ItemRow>
+            <Divider marginBottom={8} />
+            <ItemRow>
+              <CustomText>Status</CustomText>
+              <CustomText
+                textTransform="capitalize"
+                fontWeight="bold"
+                color={
+                  order?.status == 'COMPLETED'
+                    ? themes[currentTheme].primaryColor
+                    : themes[currentTheme].errorcolor
+                }>
+                {order ? order.status : ''}
+              </CustomText>
+            </ItemRow>
+          </View>
+          <View
+            style={[
+              styles.general,
+              {borderColor: themes[currentTheme].textSecondaryColor},
+            ]}>
+            <CustomText marginBottom={20} type="title">
+              Products
+            </CustomText>
 
-          <FlatList
-            style={{marginBottom: 20}}
-            horizontal={true}
-            data={listProducts}
-            keyExtractor={item => item.name}
-            renderItem={({item}) => (
-              <ItemCartDetail
-                langPref="en"
-                product={item}
-                cart={
-                  order
-                    ? order.products.filter(
-                        (cart: CartModel) => cart.id == item.id,
-                      )[0]
-                    : undefined
-                }
-              />
+            <FlatList
+              style={{marginBottom: 20}}
+              horizontal={true}
+              data={listProducts}
+              keyExtractor={item => item.name}
+              renderItem={({item}) => (
+                <ItemCartDetail
+                  langPref="en"
+                  product={item}
+                  cart={
+                    order
+                      ? order.products.filter(
+                          (cart: CartModel) => cart.id == item.id,
+                        )[0]
+                      : undefined
+                  }
+                />
+              )}
+            />
+          </View>
+
+          <View
+            style={[
+              styles.general,
+              {borderColor: themes[currentTheme].textSecondaryColor},
+            ]}>
+            {promocode ? (
+              <>
+                <ItemRow marginBottom={8}>
+                  <CustomText type="subTitle">Price:</CustomText>
+                  <CustomText type="subTitle">
+                    {order ? priceFormat(order.total, 'vn') : ''}
+                  </CustomText>
+                </ItemRow>
+
+                <Divider marginBottom={8} />
+
+                <ItemRow marginBottom={8}>
+                  <CustomText type="subTitle">Coupon:</CustomText>
+                  <CustomText type="subTitle">
+                    {order ? order?.discountRef : ''}
+                  </CustomText>
+                </ItemRow>
+
+                <Divider marginBottom={8} />
+              </>
+            ) : (
+              <></>
             )}
-          />
-        </View>
-
-        <View style={styles.general}>
-          {promocode ? (
-            <>
-              <ItemRow marginBottom={8}>
-                <CustomText type="subTitle">Price:</CustomText>
-                <CustomText type="subTitle">
-                  {order ? priceFormat(order.total, 'vn') : ''}
-                </CustomText>
-              </ItemRow>
-
-              <Divider marginBottom={8} />
-
-              <ItemRow marginBottom={8}>
-                <CustomText type="subTitle">Coupon:</CustomText>
-                <CustomText type="subTitle">
-                  {order ? order?.discountRef : ''}
-                </CustomText>
-              </ItemRow>
-
-              <Divider marginBottom={8} />
-            </>
+            <ItemRow marginBottom={8}>
+              <CustomText type="title">Total:</CustomText>
+              <CustomText type="title">
+                {order ? priceFormat(order.total, 'vn') : ''}
+              </CustomText>
+            </ItemRow>
+          </View>
+          {order?.status == 'PENDING' ? (
+            <TextButton
+              type="primary"
+              backgroundColor={themes[currentTheme].errorcolor}
+              marginBottom={20}>
+              Cancel Order
+            </TextButton>
           ) : (
             <></>
           )}
-          <ItemRow marginBottom={8}>
-            <CustomText type="title">Total:</CustomText>
-            <CustomText type="title">
-              {order ? priceFormat(order.total, 'vn') : ''}
-            </CustomText>
-          </ItemRow>
-        </View>
-        {order?.status == 'PENDING' ? (
-          <TextButton type="primary" backgroundColor={'red'} marginBottom={20}>
-            Cancel Order
-          </TextButton>
-        ) : (
-          <></>
-        )}
-      </View>
-    </ScrollView>
+        </CustomView>
+      </ScrollView>
+    </CustomView>
   );
 };
 

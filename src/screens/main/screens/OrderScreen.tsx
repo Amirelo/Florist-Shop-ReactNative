@@ -9,11 +9,14 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import React from 'react';
-import {CustomText} from '../../../components/atoms';
+import {CustomText, CustomView} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
-import { NAVIGATION_BOTTOM_TAB_EXPLORE, NAVIGATION_MAIN_ORDER_DETAIL } from '../../../constants/AppConstants';
+import {
+  NAVIGATION_BOTTOM_TAB_EXPLORE,
+  NAVIGATION_MAIN_ORDER_DETAIL,
+} from '../../../constants/AppConstants';
 
 const OrderScreen = () => {
   // Initial
@@ -67,27 +70,29 @@ const OrderScreen = () => {
   }, []);
 
   return (
-    <View style={styles.view}>
-      {listOrders.length > 0 ? (
-        <FlatList
-          data={listOrders}
-          contentContainerStyle={{gap: 16}}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <ItemOrder onPressed={() => onDetailPressed(item)} item={item} />
-          )}
-        />
-      ) : (
-        <>
-          <CustomText type="title" alignSelf="center" marginBottom={20}>
-            Empty cart
-          </CustomText>
-          <TextButton type="primary" onPressed={onShoppingPressed}>
-            Start Shopping now
-          </TextButton>
-        </>
-      )}
-    </View>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
+        {listOrders.length > 0 ? (
+          <FlatList
+            data={listOrders}
+            contentContainerStyle={{gap: 16}}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <ItemOrder onPressed={() => onDetailPressed(item)} item={item} />
+            )}
+          />
+        ) : (
+          <>
+            <CustomText type="title" alignSelf="center" marginBottom={20}>
+              Empty cart
+            </CustomText>
+            <TextButton type="primary" onPressed={onShoppingPressed}>
+              Start Shopping now
+            </TextButton>
+          </>
+        )}
+      </CustomView>
+    </CustomView>
   );
 };
 

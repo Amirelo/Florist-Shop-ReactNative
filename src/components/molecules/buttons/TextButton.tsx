@@ -21,6 +21,7 @@ interface Props {
   alignSelf?: FlexStyle['alignSelf'];
   marginBottom?: number;
   marginTop?: number;
+  allowPress?: boolean;
 }
 
 const TextButton = (props: Props) => {
