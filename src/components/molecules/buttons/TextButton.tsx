@@ -42,7 +42,7 @@ const TextButton = (props: Props) => {
             : props.type == 'primary'
             ? themes[currentThemes].primaryColor
             : props.type == 'tertiary'
-            ? themes[currentThemes].bgColor
+            ? themes[currentThemes].tertiaryColor
             : '',
           alignSelf: props.alignSelf,
           width: props.alignSelf && props.type == 'primary' ? '30%' : null,
