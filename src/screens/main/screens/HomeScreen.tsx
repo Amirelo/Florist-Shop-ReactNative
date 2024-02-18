@@ -77,7 +77,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <CustomView type='fullscreen'>
       <ScrollView
         showsVerticalScrollIndicator={false}>
         <CustomView type='body'>
@@ -139,7 +139,7 @@ const HomeScreen = () => {
           />
         </CustomView>
       </ScrollView>
-    </SafeAreaView>
+    </CustomView>
   );
 };
 

@@ -32,8 +32,8 @@ const VerifyEmailScreen = () => {
       ? [
           sendPasswordChangeEmail(email),
           navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
-            title: 'Email Sent',
-            description: 'Please check your email for password change',
+            title: lang[langPref]['complete_changepass_title'],
+            description: lang[langPref]['complete_changepass_description'],
           }),
         ]
       : console.log('Fields cannot be empty');

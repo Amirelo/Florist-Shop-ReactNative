@@ -55,8 +55,8 @@ const SignUpScreen = () => {
       ? [
           passwordSignUp(email, password),
           navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
-            title: 'Verification email sent',
-            description: 'You need to verify email before you can Sign In',
+            title: lang[langPref]['complete_signup_title'],
+            description: lang[langPref]['complete_signup_description'],
           }),
         ]
       : '';

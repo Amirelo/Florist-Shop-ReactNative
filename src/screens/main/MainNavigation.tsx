@@ -57,9 +57,19 @@ const MainNavigation = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="hometab">
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: themes[currentTheme].tertiaryColor,
+          },
+          headerTintColor: themes[currentTheme].textColor
+        }}
+        initialRouteName="hometab">
         <Stack.Screen
           options={{headerShown: false}}
           name="hometab"
@@ -71,24 +81,27 @@ const MainNavigation = () => {
           component={ProductDetailScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_profile']}}
+          options={{title: lang[langPref]['nav_main_profile']}}
           name={NAVIGATION_MAIN_PROFILE}
           component={ProfileScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_update_info']}}
+          options={{title: lang[langPref]['nav_main_update_info']}}
           name={NAVIGATION_MAIN_UPDATE_INFO}
           component={UpdateInfoScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_order']}} name={NAVIGATION_MAIN_ORDER} component={OrderScreen} />
+          options={{title: lang[langPref]['nav_main_order']}}
+          name={NAVIGATION_MAIN_ORDER}
+          component={OrderScreen}
+        />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_order_details']}}
+          options={{title: lang[langPref]['nav_main_order_details']}}
           name={NAVIGATION_MAIN_ORDER_DETAIL}
           component={OrderDetailScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_address']}}
+          options={{title: lang[langPref]['nav_main_address']}}
           name={NAVIGATION_MAIN_ADDRESS}
           component={AddressScreen}
         />
@@ -98,17 +111,17 @@ const MainNavigation = () => {
           component={AddressEdit}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_promocodes']}}
+          options={{title: lang[langPref]['nav_main_promocodes']}}
           name={NAVIGATION_MAIN_PROMOCODES}
           component={PromocodeScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_about']}}
+          options={{title: lang[langPref]['nav_main_about']}}
           name={NAVIGATION_MAIN_ABOUTUS}
           component={AboutUsScreen}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_prod_filter']}}
+          options={{title: lang[langPref]['nav_main_prod_filter']}}
           name={NAVIGATION_MAIN_PRODUCT_FILTER}
           component={ProductFilterScreen}
         />
@@ -123,7 +136,7 @@ const MainNavigation = () => {
           component={CartDetail}
         />
         <Stack.Screen
-        options={{title: lang[langPref]['nav_main_settings']}}
+          options={{title: lang[langPref]['nav_main_settings']}}
           name={NAVIGATION_MAIN_SETTINGS}
           component={SettingScreen}
         />
@@ -137,8 +150,17 @@ const MainTab = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
-    <tab.Navigator initialRouteName={NAVIGATION_BOTTOM_TAB_HOME}>
+    <tab.Navigator
+      screenOptions={{
+        tabBarActiveBackgroundColor: themes[currentTheme].tertiaryColor,
+        tabBarInactiveBackgroundColor: themes[currentTheme].tertiaryColor,
+      }}
+      initialRouteName={NAVIGATION_BOTTOM_TAB_HOME}>
       <tab.Screen
         options={{
           tabBarLabel: lang[langPref]['bottomTab_home'],
@@ -148,7 +170,7 @@ const MainTab = () => {
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon size={size} color={color} icon={faHome} />
           ),
-          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+          tabBarActiveTintColor: themes[currentTheme].primaryColor,
         }}
         name={NAVIGATION_BOTTOM_TAB_HOME}
         component={HomeScreen}
@@ -161,7 +183,7 @@ const MainTab = () => {
           tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon size={size} color={color} icon={faCompass} />
           ),
-          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+          tabBarActiveTintColor: themes[currentTheme].primaryColor,
         }}
         name={NAVIGATION_BOTTOM_TAB_EXPLORE}
         component={ExploreScreen}
@@ -174,7 +196,7 @@ const MainTab = () => {
           tabBarIcon: ({size, color}) => (
             <FontAwesomeIcon size={size} color={color} icon={faCartShopping} />
           ),
-          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+          tabBarActiveTintColor: themes[currentTheme].primaryColor,
         }}
         name={NAVIGATION_BOTTOM_TAB_CART}
         component={CartScreen}
@@ -188,7 +210,7 @@ const MainTab = () => {
           tabBarIcon: ({size, color}) => (
             <FontAwesomeIcon size={size} color={color} icon={faUser} />
           ),
-          tabBarActiveTintColor: themes['defaultTheme'].primaryColor,
+          tabBarActiveTintColor: themes[currentTheme].primaryColor,
         }}
         name={NAVIGATION_BOTTOM_TAB_ACCOUNT}
         component={AccountScreen}

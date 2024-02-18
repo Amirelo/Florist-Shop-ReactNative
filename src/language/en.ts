@@ -54,6 +54,12 @@ const en = {
   // Verify Email Screen
   verify_title: 'Password Change',
 
+  // Action Complete Screen
+  complete_signup_title: 'Verification email sent',
+  complete_changepass_title: 'Change Password Email Sent',
+  complete_signup_description: 'You need to verify email before you can Sign In',
+  complete_changepass_description: 'Please check your email',
+
   // Home:
   home_popular:'Popular',
   home_card_title: 'Need help?',

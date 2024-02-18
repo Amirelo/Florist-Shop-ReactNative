@@ -52,6 +52,12 @@ const vn = {
   // Verify Email Screen
   verify_title: 'Password Change',
 
+    // Action Complete Screen
+    complete_signup_title: 'Đã gửi Email xác nhận',
+    complete_changepass_title: 'Đã gửi Email đổi mật khẩu',
+    complete_signup_description: 'Vui lòng kiểm tra Email xác nhận tài khoản',
+    complete_changepass_description: 'Vui lòng kiểm tra Email đổi mật khẩu',
+
   // Home:
   home_popular:'Sản phẩm nổi bật',
   home_card_title: 'Cần trợ giúp?',
