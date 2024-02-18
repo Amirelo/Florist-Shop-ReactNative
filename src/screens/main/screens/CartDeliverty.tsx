@@ -6,7 +6,12 @@ import {
 } from '@react-navigation/native';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {AddressModel, CartModel, ProductModel} from '../../../models';
-import {CustomButton, CustomText, Divider} from '../../../components/atoms';
+import {
+  CustomButton,
+  CustomText,
+  CustomView,
+  Divider,
+} from '../../../components/atoms';
 import themes from '../../../themes/themes';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
 import React from 'react';
@@ -14,8 +19,12 @@ import {faPhone} from '@fortawesome/free-solid-svg-icons';
 import {addressFormat} from '../../../utils/Utils';
 import {getUserAddresses} from '../MainService';
 import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore'
-import { NAVIGATION_MAIN_ADDRESS_EDIT, NAVIGATION_MAIN_CART_DETAIL } from '../../../constants/AppConstants';
+import firestore from '@react-native-firebase/firestore';
+import {
+  NAVIGATION_MAIN_ADDRESS_EDIT,
+  NAVIGATION_MAIN_CART_DETAIL,
+} from '../../../constants/AppConstants';
+import {TextButton} from '../../../components/molecules/buttons';
 
 const CartDelivery = () => {
   // Navigation
@@ -121,8 +130,8 @@ const CartDelivery = () => {
   }, []);
 
   return (
-    <View style={{height: '100%'}}>
-      <View style={styles.view}>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
         <CustomInput
           placeholder="Phone number"
           onChangeText={setPhoneNumber}
@@ -140,26 +149,27 @@ const CartDelivery = () => {
             : 'No address selected'}
         </CustomText>
         <Divider />
-        <CustomButton onPressed={onSelectPressed} style={styles.couponButton}>
-          <CustomText>Select Address</CustomText>
-        </CustomButton>
 
-        <CustomText style={{textAlign: 'center'}} type="subTitle">
+        <TextButton
+          type="tertiary"
+          onPressed={onSelectPressed}
+          marginBottom={20}>
+          Select Address
+        </TextButton>
+
+        <CustomText alignSelf='center' type="subTitle" marginBottom={20}>
           Or
         </CustomText>
 
-        <CustomButton
+        <TextButton
+          type="tertiary"
           onPressed={onAddAddressPressed}
-          style={styles.couponButton}>
-          <CustomText>Add New Address</CustomText>
-        </CustomButton>
+          marginBottom={20}>
+          Add New Address
+        </TextButton>
 
-        <CustomButton onPressed={onContinuePressed} style={styles.button}>
-          <CustomText type="subTitle" color={'white'}>
-            Continue
-          </CustomText>
-        </CustomButton>
-      </View>
+            <TextButton type='primary' onPressed={onContinuePressed}>Continue</TextButton>
+      </CustomView>
       {optionActive ? (
         <OptionsPanel setActive={setOptionActive} title="Address">
           <FlatList
@@ -186,32 +196,8 @@ const CartDelivery = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 
 export default CartDelivery;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-  },
-  couponButton: {
-    marginTop: 20,
-    marginBottom: 20,
-    height: 48,
-    borderWidth: 1,
-    borderRadius: 7,
-    backgroundColor: 'white',
-    borderColor: themes['defaultTheme'].textSecondaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    paddingVertical: 16,
-    borderRadius: 7,
-  },
-});

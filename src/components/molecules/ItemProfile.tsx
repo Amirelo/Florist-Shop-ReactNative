@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {CustomButton, CustomText} from '../atoms';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   icon: IconProp;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const ItemProfile = (props: Props) => {
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <CustomButton
       onPressed={() =>
@@ -27,14 +29,14 @@ const ItemProfile = (props: Props) => {
           marginTop: props.marginTop,
           marginBottom: props.marginBottom,
           backgroundColor: props.viewOnly
-            ? themes['defaultTheme'].textSecondaryColor
-            : 'white',
+            ? themes[currentTheme].textSecondaryColor
+            : themes[currentTheme].tertiaryColor,
         },
       ]}>
       <View style={styles.body}>
         <FontAwesomeIcon
           size={24}
-          color={themes['defaultTheme'].primaryColor}
+          color={themes[currentTheme].primaryColor}
           style={{marginRight: 12}}
           icon={props.icon}
         />
@@ -53,7 +55,6 @@ export default ItemProfile;
 const styles = StyleSheet.create({
   view: {
     height: 54,
-    backgroundColor: 'white',
     borderRadius: 7,
     padding: 12,
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import {FlatList, View} from 'react-native';
-import {CustomText, ItemRow} from '../../../components/atoms';
+import {CustomText, CustomView, ItemRow} from '../../../components/atoms';
 import {CustomInput, ItemPick} from '../../../components/molecules';
 import React from 'react';
 import {CategoryModel} from '../../../models';
@@ -9,6 +9,7 @@ import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import { NAVIGATION_BOTTOM_TAB_EXPLORE } from '../../../constants/AppConstants';
+import { useSelector } from 'react-redux';
 
 const ProductFilterScreen = () => {
   // Initial
@@ -26,6 +27,8 @@ const ProductFilterScreen = () => {
   const [selectedColors, setSelectedColors] = React.useState<Array<string>>([]);
   const listFlowerColors = ['White', 'Red', 'Blue', 'Yellow', 'Purple', 'Pink'];
   const [clearCkb, setCleaCkb] = React.useState(false);
+
+  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
 
   // Get categories from server
   const getCategory = async () => {
@@ -109,7 +112,8 @@ const ProductFilterScreen = () => {
   }, []);
 
   return (
-    <View style={{paddingHorizontal: 16, paddingTop: 20}}>
+    <CustomView type='fullscreen'>
+    <CustomView type='body'>
       <CustomText type="title" marginBottom={10}>
         Price Range
       </CustomText>
@@ -117,6 +121,7 @@ const ProductFilterScreen = () => {
         style={{
           borderRadius: 7,
           borderWidth: 1,
+          borderColor:themes[currentTheme].textSecondaryColor,
           padding: 12,
           marginBottom: 20,
         }}>
@@ -140,6 +145,7 @@ const ProductFilterScreen = () => {
         style={{
           borderRadius: 7,
           borderWidth: 1,
+          borderColor:themes[currentTheme].textSecondaryColor,
           padding: 12,
           marginBottom: 20,
         }}>
@@ -167,6 +173,7 @@ const ProductFilterScreen = () => {
         style={{
           borderRadius: 7,
           borderWidth: 1,
+          borderColor:themes[currentTheme].textSecondaryColor,
           padding: 12,
           marginBottom: 20,
         }}>
@@ -195,7 +202,8 @@ const ProductFilterScreen = () => {
         onPressed={onClearPressed}>
         Clear
       </TextButton>
-    </View>
+    </CustomView>
+    </CustomView>
   );
 };
 

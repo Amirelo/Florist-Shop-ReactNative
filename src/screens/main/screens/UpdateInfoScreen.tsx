@@ -15,6 +15,7 @@ import {
 } from '../../auth/AuthService';
 import {useDispatch, useSelector} from 'react-redux';
 import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
+import { CustomView } from '../../../components/atoms';
 const UpdateInfoScreen = () => {
   // Fields
   const [title, setTitle] = React.useState('');
@@ -73,7 +74,8 @@ const UpdateInfoScreen = () => {
   };
 
   return (
-    <View style={styles.view}>
+    <CustomView type='fullscreen'>
+    <CustomView type='body'>
       <CustomInput
         value={data}
         onChangeText={setData}
@@ -85,7 +87,8 @@ const UpdateInfoScreen = () => {
       <TextButton type="primary" onPressed={onUpdatepressed}>
         {title == 'EMAIL' ? 'Send Update Password Email' : 'Update'}
       </TextButton>
-    </View>
+    </CustomView>
+    </CustomView>
   );
 };
 

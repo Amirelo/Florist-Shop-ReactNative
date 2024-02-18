@@ -6,7 +6,7 @@ import {
   faPhone,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import {CustomButton, CustomImage, CustomText} from '../../../components/atoms';
+import {CustomButton, CustomImage, CustomText, CustomView} from '../../../components/atoms';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {CameraOptions, launchCamera} from 'react-native-image-picker';
@@ -109,8 +109,8 @@ const ProfileScreen = () => {
   }, [userInfo]);
 
   return (
-    <View style={styles.view}>
-      <View style={styles.body}>
+    <CustomView type='fullscreen'>
+      <CustomView type='body'>
         <CustomButton onPressed={onImagePressed}>
           <CustomImage
             type="profile"
@@ -153,7 +153,7 @@ const ProfileScreen = () => {
           marginBottom={12}
           onPressed={() => onProfileTabPressed('EMAIL', '')}
         />
-      </View>
+      </CustomView>
       {active ? (
         <OptionsPanel title="Select picture" setActive={setActive}>
           <CustomButton onPressed={onStoragePressed}>
@@ -166,7 +166,7 @@ const ProfileScreen = () => {
       ) : (
         <></>
       )}
-    </View>
+    </CustomView>
   );
 };
 

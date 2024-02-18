@@ -9,6 +9,7 @@ import {
 import {
   CustomButton,
   CustomText,
+  CustomView,
   Divider,
   ItemRow,
 } from '../../../components/atoms';
@@ -36,6 +37,8 @@ const CartDetail = () => {
   // initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+
+  const currentTheme: keyof typeof themes = useSelector((store:any) => store.preference.theme)
 
   // Fields
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
@@ -125,12 +128,13 @@ const CartDetail = () => {
 
   return (
     <ScrollView>
-      <View style={styles.view}>
+      <CustomView type='body'>
         {/* Delivery Information */}
         <View
           style={{
             borderWidth: 1,
             padding: 12,
+            borderColor: themes[currentTheme].textSecondaryColor,
             borderRadius: 7,
             marginBottom: 30,
           }}>
@@ -146,6 +150,7 @@ const CartDetail = () => {
           style={{
             borderWidth: 1,
             padding: 12,
+            borderColor: themes[currentTheme].textSecondaryColor,
             borderRadius: 7,
             marginBottom: 30,
           }}>
@@ -180,6 +185,7 @@ const CartDetail = () => {
           style={{
             borderWidth: 1,
             padding: 12,
+            borderColor: themes[currentTheme].textSecondaryColor,
             borderRadius: 7,
             marginBottom: 30,
           }}>
@@ -189,7 +195,7 @@ const CartDetail = () => {
 
           <ItemRow marginBottom={20}>
             <CustomText type="title">Products price:</CustomText>
-            <CustomText type="title" color={'green'} fontWeight="bold">
+            <CustomText type="title">
               {priceFormat(total, 'en')}
             </CustomText>
           </ItemRow>
@@ -212,13 +218,14 @@ const CartDetail = () => {
 
           <ItemRow marginBottom={20}>
             <CustomText type="title">Total</CustomText>
-            <CustomText type="title">{priceFormat(total, 'en')}</CustomText>
+            <CustomText type="title" fontWeight='bold'  color={themes[currentTheme].primaryColor}>{priceFormat(total, 'en')}</CustomText>
           </ItemRow>
         </View>
         <View
           style={{
             borderWidth: 1,
             padding: 12,
+            borderColor: themes[currentTheme].textSecondaryColor,
             borderRadius: 7,
             marginBottom: 30,
           }}>
@@ -232,7 +239,7 @@ const CartDetail = () => {
         <TextButton type="primary" onPressed={onOrderPressed} marginBottom={20}>
           Order
         </TextButton>
-      </View>
+      </CustomView>
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
           {listPromos?.length > 0 ? (
