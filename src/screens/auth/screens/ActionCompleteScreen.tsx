@@ -1,15 +1,15 @@
-import {StyleSheet, View} from 'react-native';
-import {CustomText, CustomView} from '../../../components/atoms';
-import {TextButton} from '../../../components/molecules/buttons';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React from 'react';
+import {CustomText, CustomView} from '../../../components/atoms';
+import {TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
-import {useSelector} from 'react-redux';
+import {NAVIGATION_AUTH_SIGNIN} from '../../../constants/AppConstants';
 
 const ActionCompleteScreen = () => {
   // Initial
@@ -27,7 +27,7 @@ const ActionCompleteScreen = () => {
 
   // Navigate to Sign In
   const onGoBackPressed = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate(NAVIGATION_AUTH_SIGNIN);
   };
 
   // Get data from route
@@ -41,14 +41,19 @@ const ActionCompleteScreen = () => {
   }, []);
 
   return (
+    // Screen flex
     <CustomView type={'fullscreen'}>
+      {/* Authentication Card */}
       <CustomView type={'authCard'}>
+        {/* Title */}
         <CustomText alignSelf="center" marginBottom={20} type="title">
           {title}
         </CustomText>
+        {/* Description */}
         <CustomText alignSelf="center" marginBottom={30} type="subTitle">
           {description}
         </CustomText>
+        {/* Button to go back */}
         <TextButton onPressed={onGoBackPressed} type="primary">
           {lang[langPref]['buttonGoBack_long']}
         </TextButton>
@@ -58,10 +63,3 @@ const ActionCompleteScreen = () => {
 };
 
 export default ActionCompleteScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-  },
-});

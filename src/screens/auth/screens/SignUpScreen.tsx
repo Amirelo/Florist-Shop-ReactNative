@@ -1,25 +1,25 @@
-import {Image, StyleSheet, View} from 'react-native';
-import {CustomInput} from '../../../components/molecules';
-import {
-  faArrowLeft,
-  faBackspace,
-  faEnvelope,
-  faLock,
-} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import themes from '../../../themes/themes';
-import {CustomImage, CustomText, CustomView} from '../../../components/atoms';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {passwordSignUp} from '../AuthService';
+import {useSelector} from 'react-redux';
 import {
   IMAGE_AUTH_BACKGROUND,
   NAVIGATION_AUTH_ACTIONCOMPLETE,
 } from '../../../constants/AppConstants';
+import {
+  faArrowLeft,
+  faEnvelope,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons';
+import {CustomImage, CustomText, CustomView} from '../../../components/atoms';
+import {CustomInput} from '../../../components/molecules';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
+import {passwordSignUp} from '../AuthService';
 import lang from '../../../language/lang';
-import {useSelector} from 'react-redux';
 
 const SignUpScreen = () => {
+  // Initial
+  const navigation = useNavigation<NavigationProp<any>>();
+
   // Fields
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -29,9 +29,6 @@ const SignUpScreen = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
-
-  // Navigation
-  const navigation = useNavigation<NavigationProp<any>>();
 
   // Check if all fields are not empty
   const checkFields = () => {
@@ -45,11 +42,12 @@ const SignUpScreen = () => {
     return status;
   };
 
+  // Go back to Sign In Screen
   const onBackButtonPressed = () => {
     navigation.goBack();
   };
 
-  // Sign up on press
+  // Sign Up on pressed
   const onSignUpPressed = () => {
     checkFields()
       ? [
@@ -62,13 +60,9 @@ const SignUpScreen = () => {
       : '';
   };
 
-  // Return to SignInScreen on bottom text pressed
-  const onGoBackPressed = () => {
-    navigation.goBack();
-  };
-
   return (
     <CustomView>
+      {/* Background Image */}
       <CustomView type={'backgroundImage'}>
         <CustomImage
           type="background"
@@ -76,19 +70,25 @@ const SignUpScreen = () => {
           source={IMAGE_AUTH_BACKGROUND}
         />
       </CustomView>
+      {/* Authentication card */}
       <CustomView type={'authCard'}>
+        {/* Title and back button */}
         <CustomView type={'itemRow'} marignBottom={20}>
           <ImageButton icon={faArrowLeft} onPressed={onBackButtonPressed} />
           <CustomText type="title" fontWeight="bold">
             {lang[langPref]['signup_title']}
           </CustomText>
         </CustomView>
+
+        {/* Input - email */}
         <CustomInput
           marginBottom={12}
           onChangeText={setEmail}
           placeholder={lang[langPref]['edEmail']}
           icon={faEnvelope}
         />
+
+        {/* Input - password */}
         <CustomInput
           marginBottom={12}
           onChangeText={setPassword}
@@ -96,6 +96,8 @@ const SignUpScreen = () => {
           icon={faLock}
           hidden={true}
         />
+
+        {/* Input - confirm password */}
         <CustomInput
           marginBottom={20}
           onChangeText={setConfirmPassword}
@@ -104,6 +106,7 @@ const SignUpScreen = () => {
           hidden={true}
         />
 
+        {/* Button - Sign Up */}
         <TextButton
           marginBottom={20}
           type="primary"
@@ -111,8 +114,9 @@ const SignUpScreen = () => {
           {lang[langPref]['buttonSignUp']}
         </TextButton>
 
+        {/* Button - already have account */}
         <TextButton
-          onPressed={onGoBackPressed}
+          onPressed={onBackButtonPressed}
           textDecorationLine="underline"
           fontSize="subTitle"
           alignSelf="center"
@@ -125,14 +129,3 @@ const SignUpScreen = () => {
 };
 
 export default SignUpScreen;
-
-const styles = StyleSheet.create({
-  body: {
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 7,
-    marginTop: '30%',
-    marginHorizontal: 16,
-  },
-});

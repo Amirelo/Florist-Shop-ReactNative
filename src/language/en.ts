@@ -79,6 +79,7 @@ const en = {
   signup_title: 'Sign Up',
   signup_have_account: 'Already have an account? Sign In',
   changePass_title: 'Change Password',
+  signin_other_methods:'Or Sign In with',
 
   // Verify Email Screen
   verify_title: 'Password Change',

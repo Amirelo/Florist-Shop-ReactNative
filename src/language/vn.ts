@@ -78,6 +78,7 @@ const vn = {
   signup_title: 'Đăng ký',
   signup_have_account: 'Quay lại đăng nhập',
   changePass_title: 'Đổi mật khẩu',
+  signin_other_methods:'Hoặc đăng nhập bằng',
 
   // Verify Email Screen
   verify_title: 'Password Change',

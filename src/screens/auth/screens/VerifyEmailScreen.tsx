@@ -1,25 +1,23 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import {CustomInput} from '../../../components/molecules';
-import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import {ImageButton, TextButton} from '../../../components/molecules/buttons';
-import {sendPasswordChangeEmail} from '../AuthService';
-import CustomImage from '../../../components/atoms/CustomImage';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {
   IMAGE_AUTH_BACKGROUND,
   NAVIGATION_AUTH_ACTIONCOMPLETE,
 } from '../../../constants/AppConstants';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {sendPasswordChangeEmail} from '../AuthService';
+import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import {CustomText, CustomView, CustomImage} from '../../../components/atoms';
+import {CustomInput} from '../../../components/molecules';
+import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 import lang from '../../../language/lang';
-import {useSelector} from 'react-redux';
-import {CustomText, CustomView} from '../../../components/atoms';
 
 const VerifyEmailScreen = () => {
   // Navigation
   const navigation = useNavigation<NavigationProp<any>>();
 
   // Fields
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = React.useState('');
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -39,28 +37,28 @@ const VerifyEmailScreen = () => {
       : console.log('Fields cannot be empty');
   };
 
+  // Go back to Sign In Screen
   const onBackButtonPressed = () => {
     navigation.goBack();
   };
 
   return (
     <CustomView>
+      {/* Background Image */}
       <CustomView type={'backgroundImage'}>
         <CustomImage type="background" source={IMAGE_AUTH_BACKGROUND} />
       </CustomView>
-      <CustomView type='authCard'>
-        <View
-          style={{
-            marginBottom: 30,
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center',
-          }}>
+      {/* Authentication Card */}
+      <CustomView type="authCard">
+        {/* Title and back button */}
+        <CustomView type={'itemRow'}>
           <ImageButton icon={faArrowLeft} onPressed={onBackButtonPressed} />
           <CustomText type="title" fontWeight="bold">
             {lang[langPref]['verify_title']}
           </CustomText>
-        </View>
+        </CustomView>
+
+        {/* Input - email */}
         <CustomInput
           marginBottom={20}
           onChangeText={setEmail}
@@ -68,6 +66,7 @@ const VerifyEmailScreen = () => {
           icon={faEnvelope}
         />
 
+        {/* Button - Send Change password email */}
         <TextButton type="primary" onPressed={onSendEmailPressed}>
           {lang[langPref]['buttonVerify']}
         </TextButton>
@@ -77,14 +76,3 @@ const VerifyEmailScreen = () => {
 };
 
 export default VerifyEmailScreen;
-
-const styles = StyleSheet.create({
-  body: {
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 7,
-    marginTop: '30%',
-    marginHorizontal: 16,
-  },
-});
