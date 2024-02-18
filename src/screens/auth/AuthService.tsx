@@ -1,4 +1,4 @@
-import auth, {FirebaseAuthTypes, firebase} from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -34,14 +34,14 @@ export const passwordLogin = async (email: string, password: string) => {
   const res = await auth()
     .signInWithEmailAndPassword(email, password)
     .then(async () => {
-      if(auth().currentUser?.emailVerified){
+      // Check if email is verified
+      if (auth().currentUser?.emailVerified) {
         console.log('User Found, Verified');
         status = true;
-      } else{
-        console.log('Email not verified')
-        return false
+      } else {
+        console.log('Email not verified');
+        return false;
       }
-      
     })
     .catch((error: any) => {
       console.log('Error:', error.code);
@@ -65,10 +65,9 @@ export const SaveUserFirestore = async (email: string) => {
       image:
         'https://images.pexels.com/photos/20094356/pexels-photo-20094356/free-photo-of-tower-of-our-lady-of-fatima-chapel-in-portugal.jpeg',
     })
-    .then(async() => {
-      if (await signUpPromo(email)){
+    .then(async () => {
+      if (await signUpPromo(email)) {
         return true;
-
       }
     })
     .catch(error => {
@@ -79,9 +78,11 @@ export const SaveUserFirestore = async (email: string) => {
 
 // Add New Arrival Promocodes
 const signUpPromo = async (email: string) => {
+  // Calculate promocode expiration date
   const curDate = new Date();
   const expDate = new Date();
   expDate.setDate(curDate.getDate() + 20);
+  // Convert to string
   const expString =
     expDate.getFullYear().toString() +
     (expDate.getMonth().toString().length > 1
@@ -91,6 +92,8 @@ const signUpPromo = async (email: string) => {
       ? expDate.getDay().toString()
       : '0' + expDate.getDay().toString());
   console.log('exp date string:', expString);
+
+  // Create Promocode
   const userPromo = new PromocodeModel(
     '',
     'New Arrival',
@@ -101,6 +104,8 @@ const signUpPromo = async (email: string) => {
     expDate.toString(),
     'ACTIVE',
   );
+
+  // Add to Firestore
   return await firestore()
     .collection('users')
     .doc(email)
@@ -208,6 +213,7 @@ export const getUserInfo = async (email: string) => {
   return null;
 };
 
+// Update User Information base on type
 export const updateUserInfo = async (
   type: string,
   data: string,
@@ -222,6 +228,7 @@ export const updateUserInfo = async (
     : console.log('Update action not found');
 };
 
+// Update Username
 export const updateUsername = async (email: string, data: string) => {
   await firestore()
     .collection('users')
@@ -235,6 +242,7 @@ export const updateUsername = async (email: string, data: string) => {
     .catch(error => console.log('Update username error:', error));
 };
 
+// Update phone number
 export const updatePhoneNumber = async (email: string, data: string) => {
   await firestore()
     .collection('users')
@@ -248,11 +256,14 @@ export const updatePhoneNumber = async (email: string, data: string) => {
     .catch(error => console.log('Update phone number error:', error));
 };
 
+// Update User Profile Picture
 export const updateImage = async (email: string, data: string) => {
+  // Save image to Firebase Storage
   const reference = storage().ref(email + '.png');
   await reference.putFile(data);
   const url = await reference.getDownloadURL();
   console.log(url);
+  // Update data in Firestore
   await firestore()
     .collection('users')
     .doc(email)
