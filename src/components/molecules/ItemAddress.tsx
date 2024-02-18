@@ -46,14 +46,14 @@ const ItemAddress = (props: Props) => {
       </ItemRow>
       <ItemRow>
         <TextButton
-          alignSelf="baseline"
+          alignSelf="flex-start"
           type="primary"
           backgroundColor={'red'}
           onPressed={props.onDeletePressed}>
           Delete
         </TextButton>
         <TextButton
-          alignSelf="baseline"
+          alignSelf="flex-end"
           type="primary"
           onPressed={props.onEditPressed}>
           Edit

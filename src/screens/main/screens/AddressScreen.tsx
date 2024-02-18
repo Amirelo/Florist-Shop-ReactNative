@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import {deleteUserAddress} from '../MainService';
 import {addressFormat} from '../../../utils/Utils';
 import {NAVIGATION_MAIN_ADDRESS_EDIT} from '../../../constants/AppConstants';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AddressScreen = () => {
   // Navigation
@@ -88,7 +88,9 @@ const AddressScreen = () => {
         </TextButton>
         {listAddresses.length > 0 ? (
           <FlatList
+            key={'#'}
             data={listAddresses}
+            //horizontal={true}
             contentContainerStyle={{gap: 16}}
             keyExtractor={item => item.id!}
             showsVerticalScrollIndicator={false}
