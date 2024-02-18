@@ -1,5 +1,6 @@
 import {
   FONT_CHANGE,
+  FONT_SIZE_CHANGE,
   LANG_CHANGE,
   THEME_CHANGE,
 } from '../../constants/AppConstants';
@@ -14,4 +15,8 @@ export const changeTheme = (data: string) => {
 
 export const changeFontFamily = (data: string) => {
   return {type: FONT_CHANGE, payload: {data: data}};
+};
+
+export const changeFontSize = (data: number) => {
+  return {type: FONT_SIZE_CHANGE, payload: {data: data}};
 };

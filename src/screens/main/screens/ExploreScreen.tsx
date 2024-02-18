@@ -187,6 +187,7 @@ const ExploreScreen = () => {
         </View>
         {isColumn == false ? (
           <FlatList
+          key='@'
             columnWrapperStyle={{
               justifyContent: 'space-around',
               marginBottom: 24,

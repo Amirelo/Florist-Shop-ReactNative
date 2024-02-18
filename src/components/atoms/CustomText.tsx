@@ -30,7 +30,7 @@ const CustomText = (props: Props) => {
   const selectedType = props.type ? props.type : 'normal';
   const currentTheme:keyof typeof themes = useSelector((store:any)=> store.preference.theme)
   const currentFont: keyof typeof allowFont = useSelector((store:any) => store.preference.font)
-
+  const currentFontScale:number = useSelector((store:any) => store.preference.fontScale)
   return (
     <Text
       numberOfLines={props.maxLines ? props.maxLines : 10}
@@ -47,9 +47,9 @@ const CustomText = (props: Props) => {
           fontWeight: currentFont.toString().length > 0 ? undefined : props.fontWeight,
           fontSize: selectedType
              ? currentFont.toString() == 'DancingScript'
-               ? styles[selectedType].fontSize + 5
-              : styles[selectedType].fontSize 
-            : styles['normal'].fontSize
+               ? styles[selectedType].fontSize + 5 + currentFontScale
+              : styles[selectedType].fontSize  + currentFontScale
+            : styles['normal'].fontSize + currentFontScale
         },
         props.style,
       ]}>

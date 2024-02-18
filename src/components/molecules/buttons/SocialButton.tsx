@@ -23,7 +23,8 @@ const SocialButton = (props: Props) => {
       style={[
         styles.primary,
         {marginTop: props.marginTop, marginBottom: props.marginBottom,
-        borderColor: themes[currentTheme].textSecondaryColor},
+        borderColor: themes[currentTheme].textSecondaryColor,
+      backgroundColor: themes[currentTheme].tertiaryColor},
       ]}
       onPressed={props.onPressed}>
       <FontAwesomeIcon

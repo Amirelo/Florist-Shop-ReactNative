@@ -5,11 +5,12 @@ import {
   CustomView,
   Divider,
 } from '../../../components/atoms';
-import {OptionsPanel} from '../../../components/molecules';
+import {OptionsPanel, QuantityCounter} from '../../../components/molecules';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   changeFontFamily,
+  changeFontSize,
   changeLanguage,
   changeTheme,
 } from '../../../redux/actions/PreferenceAction';
@@ -35,7 +36,11 @@ const SettingScreen = () => {
     (store: any) => store.preference.theme,
   );
 
-  const font:string = useSelector((store:any) => store.preference.font)
+  const font: string = useSelector((store: any) => store.preference.font);
+
+  const fontScale: number = useSelector(
+    (store: any) => store.preference.fontScale,
+  );
 
   // Open change language panel
   const onLanguagePressed = () => {
@@ -73,6 +78,10 @@ const SettingScreen = () => {
     setFontOptionActive(false);
   };
 
+  const onChangeFontSize = (amount: number) => {
+    dispatch(changeFontSize(amount));
+  };
+
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
@@ -108,10 +117,18 @@ const SettingScreen = () => {
           {font ? font : 'Font Family'}
         </TextButton>
 
-        {/* Font Family */}
+        {/* Font Size */}
         <CustomText type="title" marginBottom={12}>
           Font Size
         </CustomText>
+        <QuantityCounter
+          quantity={fontScale}
+          onChanged={(amount: number) => {
+            onChangeFontSize(amount);
+          }}
+          maxQuantity={5}
+          minQuantity={-5}
+        />
       </CustomView>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
@@ -150,11 +167,11 @@ const SettingScreen = () => {
           <TextButton onPressed={() => onFontOptionPressed('')}>
             Default
           </TextButton>
-          <TextButton onPressed={() => onFontOptionPressed('DancingScript')}>
-            Dancing Script
-          </TextButton>
           <TextButton onPressed={() => onFontOptionPressed('Inter')}>
             Inter
+          </TextButton>
+          <TextButton onPressed={() => onFontOptionPressed('DancingScript')}>
+            Dancing Script
           </TextButton>
         </OptionsPanel>
       ) : (
