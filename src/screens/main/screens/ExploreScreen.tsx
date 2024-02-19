@@ -152,13 +152,13 @@ const ExploreScreen = () => {
             if (product.categories.includes(name)) {
               status = true;
             }
-          });
+          })
           return status;
         });
         console.log('Filter - categories:', filteredList);
       }
 
-      if (filterData.colors.length > 0) {
+      if (filterData.length >0 && filterData.colors.length > 0) {
         filteredList = filteredList.filter((product: ProductModel) => {
           var status = false;
           filterData.colors.map((name: string) => {

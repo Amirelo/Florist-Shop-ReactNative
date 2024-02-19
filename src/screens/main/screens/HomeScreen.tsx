@@ -51,16 +51,10 @@ const HomeScreen = () => {
   const waitForData = async () => {
     const categories: Array<CategoryModel> = (await getCategories()).slice(
       0,
-      3,
+      4,
     );
     console.log('category list: ', categories);
-    setListCategories(categories.slice(0, 3));
-    const more = new CategoryModel(
-      '1',
-      'See More',
-      'https://images.pexels.com/photos/15387083/pexels-photo-15387083/free-photo-of-letters-on-dice.jpeg',
-    );
-    setListCategories([...categories, more]);
+    setListCategories(categories);
 
     const products: Array<ProductModel> = await getProducts();
     console.log('product list: ', products);
