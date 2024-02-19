@@ -139,7 +139,7 @@ const ExploreScreen = () => {
         console.log('Filter - max price:', filteredList);
       }
 
-      if (filterData.categories) {
+      if (filterData.categories.length > 0) {
         filteredList = filteredList.filter((product: ProductModel) => {
           var status = false;
           const productStatus = filterData.categories.map((name: string) => {
@@ -161,6 +161,7 @@ const ExploreScreen = () => {
   return (
     <CustomView type="viewWithOptions">
       <CustomView type="body">
+        {/* Search bar */}
         <CustomInput
           onChangeText={text => onSearch(text)}
           icon={faSearch}
@@ -168,6 +169,7 @@ const ExploreScreen = () => {
           placeholder={lang[langPref]['edSearch']}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          {/* Button - Filter */}
           <CustomButton onPressed={onFilterPressed} flex={1}>
             <ItemRow justifyContent="flex-start">
               <FontAwesomeIcon
@@ -181,6 +183,7 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
 
+          {/* Button - Sort */}
           <CustomButton onPressed={onSortPressed} flex={1}>
             <ItemRow justifyContent="center">
               <FontAwesomeIcon
@@ -194,6 +197,7 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
 
+          {/* Button - Display */}
           <CustomButton onPressed={onDisplayPressed} flex={1}>
             <ItemRow justifyContent="flex-end">
               <FontAwesomeIcon
