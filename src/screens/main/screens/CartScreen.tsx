@@ -52,7 +52,6 @@ const CartScreen = () => {
 
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
-  const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
   // Go to cart delivery on press 'Place Order'
   const onBuyPressed = () => {
@@ -124,6 +123,7 @@ const CartScreen = () => {
   }, []);
 
   React.useEffect(() => {
+    console.log('Cart route changed')
     if (route.params?.product && route.params?.quantity) {
       const cart: CartModel = new CartModel(
         route.params.product.id,
@@ -136,11 +136,12 @@ const CartScreen = () => {
         const routePrice = route.params.product.price * route.params.quantity
         setTotal(prev=> prev + routePrice)
       }
-      if (route.params?.action && route.params.action == 'Order') {
-        setListProducts([]);
-        setListCarts([]);
-        setTotal(0);
-      }
+    }
+    if (route.params?.action && route.params.action == 'Order') {
+      console.log('Finish - remove all items')
+      setListProducts([]);
+      setListCarts([]);
+      setTotal(0);
     }
   }, [route]);
 

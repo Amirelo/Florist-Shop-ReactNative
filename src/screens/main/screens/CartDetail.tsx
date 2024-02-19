@@ -166,8 +166,11 @@ const CartDetail = () => {
           <CustomText fontWeight="bold" marginBottom={20} type="title">
             {lang[langPref].text_delivery_info}
           </CustomText>
-          <CustomText type="subTitle">
+          <CustomText type="subTitle" marginBottom={8}>
             {address ? addressFormat(address) : ''}
+          </CustomText>
+          <CustomText type="subTitle">
+            {phoneNumber}
           </CustomText>
         </View>
 
