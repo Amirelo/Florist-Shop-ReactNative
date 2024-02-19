@@ -139,7 +139,10 @@ export const passwordSignUp = async (email: string, password: string) => {
       console.log('User created');
       status = true;
       // Save user to Firestore
-      await SaveUserFirestore(email);
+      const userInfo = await getUserInfo(email)
+      if (userInfo == null){
+        await SaveUserFirestore(email);
+      }
       // Send email verification
       await credential.user
         .sendEmailVerification()
