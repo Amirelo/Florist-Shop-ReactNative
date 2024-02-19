@@ -7,7 +7,7 @@ import {getCategories} from '../MainService';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NAVIGATION_BOTTOM_TAB_EXPLORE} from '../../../constants/AppConstants';
 import {useSelector} from 'react-redux';
 import lang from '../../../language/lang';
@@ -15,6 +15,7 @@ import lang from '../../../language/lang';
 const ProductFilterScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
+  const route = useRoute<RouteProp<any>>();
 
   // Fields
   const [minPrice, setMinPrice] = React.useState('0');
@@ -115,6 +116,28 @@ const ProductFilterScreen = () => {
 
   React.useEffect(() => {
     getCategory();
+  }, []);
+
+  React.useEffect(() => {
+    if (route.params?.filter) {
+    const filterData = route.params?.filter
+      if (filterData.minPrice) {
+       setMinPrice(filterData.minPrice+'')
+      }
+      if (filterData.maxPrice) {
+       setMaxPrice(filterData.maxPrice+'')
+      }
+      if (filterData.categories.length > 0) {
+        console.log('Prev filter - categories:', filterData.categories)
+        filterData.categories.forEach((name:string) => {
+            setSelectedCategories(prev => [...prev, name])
+        })
+      }
+
+      if (filterData.colors.length > 0) {
+        
+      }
+    }
   }, []);
 
   return (

@@ -21,6 +21,7 @@ const ItemPick = (props: Props) => {
     props.onPressed(props.children, status)
   },[status])
 
+
   React.useEffect(()=>{
       setStatus(false)
   },[props.isClear])

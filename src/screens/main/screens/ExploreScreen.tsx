@@ -32,7 +32,7 @@ import {
   NAVIGATION_MAIN_PRODUCT_FILTER,
 } from '../../../constants/AppConstants';
 import themes from '../../../themes/themes';
-import { TextButton } from '../../../components/molecules/buttons';
+import {TextButton} from '../../../components/molecules/buttons';
 
 const ExploreScreen = () => {
   // Initial
@@ -49,6 +49,7 @@ const ExploreScreen = () => {
   );
   const [sortText, setSortText] = React.useState('');
   const [panelActive, setPanelActive] = React.useState(false);
+  const [filterParams, setFilterParams] = React.useState<any>();
 
   // Saved language
   const langPref: keyof typeof lang = useSelector(
@@ -60,7 +61,7 @@ const ExploreScreen = () => {
   );
 
   const onFilterPressed = () => {
-    navigation.navigate(NAVIGATION_MAIN_PRODUCT_FILTER);
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_FILTER, {filter: filterParams});
   };
 
   // Change product display mode
@@ -121,19 +122,23 @@ const ExploreScreen = () => {
     waitForData();
   }, []);
 
+  // Update when navigate to from route
   React.useEffect(() => {
     if (route.params?.filter) {
+      setFilterParams(route.params.filter);
       var filterData: any = [];
       console.log('Filter found:', route.params.filter);
       filterData = route.params.filter;
       var filteredList = listProducts;
+      // Filter - min price
       if (filterData.minPrice) {
         filteredList = filteredList.filter(
           item => item.price > filterData.minPrice,
         );
         console.log('Filter - min price:', filteredList);
       }
-      if (filterData.minPrice) {
+      // Filter - max price
+      if (filterData.maxPrice) {
         filteredList = filteredList.filter(
           item => item.price < filterData.maxPrice,
         );
