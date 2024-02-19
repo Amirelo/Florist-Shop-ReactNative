@@ -4,6 +4,7 @@ import {
   CustomText,
   CustomView,
   Divider,
+  ItemRow,
 } from '../../../components/atoms';
 import {OptionsPanel, QuantityCounter} from '../../../components/molecules';
 import React from 'react';
@@ -13,6 +14,7 @@ import {
   changeFontSize,
   changeLanguage,
   changeTheme,
+  resetUserPreference,
 } from '../../../redux/actions/PreferenceAction';
 import lang from '../../../language/lang';
 import themes from '../../../themes/themes';
@@ -78,8 +80,14 @@ const SettingScreen = () => {
     setFontOptionActive(false);
   };
 
+  // Change font size
   const onChangeFontSize = (amount: number) => {
     dispatch(changeFontSize(amount));
+  };
+
+  // Reset preference to default
+  const onResetPressed = () => {
+    dispatch(resetUserPreference());
   };
 
   return (
@@ -118,20 +126,25 @@ const SettingScreen = () => {
         </TextButton>
 
         {/* Font Size */}
-        <CustomText type="title" marginBottom={12}>
-          Font Size
-        </CustomText>
-        <QuantityCounter
-          quantity={fontScale}
-          onChanged={(amount: number) => {
-            onChangeFontSize(amount);
-          }}
-          maxQuantity={5}
-          minQuantity={-5}
-        />
+        <ItemRow marginBottom={40}>
+          <CustomText type="title">Font Size</CustomText>
+          <QuantityCounter
+            quantity={fontScale}
+            onChanged={(amount: number) => {
+              onChangeFontSize(amount);
+            }}
+            maxQuantity={5}
+            minQuantity={-5}
+          />
+        </ItemRow>
 
-        <TextButton>Reset Default</TextButton>
+        {/* Reset User Preference */}
+        <TextButton type="tertiary" onPressed={onResetPressed}>
+          Reset Default
+        </TextButton>
       </CustomView>
+
+      {/* Option Panel - Show available Languages */}
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
           <CustomButton onPressed={() => onLanguageOptionPressed('vn')}>
@@ -149,6 +162,7 @@ const SettingScreen = () => {
         <></>
       )}
 
+      {/* Option Panel - Show available Themes */}
       {themeOptionActive ? (
         <OptionsPanel setActive={setThemeOptionActive} title="Language">
           <CustomButton onPressed={() => onthemeOptionPressed('defaultTheme')}>
@@ -164,6 +178,7 @@ const SettingScreen = () => {
         <></>
       )}
 
+      {/* Option Panel - Show available Fonts */}
       {fontOptionActive ? (
         <OptionsPanel setActive={setThemeOptionActive} title="Language">
           <TextButton onPressed={() => onFontOptionPressed('')}>

@@ -9,6 +9,7 @@ export const LANG_CHANGE = 'CHANGELANGUAGE';
 export const THEME_CHANGE = 'CHANGETHEME';
 export const FONT_CHANGE = 'CHANGEFONT';
 export const FONT_SIZE_CHANGE = 'FONTSIZECHANGE';
+export const RESET_PREFERENCE = 'RESETPREFENCE';
 
 // Bottom tabs
 export const NAVIGATION_BOTTOM_TAB_HOME = 'Home';

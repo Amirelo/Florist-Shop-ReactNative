@@ -14,6 +14,7 @@ const ItemRow = (props: Props) => {
         styles.view,
         {
           marginBottom: props.marginBottom,
+          alignItems:'center',
           justifyContent: props.justifyContent
             ? props.justifyContent
             : 'space-between',
