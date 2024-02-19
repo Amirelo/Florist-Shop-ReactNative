@@ -125,12 +125,36 @@ const ExploreScreen = () => {
       var filterData: any = [];
       console.log('Filter found:', route.params.filter);
       filterData = route.params.filter;
-      const newList = listProducts.filter(
-        item =>
-          item.price > filterData.minPrice && item.price < filterData.maxPrice,
-      );
+      var filteredList = listProducts;
+      if (filterData.minPrice) {
+        filteredList = filteredList.filter(
+          item => item.price > filterData.minPrice,
+        );
+        console.log('Filter - min price:', filteredList);
+      }
+      if (filterData.minPrice) {
+        filteredList = filteredList.filter(
+          item => item.price < filterData.maxPrice,
+        );
+        console.log('Filter - max price:', filteredList);
+      }
 
-      setFilteredList(newList);
+      if (filterData.categories) {
+        filteredList = filteredList.filter((product: ProductModel) => {
+          var status = false;
+          const productStatus = filterData.categories.map((name: string) => {
+            if (product.categories.includes(name)) {
+              status = true;
+            }
+            return status;
+          });
+          console.log('Filter status:', productStatus);
+          return status;
+        });
+        console.log('Filter - categories:', filteredList);
+      }
+
+      setFilteredList(filteredList);
     }
   }, [route]);
 
@@ -187,7 +211,7 @@ const ExploreScreen = () => {
         </View>
         {isColumn == false ? (
           <FlatList
-          key='@'
+            key="@"
             columnWrapperStyle={{
               justifyContent: 'space-around',
               marginBottom: 24,

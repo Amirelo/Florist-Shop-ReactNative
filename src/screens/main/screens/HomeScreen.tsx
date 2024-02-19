@@ -35,9 +35,10 @@ const HomeScreen = () => {
     (store: any) => store.preference.language,
   );
 
+  // Navigate to Explore with filter
   const onCategoryPressed = (name: string) => {
     navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE, {
-      data: {listCategories: [name]},
+      filter: {categories: [name]},
     });
   };
 
