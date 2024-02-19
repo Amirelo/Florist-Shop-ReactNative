@@ -27,11 +27,15 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {addressFormat, priceFormat} from '../../../utils/Utils';
+import {
+  addressFormat,
+  priceFormat,
+  promoEffectFormat,
+} from '../../../utils/Utils';
 import {TextButton} from '../../../components/molecules/buttons';
 import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
 import {useSelector} from 'react-redux';
-import { NAVIGATION_MAIN_CART } from '../../../constants/AppConstants';
+import {NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
 import lang from '../../../language/lang';
 
 const CartDetail = () => {
@@ -39,12 +43,18 @@ const CartDetail = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
 
-  const currentTheme: keyof typeof themes = useSelector((store:any) => store.preference.theme)
-  const langPref : keyof typeof lang = useSelector((store:any) => store.preference.language)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Fields
   const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
   const [total, setTotal] = React.useState(0);
+  const [discountTotal, setDiscountTotal] = React.useState(0);
+  const [shippingCost, setShippingCost] = React.useState(50000);
   const [totalQuantity, setTotalQuantity] = React.useState(0);
   const [address, setAddress] = React.useState<AddressModel>();
   const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -67,6 +77,18 @@ const CartDetail = () => {
   const onPromocodeSelected = (item: PromocodeModel) => {
     setPromoActive(false);
     setSelectedPromo(item);
+    if (item != undefined) {
+      if (item.effect == '%') {
+        setDiscountTotal(total * (1 - item.amount / 100) + shippingCost);
+      }
+      if (item.effect == '-') {
+        setDiscountTotal(
+          total + shippingCost - item.amount < 0
+            ? 0
+            : total - item.amount + shippingCost,
+        );
+      }
+    }
   };
 
   // Navigate home on pressed
@@ -112,6 +134,7 @@ const CartDetail = () => {
     }
     if (route.params?.total) {
       setTotal(route.params.total);
+      setDiscountTotal(route.params.total + shippingCost);
       console.log('Route - total:', route.params.total);
     }
     if (route.params?.address) {
@@ -130,7 +153,7 @@ const CartDetail = () => {
 
   return (
     <ScrollView>
-      <CustomView type='body'>
+      <CustomView type="body">
         {/* Delivery Information */}
         <View
           style={{
@@ -157,11 +180,11 @@ const CartDetail = () => {
             marginBottom: 30,
           }}>
           <CustomText type="title" fontWeight="bold">
-          {lang[langPref].text_product_detail}
+            {lang[langPref].text_product_detail}
           </CustomText>
           <FlatList
             horizontal={true}
-            scrollEnabled={listProducts.length > 2}
+            scrollEnabled={listProducts.length > 1}
             key={'#'}
             contentContainerStyle={{gap: 16}}
             style={{marginTop: 24, marginBottom: 30}}
@@ -191,19 +214,30 @@ const CartDetail = () => {
             borderRadius: 7,
             marginBottom: 30,
           }}>
+          {/* Title */}
           <CustomText marginBottom={20} type="title" fontWeight="bold">
-          {lang[langPref].text_payment}
+            {lang[langPref].text_payment}
           </CustomText>
 
+          {/* Products' Price */}
           <ItemRow marginBottom={20}>
-            <CustomText type="title">{lang[langPref].text_products_price}</CustomText>
             <CustomText type="title">
-              {priceFormat(total, 'vn')}
+              {lang[langPref].text_products_price}
+            </CustomText>
+            <CustomText type="title">{priceFormat(total, 'vn')}</CustomText>
+          </ItemRow>
+
+          {/* Shipping Cost */}
+          <ItemRow marginBottom={20}>
+            <CustomText type="title">Shipping cost:</CustomText>
+            <CustomText type="title">
+              {priceFormat(shippingCost, 'vn')}
             </CustomText>
           </ItemRow>
 
           <Divider marginBottom={20} />
 
+          {/* Select Promocode */}
           <TextButton
             type="tertiary"
             marginBottom={20}
@@ -211,18 +245,29 @@ const CartDetail = () => {
             {lang[langPref].buttonSelectPromo}
           </TextButton>
 
+          {/* Promocode Effect */}
           <ItemRow marginBottom={20}>
             <CustomText type="title">Discount:</CustomText>
             <CustomText type="title">
-              {selectedPromo ? selectedPromo.effect : lang[langPref].text_discount_none}
+              {selectedPromo
+                ? promoEffectFormat(selectedPromo.effect, selectedPromo.amount)
+                : lang[langPref].text_discount_none}
             </CustomText>
           </ItemRow>
 
+          {/* Total Price After Promocode */}
           <ItemRow marginBottom={20}>
             <CustomText type="title">{lang[langPref].text_total}</CustomText>
-            <CustomText type="title" fontWeight='bold'  color={themes[currentTheme].primaryColor}>{priceFormat(total, 'vn')}</CustomText>
+            <CustomText
+              type="title"
+              fontWeight="bold"
+              color={themes[currentTheme].primaryColor}>
+              {priceFormat(discountTotal, 'vn')}
+            </CustomText>
           </ItemRow>
         </View>
+
+        {/* Payment Method */}
         <View
           style={{
             borderWidth: 1,
@@ -238,10 +283,12 @@ const CartDetail = () => {
             {lang[langPref].text_paymentMethod_cash}
           </CustomText>
         </View>
+        {/* Button - Order */}
         <TextButton type="primary" onPressed={onOrderPressed} marginBottom={20}>
           {lang[langPref].buttonOrder}
         </TextButton>
       </CustomView>
+      {/* Option Panel - how Promocodes */}
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
           {listPromos?.length > 0 ? (
@@ -258,16 +305,17 @@ const CartDetail = () => {
               )}
             />
           ) : (
-            <CustomText type='subTitle'>{lang[langPref].text_discount_none}</CustomText>
-          )}
-          <CustomButton onPressed={() => setSelectedPromo(undefined)}>
-            <CustomText
-            
-              color={themes[currentTheme].errorcolor}
-              type="subTitle">
-              {lang[langPref].text_discount_reset}
+            <CustomText type="subTitle">
+              {lang[langPref].text_discount_none}
             </CustomText>
-          </CustomButton>
+          )}
+          <TextButton
+            fontSize="subTitle"
+            onPressed={() => {
+              setSelectedPromo(undefined);
+            }}>
+            {lang[langPref].text_discount_reset}
+          </TextButton>
         </OptionsPanel>
       ) : (
         <></>

@@ -1,11 +1,11 @@
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
-import {PromocodeModel} from '../../../models';
-import {ItemPromocode} from '../../../components/molecules';
 import React from 'react';
+import {FlatList} from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {PromocodeModel} from '../../../models';
 import {CustomText, CustomView} from '../../../components/atoms';
+import {ItemPromocode} from '../../../components/molecules';
 import lang from '../../../language/lang';
-import { useSelector } from 'react-redux';
 
 const PromocodeScreen = () => {
   // Fields
@@ -13,7 +13,9 @@ const PromocodeScreen = () => {
 
   // Initial
   const route = useRoute<RouteProp<any>>();
-   const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   React.useEffect(() => {
     if (route.params?.data) {
@@ -41,10 +43,10 @@ const PromocodeScreen = () => {
           />
         ) : (
           <>
-          <CustomText type="title" alignSelf="center" marginBottom={20}>
-            {lang[langPref].text_promos_none}
-          </CustomText>
-        </>
+            <CustomText type="title" alignSelf="center" marginBottom={20}>
+              {lang[langPref].text_promos_none}
+            </CustomText>
+          </>
         )}
       </CustomView>
     </CustomView>
@@ -52,10 +54,3 @@ const PromocodeScreen = () => {
 };
 
 export default PromocodeScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-  },
-});

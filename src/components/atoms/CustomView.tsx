@@ -1,4 +1,4 @@
-import {StyleProp, StyleSheet, View, ViewProps, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useSelector} from 'react-redux';
 import themes from '../../themes/themes';
 
@@ -67,4 +67,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 7,
   },
+  itemCardRow:{
+    flexDirection: 'row',
+    padding: 12,
+    borderRadius:7
+  }
 });

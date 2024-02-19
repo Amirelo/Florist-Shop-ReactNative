@@ -1,22 +1,27 @@
 import {useSelector} from 'react-redux';
 import lang from '../language/lang';
 import {Dimensions} from 'react-native';
-import {AddressModel} from '../models';
+import {AddressModel, PromocodeModel} from '../models';
 
 export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   var result = '';
-  if(langPref == 'vn') {
-    var formattingPrice = price.toString()
-    while (formattingPrice.length>3) {
-      result = formattingPrice.substring(formattingPrice.length-3, formattingPrice.length) + (result.length>0 ? '.' : '') +result
-      formattingPrice = formattingPrice.slice(0, formattingPrice.length-3)
-      console.log(formattingPrice)
+  if (langPref == 'vn') {
+    var formattingPrice = price.toString();
+    while (formattingPrice.length > 3) {
+      result =
+        formattingPrice.substring(
+          formattingPrice.length - 3,
+          formattingPrice.length,
+        ) +
+        (result.length > 0 ? '.' : '') +
+        result;
+      formattingPrice = formattingPrice.slice(0, formattingPrice.length - 3);
+      console.log(formattingPrice);
     }
-    result = formattingPrice +'.' + result + 'đ'
+    result = formattingPrice + '.' + result + 'đ';
   } else if (langPref == 'en') {
-    result = '$' + (price * 0.000041).toFixed(2)
+    result = '$' + (price * 0.000041).toFixed(2);
   }
-  console.log('Price Format Result:', result);
   return result;
 };
 
@@ -40,6 +45,12 @@ export const addressFormat = (address: AddressModel) => {
     ', ' +
     address.city
   );
+};
+
+export const promoEffectFormat = (effect: string, amount: number) => {
+  const discount =
+    effect == '%' ? 'get ' + amount + '% off' : 'price decrease by ' + amount;
+  return discount;
 };
 
 export const deviceWidth = Dimensions.get('screen').width;

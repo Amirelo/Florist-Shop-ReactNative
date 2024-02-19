@@ -71,7 +71,7 @@ export const getUserOrders = async (email: string) => {
         snapshot.data().orderDate,
         snapshot.data().products,
         snapshot.data().address,
-        snapshot.data().phoneNumber
+        snapshot.data().phoneNumber,
       ),
   );
 };
@@ -80,13 +80,17 @@ export const getUserOrders = async (email: string) => {
 export const AddUserOrder = async (order: OrderModel, email: string) => {
   var currentdate = new Date();
   var year = currentdate.getFullYear();
-  var month = currentdate.getMonth() + 1 <10 ? '0' + (currentdate.getMonth()+1) : currentdate.getMonth()+1;
-  var day = currentdate.getDay() < 10 ? '0' + currentdate.getDay() : currentdate.getDay();
-  var date:string = year.toString() + month.toString() + day.toString()
-  console.log('SERVICE - Add User Order - current date:', date)
-  console.log('SERVICE - Add User Order - order:', order)
-
-
+  var month =
+    currentdate.getMonth() + 1 < 10
+      ? '0' + (currentdate.getMonth() + 1)
+      : currentdate.getMonth() + 1;
+  var day =
+    currentdate.getDay() < 10
+      ? '0' + currentdate.getDay()
+      : currentdate.getDay();
+  var date: string = year.toString() + month.toString() + day.toString();
+  console.log('SERVICE - Add User Order - current date:', date);
+  console.log('SERVICE - Add User Order - order:', order);
   return await firestore()
     .collection('users')
     .doc(email)
@@ -100,15 +104,59 @@ export const AddUserOrder = async (order: OrderModel, email: string) => {
       orderDate: date,
       products: order.products,
       address: order.address,
-      phoneNumber: order.phoneNumber
+      phoneNumber: order.phoneNumber,
     })
-    .then(() => {
+    .then(async () => {
       console.log('SERVICE - Add User Order: success');
+      if (order.discountRef.length > 0) {
+        await applyOrderPromocode(email, order.discountRef);
+      }
+      order.products.forEach(async(item) => {
+        await reduceItemQuantity(item.id, item.quantity)
+      })
+
       return true;
     })
     .catch(error => {
       console.log('SERVICE - Add User Order:', error);
       return false;
+    });
+};
+
+// Remove promocode after using in order
+export const applyOrderPromocode = async (email: string, promoID: string) => {
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .collection('promocodes')
+    .doc(promoID)
+    .update({
+      status: 'USED',
+    })
+    .then(() => {
+      console.log('SERVICE - Apply Order Promo: success');
+    })
+    .catch(error => {
+      console.log('SERVICE - Apply Order Promo error:', error);
+    });
+};
+
+// Reduce item quantity
+export const reduceItemQuantity = async (
+  productID: string,
+  amount: number,
+) => {
+  await firestore()
+    .collection('products')
+    .doc(productID)
+    .update({
+      quantity: firestore.FieldValue.increment(-amount),
+    })
+    .then(() => {
+      console.log('SERVICE - Product quantity decreased success:', productID);
+    })
+    .catch(error => {
+      console.log('SERVICE - Product quantity decreased failed:', error);
     });
 };
 
@@ -209,21 +257,21 @@ export const deleteCartItem = async (productID: string, email: string) => {
 
 // Delete all cart item
 export const deleteCart = async (email: string) => {
-  try{
-  const carts = await firestore()
-    .collection('users')
-    .doc(email)
-    .collection('carts')
-    .get();
-  carts.docs.forEach(item => {
-    item.ref.delete();
-  });
-  console.log('SERVICE - Delete Cart: Success')
-  return true
-} catch(error){
-  console.log('SERVICE - Delete Cart Error:', error)
-  return false
-}
+  try {
+    const carts = await firestore()
+      .collection('users')
+      .doc(email)
+      .collection('carts')
+      .get();
+    carts.docs.forEach(item => {
+      item.ref.delete();
+    });
+    console.log('SERVICE - Delete Cart: Success');
+    return true;
+  } catch (error) {
+    console.log('SERVICE - Delete Cart Error:', error);
+    return false;
+  }
 };
 
 // Get User Addresses
@@ -277,7 +325,7 @@ export const EditUserAddress = async (email: string, address: AddressModel) => {
     .doc(email)
     .collection('addresses')
     .doc(address.id)
-    .set({
+    .update({
       streetNumber: address.streetNumber,
       street: address.street,
       ward: address.ward,

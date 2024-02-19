@@ -72,6 +72,8 @@ const CartScreen = () => {
 
   const onItemDeletePressed = async () => {
     setProductActive(false);
+    const decreaseQuantity = listCarts.filter(cartItem => cartItem.id == selectedProduct!.id)[0].quantity
+    setTotal(prev=>prev - selectedProduct!.price * decreaseQuantity)
     if (await deleteCartItem(selectedProduct!.id, email)) {
       setListProducts(
         listProducts.filter(
@@ -97,12 +99,12 @@ const CartScreen = () => {
   const waitForData = async () => {
     setListProducts([]);
     setListCarts([]);
+    setTotal(0);
     const carts: Array<CartModel> = await getCart(email);
 
     console.log('User carts:', carts);
     setListCarts(carts);
     var sum = 0;
-    setTotal(0);
     // Get Products
     carts.forEach(async (cart: any) => {
       console.log('Cart:', cart);
@@ -128,8 +130,11 @@ const CartScreen = () => {
         route.params.quantity,
       );
       if (!listCarts.includes(cart)) {
+        console.log('item not in cart')
         setListProducts([...listProducts, route.params.product]);
         setListCarts([...listCarts, cart]);
+        const routePrice = route.params.product.price * route.params.quantity
+        setTotal(prev=> prev + routePrice)
       }
       if (route.params?.action && route.params.action == 'Order') {
         setListProducts([]);
@@ -219,23 +224,3 @@ const CartScreen = () => {
 };
 
 export default CartScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    marginTop: 20,
-  },
-  orderButton: {
-    marginBottom: 20,
-    height: 48,
-    borderRadius: 7,
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  line: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: themes['defaultTheme'].textSecondaryColor,
-    marginBottom: 20,
-  },
-});

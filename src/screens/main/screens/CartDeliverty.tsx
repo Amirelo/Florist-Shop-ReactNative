@@ -132,6 +132,27 @@ const CartDelivery = () => {
       });
   }, []);
 
+  React.useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(email)
+      .collection('addresses')
+      .onSnapshot(querySnapshot => {
+        setListAddresses([]);
+        querySnapshot.docs.map(item => {
+          const address = new AddressModel(
+            item.id,
+            item.data().streetNumber,
+            item.data().street,
+            item.data().ward,
+            item.data().district,
+            item.data().city,
+          );
+          setListAddresses(prev => [...prev, address]);
+        });
+      });
+  }, []);
+
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">

@@ -129,6 +129,8 @@ const SettingScreen = () => {
           maxQuantity={5}
           minQuantity={-5}
         />
+
+        <TextButton>Reset Default</TextButton>
       </CustomView>
       {languageOptionActive ? (
         <OptionsPanel setActive={setLanguageOptionActive} title="Language">
