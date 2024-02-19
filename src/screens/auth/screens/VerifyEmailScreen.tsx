@@ -5,7 +5,7 @@ import {
   IMAGE_AUTH_BACKGROUND,
   NAVIGATION_AUTH_ACTIONCOMPLETE,
 } from '../../../constants/AppConstants';
-import {sendPasswordChangeEmail} from '../AuthService';
+import {getUserInfo, passwordSignUp, sendPasswordChangeEmail} from '../AuthService';
 import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {CustomText, CustomView, CustomImage} from '../../../components/atoms';
 import {CustomInput} from '../../../components/molecules';
@@ -25,16 +25,36 @@ const VerifyEmailScreen = () => {
   );
 
   // Send email and navigate to Action Complete Screen when finish
-  const onSendEmailPressed = () => {
-    email != ''
-      ? [
-          sendPasswordChangeEmail(email),
-          navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
-            title: lang[langPref]['complete_changepass_title'],
-            description: lang[langPref]['complete_changepass_description'],
-          }),
-        ]
-      : console.log('Fields cannot be empty');
+  const onSendEmailPressed = async() => {
+    if(email.length > 0) {
+        const userInfo = await getUserInfo(email);
+        if (userInfo != null){
+          var charset = '';
+          charset += 'abcdefghijklmnopqrstuvwxyz';
+          charset += '0123456789';
+          charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          var randomPassword: string = '';
+          for (let i = 0; i < 20; i++) {
+            randomPassword += charset.charAt(
+              Math.floor(Math.random() * charset.length),
+            );
+          }
+  
+          const signUpStatus = await passwordSignUp(email, randomPassword);
+          if (signUpStatus) {
+            console.log('New Auth User created')
+           
+          } else {
+            console.log('User already existed, send password changeEmail');
+          }
+          sendPasswordChangeEmail(email);
+          navigation.goBack();
+        } else{
+          console.log('User not in Firestore. Please go to create account')
+        }
+      } else{
+        console.log('Fields cannot be empty')
+      }
   };
 
   // Go back to Sign In Screen

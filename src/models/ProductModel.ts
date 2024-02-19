@@ -7,6 +7,7 @@ class ProductModel {
   totalRating: number;
   categories: Array<string>;
   images: Array<string>;
+  colors: Array<String>;
   constructor(
     id: string,
     name: string,
@@ -16,6 +17,7 @@ class ProductModel {
     totalRating: number,
     categories: Array<string>,
     images: Array<string>,
+    colors: Array<String>,
   ) {
     this.id = id;
     this.name = name;
@@ -25,6 +27,7 @@ class ProductModel {
     this.totalRating = totalRating;
     this.categories = categories;
     this.images = images;
+    this.colors = colors;
   }
 }
 
