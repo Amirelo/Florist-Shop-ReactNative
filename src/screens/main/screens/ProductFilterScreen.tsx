@@ -149,7 +149,7 @@ const ProductFilterScreen = () => {
         });
       }
 
-      if (filterData.colors.length > 0) {
+      if (filterData.length > 0 && filterData.colors.length > 0) {
       }
     }
   }, []);
