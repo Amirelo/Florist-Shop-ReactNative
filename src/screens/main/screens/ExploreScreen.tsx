@@ -32,6 +32,7 @@ import {
   NAVIGATION_MAIN_PRODUCT_FILTER,
 } from '../../../constants/AppConstants';
 import themes from '../../../themes/themes';
+import { TextButton } from '../../../components/molecules/buttons';
 
 const ExploreScreen = () => {
   // Initial
@@ -142,16 +143,27 @@ const ExploreScreen = () => {
       if (filterData.categories.length > 0) {
         filteredList = filteredList.filter((product: ProductModel) => {
           var status = false;
-          const productStatus = filterData.categories.map((name: string) => {
+          filterData.categories.map((name: string) => {
             if (product.categories.includes(name)) {
               status = true;
             }
-            return status;
           });
-          console.log('Filter status:', productStatus);
           return status;
         });
         console.log('Filter - categories:', filteredList);
+      }
+
+      if (filterData.colors.length > 0) {
+        filteredList = filteredList.filter((product: ProductModel) => {
+          var status = false;
+          filterData.colors.map((name: string) => {
+            if (product.colors.includes(name)) {
+              status = true;
+            }
+          });
+          return status;
+        });
+        console.log('Filter - colors:', filteredList);
       }
 
       setFilteredList(filteredList);
@@ -213,7 +225,10 @@ const ExploreScreen = () => {
             </ItemRow>
           </CustomButton>
         </View>
+
+        {/* Flatlist */}
         {isColumn == false ? (
+          // 2 column
           <FlatList
             key="@"
             columnWrapperStyle={{
@@ -234,6 +249,7 @@ const ExploreScreen = () => {
             )}
           />
         ) : (
+          // 1 Column
           <FlatList
             key={'#'}
             contentContainerStyle={{gap: 16, paddingBottom: 20}}
@@ -251,6 +267,7 @@ const ExploreScreen = () => {
           />
         )}
       </CustomView>
+      {/* Option Panel: Sort */}
       {panelActive ? (
         <OptionsPanel title="Sort" setActive={setPanelActive}>
           <CustomButton onPressed={() => onSortOptionSelected('NAME_ASC')}>

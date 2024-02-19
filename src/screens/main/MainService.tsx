@@ -30,6 +30,7 @@ export const getProducts = async () => {
         doc.data().totalRating,
         doc.data().categories,
         doc.data().images,
+        doc.data()!.colors,
       ),
   );
 };
@@ -46,6 +47,7 @@ export const getProductByID = async (id: string) => {
     doc.data()!.totalRating,
     doc.data()!.categories,
     doc.data()!.images,
+    doc.data()!.colors,
   );
   console.log('SERVICE GET PRODUCT:', res);
   return res;
@@ -111,9 +113,9 @@ export const AddUserOrder = async (order: OrderModel, email: string) => {
       if (order.discountRef.length > 0) {
         await applyOrderPromocode(email, order.discountRef);
       }
-      order.products.forEach(async(item) => {
-        await reduceItemQuantity(item.id, item.quantity)
-      })
+      order.products.forEach(async item => {
+        await reduceItemQuantity(item.id, item.quantity);
+      });
 
       return true;
     })
@@ -142,10 +144,7 @@ export const applyOrderPromocode = async (email: string, promoID: string) => {
 };
 
 // Reduce item quantity
-export const reduceItemQuantity = async (
-  productID: string,
-  amount: number,
-) => {
+export const reduceItemQuantity = async (productID: string, amount: number) => {
   await firestore()
     .collection('products')
     .doc(productID)

@@ -120,6 +120,7 @@ const ProductFilterScreen = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
+        {/* Title - Price */}
         <CustomText type="title" marginBottom={10}>
           {lang[langPref].text_price_range}
         </CustomText>
@@ -132,12 +133,14 @@ const ProductFilterScreen = () => {
             marginBottom: 20,
           }}>
           <ItemRow>
+            {/* Min Price */}
             <CustomInput
               flex={1}
               value={minPrice}
               onChangeText={setMinPrice}
               placeholder={lang[langPref].text_price_min}
               keyboardType="numeric"></CustomInput>
+              {/* Max Price */}
             <CustomInput
               flex={1}
               value={maxPrice}
@@ -146,6 +149,7 @@ const ProductFilterScreen = () => {
               keyboardType="numeric"></CustomInput>
           </ItemRow>
         </View>
+        {/* Title - Occasions */}
         <CustomText type="title" marginBottom={10}>
           {lang[langPref].text_occasion}
         </CustomText>
@@ -157,6 +161,7 @@ const ProductFilterScreen = () => {
             padding: 12,
             marginBottom: 20,
           }}>
+            {/* Occasion list */}
           <FlatList
             columnWrapperStyle={{marginBottom: 8}}
             numColumns={3}
