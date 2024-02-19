@@ -35,7 +35,7 @@ const ProductDetailScreen = () => {
   // Fields
   const [quantity, setQuantity] = React.useState(1);
   const [product, setProduct] = React.useState<ProductModel>(
-    new ProductModel('', '', -10, -10, '', -10, [], []),
+    new ProductModel('', '', -10, -10, '', -10, [], [],[]),
   );
   const [priceString, setPriceString] = React.useState<string>();
   const [price, setPrice] = React.useState<number>();
@@ -161,9 +161,14 @@ const ProductDetailScreen = () => {
           </ItemRow>
 
           {/* Order Button */}
+          {product.quantity> 0 ?
           <TextButton type="primary" onPressed={onAddToCartPressed} marginBottom={20}>
             {lang[langPref].buttonAddToCart}
           </TextButton>
+          :
+          <TextButton type="primary" backgroundColor={themes[currentTheme].textSecondaryColor} marginBottom={20}>
+            {'Out Of Stock'}
+          </TextButton>}
 
           {/* Review button */}
           <TextButton
