@@ -8,23 +8,33 @@ interface Props {
   children: string;
   onPressed(title: string, status: boolean): any;
   isClear: boolean;
+  status: boolean;
 }
 
 const ItemPick = (props: Props) => {
   const [status, setStatus] = React.useState(false);
+  const [swap, setSwap] = React.useState(false);
+  const [count, setCount] = React.useState(0)
 
   const onCategoryPressed = () => {
     setStatus(!status);
+    setSwap(!swap)
   };
 
   React.useEffect(()=> {
-    props.onPressed(props.children, status)
-  },[status])
+    if (count>0){
+      console.log('Status changed', status, props.children)
+      props.onPressed(props.children, status)
+    }
+    setCount(prev=> prev+1)
+  },[swap])
+
+  React.useEffect(()=> {
+    setStatus(props.status)
+  },[props.status])
 
 
-  React.useEffect(()=>{
-      setStatus(false)
-  },[props.isClear])
+ 
 
   return (
     <CustomButton onPressed={onCategoryPressed} style={{width: '33%'}}>

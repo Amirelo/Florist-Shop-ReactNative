@@ -7,7 +7,12 @@ import {getCategories} from '../MainService';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {TextButton} from '../../../components/molecules/buttons';
 import themes from '../../../themes/themes';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {NAVIGATION_BOTTOM_TAB_EXPLORE} from '../../../constants/AppConstants';
 import {useSelector} from 'react-redux';
 import lang from '../../../language/lang';
@@ -27,7 +32,15 @@ const ProductFilterScreen = () => {
     Array<string>
   >([]);
   const [selectedColors, setSelectedColors] = React.useState<Array<string>>([]);
-  const listFlowerColors = ['White', 'Red', 'Blue', 'Yellow', 'Purple', 'Pink'];
+  const listFlowerColors = [
+    'White',
+    'Red',
+    'Blue',
+    'Yellow',
+    'Purple',
+    'Pink',
+    'Green',
+  ];
   const [clearCkb, setCleaCkb] = React.useState(false);
 
   const currentTheme: keyof typeof themes = useSelector(
@@ -55,7 +68,9 @@ const ProductFilterScreen = () => {
         setSelectedCategories(listAfter);
       }
     } else {
+      console.log('Not yet in categories');
       if (status) {
+        console.log('Add to categories');
         setSelectedCategories(prev => [...prev, title]);
       }
     }
@@ -120,22 +135,21 @@ const ProductFilterScreen = () => {
 
   React.useEffect(() => {
     if (route.params?.filter) {
-    const filterData = route.params?.filter
+      const filterData = route.params?.filter;
       if (filterData.minPrice) {
-       setMinPrice(filterData.minPrice+'')
+        setMinPrice(filterData.minPrice + '');
       }
       if (filterData.maxPrice) {
-       setMaxPrice(filterData.maxPrice+'')
+        setMaxPrice(filterData.maxPrice + '');
       }
       if (filterData.categories.length > 0) {
-        console.log('Prev filter - categories:', filterData.categories)
-        filterData.categories.forEach((name:string) => {
-            setSelectedCategories(prev => [...prev, name])
-        })
+        console.log('Prev filter - categories:', filterData.categories);
+        filterData.categories.forEach((name: string) => {
+          setSelectedCategories(prev => [...prev, name]);
+        });
       }
 
       if (filterData.colors.length > 0) {
-        
       }
     }
   }, []);
@@ -163,7 +177,7 @@ const ProductFilterScreen = () => {
               onChangeText={setMinPrice}
               placeholder={lang[langPref].text_price_min}
               keyboardType="numeric"></CustomInput>
-              {/* Max Price */}
+            {/* Max Price */}
             <CustomInput
               flex={1}
               value={maxPrice}
@@ -184,7 +198,7 @@ const ProductFilterScreen = () => {
             padding: 12,
             marginBottom: 20,
           }}>
-            {/* Occasion list */}
+          {/* Occasion list */}
           <FlatList
             columnWrapperStyle={{marginBottom: 8}}
             numColumns={3}
@@ -193,6 +207,7 @@ const ProductFilterScreen = () => {
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <ItemPick
+                status={selectedCategories.includes(item.name)}
                 isClear={clearCkb}
                 onPressed={(title, status) =>
                   onCategoryItemPressed(title, status)
@@ -222,6 +237,7 @@ const ProductFilterScreen = () => {
             keyExtractor={item => item}
             renderItem={({item}) => (
               <ItemPick
+                status={selectedColors.includes(item)}
                 isClear={clearCkb}
                 onPressed={(title, status) =>
                   onColorItemPressed(title, status)
