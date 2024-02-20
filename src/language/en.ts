@@ -171,6 +171,7 @@ const en = {
   text_ward: 'Ward:',
   text_district: 'District:',
   text_city: 'City:',
+  text_address_empty: 'No Address Found',
 
   // Promocode
   text_promos_none: 'No Available Promocodes',

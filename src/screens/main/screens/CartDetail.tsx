@@ -1,4 +1,17 @@
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+// React and libs
+import React from 'react';
+import {FlatList, ScrollView, View} from 'react-native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+
+// Constants
+import {NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
+
+// Models
 import {
   AddressModel,
   CartModel,
@@ -6,6 +19,14 @@ import {
   ProductModel,
   PromocodeModel,
 } from '../../../models';
+
+// Services
+import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
+
+// Redux
+import {useSelector} from 'react-redux';
+
+// Components
 import {
   CustomButton,
   CustomText,
@@ -13,60 +34,48 @@ import {
   Divider,
   ItemRow,
 } from '../../../components/atoms';
-import {
-  ItemCartDetail,
-  ItemProduct,
-  ItemProductLong,
-  OptionsPanel,
-} from '../../../components/molecules';
-import React from 'react';
+import {ItemCartDetail, OptionsPanel} from '../../../components/molecules';
+import {TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
+import lang from '../../../language/lang';
 import themes from '../../../themes/themes';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+
+// Utilities
 import {
   addressFormat,
   priceFormat,
   promoEffectFormat,
 } from '../../../utils/Utils';
-import {TextButton} from '../../../components/molecules/buttons';
-import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
-import {useSelector} from 'react-redux';
-import {NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
-import lang from '../../../language/lang';
 
 const CartDetail = () => {
   // initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
-
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
+  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   // Fields
-  const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
+  const [cartList, setCartList] = React.useState<Array<CartModel>>([]);
+  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>([]);
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
+    [],
+  );
+  const [address, setAddress] = React.useState<AddressModel>();
+  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [total, setTotal] = React.useState(0);
   const [discountTotal, setDiscountTotal] = React.useState(0);
   const [shippingCost, setShippingCost] = React.useState(50000);
   const [totalQuantity, setTotalQuantity] = React.useState(0);
-  const [address, setAddress] = React.useState<AddressModel>();
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [cartList, setCartList] = React.useState<Array<CartModel>>([]);
-  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
-    [],
-  );
+  const [selectedPromo, setSelectedPromo] = React.useState<PromocodeModel>();
 
+  // Fields - Option Panel status
   const [promoActive, setPromoActive] = React.useState(false);
-  const [listPromos, setListPromos] = React.useState<Array<PromocodeModel>>([]);
-
-  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   // Open option panel (promocodes)
   const onPromocodePressed = () => {
@@ -78,9 +87,11 @@ const CartDetail = () => {
     setPromoActive(false);
     setSelectedPromo(item);
     if (item != undefined) {
+      // Discount - %
       if (item.effect == '%') {
         setDiscountTotal(total * (1 - item.amount / 100) + shippingCost);
       }
+      // Discount - amount
       if (item.effect == '-') {
         setDiscountTotal(
           total + shippingCost - item.amount < 0
@@ -93,9 +104,11 @@ const CartDetail = () => {
 
   // Navigate home on pressed
   const onOrderPressed = async () => {
+    // Calculate total (with promo)
     const totalPrice = selectedPromo
       ? total * (1 - selectedPromo.amount / 100)
       : total;
+    // Create model
     const userOrder = new OrderModel(
       '',
       'PENDING',
@@ -108,8 +121,11 @@ const CartDetail = () => {
       addressFormat(address!),
       phoneNumber,
     );
+    // Service
     const addOrderRes = await AddUserOrder(userOrder, email);
+    // If success
     if (addOrderRes) {
+      // Delete carts
       await deleteCart(email);
       navigation.navigate(NAVIGATION_MAIN_CART, {action: 'Order'});
     }
@@ -117,13 +133,16 @@ const CartDetail = () => {
 
   // Get promo
   const getPromocodes = async () => {
-    const codes = await getUserPromoocodes(email);
+    const codes = (await getUserPromoocodes(email)).filter(
+      item => item.status == 'ACTIVE',
+    );
     setListPromos(codes);
   };
 
   // Get data from routes
   React.useEffect(() => {
     getPromocodes();
+    // Get carts from previous screen
     if (route.params?.carts) {
       setTotalQuantity(0);
       setCartList(route.params.carts);
@@ -132,19 +151,23 @@ const CartDetail = () => {
         setTotalQuantity(prev => prev + item.quantity);
       });
     }
+    // Get total from previous screen
     if (route.params?.total) {
       setTotal(route.params.total);
       setDiscountTotal(route.params.total + shippingCost);
       console.log('Route - total:', route.params.total);
     }
+    // Get address from previous screen
     if (route.params?.address) {
       setAddress(route.params.address);
       console.log('Route - address:', route.params.address);
     }
+    // Get products from previous screen
     if (route.params?.products) {
       setListProducts(route.params.products);
       console.log('Route - products:', route.params.products);
     }
+    // Get phoneNumber from previous screen
     if (route.params?.phoneNumber) {
       setPhoneNumber(route.params.phoneNumber);
       console.log('Route - phone number:', route.params.phoneNumber);
@@ -155,36 +178,30 @@ const CartDetail = () => {
     <ScrollView>
       <CustomView type="body">
         {/* Delivery Information */}
-        <View
-          style={{
-            borderWidth: 1,
-            padding: 12,
-            borderColor: themes[currentTheme].textSecondaryColor,
-            borderRadius: 7,
-            marginBottom: 30,
-          }}>
+        <CustomView
+          type={'itemPadding'}
+          borderColor={themes[currentTheme].textSecondaryColor}
+          marignBottom={30}>
+          {/* Title - Delivery information */}
           <CustomText fontWeight="bold" marginBottom={20} type="title">
             {lang[langPref].text_delivery_info}
           </CustomText>
+          {/* Chosen Address */}
           <CustomText type="subTitle" marginBottom={8}>
             {address ? addressFormat(address) : ''}
           </CustomText>
-          <CustomText type="subTitle">
-            {phoneNumber}
-          </CustomText>
-        </View>
-
-        <View
-          style={{
-            borderWidth: 1,
-            padding: 12,
-            borderColor: themes[currentTheme].textSecondaryColor,
-            borderRadius: 7,
-            marginBottom: 30,
-          }}>
+          {/* Chosen Phone Number */}
+          <CustomText type="subTitle">{phoneNumber}</CustomText>
+        </CustomView>
+        <CustomView
+          type={'itemPadding'}
+          borderColor={themes[currentTheme].textSecondaryColor}
+          marignBottom={30}>
+          {/* Title - Product Detail */}
           <CustomText type="title" fontWeight="bold">
             {lang[langPref].text_product_detail}
           </CustomText>
+          {/* List - products */}
           <FlatList
             horizontal={true}
             scrollEnabled={listProducts.length > 1}
@@ -208,16 +225,12 @@ const CartDetail = () => {
               />
             )}
           />
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            padding: 12,
-            borderColor: themes[currentTheme].textSecondaryColor,
-            borderRadius: 7,
-            marginBottom: 30,
-          }}>
-          {/* Title */}
+        </CustomView>
+        <CustomView
+          type={'itemPadding'}
+          borderColor={themes[currentTheme].textSecondaryColor}
+          marignBottom={30}>
+          {/* Title - Payment */}
           <CustomText marginBottom={20} type="title" fontWeight="bold">
             {lang[langPref].text_payment}
           </CustomText>
@@ -240,7 +253,7 @@ const CartDetail = () => {
 
           <Divider marginBottom={20} />
 
-          {/* Select Promocode */}
+          {/* Button - Select Promocode */}
           <TextButton
             type="tertiary"
             marginBottom={20}
@@ -268,29 +281,28 @@ const CartDetail = () => {
               {priceFormat(discountTotal, 'vn')}
             </CustomText>
           </ItemRow>
-        </View>
+        </CustomView>
 
         {/* Payment Method */}
-        <View
-          style={{
-            borderWidth: 1,
-            padding: 12,
-            borderColor: themes[currentTheme].textSecondaryColor,
-            borderRadius: 7,
-            marginBottom: 30,
-          }}>
+        <CustomView
+          type={'itemPadding'}
+          borderColor={themes[currentTheme].textSecondaryColor}
+          marignBottom={30}>
+          {/* Title */}
           <CustomText type="title" fontWeight="bold" marginBottom={20}>
             {lang[langPref].text_paymentMethod}
           </CustomText>
+          {/* Payment Option */}
           <CustomText marginBottom={20} type="subTitle">
             {lang[langPref].text_paymentMethod_cash}
           </CustomText>
-        </View>
+        </CustomView>
         {/* Button - Order */}
         <TextButton type="primary" onPressed={onOrderPressed} marginBottom={20}>
           {lang[langPref].buttonOrder}
         </TextButton>
       </CustomView>
+
       {/* Option Panel - how Promocodes */}
       {promoActive ? (
         <OptionsPanel setActive={setPromoActive} title="Promocodes">
@@ -312,6 +324,7 @@ const CartDetail = () => {
               {lang[langPref].text_discount_none}
             </CustomText>
           )}
+          {/* Button - Reset */}
           <TextButton
             fontSize="subTitle"
             onPressed={() => {

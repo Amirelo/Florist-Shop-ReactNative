@@ -8,6 +8,7 @@ interface Props {
   justifyContent?: ViewStyle['justifyContent'];
   marignBottom?: ViewStyle['marginBottom'];
   backgroundColor?: ViewStyle['backgroundColor'];
+  borderColor?: ViewStyle['borderColor'];
   style?: StyleProp<ViewStyle>;
 }
 
@@ -26,6 +27,8 @@ const CustomView = (props: Props) => {
             : themes[currentTheme].bgColor,
           justifyContent: props.justifyContent,
           marginBottom: props.marignBottom,
+          borderColor:props.borderColor,
+          borderWidth: props.borderColor ? 1 : undefined,
         },
         props.style,
       ]}>

@@ -1,65 +1,79 @@
+// React and libs
+import React from 'react';
+import {FlatList} from 'react-native';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+
+// Constants
+import {
+  NAVIGATION_MAIN_ADDRESS_EDIT,
+  NAVIGATION_MAIN_CART_DETAIL,
+} from '../../../constants/AppConstants';
+
+// Models
 import {AddressModel, CartModel, ProductModel} from '../../../models';
+
+// Services
+import {getUserAddresses} from '../MainService';
+
+// Components
 import {
   CustomButton,
   CustomText,
   CustomView,
   Divider,
 } from '../../../components/atoms';
-import themes from '../../../themes/themes';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
-import React from 'react';
-import {faPhone} from '@fortawesome/free-solid-svg-icons';
-import {addressFormat} from '../../../utils/Utils';
-import {getUserAddresses} from '../MainService';
-import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import {
-  NAVIGATION_MAIN_ADDRESS_EDIT,
-  NAVIGATION_MAIN_CART_DETAIL,
-} from '../../../constants/AppConstants';
 import {TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
 import lang from '../../../language/lang';
 
+// Utilities
+import {addressFormat} from '../../../utils/Utils';
+
 const CartDelivery = () => {
-  // Navigation
+  // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   // Fields
-
-  const [optionActive, setOptionActive] = React.useState(false);
-  const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>();
-  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>(
     [],
   );
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>();
   const [listCarts, setListCarts] = React.useState<Array<CartModel>>();
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [selectedAddress, setSelectedAddress] = React.useState<AddressModel>();
   const [total, setTotal] = React.useState(0);
 
-  // Get total price
+  // Fields - option panel status
+  const [optionActive, setOptionActive] = React.useState(false);
 
+  // Get User Address
   const getAddresses = async () => {
     const addresses: Array<AddressModel> = await getUserAddresses(email);
     setListAddresses(addresses);
   };
 
-  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
-
   // Get data from route
   React.useEffect(() => {
     getAddresses();
+    // Get carts from previous screen
     if (route.params?.carts) {
       setListCarts(route.params.carts);
     }
+    // Get products from previous screen
     if (route.params?.products) {
       console.log(
         'CartDelivery - route found - products:',
@@ -67,6 +81,7 @@ const CartDelivery = () => {
       );
       setListProducts(route.params.products);
     }
+    // Get totals from previous screen
     if (route.params?.total) {
       setTotal(route.params.total);
     }
@@ -74,6 +89,7 @@ const CartDelivery = () => {
 
   // Go to Cart Detail screen
   const onContinuePressed = () => {
+    // Check if fields correct
     if (
       phoneNumber != null &&
       selectedAddress != null &&
@@ -84,6 +100,7 @@ const CartDelivery = () => {
       console.log('CartDelivery - passing route - products:', listProducts);
       console.log('CartDelivery - passing route - address:', selectedAddress);
       console.log('CartDelivery - passing route - phone number:', phoneNumber);
+      // Navigate - CartDetailScreen
       navigation.navigate(NAVIGATION_MAIN_CART_DETAIL, {
         carts: listCarts,
         total: total,
@@ -101,6 +118,7 @@ const CartDelivery = () => {
     setOptionActive(true);
   };
 
+  // Navigate - AddressEditScreen
   const onAddAddressPressed = () => {
     navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT);
   };
@@ -111,27 +129,7 @@ const CartDelivery = () => {
     setOptionActive(false);
   };
 
-  React.useEffect(() => {
-    firestore()
-      .collection('users')
-      .doc(email)
-      .collection('addresses')
-      .onSnapshot(querySnapshot => {
-        setListAddresses([]);
-        querySnapshot.docs.map(item => {
-          const address = new AddressModel(
-            item.id,
-            item.data().streetNumber,
-            item.data().street,
-            item.data().ward,
-            item.data().district,
-            item.data().city,
-          );
-          setListAddresses(prev => [...prev, address]);
-        });
-      });
-  }, []);
-
+  // Update list on firestore 'addresses' collection change
   React.useEffect(() => {
     firestore()
       .collection('users')
@@ -156,6 +154,7 @@ const CartDelivery = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
+        {/* Input - Phone Number */}
         <CustomInput
           placeholder={lang[langPref].edPhone}
           onChangeText={setPhoneNumber}
@@ -167,6 +166,7 @@ const CartDelivery = () => {
           {lang[langPref].text_address}
         </CustomText>
 
+        {/* Text - Selected Address */}
         <CustomText marginBottom={12} type="subTitle">
           {selectedAddress
             ? addressFormat(selectedAddress)
@@ -174,6 +174,7 @@ const CartDelivery = () => {
         </CustomText>
         <Divider />
 
+        {/* Button - Select Address */}
         <TextButton
           type="tertiary"
           onPressed={onSelectPressed}
@@ -181,10 +182,11 @@ const CartDelivery = () => {
           {lang[langPref].buttonSelectAddress}
         </TextButton>
 
-        <CustomText alignSelf='center' type="subTitle" marginBottom={20}>
+        <CustomText alignSelf="center" type="subTitle" marginBottom={20}>
           {lang[langPref].text_or}
         </CustomText>
 
+        {/* Button - Add New Address */}
         <TextButton
           type="tertiary"
           onPressed={onAddAddressPressed}
@@ -192,8 +194,13 @@ const CartDelivery = () => {
           {lang[langPref].buttonNewAddress}
         </TextButton>
 
-            <TextButton type='primary' onPressed={onContinuePressed}>{lang[langPref].buttonContinue}</TextButton>
+        {/* Button - Continue to CartDetail */}
+        <TextButton type="primary" onPressed={onContinuePressed}>
+          {lang[langPref].buttonContinue}
+        </TextButton>
       </CustomView>
+
+      {/* Option Panel - Address list */}
       {optionActive ? (
         <OptionsPanel setActive={setOptionActive} title="Address">
           <FlatList

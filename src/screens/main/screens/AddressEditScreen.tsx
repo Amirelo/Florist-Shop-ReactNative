@@ -1,292 +1,61 @@
+// React and libs
 import React from 'react';
-import themes from '../../../themes/themes';
-import {StyleSheet, View} from 'react-native';
-import {CustomInput, OptionsPanel} from '../../../components/molecules';
-import {CustomButton, CustomText, CustomView} from '../../../components/atoms';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {AddressModel} from '../../../models';
-import {SocialButton, TextButton} from '../../../components/molecules/buttons';
-import * as road from '../../../data/roads.json';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import {AddNewUserAddress, EditUserAddress} from '../MainService';
 import {useSelector} from 'react-redux';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
+
+// Models
+import {AddressModel} from '../../../models';
+
+// Services
+import {AddNewUserAddress, EditUserAddress} from '../MainService';
+
+// Components
+import {CustomText, CustomView} from '../../../components/atoms';
+import {CustomInput, OptionsPanel} from '../../../components/molecules';
+import {TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
 import lang from '../../../language/lang';
+import themes from '../../../themes/themes';
+
+// Road data
+import * as road from '../../../data/roads.json';
 
 const AddressEdit = () => {
-  const locationHCM = {
-    '1': [
-      'Bến Thành',
-      'Bến Nghé',
-      'Đa Kao',
-      'Nguyễn Cư Trinh',
-      'Nguyễn Thái Bình',
-      'Tân Định',
-      'Cô Giang',
-      'Cầu Ông Lãnh',
-      'Phạm Ngũ Lão',
-      'Cầu Kho',
-    ],
-    '3': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      'Võ Thị Sáu',
-    ],
-    '4': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '6',
-      '8',
-      '9',
-      '10',
-      '13',
-      '14',
-      '15',
-      '16',
-      '18',
-    ],
-    '5': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-    ],
-    '6': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-    ],
-    '7': [
-      'Phú Mỹ',
-      'Phú Thuận',
-      'Bình Thuận',
-      'Tân Phong',
-      'Tân Phú',
-      'Tân Hưng',
-      'Tân Kiểng',
-      'Tân Quy',
-      'Tân Thuận Đông',
-      'Tân Thuận Tây',
-    ],
-    '8': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-    ],
-    '10': [
-      '1',
-      '2',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-    ],
-    '11': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-    ],
-    '12': [
-      'An Phú Đông',
-      'Đông Hưng Thuận',
-      'Tân Hưng Thuận',
-      'Hiệp Thành',
-      'Thới An',
-      'Tân Thới Nhất',
-      'Tân Thới Hiệp',
-      'Tân Chánh Hiệp',
-      'Thạnh Lộc',
-      'Thạnh Xuân',
-      'Trung Mỹ Tây',
-    ],
-    'Tân Bình': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-    ],
-    'Bình Tân': [
-      'Hòa Thạnh',
-      'Phú Thạnh',
-      'Hiệp Tân',
-      'Phú Trung',
-      'Phú Thọ Hòa',
-      'Sơn Kỳ',
-      'Tân Quý',
-      'Tân Sơn Nhì',
-      'Tân Thành',
-      'Tân Thới Hòa',
-      'Tây Thạnh',
-    ],
-    'Bình Thạnh': [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '13',
-      '15',
-      '17',
-    ],
-    'Tân Phú': [
-      'An Lạc',
-      'An Lạc A',
-      'Bình Hưng Hòa',
-      'Bình Hưng Hòa A',
-      'Bình Hưng Hòa B',
-      'Tân Tạo',
-      'Tân Tạo A',
-      'Bình Trị Đông A',
-      'Bình Trị Đông B',
-    ],
-    'Gò Vấp': [
-      '1',
-      '2',
-      '3',
-      '5',
-      '6',
-      '7',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '17',
-      '19',
-      '21',
-      '22',
-      '24',
-      '25',
-      '26',
-      '27',
-      '28',
-    ],
-    'Phú Nhuận': [
-      '1',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-    ],
-  };
-
-  // Fields
-  const [streetNumber, setStreetNumber] = React.useState('');
-  const [streetName, setStreetName] = React.useState('');
-  const [ward, setWard] = React.useState('');
-  const [district, setDistrict] = React.useState('');
-
-  const [searchStreetName, setSearchStreetName] = React.useState('');
-
-  const [streetNameActive, setStreetNameActive] = React.useState(false);
-  const [wardActive, setWardActive] = React.useState(false);
-  const [districtActive, setDistrictActive] = React.useState(false);
+  // NOTE: there will be delay when opening street option panel due to the amount of data
 
   // Initial
   const route = useRoute<RouteProp<any>>();
   const navigation = useNavigation<NavigationProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
-  const langPref:keyof typeof lang  = useSelector((store:any) => store.preference.language)
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
 
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  // Fields - data
+  const [streetNumber, setStreetNumber] = React.useState('');
+  const [streetName, setStreetName] = React.useState('');
+  const [ward, setWard] = React.useState('');
+  const [district, setDistrict] = React.useState('');
 
+  // Field - Search string
+  const [searchStreetName, setSearchStreetName] = React.useState('');
+
+  // Field - Option Panel status
+  const [streetNameActive, setStreetNameActive] = React.useState(false);
+  const [wardActive, setWardActive] = React.useState(false);
+  const [districtActive, setDistrictActive] = React.useState(false);
+
+  // Activate Option Panel based on type
   const onOptionButtonPressed = (type: string) => {
     switch (type) {
       case 'DISTRICT':
@@ -301,6 +70,7 @@ const AddressEdit = () => {
     }
   };
 
+  // Set data based on type
   const onOptionItemSelected = (data: string, type: string) => {
     switch (type) {
       case 'DISTRICT':
@@ -320,6 +90,7 @@ const AddressEdit = () => {
     }
   };
 
+  // Check if empty
   const checkFields = () => {
     if (
       streetNumber.length > 0 &&
@@ -334,6 +105,7 @@ const AddressEdit = () => {
     return false;
   };
 
+  // Add address to Firestore
   const onAddPressed = async () => {
     if (checkFields()) {
       const address = new AddressModel(
@@ -349,6 +121,7 @@ const AddressEdit = () => {
     }
   };
 
+  // Edit Address on Firestore
   const onEditPressed = async () => {
     if (checkFields()) {
       const address = new AddressModel(
@@ -376,8 +149,9 @@ const AddressEdit = () => {
   }, []);
 
   return (
-    <CustomView type='fullscreen'>
-      <CustomView type='itemPadding'>
+    <CustomView type="fullscreen">
+      <CustomView type="itemPadding">
+        {/* City */}
         <CustomText type="title" marginBottom={8}>
           {lang[langPref].text_city}
         </CustomText>
@@ -388,8 +162,9 @@ const AddressEdit = () => {
           Ho Chi Minh City
         </TextButton>
 
+        {/* District */}
         <CustomText type="title" marginBottom={8}>
-        {lang[langPref].text_district}
+          {lang[langPref].text_district}
         </CustomText>
         <TextButton
           type="tertiary"
@@ -398,8 +173,9 @@ const AddressEdit = () => {
           {district}
         </TextButton>
 
+        {/* Ward */}
         <CustomText type="title" marginBottom={8}>
-        {lang[langPref].text_ward}
+          {lang[langPref].text_ward}
         </CustomText>
         <TextButton
           type="tertiary"
@@ -408,8 +184,9 @@ const AddressEdit = () => {
           {ward}
         </TextButton>
 
+        {/* Street Name */}
         <CustomText type="title" marginBottom={8}>
-        {lang[langPref].text_street}
+          {lang[langPref].text_street}
         </CustomText>
         <TextButton
           type="tertiary"
@@ -420,20 +197,25 @@ const AddressEdit = () => {
           {streetName}
         </TextButton>
 
+        {/* Street Number */}
         <CustomInput
           value={streetNumber}
           onChangeText={setStreetNumber}
           marginBottom={40}
           placeholder={lang[langPref].text_street_number}></CustomInput>
 
+        {/* Display Edit Button if User pass data through navigation */}
         {route.params?.item ? (
-          <TextButton type="primary" onPressed={onEditPressed}>{lang[langPref].buttonEditAddress}</TextButton>
+          <TextButton type="primary" onPressed={onEditPressed}>
+            {lang[langPref].buttonEditAddress}
+          </TextButton>
         ) : (
           <TextButton type="primary" onPressed={onAddPressed}>
             {lang[langPref].buttonNewAddress}
           </TextButton>
         )}
       </CustomView>
+
       {/* District Option */}
       {districtActive ? (
         <OptionsPanel
@@ -525,16 +307,3 @@ const AddressEdit = () => {
 };
 
 export default AddressEdit;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-  },
-  button: {
-    backgroundColor: themes['defaultTheme'].primaryColor,
-    alignItems: 'center',
-    paddingVertical: 16,
-    borderRadius: 7,
-  },
-});

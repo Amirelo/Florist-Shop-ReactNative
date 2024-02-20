@@ -1,42 +1,56 @@
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
-import {ItemAddress} from '../../../components/molecules';
-import {AddressModel} from '../../../models';
-import firestore from '@react-native-firebase/firestore';
+// React and libs
+import React from 'react';
+import {Alert, FlatList} from 'react-native';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React from 'react';
-import {CustomText, CustomView} from '../../../components/atoms';
-import TextButton from '../../../components/molecules/buttons/TextButton';
 import {useSelector} from 'react-redux';
-import {deleteUserAddress} from '../MainService';
-import {addressFormat} from '../../../utils/Utils';
+import firestore from '@react-native-firebase/firestore';
+
+// Constants
 import {NAVIGATION_MAIN_ADDRESS_EDIT} from '../../../constants/AppConstants';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
+// Services
+import {deleteUserAddress} from '../MainService';
+
+// Models
+import {AddressModel} from '../../../models';
+
+// Components
+import {CustomText, CustomView} from '../../../components/atoms';
+import {ItemAddress} from '../../../components/molecules';
+import {TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
 import lang from '../../../language/lang';
 
+// Utilities
+import {addressFormat} from '../../../utils/Utils';
+
 const AddressScreen = () => {
-  // Navigation
+  // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
-
-  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
 
   // Fields
   const [listAddresses, setListAddresses] = React.useState<Array<AddressModel>>(
     [],
   );
 
-  const email = useSelector((store: any) => store.isLoggedIn.userEmail);
-
-  // Navigate to Address Edit Screen with address detail
+  // Navigate - AddressEditScreen
+  // Data: address detail
   const onEditPressed = (item: AddressModel) => {
     navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT, {item: item});
   };
 
+  // Delete cart in Firestore
   const onDeletePressed = (item: AddressModel) => {
     Alert.alert(
       'Delete address: ' + addressFormat(item),
@@ -48,10 +62,12 @@ const AddressScreen = () => {
     );
   };
 
+  // Navigate - AddressEditScreen
   const onAddNewPressed = () => {
     navigation.navigate(NAVIGATION_MAIN_ADDRESS_EDIT);
   };
 
+  // Get address list from ProfileScreen
   React.useEffect(() => {
     if (route.params?.data) {
       setListAddresses(route.params.data);
@@ -59,6 +75,7 @@ const AddressScreen = () => {
     }
   }, []);
 
+  // Update list on firestore 'addresses' collection change
   React.useEffect(() => {
     firestore()
       .collection('users')
@@ -83,35 +100,43 @@ const AddressScreen = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
-        <TextButton
-          type="primary"
-          onPressed={onAddNewPressed}
-          marginBottom={20}>
-          {lang[langPref].buttonNewAddress}
-        </TextButton>
+        {/* Button - Add New */}
+
         {listAddresses.length > 0 ? (
-          <FlatList
-            key={'#'}
-            data={listAddresses}
-            //horizontal={true}
-            contentContainerStyle={{gap: 16}}
-            keyExtractor={item => item.id!}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-              <ItemAddress
-                item={item}
-                onEditPressed={() => onEditPressed(item)}
-                onDeletePressed={() => onDeletePressed(item)}
-              />
-            )}
-          />
+          <>
+            {/* Button - Add New Address */}
+            <TextButton
+              type="primary"
+              onPressed={onAddNewPressed}
+              marginBottom={20}>
+              {lang[langPref].buttonNewAddress}
+            </TextButton>
+
+            {/* List - User Address */}
+            <FlatList
+              key={'#'}
+              data={listAddresses}
+              //horizontal={true}
+              contentContainerStyle={{gap: 16}}
+              keyExtractor={item => item.id!}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => (
+                <ItemAddress
+                  item={item}
+                  onEditPressed={() => onEditPressed(item)}
+                  onDeletePressed={() => onDeletePressed(item)}
+                />
+              )}
+            />
+          </>
         ) : (
           <>
             <CustomText type="title" alignSelf="center" marginBottom={20}>
-              No Address
+              {lang[langPref].text_address_empty}
             </CustomText>
+            {/* Button - Add New Address */}
             <TextButton type="primary" onPressed={onAddNewPressed}>
-              Add New Address
+              {lang[langPref].buttonNewAddress}
             </TextButton>
           </>
         )}
@@ -121,11 +146,3 @@ const AddressScreen = () => {
 };
 
 export default AddressScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    flex: 1,
-  },
-});

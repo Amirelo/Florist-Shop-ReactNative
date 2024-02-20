@@ -169,6 +169,7 @@ const vn = {
   text_ward:'Phường:',
   text_district:'Quận:',
   text_city:'Thành phố:',
+  text_address_empty: 'Không tìm thấy địa chỉ nào',
 
   // Promocode
   text_promos_none:'Không có mã khuyến mãi có thể sử dụng',
