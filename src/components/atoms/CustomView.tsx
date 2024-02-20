@@ -27,7 +27,7 @@ const CustomView = (props: Props) => {
             : themes[currentTheme].bgColor,
           justifyContent: props.justifyContent,
           marginBottom: props.marignBottom,
-          borderColor:props.borderColor,
+          borderColor: props.borderColor,
           borderWidth: props.borderColor ? 1 : undefined,
         },
         props.style,
@@ -70,9 +70,13 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 7,
   },
-  itemCardRow:{
+  itemCardRow: {
     flexDirection: 'row',
     padding: 12,
-    borderRadius:7
-  }
+    borderRadius: 7,
+  },
+  centerScreen: {
+    padding:16,
+    top:'40%'
+  },
 });

@@ -47,6 +47,12 @@ const en = {
   option_storage: 'Storage',
   option_camera: 'Camera',
 
+  // Sorts
+  sort_name_asc:'Name Asc',
+  sort_name_desc:'Name Desc',
+  sort_price_asc:'Price Asc',
+  sort_price_desc:'Price Desc',
+
   // Option titles
   option_title_userimg: 'Select Picture',
 

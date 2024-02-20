@@ -1,13 +1,12 @@
+// React and libs
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList} from 'react-native';
 import {
-  CustomInput,
-  ItemProduct,
-  ItemProductLong,
-  OptionsPanel,
-} from '../../../components/molecules';
-import {CustomButton, CustomView, ItemRow} from '../../../components/atoms';
-import {ProductModel, UserModel} from '../../../models';
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faGripVertical,
@@ -16,28 +15,49 @@ import {
   faSort,
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
-import {CustomText} from '../../../components/atoms';
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {getProducts} from '../MainService';
-import lang from '../../../language/lang';
 import {useSelector} from 'react-redux';
-import {priceFormat} from '../../../utils/Utils';
+
+// Constants
 import {
   NAVIGATION_MAIN_PRODUCT_DETAIL,
   NAVIGATION_MAIN_PRODUCT_FILTER,
 } from '../../../constants/AppConstants';
+
+// Models
+import {ProductModel} from '../../../models';
+
+// Services
+import {getProducts} from '../MainService';
+
+// Components
+import {
+  CustomButton,
+  CustomView,
+  ItemRow,
+  CustomText,
+} from '../../../components/atoms';
+import {
+  CustomInput,
+  ItemProduct,
+  ItemProductLong,
+  OptionsPanel,
+} from '../../../components/molecules';
+
+// User Preferences
+import lang from '../../../language/lang';
+
 import themes from '../../../themes/themes';
-import {TextButton} from '../../../components/molecules/buttons';
 
 const ExploreScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
 
   // Fields
   const [isColumn, setIsColumn] = React.useState(false);
@@ -48,18 +68,12 @@ const ExploreScreen = () => {
     [],
   );
   const [sortText, setSortText] = React.useState('');
-  const [panelActive, setPanelActive] = React.useState(false);
   const [filterParams, setFilterParams] = React.useState<any>();
 
-  // Saved language
-  const langPref: keyof typeof lang = useSelector(
-    (store: any) => store.preference.language,
-  );
+  // Option panel - sort
+  const [panelActive, setPanelActive] = React.useState(false);
 
-  const currentTheme: keyof typeof themes = useSelector(
-    (store: any) => store.preference.theme,
-  );
-
+  // Navigate - ProductFilterScreen
   const onFilterPressed = () => {
     navigation.navigate(NAVIGATION_MAIN_PRODUCT_FILTER, {filter: filterParams});
   };
@@ -80,14 +94,16 @@ const ExploreScreen = () => {
     console.log('Sort pressed');
     type == 'NAME_ASC' ? (
       (filteredList.sort((a, b) => a.name.localeCompare(b.name)),
-      (text = 'Name Asc'))
+      (text = lang[langPref].sort_name_asc))
     ) : type == 'NAME_DESC' ? (
       (filteredList.sort((a, b) => b.name.localeCompare(a.name)),
-      (text = 'Name Desc'))
+      (text = lang[langPref].sort_name_desc))
     ) : type == 'PRICE_ASC' ? (
-      (filteredList.sort((a, b) => a.price - b.price), (text = 'Price Asc'))
+      (filteredList.sort((a, b) => a.price - b.price),
+      (text = lang[langPref].sort_price_asc))
     ) : type == 'PRICE_DESC' ? (
-      (filteredList.sort((a, b) => b.price - a.price), (text = 'Price Desc'))
+      (filteredList.sort((a, b) => b.price - a.price),
+      (text = lang[langPref].sort_price_desc))
     ) : (
       <></>
     );
@@ -145,6 +161,7 @@ const ExploreScreen = () => {
         console.log('Filter - max price:', filteredList);
       }
 
+      // Filter - categories
       if (filterData.categories.length > 0) {
         filteredList = filteredList.filter((product: ProductModel) => {
           var status = false;
@@ -152,13 +169,14 @@ const ExploreScreen = () => {
             if (product.categories.includes(name)) {
               status = true;
             }
-          })
+          });
           return status;
         });
         console.log('Filter - categories:', filteredList);
       }
 
-      if (filterData.length >0 && filterData.colors.length > 0) {
+      // Filter - colors
+      if (filterData.length > 0 && filterData.colors.length > 0) {
         filteredList = filteredList.filter((product: ProductModel) => {
           var status = false;
           filterData.colors.map((name: string) => {
@@ -183,9 +201,9 @@ const ExploreScreen = () => {
           onChangeText={text => onSearch(text)}
           icon={faSearch}
           marginBottom={12}
-          placeholder={lang[langPref]['edSearch']}
+          placeholder={lang[langPref].edSearch}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <CustomView type="itemRow">
           {/* Button - Filter */}
           <CustomButton onPressed={onFilterPressed} flex={1}>
             <ItemRow justifyContent="flex-start">
@@ -195,7 +213,7 @@ const ExploreScreen = () => {
                 icon={faSliders}
               />
               <CustomText type="subTitle">
-                {lang[langPref]['text_filter']}
+                {lang[langPref].text_filter}
               </CustomText>
             </ItemRow>
           </CustomButton>
@@ -209,7 +227,7 @@ const ExploreScreen = () => {
                 icon={faSort}
               />
               <CustomText type="subTitle">
-                {sortText ? sortText : lang[langPref]['text_sort']}
+                {sortText ? sortText : lang[langPref].text_sort}
               </CustomText>
             </ItemRow>
           </CustomButton>
@@ -224,12 +242,12 @@ const ExploreScreen = () => {
               />
               <CustomText type="subTitle">
                 {isColumn
-                  ? lang[langPref]['text_display_column']
-                  : lang[langPref]['text_display_grid']}
+                  ? lang[langPref].text_display_column
+                  : lang[langPref].text_display_grid}
               </CustomText>
             </ItemRow>
           </CustomButton>
-        </View>
+        </CustomView>
 
         {/* Flatlist */}
         {isColumn == false ? (
@@ -277,22 +295,22 @@ const ExploreScreen = () => {
         <OptionsPanel title="Sort" setActive={setPanelActive}>
           <CustomButton onPressed={() => onSortOptionSelected('NAME_ASC')}>
             <CustomText type="subTitle" marginBottom={8}>
-              Name Asc
+              {lang[langPref].sort_name_asc}
             </CustomText>
           </CustomButton>
           <CustomButton onPressed={() => onSortOptionSelected('NAME_DESC')}>
             <CustomText type="subTitle" marginBottom={8}>
-              Name Desc
-            </CustomText>
-          </CustomButton>
-          <CustomButton onPressed={() => onSortOptionSelected('PRICE_DESC')}>
-            <CustomText type="subTitle" marginBottom={8}>
-              Price Desc
+              {lang[langPref].sort_name_desc}
             </CustomText>
           </CustomButton>
           <CustomButton onPressed={() => onSortOptionSelected('PRICE_ASC')}>
             <CustomText type="subTitle" marginBottom={8}>
-              Price Asc
+              {lang[langPref].sort_price_asc}
+            </CustomText>
+          </CustomButton>
+          <CustomButton onPressed={() => onSortOptionSelected('PRICE_DESC')}>
+            <CustomText type="subTitle" marginBottom={8}>
+              {lang[langPref].sort_price_desc}
             </CustomText>
           </CustomButton>
         </OptionsPanel>

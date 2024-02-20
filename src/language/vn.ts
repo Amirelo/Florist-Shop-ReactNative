@@ -46,6 +46,12 @@ const vn = {
   option_storage: 'Album',
   option_camera: 'Máy ảnh',
 
+   // Sorts
+   sort_name_asc:'Tên A - Z',
+   sort_name_desc:'Tên Z - A',
+   sort_price_asc:'Giá thấp tới cao',
+   sort_price_desc:'Giá cao tới thấp',
+
   // Option titles
   option_title_userimg: 'Chọn ảnh đại diện mới từ',
 
