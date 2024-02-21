@@ -3,6 +3,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../atoms';
+import themes from '../../themes/themes';
+import { useSelector } from 'react-redux';
 
 interface Props {
   children: string;
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const ItemPick = (props: Props) => {
+  const currentTheme: keyof typeof themes = useSelector((store:any) => store.preference.theme)
+
   const [status, setStatus] = React.useState(false);
   const [swap, setSwap] = React.useState(false);
   const [count, setCount] = React.useState(0)
@@ -39,7 +43,7 @@ const ItemPick = (props: Props) => {
   return (
     <CustomButton onPressed={onCategoryPressed} style={{width: '33%'}}>
       <View style={styles.view}>
-        <FontAwesomeIcon size={20} icon={status ? faSquareCheck : faSquare} />
+        <FontAwesomeIcon color={themes[currentTheme].textColor} size={20} icon={status ? faSquareCheck : faSquare} />
         <CustomText type="subTitle">{props.children}</CustomText>
       </View>
     </CustomButton>
