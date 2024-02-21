@@ -32,6 +32,7 @@ export const NAVIGATION_MAIN_CART_DETAIL = 'Cart Detail';
 export const NAVIGATION_MAIN_PRODUCT = 'Product';
 export const NAVIGATION_MAIN_PRODUCT_DETAIL = 'Product Detail';
 export const NAVIGATION_MAIN_PRODUCT_FILTER = 'Product Filter';
+export const NAVIGATION_MAIN_PRODUCT_REVIEW = 'Product Reviews';
 
 // Main - Account Screens
 export const NAVIGATION_MAIN_ACCOUNT = 'Account';

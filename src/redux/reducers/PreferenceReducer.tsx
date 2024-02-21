@@ -1,4 +1,3 @@
-import {REHYDRATE} from 'redux-persist';
 import {
   FONT_CHANGE,
   FONT_SIZE_CHANGE,

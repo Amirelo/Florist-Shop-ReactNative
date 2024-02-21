@@ -132,10 +132,11 @@ const HomeScreen = () => {
             style={{marginBottom: 30}}
             contentContainerStyle={{
               justifyContent: 'space-between',
+              gap:16
             }}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={listProducts}
+            data={listProducts?.slice(0,5)}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <ItemProductBig

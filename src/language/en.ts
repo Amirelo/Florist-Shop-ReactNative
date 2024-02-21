@@ -65,6 +65,7 @@ const en = {
   // Main Navigation
   nav_main_prod_details: 'Product Details',
   nav_main_prod_filter: 'Product Filter',
+  nav_main_prod_reviews: 'Product Reviews',
   nav_main_profile: 'Profile',
   nav_main_update_info: 'Update User Information',
   nav_main_order: 'User Orders',

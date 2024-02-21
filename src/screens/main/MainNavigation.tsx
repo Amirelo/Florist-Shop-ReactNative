@@ -17,6 +17,7 @@ import {
   CartDetail,
   SettingScreen,
   ProductFilterScreen,
+  ProductReviewScreen,
 } from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -44,6 +45,7 @@ import {
   NAVIGATION_MAIN_ORDER_DETAIL,
   NAVIGATION_MAIN_PRODUCT_DETAIL,
   NAVIGATION_MAIN_PRODUCT_FILTER,
+  NAVIGATION_MAIN_PRODUCT_REVIEW,
   NAVIGATION_MAIN_PROFILE,
   NAVIGATION_MAIN_PROMOCODES,
   NAVIGATION_MAIN_SETTINGS,
@@ -76,67 +78,72 @@ const MainNavigation = () => {
           component={MainTab}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_prod_details']}}
+          options={{title: lang[langPref].nav_main_prod_details}}
           name={NAVIGATION_MAIN_PRODUCT_DETAIL}
           component={ProductDetailScreen}
         />
+        <Stack.Screen 
+        options={{title: lang[langPref].nav_main_prod_reviews}}
+          name={NAVIGATION_MAIN_PRODUCT_REVIEW}
+          component={ProductReviewScreen}
+        />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_profile']}}
+          options={{title: lang[langPref].nav_main_profile}}
           name={NAVIGATION_MAIN_PROFILE}
           component={ProfileScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_update_info']}}
+          options={{title: lang[langPref].nav_main_update_info}}
           name={NAVIGATION_MAIN_UPDATE_INFO}
           component={UpdateInfoScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_order']}}
+          options={{title: lang[langPref].nav_main_order}}
           name={NAVIGATION_MAIN_ORDER}
           component={OrderScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_order_details']}}
+          options={{title: lang[langPref].nav_main_order_details}}
           name={NAVIGATION_MAIN_ORDER_DETAIL}
           component={OrderDetailScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_address']}}
+          options={{title: lang[langPref].nav_main_address}}
           name={NAVIGATION_MAIN_ADDRESS}
           component={AddressScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_address_edit']}}
+          options={{title: lang[langPref].nav_main_address_edit}}
           name={NAVIGATION_MAIN_ADDRESS_EDIT}
           component={AddressEdit}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_promocodes']}}
+          options={{title: lang[langPref].nav_main_promocodes}}
           name={NAVIGATION_MAIN_PROMOCODES}
           component={PromocodeScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_about']}}
+          options={{title: lang[langPref].nav_main_about}}
           name={NAVIGATION_MAIN_ABOUTUS}
           component={AboutUsScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_prod_filter']}}
+          options={{title: lang[langPref].nav_main_prod_filter}}
           name={NAVIGATION_MAIN_PRODUCT_FILTER}
           component={ProductFilterScreen}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_cart_delivery']}}
+          options={{title: lang[langPref].nav_main_cart_delivery}}
           name={NAVIGATION_MAIN_CART_DELIVERY}
           component={CartDelivery}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_cart_details']}}
+          options={{title: lang[langPref].nav_main_cart_details}}
           name={NAVIGATION_MAIN_CART_DETAIL}
           component={CartDetail}
         />
         <Stack.Screen
-          options={{title: lang[langPref]['nav_main_settings']}}
+          options={{title: lang[langPref].nav_main_settings}}
           name={NAVIGATION_MAIN_SETTINGS}
           component={SettingScreen}
         />
@@ -163,7 +170,7 @@ const MainTab = () => {
       initialRouteName={NAVIGATION_BOTTOM_TAB_HOME}>
       <tab.Screen
         options={{
-          tabBarLabel: lang[langPref]['bottomTab_home'],
+          tabBarLabel: lang[langPref].bottomTab_home,
           headerShown: false,
           headerTitle: lang['en'].appBarHome,
           headerTitleAlign: 'center',
@@ -177,7 +184,7 @@ const MainTab = () => {
       />
       <tab.Screen
         options={{
-          tabBarLabel: lang[langPref]['bottomTab_explore'],
+          tabBarLabel: lang[langPref].bottomTab_explore,
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({color, size}) => (
@@ -190,7 +197,7 @@ const MainTab = () => {
       />
       <tab.Screen
         options={{
-          tabBarLabel: lang[langPref]['bottomTab_cart'],
+          tabBarLabel: lang[langPref].bottomTab_cart,
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (
@@ -204,7 +211,7 @@ const MainTab = () => {
 
       <tab.Screen
         options={{
-          tabBarLabel: lang[langPref]['bottomTab_account'],
+          tabBarLabel: lang[langPref].bottomTab_account,
           headerShown: false,
           headerTitleAlign: 'center',
           tabBarIcon: ({size, color}) => (

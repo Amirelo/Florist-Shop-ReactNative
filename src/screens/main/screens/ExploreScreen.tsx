@@ -255,7 +255,7 @@ const ExploreScreen = () => {
           <FlatList
             key="@"
             columnWrapperStyle={{
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
               marginBottom: 24,
             }}
             style={{marginTop: 24}}

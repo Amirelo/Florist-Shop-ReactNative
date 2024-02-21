@@ -10,7 +10,10 @@ import {
 import {useSelector} from 'react-redux';
 
 // Constants
-import {NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
+import {
+  NAVIGATION_MAIN_CART,
+  NAVIGATION_MAIN_PRODUCT_REVIEW,
+} from '../../../constants/AppConstants';
 
 // Models
 import {ProductModel} from '../../../models';
@@ -57,6 +60,11 @@ const ProductDetailScreen = () => {
   const [priceString, setPriceString] = React.useState<string>();
   const [price, setPrice] = React.useState<number>();
 
+  // Navigation - ProductReviewScreen
+  const onReviewPressed = () => {
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW, {data: product});
+  };
+
   // Add Item to Cart
   const onAddToCartPressed = async () => {
     if (await AddCart(product.id, quantity, email)) {
@@ -88,7 +96,7 @@ const ProductDetailScreen = () => {
   return (
     <ScrollView>
       <CustomView type="fullscreen">
-        <CustomView type='product_detail_image'>
+        <CustomView type="product_detail_image">
           {/* List-  Product Images */}
           <FlatList
             horizontal={true}
@@ -179,7 +187,8 @@ const ProductDetailScreen = () => {
           <TextButton
             type="primary"
             backgroundColor={themes[currentTheme].warnColor}
-            marginBottom={20}>
+            marginBottom={20}
+            onPressed={onReviewPressed}>
             {lang[langPref].buttonSeeReviews}
           </TextButton>
         </CustomView>

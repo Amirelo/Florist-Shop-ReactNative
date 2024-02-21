@@ -15,6 +15,7 @@ import AboutUsScreen from './AboutUsScreen';
 import CartDelivery from './CartDeliverty';
 import CartDetail from './CartDetail';
 import SettingScreen from './SettingScreen';
+import ProductReviewScreen from './ProductReviewScreen';
 
 export {
   HomeScreen,
@@ -33,5 +34,6 @@ export {
   CartDelivery,
   CartDetail,
   SettingScreen,
-  ProductFilterScreen
+  ProductFilterScreen,
+  ProductReviewScreen,
 };
