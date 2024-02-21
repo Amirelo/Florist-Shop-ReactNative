@@ -53,6 +53,29 @@ export const getProductByID = async (id: string) => {
   return res;
 };
 
+// Get Product Review
+
+export const getProductReviews = async (productID: string) => {
+  return (
+    await firestore()
+      .collection('products')
+      .doc(productID)
+      .collection('reviews')
+      .get()
+  ).docs.map(
+    doc =>
+      new ReviewModel(
+        doc.id,
+        doc.data().name,
+        doc.data().userImage,
+        doc.data().comment,
+        doc.data().date,
+        doc.data().description,
+        doc.data().images,
+      ),
+  );
+};
+
 // Get User Order by Email
 export const getUserOrders = async (email: string) => {
   const querySnapshot = await firestore()

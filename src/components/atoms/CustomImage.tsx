@@ -6,6 +6,7 @@ import {
   ImageStyle,
   StyleProp,
   StyleSheet,
+  ViewStyle,
 } from 'react-native';
 import themes from '../../themes/themes';
 import {deviceHeight, deviceWidth} from '../../utils/Utils';
@@ -17,7 +18,7 @@ interface Props {
   marginTop?: number;
   marginBottom?: number;
   marginRight?: number;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 const CustomImage = (props: Props) => {
@@ -106,4 +107,9 @@ const styles = StyleSheet.create({
     width: deviceWidth,
     height: deviceHeight,
   },
+  review_icon:{
+    width:40,
+    height:40,
+    borderRadius: 40 / 2,
+  }
 });
