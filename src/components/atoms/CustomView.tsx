@@ -79,4 +79,14 @@ const styles = StyleSheet.create({
     padding:16,
     top:'40%'
   },
+  product_detail_image: {
+    width: '100%',
+            height: 350,
+            borderWidth: 1,
+            borderTopWidth: 0,
+            borderBottomLeftRadius: 40,
+            borderBottomRightRadius: 40,
+            overflow: 'hidden',
+            marginBottom: 20,
+  }
 });

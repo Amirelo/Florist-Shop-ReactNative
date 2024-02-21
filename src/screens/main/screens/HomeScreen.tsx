@@ -1,14 +1,11 @@
+// React and libs
 import React from 'react';
-import CustomText from '../../../components/atoms/CustomText';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
-import CardHelp from '../../../components/molecules/CardHelp';
-import CategoryModel from '../../../models/CategoryModel';
-import ItemCategory from '../../../components/molecules/ItemCategory';
-import ItemProductBig from '../../../components/molecules/ItemProductBig';
-import ProductModel from '../../../models/ProductModel';
+import {FlatList, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {getCategories, getProducts} from '../MainService';
 import {faCalendarDay} from '@fortawesome/free-solid-svg-icons';
+
+// Constants
 import {
   IMAGE_HOME_HEADER,
   IMAGE_HOME_HEADER_DARK,
@@ -16,33 +13,44 @@ import {
   NAVIGATION_MAIN_ABOUTUS,
   NAVIGATION_MAIN_PRODUCT_DETAIL,
 } from '../../../constants/AppConstants';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
+// Models
+import {CategoryModel, ProductModel} from '../../../models';
+
+// Services
+import {getCategories, getProducts} from '../MainService';
+
+// Components
+import {CustomText, CustomView} from '../../../components/atoms';
+import {
+  CardHelp,
+  ItemCategory,
+  ItemProductBig,
+} from '../../../components/molecules';
+
+// User Preferences
 import lang from '../../../language/lang';
-import {useSelector} from 'react-redux';
-import CustomView from '../../../components/atoms/CustomView';
 
 const HomeScreen = () => {
-  // Navigation
+  // Initial
   const navigation = useNavigation<NavigationProp<any>>();
-
-  // Store list get from server
-  const [listCategories, setListCategories] =
-    React.useState<Array<CategoryModel>>();
-  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>();
-
-  // Saved language
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
 
-  // Navigate to Explore with filter
+  // Fields
+  const [listCategories, setListCategories] =
+    React.useState<Array<CategoryModel>>();
+  const [listProducts, setListProducts] = React.useState<Array<ProductModel>>();
+
+  // Navigate - ExploreScreen with filter
   const onCategoryPressed = (name: string) => {
     navigation.navigate(NAVIGATION_BOTTOM_TAB_EXPLORE, {
       filter: {categories: [name]},
     });
   };
 
-  // Navigate to Product Detail Screen with item
+  // Navigate - ProductDetailScreen with product
   const onProductPressed = (item: ProductModel) => {
     navigation.navigate(NAVIGATION_MAIN_PRODUCT_DETAIL, {item: item});
   };
@@ -72,10 +80,10 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <CustomView type='fullscreen'>
-      <ScrollView
-        showsVerticalScrollIndicator={false}>
-        <CustomView type='body'>
+    <CustomView type="fullscreen">
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <CustomView type="body">
+          {/* Header - Welcome */}
           <CardHelp
             title={lang[langPref].home_header}
             height={200}
@@ -83,6 +91,7 @@ const HomeScreen = () => {
             marginBottom={24}
           />
 
+          {/* Header - Need Help */}
           <CardHelp
             title={lang[langPref].home_card_title}
             description={lang[langPref].home_card_description}
@@ -91,10 +100,12 @@ const HomeScreen = () => {
             onPressed={onHelpCardPressed}
           />
 
+          {/* Title - Categories */}
           <CustomText type="title" marginBottom={20}>
             {lang[langPref].home_occasions}
           </CustomText>
 
+          {/* List - Categories */}
           <FlatList
             style={{marginBottom: 32}}
             contentContainerStyle={{
@@ -112,9 +123,11 @@ const HomeScreen = () => {
             )}
           />
 
+          {/* Title - Popular */}
           <CustomText type="title" marginBottom={24}>
             {lang[langPref]['home_popular']}
           </CustomText>
+          {/* List - Popular */}
           <FlatList
             style={{marginBottom: 30}}
             contentContainerStyle={{

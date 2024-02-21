@@ -1,49 +1,52 @@
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
-import {
-  CustomButton,
-  CustomText,
-  CustomView,
-  Divider,
-  ItemRow,
-} from '../../../components/atoms';
-import themes from '../../../themes/themes';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faColumns} from '@fortawesome/free-solid-svg-icons';
+// React and libs
 import React from 'react';
+import {FlatList, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 import {RouteProp, useRoute} from '@react-navigation/native';
+
+// Models
 import {
   CartModel,
   OrderModel,
   ProductModel,
   PromocodeModel,
 } from '../../../models';
-import {
-  ItemCartDetail,
-  ItemProduct,
-  ItemProductLong,
-} from '../../../components/molecules';
+
+// Services
 import {getProductByID} from '../MainService';
+
+// Components
+import {
+  CustomText,
+  CustomView,
+  Divider,
+  ItemRow,
+} from '../../../components/atoms';
+import {ItemCartDetail} from '../../../components/molecules';
 import {TextButton} from '../../../components/molecules/buttons';
-import {dateFormat, priceFormat} from '../../../utils/Utils';
-import {useSelector} from 'react-redux';
+
+// User Preferences
 import lang from '../../../language/lang';
+import themes from '../../../themes/themes';
+
+// Utilities
+import {dateFormat, priceFormat} from '../../../utils/Utils';
 
 const OrderDetailScreen = () => {
+  // Initials
+  const route = useRoute<RouteProp<any>>();
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
-  // Initial
-  const route = useRoute<RouteProp<any>>();
 
   // Fields
-  const [order, setOrder] = React.useState<OrderModel>();
   const [listProducts, setListProducts] = React.useState<Array<ProductModel>>(
     [],
   );
-
+  const [order, setOrder] = React.useState<OrderModel>();
   const [promocode, setPromocode] = React.useState<PromocodeModel>();
 
   // Get data from route
@@ -65,24 +68,31 @@ const OrderDetailScreen = () => {
     <CustomView type="fullscreen">
       <ScrollView>
         <CustomView type="body">
-          <View
-            style={[
-              styles.general,
-              {borderColor: themes[currentTheme].textSecondaryColor},
-            ]}>
+          <CustomView
+            type="itemPadding"
+            borderColor={themes[currentTheme].textSecondaryColor}>
+            {/* Title - General Info */}
             <CustomText marginBottom={20} type="title">
               {lang[langPref].text_general_info}
             </CustomText>
+
+            {/* Order ID */}
             <ItemRow marginBottom={8}>
               <CustomText>{lang[langPref].text_id}</CustomText>
               <CustomText>{order ? order.id : ''}</CustomText>
             </ItemRow>
             <Divider marginBottom={8} />
+
+            {/* Order Date */}
             <ItemRow marginBottom={8}>
               <CustomText>{lang[langPref].text_date}</CustomText>
-              <CustomText>{order ? dateFormat(order.orderDate) : ''}</CustomText>
+              <CustomText>
+                {order ? dateFormat(order.orderDate) : ''}
+              </CustomText>
             </ItemRow>
             <Divider marginBottom={8} />
+
+            {/* Order status */}
             <ItemRow>
               <CustomText>{lang[langPref].text_status}</CustomText>
               <CustomText
@@ -96,16 +106,16 @@ const OrderDetailScreen = () => {
                 {order ? order.status : ''}
               </CustomText>
             </ItemRow>
-          </View>
-          <View
-            style={[
-              styles.general,
-              {borderColor: themes[currentTheme].textSecondaryColor},
-            ]}>
+          </CustomView>
+          <CustomView
+            type="itemPadding"
+            borderColor={themes[currentTheme].textSecondaryColor}>
+            {/* Title - Product Details */}
             <CustomText marginBottom={20} type="title">
               {lang[langPref].text_product_detail}
             </CustomText>
 
+            {/* List - Brought Products */}
             <FlatList
               style={{marginBottom: 20}}
               horizontal={true}
@@ -125,15 +135,14 @@ const OrderDetailScreen = () => {
                 />
               )}
             />
-          </View>
+          </CustomView>
 
-          <View
-            style={[
-              styles.general,
-              {borderColor: themes[currentTheme].textSecondaryColor},
-            ]}>
+          <CustomView
+            type="itemPadding"
+            borderColor={themes[currentTheme].textSecondaryColor}>
             {promocode ? (
               <>
+                {/* Product Price -before - if had promocde */}
                 <ItemRow marginBottom={8}>
                   <CustomText type="subTitle">
                     {lang[langPref].text_price}
@@ -145,6 +154,7 @@ const OrderDetailScreen = () => {
 
                 <Divider marginBottom={8} />
 
+                {/* Discount Effect */}
                 <ItemRow marginBottom={8}>
                   <CustomText type="subTitle">
                     {lang[langPref].text_discount}
@@ -159,13 +169,15 @@ const OrderDetailScreen = () => {
             ) : (
               <></>
             )}
+            {/* Total Price */}
             <ItemRow marginBottom={8}>
               <CustomText type="title">{lang[langPref].text_total}</CustomText>
               <CustomText type="title">
                 {order ? priceFormat(order.total, 'vn') : ''}
               </CustomText>
             </ItemRow>
-          </View>
+          </CustomView>
+          {/* Allow cancel order if it is pending */}
           {order?.status == 'PENDING' ? (
             <TextButton
               type="primary"
@@ -183,28 +195,3 @@ const OrderDetailScreen = () => {
 };
 
 export default OrderDetailScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  button: {
-    paddingVertical: 12,
-    width: '60%',
-    borderRadius: 7,
-    backgroundColor: themes['defaultTheme'].errorcolor,
-    alignSelf: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  review: {
-    backgroundColor: themes['defaultTheme'].primaryColor,
-  },
-  general: {
-    borderWidth: 1,
-    borderRadius: 7,
-    marginBottom: 30,
-    padding: 12,
-  },
-});
