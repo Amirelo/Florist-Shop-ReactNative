@@ -30,6 +30,7 @@ import {
 
 // User Preferences
 import lang from '../../../language/lang';
+import { Filter } from '@react-native-firebase/firestore';
 
 const HomeScreen = () => {
   // Initial
@@ -136,7 +137,7 @@ const HomeScreen = () => {
             }}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={listProducts?.slice(0,5)}
+            data={listProducts?.sort((a,b) => b.totalRating - a.totalRating).slice(0,5)}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <ItemProductBig
