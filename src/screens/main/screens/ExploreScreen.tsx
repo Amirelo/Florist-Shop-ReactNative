@@ -1,6 +1,6 @@
 // React and libs
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, ScrollView} from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -194,8 +194,8 @@ const ExploreScreen = () => {
   }, [route]);
 
   return (
-    <CustomView type="viewWithOptions">
-      <CustomView type="body">
+    <CustomView type="fullscreen">
+      <CustomView type="body" style={{height:'100%'}}>
         {/* Search bar */}
         <CustomInput
           onChangeText={text => onSearch(text)}
@@ -203,7 +203,7 @@ const ExploreScreen = () => {
           marginBottom={12}
           placeholder={lang[langPref].edSearch}
         />
-        <CustomView type="itemRow">
+        <CustomView type="itemRow" marignBottom={20}>
           {/* Button - Filter */}
           <CustomButton onPressed={onFilterPressed} flex={1}>
             <ItemRow justifyContent="flex-start">
@@ -258,11 +258,10 @@ const ExploreScreen = () => {
               justifyContent: 'space-between',
               marginBottom: 24,
             }}
-            style={{marginTop: 24}}
             showsVerticalScrollIndicator={false}
             numColumns={2}
             data={filteredList}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item.id}
             renderItem={({item}) => (
               <ItemProduct
                 onPressed={() => onProductPressed(item)}
@@ -275,11 +274,11 @@ const ExploreScreen = () => {
           // 1 Column
           <FlatList
             key={'#'}
-            contentContainerStyle={{gap: 16, paddingBottom: 20}}
-            style={{marginTop: 24}}
+            contentContainerStyle={{gap: 16, marginBottom: 24}}
+            scrollEnabled={true}
             showsVerticalScrollIndicator={false}
             data={filteredList}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item.id}
             renderItem={({item}) => (
               <ItemProductLong
                 onPressed={() => onProductPressed(item)}

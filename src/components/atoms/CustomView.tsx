@@ -10,6 +10,7 @@ interface Props {
   backgroundColor?: ViewStyle['backgroundColor'];
   borderColor?: ViewStyle['borderColor'];
   style?: StyleProp<ViewStyle>;
+  flex?: ViewStyle['flex'];
 }
 
 const CustomView = (props: Props) => {
@@ -29,6 +30,7 @@ const CustomView = (props: Props) => {
           marginBottom: props.marignBottom,
           borderColor: props.borderColor,
           borderWidth: props.borderColor ? 1 : undefined,
+          flex: props.flex,
         },
         props.style,
       ]}>
@@ -76,17 +78,17 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   centerScreen: {
-    padding:16,
-    top:'40%'
+    padding: 16,
+    top: '40%',
   },
   product_detail_image: {
     width: '100%',
-            height: 350,
-            borderWidth: 1,
-            borderTopWidth: 0,
-            borderBottomLeftRadius: 40,
-            borderBottomRightRadius: 40,
-            overflow: 'hidden',
-            marginBottom: 20,
-  }
+    height: 350,
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    overflow: 'hidden',
+    marginBottom: 20,
+  },
 });
