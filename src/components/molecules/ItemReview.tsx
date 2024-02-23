@@ -47,7 +47,7 @@ const ItemReview = (props:Props) => {
         </ItemRow>
         <RatingStars totalRating={props.data.rating} />
         <CustomText type='subTitle'>{props.data.rating.toString()}</CustomText>
-        <CustomText>{props.data.description}</CustomText>
+        <CustomText marginBottom={8}>{props.data.description}</CustomText>
         {props.data.images.length >0?
         <FlatList
           data={props.data.images}

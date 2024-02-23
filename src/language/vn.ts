@@ -65,6 +65,7 @@ const vn = {
   nav_main_prod_details: 'Thông tin sản phẩm',
   nav_main_prod_filter: 'Lọc sản phẩm',
   nav_main_prod_reviews: 'Đánh giá sản phẩm',
+  nav_main_prod_reviews_edit: 'Thêm đánh giá',
   nav_main_profile: 'Thông tin người dùng',
   nav_main_update_info: 'Cập nhật thông tin',
   nav_main_order: 'Lịch sử mua hàng',

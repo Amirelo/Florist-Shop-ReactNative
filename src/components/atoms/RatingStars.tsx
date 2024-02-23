@@ -4,27 +4,33 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import * as regular from '@fortawesome/free-regular-svg-icons';
 import themes from '../../themes/themes';
+import {CustomButton} from '.';
 
 interface Props {
   totalRating: number;
+  size?: number;
+  onChanged?(amount: string): void;
 }
 
 const RatingStars = (props: Props) => {
   return (
     <View style={styles.rating}>
+      <CustomButton
+        onPressed={() => (props.onChanged ? props.onChanged('0.5') : '')}>
+        <FontAwesomeIcon
+          size={props.size ? props.size : 18}
+          color={themes['defaultTheme'].warnColor}
+          icon={
+            props.totalRating >= 1
+              ? solid.faStar
+              : props.totalRating >= 0.5
+              ? solid.faStarHalfAlt
+              : regular.faStar
+          }
+        />
+      </CustomButton>
       <FontAwesomeIcon
-        size={18}
-        color={themes['defaultTheme'].warnColor}
-        icon={
-          props.totalRating >= 1
-            ? solid.faStar
-            : props.totalRating >= 0.5
-            ? solid.faStarHalfAlt
-            : regular.faStar
-        }
-      />
-      <FontAwesomeIcon
-        size={18}
+        size={props.size ? props.size : 18}
         color={themes['defaultTheme'].warnColor}
         icon={
           props.totalRating >= 2
@@ -35,7 +41,7 @@ const RatingStars = (props: Props) => {
         }
       />
       <FontAwesomeIcon
-        size={18}
+        size={props.size ? props.size : 18}
         color={themes['defaultTheme'].warnColor}
         icon={
           props.totalRating >= 3
@@ -46,7 +52,7 @@ const RatingStars = (props: Props) => {
         }
       />
       <FontAwesomeIcon
-        size={18}
+        size={props.size ? props.size : 18}
         color={themes['defaultTheme'].warnColor}
         icon={
           props.totalRating >= 4
@@ -57,7 +63,7 @@ const RatingStars = (props: Props) => {
         }
       />
       <FontAwesomeIcon
-        size={18}
+        size={props.size ? props.size : 18}
         color={themes['defaultTheme'].warnColor}
         icon={
           props.totalRating == 5

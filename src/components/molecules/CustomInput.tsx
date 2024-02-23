@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  FlexStyle,
   KeyboardType,
   KeyboardTypeOptions,
   StyleSheet,
@@ -23,7 +24,10 @@ interface Props {
   marginBottom?: number;
   icon?: IconProp;
   keyboardType?: KeyboardType;
-  flex?:number;
+  flex?: number;
+  multiLine?: boolean;
+  width?: FlexStyle['width'];
+  hideTitle?: boolean;
 }
 
 const CustomInput = (props: Props) => {
@@ -46,11 +50,14 @@ const CustomInput = (props: Props) => {
             ? themes[currentTheme].textSecondaryColor
             : '',
           backgroundColor: props.icon ? themes[currentTheme].tertiaryColor : '',
-          flex: props.flex
+          flex: props.flex,
+          width: props.width,
         },
         props.icon ? styles.view : null,
       ]}>
-      {props.icon == null ? (
+      {props.hideTitle ? (
+        <></>
+      ) : props.icon == null ? (
         <CustomText textTransform="capitalize" type="title" marginBottom={12}>
           {props.placeholder + ''}
         </CustomText>
@@ -64,6 +71,7 @@ const CustomInput = (props: Props) => {
       )}
 
       <TextInput
+        multiline={props.multiLine}
         keyboardType={props.keyboardType}
         secureTextEntry={secure}
         placeholder={props.placeholder}

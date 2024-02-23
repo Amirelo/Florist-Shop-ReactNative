@@ -1,7 +1,7 @@
 // React and libs
 import React from 'react';
 import {FlatList} from 'react-native';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
 // Models
@@ -23,12 +23,14 @@ import {
 import themes from '../../../themes/themes';
 
 // Utilities
-import {dateFormat} from '../../../utils/Utils';
 import {ItemReview} from '../../../components/molecules';
+import { TextButton } from '../../../components/molecules/buttons';
+import { NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT } from '../../../constants/AppConstants';
 
 const ProductReviewScreen = () => {
   // Initials
   const route = useRoute<RouteProp<any>>();
+  const navigation = useNavigation<NavigationProp<any>>();
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
@@ -39,12 +41,7 @@ const ProductReviewScreen = () => {
   >([]);
   const [listReviews, setListReviews] = React.useState<Array<ReviewModel>>([]);
 
-  const tempList = [
-    'https://images.pexels.com/photos/20324592/pexels-photo-20324592/free-photo-of-coffee-beans-in-small-bowl-on-wood-background.jpeg',
-    'https://images.pexels.com/photos/20328920/pexels-photo-20328920/free-photo-of-a-kangaroo-is-standing-in-the-grass-near-a-road.jpeg',
-    'https://images.pexels.com/photos/20315644/pexels-photo-20315644/free-photo-of-summer-garden-leaf-blur.jpeg',
-  ];
-
+  // Get data from server
   const getData = async () => {
     if (route.params?.data) {
       setSelectedProduct(route.params.data);
@@ -54,6 +51,11 @@ const ProductReviewScreen = () => {
     }
   };
 
+  // Navigate - ProductReviewEditScreen
+  const onWritePresed = () => {
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT)
+  }
+
   // Get data from route
   React.useEffect(() => {
     getData();
@@ -62,6 +64,7 @@ const ProductReviewScreen = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
+        <TextButton onPressed={onWritePresed} type='primary' marginBottom={20}>Write a review</TextButton>
         <CustomText>Review screen</CustomText>
 
         <FlatList

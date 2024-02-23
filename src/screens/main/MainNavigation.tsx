@@ -18,6 +18,7 @@ import {
   SettingScreen,
   ProductFilterScreen,
   ProductReviewScreen,
+  ProductReviewEditScreen,
 } from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -46,6 +47,7 @@ import {
   NAVIGATION_MAIN_PRODUCT_DETAIL,
   NAVIGATION_MAIN_PRODUCT_FILTER,
   NAVIGATION_MAIN_PRODUCT_REVIEW,
+  NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT,
   NAVIGATION_MAIN_PROFILE,
   NAVIGATION_MAIN_PROMOCODES,
   NAVIGATION_MAIN_SETTINGS,
@@ -86,6 +88,11 @@ const MainNavigation = () => {
         options={{title: lang[langPref].nav_main_prod_reviews}}
           name={NAVIGATION_MAIN_PRODUCT_REVIEW}
           component={ProductReviewScreen}
+        />
+        <Stack.Screen
+          options={{title: lang[langPref].nav_main_prod_reviews_edit}}
+          name={NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT}
+          component={ProductReviewEditScreen}
         />
         <Stack.Screen
           options={{title: lang[langPref].nav_main_profile}}
@@ -147,6 +154,8 @@ const MainNavigation = () => {
           name={NAVIGATION_MAIN_SETTINGS}
           component={SettingScreen}
         />
+
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

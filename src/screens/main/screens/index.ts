@@ -16,6 +16,7 @@ import CartDelivery from './CartDeliverty';
 import CartDetail from './CartDetail';
 import SettingScreen from './SettingScreen';
 import ProductReviewScreen from './ProductReviewScreen';
+import ProductReviewEditScreen from './ProductReviewEditScreen';
 
 export {
   HomeScreen,
@@ -36,4 +37,5 @@ export {
   SettingScreen,
   ProductFilterScreen,
   ProductReviewScreen,
+  ProductReviewEditScreen,
 };
