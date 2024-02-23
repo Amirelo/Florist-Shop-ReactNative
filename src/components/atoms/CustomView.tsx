@@ -10,7 +10,6 @@ interface Props {
   backgroundColor?: ViewStyle['backgroundColor'];
   borderColor?: ViewStyle['borderColor'];
   style?: StyleProp<ViewStyle>;
-  flex?: ViewStyle['flex'];
 }
 
 const CustomView = (props: Props) => {
@@ -30,7 +29,6 @@ const CustomView = (props: Props) => {
           marginBottom: props.marignBottom,
           borderColor: props.borderColor,
           borderWidth: props.borderColor ? 1 : undefined,
-          flex: props.flex,
         },
         props.style,
       ]}>

@@ -2,7 +2,7 @@ class ReviewModel {
   id: string;
   name: string;
   userImage: string;
-  comment: string;
+  rating: number;
   date: string;
   description: string;
   images: Array<string>;
@@ -11,7 +11,7 @@ class ReviewModel {
     id: string,
     name: string,
     userImage: string,
-    comment: string,
+    rating: number,
     date: string,
     description: string,
     images: Array<string>,
@@ -19,9 +19,11 @@ class ReviewModel {
     this.id = id;
     this.name = name;
     this.userImage = userImage;
-    this.comment = comment;
+    this.rating = rating;
     this.date = date;
     this.description = description;
     this.images = images;
   }
 }
+
+export default ReviewModel

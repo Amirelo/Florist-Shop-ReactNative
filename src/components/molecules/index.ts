@@ -15,6 +15,7 @@ import ItemAddress from './ItemAddress';
 import ItemPromocode from './ItemPromocode';
 import ItemCartDetail from './ItemCartDetail';
 import ItemPick from './ItemPick';
+import ItemReview from './ItemReview';
 
 export {
   CardHelp,
@@ -33,5 +34,6 @@ export {
   ItemAddress,
   ItemPromocode,
   ItemCartDetail,
-  ItemPick
+  ItemPick,
+  ItemReview,
 };

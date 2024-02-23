@@ -5,10 +5,10 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
 // Models
-import { ProductModel } from '../../../models';
+import {ProductModel, ReviewModel} from '../../../models';
 
 // Services
-import { getProductReviews } from '../MainService';
+import {getProductReviews} from '../MainService';
 
 // Components
 import {
@@ -24,6 +24,7 @@ import themes from '../../../themes/themes';
 
 // Utilities
 import {dateFormat} from '../../../utils/Utils';
+import {ItemReview} from '../../../components/molecules';
 
 const ProductReviewScreen = () => {
   // Initials
@@ -33,8 +34,10 @@ const ProductReviewScreen = () => {
   );
 
   // Fields
-  const [selectedProduct, setSelectedProduct] = React.useState<Array<ProductModel>>([]);
-  const [listComments, setListComments] = React.useState<Array<ReviewModel>>([]);
+  const [selectedProduct, setSelectedProduct] = React.useState<
+    Array<ProductModel>
+  >([]);
+  const [listReviews, setListReviews] = React.useState<Array<ReviewModel>>([]);
 
   const tempList = [
     'https://images.pexels.com/photos/20324592/pexels-photo-20324592/free-photo-of-coffee-beans-in-small-bowl-on-wood-background.jpeg',
@@ -42,57 +45,31 @@ const ProductReviewScreen = () => {
     'https://images.pexels.com/photos/20315644/pexels-photo-20315644/free-photo-of-summer-garden-leaf-blur.jpeg',
   ];
 
-
-  const getData = async() => {
+  const getData = async () => {
     if (route.params?.data) {
-      setSelectedProduct(route.params.data)
-      const product: ProductModel = route.params.data
-      const data = await getProductReviews(product.id)
-      setListComments(data)
-
+      setSelectedProduct(route.params.data);
+      const product: ProductModel = route.params.data;
+      const data = await getProductReviews(product.id);
+      setListReviews(data);
     }
-  }
+  };
 
   // Get data from route
-  React.useEffect(()=>{ 
-    getData()
-  },[])
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
         <CustomText>Review screen</CustomText>
 
-        <CustomView
-          style={{marginHorizontal: 20, marginTop: 20}}
-          type="itemPadding"
-          borderColor={themes[currentTheme].textSecondaryColor}>
-          <CustomImage
-            style={{position: 'absolute', top: -20, left: -20}}
-            type="review_icon"
-            source="https://images.pexels.com/photos/19673995/pexels-photo-19673995/free-photo-of-brunette-woman-in-shadow-in-forest.jpeg"
-          />
-          <CustomView
-            style={{paddingLeft: '10%'}}
-            backgroundColor={'#ffffff00'}>
-            <ItemRow marginBottom={4}>
-              <CustomText>Name</CustomText>
-              <CustomText>{dateFormat('20240202')}</CustomText>
-            </ItemRow>
-            <RatingStars totalRating={3} />
-            <CustomText>Description</CustomText>
-            <FlatList
-              data={tempList}
-              horizontal={true}
-              contentContainerStyle={{gap: 8}}
-              key={'#'}
-              keyExtractor={item => item}
-              renderItem={({item}) => (
-                <CustomImage type={'tabImage'} source={item} />
-              )}
-            />
-          </CustomView>
-        </CustomView>
+        <FlatList
+          key={'#'}
+          data={listReviews}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => <ItemReview data={item} />}
+        />
       </CustomView>
     </CustomView>
   );

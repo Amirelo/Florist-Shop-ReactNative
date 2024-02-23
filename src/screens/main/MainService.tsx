@@ -6,6 +6,7 @@ import {
   OrderModel,
   ProductModel,
   PromocodeModel,
+  ReviewModel
 } from '../../models';
 
 // Get all categories from server
@@ -68,7 +69,7 @@ export const getProductReviews = async (productID: string) => {
         doc.id,
         doc.data().name,
         doc.data().userImage,
-        doc.data().comment,
+        doc.data().rating,
         doc.data().date,
         doc.data().description,
         doc.data().images,
