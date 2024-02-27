@@ -1,11 +1,20 @@
-import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText, CustomView, Divider, ItemRow} from '../atoms';
-import {AddressModel} from '../../models';
-import themes from '../../themes/themes';
-import {TextButton} from './buttons';
-import {addressFormat} from '../../utils/Utils';
+// React and libs
+import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+
+// Models
+import {AddressModel} from '../../models';
+
+// Components
+import {CustomText, CustomView, Divider, ItemRow} from '../atoms';
+import {TextButton} from './buttons';
+
+// User Preferences
+import themes from '../../themes/themes';
 import lang from '../../language/lang';
+
+// Utilities
+import {addressFormat} from '../../utils/Utils';
 
 interface Props {
   item: AddressModel;
@@ -14,10 +23,13 @@ interface Props {
 }
 
 const ItemAddress = (props: Props) => {
+  // Get selected theme and language
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
-  const langPref:keyof typeof lang = useSelector((store:any) => store.preference.language)
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
   return (
     <CustomView
       type={'itemPadding'}
@@ -28,7 +40,9 @@ const ItemAddress = (props: Props) => {
       <Divider marginBottom={8} />
 
       <ItemRow marginBottom={8}>
-        <CustomText type="subTitle">{lang[langPref].text_street_number}</CustomText>
+        <CustomText type="subTitle">
+          {lang[langPref].text_street_number}
+        </CustomText>
         <CustomText>{props.item.streetNumber + ''}</CustomText>
       </ItemRow>
       <Divider marginBottom={8} />

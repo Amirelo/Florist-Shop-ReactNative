@@ -1,3 +1,4 @@
+// React and libs
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {
@@ -6,10 +7,16 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
+
+// Constants
+import {NAVIGATION_AUTH_SIGNIN} from '../../../constants/AppConstants';
+
+// Components
 import {CustomText, CustomView} from '../../../components/atoms';
 import {TextButton} from '../../../components/molecules/buttons';
+
+// Preferences
 import lang from '../../../language/lang';
-import {NAVIGATION_AUTH_SIGNIN} from '../../../constants/AppConstants';
 
 const ActionCompleteScreen = () => {
   // Initial

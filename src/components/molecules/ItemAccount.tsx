@@ -1,10 +1,15 @@
+// React and libs
 import React from 'react';
 import {ColorValue, StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText} from '../atoms';
+
+// User Preferences
 import themes from '../../themes/themes';
-import { useSelector } from 'react-redux';
 
 interface Props {
   children: string;
@@ -18,7 +23,10 @@ interface Props {
 }
 
 const ItemAccount = (props: Props) => {
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  // Get selected theme
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
 
   return (
     <CustomButton
@@ -36,12 +44,15 @@ const ItemAccount = (props: Props) => {
           {props.children}
         </CustomText>
         <CustomText color={themes['defaultTheme'].textSecondaryColor}>
-          {props.amount!= null
+          {props.amount != null
             ? props.amount + ' ' + props.description
             : props.description}
         </CustomText>
       </View>
-      <FontAwesomeIcon color={themes[currentTheme].textColor} icon={faChevronRight} />
+      <FontAwesomeIcon
+        color={themes[currentTheme].textColor}
+        icon={faChevronRight}
+      />
     </CustomButton>
   );
 };
@@ -53,7 +64,7 @@ const styles = StyleSheet.create({
     height: 72,
     borderRadius: 7,
     padding: 16,
-    
+
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

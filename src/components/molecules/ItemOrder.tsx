@@ -1,12 +1,21 @@
-import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomText, ItemRow} from '../atoms';
-import themes from '../../themes/themes';
+// React and libs
 import React from 'react';
-import OrderModel from '../../models/OrderModel';
-import {dateFormat, priceFormat} from '../../utils/Utils';
+import {StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
+
+// Models
+import OrderModel from '../../models/OrderModel';
+
+// Components
+import {CustomText, ItemRow} from '../atoms';
 import {TextButton} from './buttons';
+
+// User Preferences
+import themes from '../../themes/themes';
 import lang from '../../language/lang';
+
+// Utilities
+import {dateFormat, priceFormat} from '../../utils/Utils';
 
 interface Props {
   marginTop?: number;

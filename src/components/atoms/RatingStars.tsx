@@ -1,11 +1,16 @@
+// React and libs
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import * as solid from '@fortawesome/free-solid-svg-icons';
 import * as regular from '@fortawesome/free-regular-svg-icons';
-import themes from '../../themes/themes';
+
+// Components
 import {CustomButton} from '.';
-import {useSelector} from 'react-redux';
+
+// User Preferences
+import themes from '../../themes/themes';
 
 interface Props {
   totalRating: number;
@@ -14,11 +19,13 @@ interface Props {
 }
 
 const RatingStars = (props: Props) => {
+  // Get seleceted theme
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
   return (
     <View style={styles.rating}>
+      {/* Star - 1 */}
       <CustomButton
         onPressed={() => (props.onChanged ? props.onChanged('1') : '')}>
         <FontAwesomeIcon
@@ -33,6 +40,8 @@ const RatingStars = (props: Props) => {
           }
         />
       </CustomButton>
+
+      {/* Star - 2 */}
       <CustomButton
         onPressed={() => (props.onChanged ? props.onChanged('2') : '')}>
         <FontAwesomeIcon
@@ -48,6 +57,7 @@ const RatingStars = (props: Props) => {
         />
       </CustomButton>
 
+      {/* Star - 3 */}
       <CustomButton
         onPressed={() => (props.onChanged ? props.onChanged('3') : '')}>
         <FontAwesomeIcon
@@ -63,6 +73,7 @@ const RatingStars = (props: Props) => {
         />
       </CustomButton>
 
+      {/* Star - 4 */}
       <CustomButton
         onPressed={() => (props.onChanged ? props.onChanged('4') : '')}>
         <FontAwesomeIcon
@@ -78,6 +89,7 @@ const RatingStars = (props: Props) => {
         />
       </CustomButton>
 
+      {/* Star -5 */}
       <CustomButton
         onPressed={() => (props.onChanged ? props.onChanged('5') : '')}>
         <FontAwesomeIcon

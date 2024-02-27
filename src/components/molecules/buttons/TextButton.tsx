@@ -1,7 +1,12 @@
+// React and libs
 import {ColorValue, FlexStyle, StyleSheet, TextStyle} from 'react-native';
-import {CustomButton, CustomText} from '../../atoms';
-import themes from '../../../themes/themes';
 import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText} from '../../atoms';
+
+// User Preferences
+import themes from '../../../themes/themes';
 
 interface Props {
   children: string;
@@ -25,16 +30,21 @@ interface Props {
 }
 
 const TextButton = (props: Props) => {
+  // Get selected theme
   const currentThemes: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
   const selectedStyle = props.type ? props.type : 'none';
+
   return (
     <CustomButton
       style={[
         styles[selectedStyle],
         {
-          borderColor: props.type == 'tertiary' ? themes[currentThemes].textSecondaryColor :'',
+          borderColor:
+            props.type == 'tertiary'
+              ? themes[currentThemes].textSecondaryColor
+              : '',
           marginTop: props.marginTop,
           marginBottom: props.marginBottom,
           backgroundColor: props.backgroundColor
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 7,
     backgroundColor: 'white',
-    
+
     alignItems: 'center',
     justifyContent: 'center',
   },

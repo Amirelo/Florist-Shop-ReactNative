@@ -1,8 +1,15 @@
+// React and libs
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import themes from '../../themes/themes';
-import {CustomText, CustomImage, CustomButton} from '../atoms';
+
+// Models
 import {CategoryModel} from '../../models';
+
+// Components
+import {CustomText, CustomImage, CustomButton} from '../atoms';
+
+// User Preferences
+import themes from '../../themes/themes';
 
 interface Props {
   //marginTop?: number;

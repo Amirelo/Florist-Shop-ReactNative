@@ -1,13 +1,20 @@
+// React and libs
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage, CustomButton, ItemRow} from '../atoms';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import * as solid from '@fortawesome/free-solid-svg-icons';
-import themes from '../../themes/themes';
+import {useSelector} from 'react-redux';
+
+// Models
 import {CartModel, ProductModel} from '../../models';
-import {priceFormat} from '../../utils/Utils';
+
+// Components
+import {CustomText, CustomImage, CustomButton, ItemRow} from '../atoms';
+
+// User Preferences
+import themes from '../../themes/themes';
 import lang from '../../language/lang';
-import { useSelector } from 'react-redux';
+
+// Utilities
+import {priceFormat} from '../../utils/Utils';
 
 interface Props {
   product: ProductModel;
@@ -19,7 +26,11 @@ interface Props {
 }
 
 const ItemCartDetail = (props: Props) => {
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  // Get selected theme
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
+
   return (
     <CustomButton
       onPressed={props.onPressed}
@@ -29,7 +40,7 @@ const ItemCartDetail = (props: Props) => {
           {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
-            backgroundColor: themes[currentTheme].tertiaryColor
+            backgroundColor: themes[currentTheme].tertiaryColor,
           },
         ] as ViewStyle
       }>
@@ -58,7 +69,7 @@ const ItemCartDetail = (props: Props) => {
         </ItemRow>
         <ItemRow marginBottom={4}>
           <CustomText>Total:</CustomText>
-          <CustomText  color={themes[currentTheme].primaryColor}>
+          <CustomText color={themes[currentTheme].primaryColor}>
             {props.cart
               ? priceFormat(props.product.price * props.cart.quantity, 'vn')
               : '0'}
@@ -77,7 +88,6 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     padding: 12,
     borderRadius: 14,
-    
   },
   body: {
     flexDirection: 'row',

@@ -1,15 +1,12 @@
+// React and libs
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import {
-  ActionCompleteScreen,
-  SignInScreen,
-  SignUpScreen,
-  VerifyEmailScreen,
-} from './screens';
+
+// Constants
 import {
   NAVIGATION_AUTH_ACTIONCOMPLETE,
   NAVIGATION_AUTH_SIGNIN,
@@ -17,9 +14,19 @@ import {
   NAVIGATION_AUTH_VERIFY,
 } from '../../constants/AppConstants';
 
+// Screens
+import {
+  ActionCompleteScreen,
+  SignInScreen,
+  SignUpScreen,
+  VerifyEmailScreen,
+} from './screens';
+
+// Navigator
 const Stack = createNativeStackNavigator();
 
 const AuthNavigation = () => {
+  // Hide header
   const generalOption: NativeStackNavigationOptions = {headerShown: false};
 
   return (

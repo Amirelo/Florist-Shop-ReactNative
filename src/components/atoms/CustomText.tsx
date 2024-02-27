@@ -1,3 +1,4 @@
+// React and libs
 import React from 'react';
 import {
   ColorValue,
@@ -7,7 +8,9 @@ import {
   Text,
   TextStyle,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
+
+// User Preferences
 import themes from '../../themes/themes';
 
 interface Props {
@@ -25,12 +28,21 @@ interface Props {
 }
 
 const CustomText = (props: Props) => {
-  const allowFont = ['','Inter','DancingScript']
+  // Available fonts
+  const allowFont = ['', 'Inter', 'DancingScript'];
+
+  // User Preferences
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
+  const currentFont: keyof typeof allowFont = useSelector(
+    (store: any) => store.preference.font,
+  );
+  const currentFontScale: number = useSelector(
+    (store: any) => store.preference.fontScale,
+  );
 
   const selectedType = props.type ? props.type : 'normal';
-  const currentTheme:keyof typeof themes = useSelector((store:any)=> store.preference.theme)
-  const currentFont: keyof typeof allowFont = useSelector((store:any) => store.preference.font)
-  const currentFontScale:number = useSelector((store:any) => store.preference.fontScale)
   return (
     <Text
       numberOfLines={props.maxLines ? props.maxLines : 10}
@@ -43,13 +55,16 @@ const CustomText = (props: Props) => {
           textTransform: props.textTransform,
           alignSelf: props.alignSelf,
           fontFamily:
-            props.fontWeight == 'bold' ? currentFont.toString() + '-Bold' : currentFont.toString() + '-Regular',
-          fontWeight: currentFont.toString().length > 0 ? undefined : props.fontWeight,
+            props.fontWeight == 'bold'
+              ? currentFont.toString() + '-Bold'
+              : currentFont.toString() + '-Regular',
+          fontWeight:
+            currentFont.toString().length > 0 ? undefined : props.fontWeight,
           fontSize: selectedType
-             ? currentFont.toString() == 'DancingScript'
-               ? styles[selectedType].fontSize + 5 + currentFontScale
-              : styles[selectedType].fontSize  + currentFontScale
-            : styles['normal'].fontSize + currentFontScale
+            ? currentFont.toString() == 'DancingScript'
+              ? styles[selectedType].fontSize + 5 + currentFontScale
+              : styles[selectedType].fontSize + currentFontScale
+            : styles['normal'].fontSize + currentFontScale,
         },
         props.style,
       ]}>

@@ -1,19 +1,28 @@
+// React and libs
 import React from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import {
-  IMAGE_AUTH_BACKGROUND,
-  NAVIGATION_AUTH_ACTIONCOMPLETE,
-} from '../../../constants/AppConstants';
 import {
   faArrowLeft,
   faEnvelope,
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
+
+// Constants
+import {
+  IMAGE_AUTH_BACKGROUND,
+  NAVIGATION_AUTH_ACTIONCOMPLETE,
+} from '../../../constants/AppConstants';
+
+// Services
+import {passwordSignUp} from '../AuthService';
+
+// Components
 import {CustomImage, CustomText, CustomView} from '../../../components/atoms';
 import {CustomInput} from '../../../components/molecules';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
-import {passwordSignUp} from '../AuthService';
+
+// Preferences
 import lang from '../../../language/lang';
 
 const SignUpScreen = () => {

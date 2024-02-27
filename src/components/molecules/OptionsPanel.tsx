@@ -1,9 +1,13 @@
-import {ScrollView, StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomButton, CustomText, Divider} from '../atoms';
+// React and libs
 import React from 'react';
-import { height } from '@fortawesome/free-brands-svg-icons/fa42Group';
+import {ScrollView, StyleSheet, View, ViewStyle} from 'react-native';
+import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText, Divider} from '../atoms';
+
+// User Preferences
 import themes from '../../themes/themes';
-import { useSelector } from 'react-redux';
 
 interface Props {
   children: any;
@@ -13,7 +17,9 @@ interface Props {
 }
 
 const OptionsPanel = (props: Props) => {
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
 
   const onBackgroundPressed = () => {
     props.setActive(false);
@@ -23,14 +29,28 @@ const OptionsPanel = (props: Props) => {
     <View style={styles.view}>
       <CustomButton
         onPressed={onBackgroundPressed}
-        style={[styles.back,{backgroundColor: themes[currentTheme].textColor+'20',}]}></CustomButton>
-      <View style={[styles.main, {height: props.maxHeight, backgroundColor: themes[currentTheme].tertiaryColor,}]}>
+        style={[
+          styles.back,
+          {backgroundColor: themes[currentTheme].textColor + '20'},
+        ]}></CustomButton>
+      <View
+        style={[
+          styles.main,
+          {
+            height: props.maxHeight,
+            backgroundColor: themes[currentTheme].tertiaryColor,
+          },
+        ]}>
         <CustomText type="title" marginBottom={20}>
           {props.title}
         </CustomText>
         <Divider width={'90%'} marginBottom={20} />
         <View style={{width: '90%'}}>
-          <ScrollView scrollEnabled={true} contentContainerStyle={{alignItems:'center', gap:16}}>{props.children}</ScrollView>
+          <ScrollView
+            scrollEnabled={true}
+            contentContainerStyle={{alignItems: 'center', gap: 16}}>
+            {props.children}
+          </ScrollView>
         </View>
       </View>
     </View>
@@ -54,12 +74,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     alignItems: 'center',
-    
   },
   back: {
     width: '100%',
     height: '100%',
-    
+
     position: 'absolute',
   },
 });

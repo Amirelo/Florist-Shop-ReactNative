@@ -1,23 +1,39 @@
-import {StyleSheet, View} from 'react-native';
-import {ItemProfile, OptionsPanel} from '../../../components/molecules';
+// React and libs
+import React from 'react';
 import {
   faEnvelope,
   faLock,
   faPhone,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import {CustomButton, CustomImage, CustomText, CustomView} from '../../../components/atoms';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {CameraOptions, launchCamera} from 'react-native-image-picker';
-import React from 'react';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import {CameraOptions, launchCamera} from 'react-native-image-picker';
 import {useDispatch, useSelector} from 'react-redux';
+
+// Constants
+import {NAVIGATION_MAIN_UPDATE_INFO} from '../../../constants/AppConstants';
+
+// Models
 import {UserModel} from '../../../models';
-import {updateImage, updateUserInfo} from '../../auth/AuthService';
-import {NAVIGATION_MAIN_UPDATE_INFO, UPDATE_USER_PROFILE_PICTURE} from '../../../constants/AppConstants';
+
+// Services
+import {updateImage} from '../../auth/AuthService';
+
+// Redux
 import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
+
+// Components
+import {
+  CustomButton,
+  CustomImage,
+  CustomText,
+  CustomView,
+} from '../../../components/atoms';
+import {ItemProfile, OptionsPanel} from '../../../components/molecules';
+
+// User Preferences
 import lang from '../../../language/lang';
 
 const ProfileScreen = () => {
@@ -35,13 +51,14 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((store: any) => store.isLoggedIn.userInfo);
 
-  const langPref: keyof typeof lang = useSelector((store:any) => store.preference.language)
+  const langPref: keyof typeof lang = useSelector(
+    (store: any) => store.preference.language,
+  );
 
   const onProfileTabPressed = (type: string, data: string) => {
     console.log('data:', data);
     navigation.navigate(NAVIGATION_MAIN_UPDATE_INFO, {type: type, data: data});
   };
-
 
   // Show option menu when image pressed
   const onImagePressed = () => {
@@ -93,7 +110,8 @@ const ProfileScreen = () => {
       }
     });
   };
- 
+
+  // Check data from route
   React.useEffect(() => {
     if (route.params?.email) {
       setEmail(route.params.email);
@@ -105,6 +123,7 @@ const ProfileScreen = () => {
     console.log('User info:', userInfo);
   }, []);
 
+  // Set user on userInfo changed
   React.useEffect(() => {
     console.log('User info changed');
     setUser(userInfo);
@@ -112,9 +131,10 @@ const ProfileScreen = () => {
   }, [userInfo]);
 
   return (
-    <CustomView type='fullscreen'>
-      <CustomView type='body'>
+    <CustomView type="fullscreen">
+      <CustomView type="body">
         <CustomButton onPressed={onImagePressed}>
+          {/* User Image */}
           <CustomImage
             type="profile"
             source={
@@ -126,6 +146,8 @@ const ProfileScreen = () => {
             marginBottom={20}
           />
         </CustomButton>
+
+        {/* Email */}
         <ItemProfile
           title={lang[langPref].edEmail}
           data={email}
@@ -133,6 +155,8 @@ const ProfileScreen = () => {
           marginBottom={12}
           viewOnly={true}
         />
+
+        {/* Username */}
         <ItemProfile
           title={lang[langPref].edUsername}
           data={user ? user.username! : ''}
@@ -141,6 +165,7 @@ const ProfileScreen = () => {
           onPressed={data => onProfileTabPressed('USERNAME', data)}
         />
 
+        {/* Phone Number */}
         <ItemProfile
           title={lang[langPref].edPhone}
           data={user ? user.phoneNumber! : ''}
@@ -149,6 +174,7 @@ const ProfileScreen = () => {
           onPressed={data => onProfileTabPressed('PHONENUMBER', data)}
         />
 
+        {/* Password */}
         <ItemProfile
           title={lang[langPref].edPass}
           data="**********"
@@ -157,13 +183,20 @@ const ProfileScreen = () => {
           onPressed={() => onProfileTabPressed('EMAIL', '')}
         />
       </CustomView>
+      {/* Option panel - user images */}
       {active ? (
-        <OptionsPanel title={lang[langPref].option_title_userimg} setActive={setActive}>
+        <OptionsPanel
+          title={lang[langPref].option_title_userimg}
+          setActive={setActive}>
           <CustomButton onPressed={onStoragePressed}>
-            <CustomText type='subTitle'>{lang[langPref].option_storage}</CustomText>
+            <CustomText type="subTitle">
+              {lang[langPref].option_storage}
+            </CustomText>
           </CustomButton>
           <CustomButton onPressed={onCameraPressed}>
-            <CustomText type='subTitle'>{lang[langPref].option_camera}</CustomText>
+            <CustomText type="subTitle">
+              {lang[langPref].option_camera}
+            </CustomText>
           </CustomButton>
         </OptionsPanel>
       ) : (
@@ -174,13 +207,3 @@ const ProfileScreen = () => {
 };
 
 export default ProfileScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    width: '100%',
-    height: '100%',
-  },
-  body: {
-    paddingHorizontal: 16,
-  },
-});

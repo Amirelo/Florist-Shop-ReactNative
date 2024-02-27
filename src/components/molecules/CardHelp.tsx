@@ -1,10 +1,14 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CustomButton, CustomImage, CustomText} from '../atoms';
+// React and libs
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {faCalendarDays} from '@fortawesome/free-regular-svg-icons';
-import themes from '../../themes/themes';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomImage, CustomText} from '../atoms';
+
+// User Preferences
+import themes from '../../themes/themes';
 
 interface Props {
   title: string;
@@ -18,6 +22,7 @@ interface Props {
 }
 
 const CardHelp = (props: Props) => {
+  // Get seleceted theme
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
@@ -41,7 +46,14 @@ const CardHelp = (props: Props) => {
         }>
         {props.backgroundImage ? (
           <View style={[styles.backgroundView]}>
-            <CustomImage type="match_parent" source={currentTheme == 'dark' ? props.backgroundImage[1] : props.backgroundImage[0]} />
+            <CustomImage
+              type="match_parent"
+              source={
+                currentTheme == 'dark'
+                  ? props.backgroundImage[1]
+                  : props.backgroundImage[0]
+              }
+            />
           </View>
         ) : (
           <></>
@@ -51,13 +63,19 @@ const CardHelp = (props: Props) => {
             <CustomText type="big" color={themes[currentTheme].tertiaryColor}>
               {props.title ? props.title : ''}
             </CustomText>
-            <CustomText type="subTitle" color={themes[currentTheme].tertiaryColor}>
+            <CustomText
+              type="subTitle"
+              color={themes[currentTheme].tertiaryColor}>
               {props.description ? props.description : ''}
             </CustomText>
           </View>
 
           {props.icon ? (
-            <FontAwesomeIcon color={themes[currentTheme].tertiaryColor} size={39} icon={props.icon} />
+            <FontAwesomeIcon
+              color={themes[currentTheme].tertiaryColor}
+              size={39}
+              icon={props.icon}
+            />
           ) : (
             <></>
           )}

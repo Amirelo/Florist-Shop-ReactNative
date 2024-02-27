@@ -1,9 +1,19 @@
+// React and libs
 import React from 'react';
 import {useSelector} from 'react-redux';
+
+// Models
 import {PromocodeModel} from '../../models';
+
+// Components
 import {CustomImage, CustomText, CustomView, ItemRow} from '../atoms';
+
+// User Preferences
 import themes from '../../themes/themes';
+
+// Utilities
 import {promoEffectFormat} from '../../utils/Utils';
+
 
 interface Props {
   item: PromocodeModel;

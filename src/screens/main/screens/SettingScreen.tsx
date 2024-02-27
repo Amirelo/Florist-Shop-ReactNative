@@ -1,14 +1,8 @@
-import {StyleSheet, View} from 'react-native';
-import {
-  CustomButton,
-  CustomText,
-  CustomView,
-  Divider,
-  ItemRow,
-} from '../../../components/atoms';
-import {OptionsPanel, QuantityCounter} from '../../../components/molecules';
+// React and libs
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+
+// Redux
 import {
   changeFontFamily,
   changeFontSize,
@@ -16,9 +10,20 @@ import {
   changeTheme,
   resetUserPreference,
 } from '../../../redux/actions/PreferenceAction';
+
+// Components
+import {
+  CustomButton,
+  CustomText,
+  CustomView,
+  ItemRow,
+} from '../../../components/atoms';
+import {OptionsPanel, QuantityCounter} from '../../../components/molecules';
+import {TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
 import lang from '../../../language/lang';
 import themes from '../../../themes/themes';
-import {TextButton} from '../../../components/molecules/buttons';
 
 const SettingScreen = () => {
   // Initial
@@ -33,13 +38,14 @@ const SettingScreen = () => {
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
-
+  // Get currrent theme
   const themePref: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
-
+  // Get currrent font
   const font: string = useSelector((store: any) => store.preference.font);
 
+  // Get currrent font scale
   const fontScale: number = useSelector(
     (store: any) => store.preference.fontScale,
   );
@@ -97,6 +103,7 @@ const SettingScreen = () => {
         <CustomText type="title" marginBottom={12}>
           {lang[langPref].text_language}
         </CustomText>
+        {/* Button - change language */}
         <TextButton
           type="tertiary"
           marginBottom={20}
@@ -108,6 +115,7 @@ const SettingScreen = () => {
         <CustomText type="title" marginBottom={12}>
           {lang[langPref].text_theme}
         </CustomText>
+        {/* Button - change theme */}
         <TextButton
           type="tertiary"
           onPressed={onThemePressed}
@@ -121,6 +129,7 @@ const SettingScreen = () => {
         <CustomText type="title" marginBottom={12}>
           Font Family
         </CustomText>
+        {/* Button - change font */}
         <TextButton type="tertiary" marginBottom={20} onPressed={onFontPressed}>
           {font ? font : 'Font Family'}
         </TextButton>

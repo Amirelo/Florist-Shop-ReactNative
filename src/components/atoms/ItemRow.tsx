@@ -1,3 +1,4 @@
+// React and libs
 import {FlexStyle, StyleSheet, View} from 'react-native';
 
 interface Props {

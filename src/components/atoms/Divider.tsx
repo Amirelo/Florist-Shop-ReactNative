@@ -1,7 +1,10 @@
+// React and libs
 import {DimensionValue, StyleSheet} from 'react-native';
 import {View} from 'react-native';
-import themes from '../../themes/themes';
 import { useSelector } from 'react-redux';
+
+// User Preferences
+import themes from '../../themes/themes';
 
 interface Props {
   paddingHorizontal?: number;
@@ -10,6 +13,7 @@ interface Props {
 }
 
 const Divider = (props: Props) => {
+  // User Preferences
   const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
   return (
     <View

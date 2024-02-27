@@ -1,11 +1,20 @@
+// React and libs
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
+import {useSelector} from 'react-redux';
+
+// Models
 import {ProductModel} from '../../models';
+
+// Components
+import {CustomText, CustomImage, RatingStars, CustomButton} from '../atoms';
+
+// User Preferences
 import themes from '../../themes/themes';
 import lang from '../../language/lang';
+
+// Utilities
 import {priceFormat} from '../../utils/Utils';
-import {useSelector} from 'react-redux';
 
 interface Props {
   product: ProductModel;

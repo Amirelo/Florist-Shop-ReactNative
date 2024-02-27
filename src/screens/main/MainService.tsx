@@ -100,6 +100,7 @@ export const AddUserReview = async (
   email: string,
   userImage: string,
   data: ReviewModel,
+  isAnonymous: boolean,
 ) => {
   var currentdate = new Date();
   var year = currentdate.getFullYear();
@@ -121,8 +122,10 @@ export const AddUserReview = async (
     .set({
       date: date,
       description: data.description,
-      images: data.images,
-      name: data.name,
+      images: isAnonymous
+        ? 'https://images.pexels.com/photos/2375034/pexels-photo-2375034.jpeg'
+        : data.images,
+      name: isAnonymous ? 'Anonymous' : data.name,
       rating: data.rating,
       userImage: userImage,
     });

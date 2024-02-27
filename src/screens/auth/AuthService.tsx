@@ -1,7 +1,10 @@
+// React and libs
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+// Models
 import {PromocodeModel, UserModel} from '../../models';
 
 // Config for signing in with Google

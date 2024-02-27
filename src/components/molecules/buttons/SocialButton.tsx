@@ -1,10 +1,14 @@
+// React and libs
 import {StyleSheet} from 'react-native';
-import {CustomButton, CustomText} from '../../atoms';
-import themes from '../../../themes/themes';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText} from '../../atoms';
+
+// User Preferences
+import themes from '../../../themes/themes';
 
 interface Props {
   children: string;

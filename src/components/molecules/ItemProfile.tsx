@@ -1,10 +1,15 @@
+// React and libs
 import {StyleSheet, View} from 'react-native';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CustomButton, CustomText} from '../atoms';
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText} from '../atoms';
+
+// User Preferences
 import themes from '../../themes/themes';
-import { useSelector } from 'react-redux';
 
 interface Props {
   icon: IconProp;
@@ -17,7 +22,9 @@ interface Props {
 }
 
 const ItemProfile = (props: Props) => {
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <CustomButton
       onPressed={() =>

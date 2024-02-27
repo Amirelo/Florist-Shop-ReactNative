@@ -1,25 +1,6 @@
+// React and libs
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  HomeScreen,
-  ExploreScreen,
-  CartScreen,
-  AccountScreen,
-  ProfileScreen,
-  UpdateInfoScreen,
-  OrderScreen,
-  OrderDetailScreen,
-  AddressScreen,
-  AddressEdit,
-  PromocodeScreen,
-  AboutUsScreen,
-  CartDelivery,
-  CartDetail,
-  SettingScreen,
-  ProductFilterScreen,
-  ProductReviewScreen,
-  ProductReviewEditScreen,
-} from './screens';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faHome,
@@ -27,11 +8,10 @@ import {
   faCartShopping,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import themes from '../../themes/themes';
-import lang from '../../language/lang';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ProductDetailScreen from './screens/ProductDetailScreen';
 import {useSelector} from 'react-redux';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+// Constants
 import {
   NAVIGATION_BOTTOM_TAB_ACCOUNT,
   NAVIGATION_BOTTOM_TAB_CART,
@@ -54,6 +34,34 @@ import {
   NAVIGATION_MAIN_UPDATE_INFO,
 } from '../../constants/AppConstants';
 
+// Screens
+import {
+  HomeScreen,
+  ExploreScreen,
+  CartScreen,
+  AccountScreen,
+  ProfileScreen,
+  UpdateInfoScreen,
+  OrderScreen,
+  OrderDetailScreen,
+  AddressScreen,
+  AddressEdit,
+  PromocodeScreen,
+  AboutUsScreen,
+  CartDelivery,
+  CartDetail,
+  SettingScreen,
+  ProductFilterScreen,
+  ProductReviewScreen,
+  ProductReviewEditScreen,
+  ProductDetailScreen,
+} from './screens';
+
+// User Preferences
+import themes from '../../themes/themes';
+import lang from '../../language/lang';
+
+// Navigator
 const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -71,7 +79,7 @@ const MainNavigation = () => {
           headerStyle: {
             backgroundColor: themes[currentTheme].tertiaryColor,
           },
-          headerTintColor: themes[currentTheme].textColor
+          headerTintColor: themes[currentTheme].textColor,
         }}
         initialRouteName="hometab">
         <Stack.Screen
@@ -84,8 +92,8 @@ const MainNavigation = () => {
           name={NAVIGATION_MAIN_PRODUCT_DETAIL}
           component={ProductDetailScreen}
         />
-        <Stack.Screen 
-        options={{title: lang[langPref].nav_main_prod_reviews}}
+        <Stack.Screen
+          options={{title: lang[langPref].nav_main_prod_reviews}}
           name={NAVIGATION_MAIN_PRODUCT_REVIEW}
           component={ProductReviewScreen}
         />
@@ -154,13 +162,12 @@ const MainNavigation = () => {
           name={NAVIGATION_MAIN_SETTINGS}
           component={SettingScreen}
         />
-
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
+// Bottom Tab Navigation
 const MainTab = () => {
   // Saved language
   const langPref: keyof typeof lang = useSelector(

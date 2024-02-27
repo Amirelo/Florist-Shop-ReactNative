@@ -1,13 +1,22 @@
+// React and libs
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CustomButton, CustomImage, CustomText} from '../atoms';
-import {QuantityCounter} from '.';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux';
+
+// Models
 import {ProductModel} from '../../models';
-import {priceFormat} from '../../utils/Utils';
+
+// Components
+import {CustomButton, CustomImage, CustomText} from '../atoms';
+import {QuantityCounter} from '.';
+
+// User Preferences
 import themes from '../../themes/themes';
-import { useSelector } from 'react-redux';
+
+// Utilities
+import {priceFormat} from '../../utils/Utils';
 
 interface Props {
   marginTop?: number;
@@ -15,34 +24,44 @@ interface Props {
   onQuantityChanged?: any;
   onEllipsesPressed?: any;
   item: ProductModel;
-  quantity:number;
+  quantity: number;
 }
 
 const ItemCart = (props: Props) => {
   const [quantity, setQuantity] = React.useState(1);
 
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
 
   React.useEffect(() => {
-    setQuantity(props.quantity)
-  },[])
+    setQuantity(props.quantity);
+  }, []);
 
-  React.useEffect(()=>{
-    props.quantity = quantity
-  },[quantity])
+  React.useEffect(() => {
+    props.quantity = quantity;
+  }, [quantity]);
 
   return (
     <View
       style={[
         styles.view,
-        {marginTop: props.marginTop, marginBottom: props.marginBottom,backgroundColor: themes[currentTheme].tertiaryColor},
+        {
+          marginTop: props.marginTop,
+          marginBottom: props.marginBottom,
+          backgroundColor: themes[currentTheme].tertiaryColor,
+        },
       ]}>
       <CustomImage type="cart" marginRight={8} source={props.item.images[0]} />
       <View style={styles.body}>
         <View style={[styles.row, {marginBottom: 8}]}>
           <CustomText type="title">{props.item.name}</CustomText>
           <CustomButton onPressed={props.onEllipsesPressed}>
-          <FontAwesomeIcon  color={themes[currentTheme].textColor} size={16} icon={faEllipsisVertical} />
+            <FontAwesomeIcon
+              color={themes[currentTheme].textColor}
+              size={16}
+              icon={faEllipsisVertical}
+            />
           </CustomButton>
         </View>
         <View style={styles.row}>
@@ -53,7 +72,9 @@ const ItemCart = (props: Props) => {
             quantity={quantity}
             setQuantity={setQuantity}
             maxQuantity={props.item.quantity}
-            onChanged={(amount:number)=>{props.onQuantityChanged(amount)}}
+            onChanged={(amount: number) => {
+              props.onQuantityChanged(amount);
+            }}
           />
         </View>
       </View>
@@ -67,7 +88,7 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     padding: 14,
-    
+
     borderRadius: 7,
   },
   body: {

@@ -1,18 +1,22 @@
+// React and libs
 import React from 'react';
 import {
   FlexStyle,
   KeyboardType,
-  KeyboardTypeOptions,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
-import themes from '../../themes/themes';
-import {CustomButton, CustomText} from '../atoms';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton, CustomText} from '../atoms';
+
+// User Preferences
+import themes from '../../themes/themes';
 
 interface Props {
   placeholder?: string;
@@ -31,6 +35,7 @@ interface Props {
 }
 
 const CustomInput = (props: Props) => {
+  // Get seleceted theme
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );

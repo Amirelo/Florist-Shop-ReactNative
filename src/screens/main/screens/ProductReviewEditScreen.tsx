@@ -1,7 +1,15 @@
 // React and libs
 import React from 'react';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+
+// Constants
+import {NAVIGATION_MAIN_PRODUCT_REVIEW} from '../../../constants/AppConstants';
 
 // Models
 import {ProductModel, ReviewModel, UserModel} from '../../../models';
@@ -18,7 +26,6 @@ import {
 } from '../../../components/atoms';
 import {CustomInput, ItemPick} from '../../../components/molecules';
 import {TextButton} from '../../../components/molecules/buttons';
-import { NAVIGATION_MAIN_PRODUCT_REVIEW } from '../../../constants/AppConstants';
 
 const ProductReviewEditScreen = () => {
   // Initials
@@ -37,7 +44,8 @@ const ProductReviewEditScreen = () => {
   const [product, setProduct] = React.useState<ProductModel>();
   const [isAdd, setIsAdd] = React.useState(false);
 
-  const onAddPresed = async() => {
+  // Add review
+  const onAddPresed = async () => {
     if (rating != null && description != null) {
       const review = new ReviewModel(
         '',
@@ -48,12 +56,18 @@ const ProductReviewEditScreen = () => {
         description,
         images,
       );
-
-      await AddUserReview(product!.id, userEmail, userInfo.image!, review)
-      navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW)
+      await AddUserReview(
+        product!.id,
+        userEmail,
+        userInfo.image!,
+        review,
+        isAnonymous,
+      );
+      navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW);
     }
   };
 
+  // Get data from route and check if user has written a review for this product
   const getData = async () => {
     if (route.params?.data) {
       setProduct(route.params.data.product);
@@ -62,12 +76,13 @@ const ProductReviewEditScreen = () => {
         route.params.data.product.id,
         userEmail,
       );
-      setRating( res ? res.rating.toString() : '0')
-      setDescription(res ? res.description : '')
+      setRating(res ? res.rating.toString() : '0');
+      setDescription(res ? res.description : '');
       setIsAdd(res ? true : false);
     }
   };
 
+  // Run at beginning
   React.useEffect(() => {
     getData();
   }, []);
@@ -75,6 +90,7 @@ const ProductReviewEditScreen = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
+        {/* Review / Description */}
         <CustomInput
           placeholder="Reviews"
           multiLine={true}
@@ -86,6 +102,7 @@ const ProductReviewEditScreen = () => {
           Rating
         </CustomText>
         <ItemRow marginBottom={20}>
+          {/* Rating - input */}
           <CustomInput
             value={rating}
             onChangeText={setRating}
@@ -93,6 +110,7 @@ const ProductReviewEditScreen = () => {
             placeholder="Rating"
             width={'20%'}
           />
+          {/* Rating - stars */}
           <RatingStars
             onChanged={amount => setRating(amount)}
             totalRating={Number(rating)}
@@ -100,6 +118,7 @@ const ProductReviewEditScreen = () => {
           />
         </ItemRow>
 
+        {/* Anonymous - hide username and image */}
         <ItemPick
           onPressed={(title, status) => setIsAnonymous(status)}
           status={isAnonymous}
@@ -107,15 +126,10 @@ const ProductReviewEditScreen = () => {
           Anonymous review
         </ItemPick>
 
-        {isAdd ? (
-          <TextButton onPressed={onAddPresed} type="primary">
-            Edit
-          </TextButton>
-        ) : (
-          <TextButton onPressed={onAddPresed} type="primary">
-            Add
-          </TextButton>
-        )}
+        {/* Button - Add/Edit review */}
+        <TextButton onPressed={onAddPresed} type="primary">
+          {isAdd ? 'Add' : 'Edit'}
+        </TextButton>
       </CustomView>
     </CustomView>
   );

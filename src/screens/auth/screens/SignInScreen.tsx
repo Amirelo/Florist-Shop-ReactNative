@@ -1,9 +1,34 @@
+// React and libs
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
 import {faGoogle} from '@fortawesome/free-brands-svg-icons';
+
+// Constants
+import {
+  IMAGE_AUTH_BACKGROUND,
+  NAVIGATION_AUTH_SIGNUP,
+  NAVIGATION_AUTH_VERIFY,
+} from '../../../constants/AppConstants';
+
+// Models
+import {UserModel} from '../../../models';
+
+// Services
+import {
+  SignInWithGoogle,
+  checkIsSignIn,
+  getUserInfo,
+  passwordLogin,
+} from '../AuthService';
+
+// Redux
+import {authorizeLogin} from '../../../redux/actions/LoginAction';
+import {changeLanguage} from '../../../redux/actions/PreferenceAction';
+
+// Components
 import {
   CustomButton,
   CustomImage,
@@ -13,21 +38,9 @@ import {
 } from '../../../components/atoms';
 import {CustomInput, OptionsPanel} from '../../../components/molecules';
 import {SocialButton, TextButton} from '../../../components/molecules/buttons';
-import {
-  IMAGE_AUTH_BACKGROUND,
-  NAVIGATION_AUTH_SIGNUP,
-  NAVIGATION_AUTH_VERIFY,
-} from '../../../constants/AppConstants';
-import {
-  SignInWithGoogle,
-  checkIsSignIn,
-  getUserInfo,
-  passwordLogin,
-} from '../AuthService';
-import {authorizeLogin} from '../../../redux/actions/LoginAction';
+
+// User Preferences
 import lang from '../../../language/lang';
-import {changeLanguage} from '../../../redux/actions/PreferenceAction';
-import {UserModel} from '../../../models';
 
 const SignInScreen = () => {
   // Initial

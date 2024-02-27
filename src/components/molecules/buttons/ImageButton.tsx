@@ -1,9 +1,14 @@
+// React and libs
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {CustomButton} from '../../atoms';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {StyleSheet} from 'react-native';
-import themes from '../../../themes/themes';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useSelector} from 'react-redux';
+
+// Components
+import {CustomButton} from '../../atoms';
+
+// User Preferences
+import themes from '../../../themes/themes';
 
 interface Props {
   icon: IconProp;
@@ -11,6 +16,7 @@ interface Props {
 }
 
 const ImageButton = (props: Props) => {
+  // Get selected theme
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );

@@ -1,5 +1,14 @@
+// React and libs
 import React from 'react';
-import {StyleSheet, View, ViewStyle} from 'react-native';
+import {ViewStyle} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import * as solid from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux';
+
+// Models
+import {ProductModel} from '../../models';
+
+// Components
 import {
   CustomText,
   CustomImage,
@@ -7,13 +16,13 @@ import {
   ItemRow,
   CustomView,
 } from '../atoms';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import * as solid from '@fortawesome/free-solid-svg-icons';
+
+// User Preferences
 import themes from '../../themes/themes';
-import {ProductModel} from '../../models';
-import {priceFormat} from '../../utils/Utils';
 import lang from '../../language/lang';
-import {useSelector} from 'react-redux';
+
+// Utilities
+import {priceFormat} from '../../utils/Utils';
 
 interface Props {
   product: ProductModel;
@@ -39,7 +48,7 @@ const ItemProduct = (props: Props) => {
         ] as ViewStyle
       }>
       <CustomView
-        style={{alignSelf:'baseline'}}
+        style={{alignSelf: 'baseline'}}
         type={'itemPadding'}
         backgroundColor={themes[currentThemes].tertiaryColor}>
         {/* Product Image */}
@@ -50,7 +59,7 @@ const ItemProduct = (props: Props) => {
           source={props.product.images[0]}
         />
         {/* Product Name */}
-        <CustomText style={{maxWidth:144}} type="title" maxLines={1}>
+        <CustomText style={{maxWidth: 144}} type="title" maxLines={1}>
           {props.product.name}
         </CustomText>
         <ItemRow>

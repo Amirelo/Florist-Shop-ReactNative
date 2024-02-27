@@ -1,21 +1,26 @@
-import {StyleSheet, View} from 'react-native';
-import {CustomInput} from '../../../components/molecules';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+// React
 import React from 'react';
 import {
   NavigationProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {TextButton} from '../../../components/molecules/buttons';
+import {useDispatch, useSelector} from 'react-redux';
+
+// Services
 import {
   passwordSignUp,
   sendPasswordChangeEmail,
   updateUserInfo,
 } from '../../auth/AuthService';
-import {useDispatch, useSelector} from 'react-redux';
+
+// Redux
 import {ReduxUpdateUser} from '../../../redux/actions/LoginAction';
-import { CustomView } from '../../../components/atoms';
+
+// Components
+import {CustomView} from '../../../components/atoms';
+import {CustomInput} from '../../../components/molecules';
+import {TextButton} from '../../../components/molecules/buttons';
 const UpdateInfoScreen = () => {
   // Fields
   const [title, setTitle] = React.useState('');
@@ -38,6 +43,7 @@ const UpdateInfoScreen = () => {
     }
   }, []);
 
+  // Update user data based on title
   const onUpdatepressed = async () => {
     if (title != 'EMAIL') {
       await updateUserInfo(title, data, email);
@@ -45,6 +51,7 @@ const UpdateInfoScreen = () => {
       console.log('Update completed:', userInfo);
       navigation.goBack();
     } else {
+      // Change password if type is "EMAIL"
       // If input correct email
       if (email == data) {
         var charset = '';
@@ -60,8 +67,7 @@ const UpdateInfoScreen = () => {
 
         const signUpStatus = await passwordSignUp(email, randomPassword);
         if (signUpStatus) {
-          console.log('New Auth User created')
-         
+          console.log('New Auth User created');
         } else {
           console.log('User already existed, send password changeEmail');
         }
@@ -74,28 +80,24 @@ const UpdateInfoScreen = () => {
   };
 
   return (
-    <CustomView type='fullscreen'>
-    <CustomView type='body'>
-      <CustomInput
-        value={data}
-        onChangeText={setData}
-        marginTop={20}
-        marginBottom={20}
-        placeholder={title}
-      />
+    <CustomView type="fullscreen">
+      <CustomView type="body">
+        {/* Input - data */}
+        <CustomInput
+          value={data}
+          onChangeText={setData}
+          marginTop={20}
+          marginBottom={20}
+          placeholder={title}
+        />
 
-      <TextButton type="primary" onPressed={onUpdatepressed}>
-        {title == 'EMAIL' ? 'Send Update Password Email' : 'Update'}
-      </TextButton>
-    </CustomView>
+        {/* Button - Update */}
+        <TextButton type="primary" onPressed={onUpdatepressed}>
+          {title == 'EMAIL' ? 'Send Update Password Email' : 'Update'}
+        </TextButton>
+      </CustomView>
     </CustomView>
   );
 };
 
 export default UpdateInfoScreen;
-
-const styles = StyleSheet.create({
-  view: {
-    paddingHorizontal: 16,
-  },
-});

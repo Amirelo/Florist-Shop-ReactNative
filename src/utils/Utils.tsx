@@ -1,8 +1,13 @@
-import {useSelector} from 'react-redux';
-import lang from '../language/lang';
+// React and libs
 import {Dimensions} from 'react-native';
-import {AddressModel, PromocodeModel} from '../models';
 
+// Models
+import {AddressModel} from '../models';
+
+// User Preferences
+import lang from '../language/lang';
+
+// Format price
 export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   var result = '';
   if (langPref == 'vn') {
@@ -25,6 +30,7 @@ export const priceFormat = (price: number, langPref: keyof typeof lang) => {
   return result;
 };
 
+// Format date
 export const dateFormat = (date: string) => {
   var year = date.slice(0, 4);
   var month = date.slice(4, 6);
@@ -33,6 +39,7 @@ export const dateFormat = (date: string) => {
   return format;
 };
 
+// Format address
 export const addressFormat = (address: AddressModel) => {
   return (
     address.streetNumber +
@@ -47,11 +54,13 @@ export const addressFormat = (address: AddressModel) => {
   );
 };
 
+// Format promocode description
 export const promoEffectFormat = (effect: string, amount: number) => {
   const discount =
     effect == '%' ? 'get ' + amount + '% off' : 'price decrease by ' + amount;
   return discount;
 };
 
+// Device width and height
 export const deviceWidth = Dimensions.get('screen').width;
 export const deviceHeight = Dimensions.get('screen').height;

@@ -1,8 +1,16 @@
 // React and libs
 import React from 'react';
 import {FlatList} from 'react-native';
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+
+// Constants
+import {NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT} from '../../../constants/AppConstants';
 
 // Models
 import {ProductModel, ReviewModel} from '../../../models';
@@ -11,29 +19,19 @@ import {ProductModel, ReviewModel} from '../../../models';
 import {getProductReviews} from '../MainService';
 
 // Components
-import {
-  CustomImage,
-  CustomText,
-  CustomView,
-  ItemRow,
-  RatingStars,
-} from '../../../components/atoms';
+import {CustomView} from '../../../components/atoms';
 
 // User Preferences
 import themes from '../../../themes/themes';
 
 // Utilities
 import {ItemReview} from '../../../components/molecules';
-import { TextButton } from '../../../components/molecules/buttons';
-import { NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT } from '../../../constants/AppConstants';
+import {TextButton} from '../../../components/molecules/buttons';
 
 const ProductReviewScreen = () => {
   // Initials
   const route = useRoute<RouteProp<any>>();
   const navigation = useNavigation<NavigationProp<any>>();
-  const currentTheme: keyof typeof themes = useSelector(
-    (store: any) => store.preference.theme,
-  );
 
   // Fields
   const [selectedProduct, setSelectedProduct] = React.useState<
@@ -53,8 +51,10 @@ const ProductReviewScreen = () => {
 
   // Navigate - ProductReviewEditScreen
   const onWritePresed = () => {
-    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT,{data:{product: route.params!.data}})
-  }
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT, {
+      data: {product: route.params!.data},
+    });
+  };
 
   // Get data from route
   React.useEffect(() => {
@@ -64,8 +64,12 @@ const ProductReviewScreen = () => {
   return (
     <CustomView type="fullscreen">
       <CustomView type="body">
-        <TextButton onPressed={onWritePresed} type='primary' marginBottom={20}>Write a review</TextButton>
+        {/* Button - write review */}
+        <TextButton onPressed={onWritePresed} type="primary" marginBottom={20}>
+          Write a review
+        </TextButton>
 
+        {/* List - reviews */}
         <FlatList
           key={'#'}
           data={listReviews}

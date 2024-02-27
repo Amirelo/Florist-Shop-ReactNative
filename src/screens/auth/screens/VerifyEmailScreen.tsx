@@ -1,15 +1,25 @@
+// React and libs
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {
-  IMAGE_AUTH_BACKGROUND,
-  NAVIGATION_AUTH_ACTIONCOMPLETE,
-} from '../../../constants/AppConstants';
-import {getUserInfo, passwordSignUp, sendPasswordChangeEmail} from '../AuthService';
 import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+
+// Constants
+import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+
+// Services
+import {
+  getUserInfo,
+  passwordSignUp,
+  sendPasswordChangeEmail,
+} from '../AuthService';
+
+// Components
 import {CustomText, CustomView, CustomImage} from '../../../components/atoms';
 import {CustomInput} from '../../../components/molecules';
 import {ImageButton, TextButton} from '../../../components/molecules/buttons';
+
+// User Preferences
 import lang from '../../../language/lang';
 
 const VerifyEmailScreen = () => {
@@ -25,36 +35,35 @@ const VerifyEmailScreen = () => {
   );
 
   // Send email and navigate to Action Complete Screen when finish
-  const onSendEmailPressed = async() => {
-    if(email.length > 0) {
-        const userInfo = await getUserInfo(email);
-        if (userInfo != null){
-          var charset = '';
-          charset += 'abcdefghijklmnopqrstuvwxyz';
-          charset += '0123456789';
-          charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-          var randomPassword: string = '';
-          for (let i = 0; i < 20; i++) {
-            randomPassword += charset.charAt(
-              Math.floor(Math.random() * charset.length),
-            );
-          }
-  
-          const signUpStatus = await passwordSignUp(email, randomPassword);
-          if (signUpStatus) {
-            console.log('New Auth User created')
-           
-          } else {
-            console.log('User already existed, send password changeEmail');
-          }
-          sendPasswordChangeEmail(email);
-          navigation.goBack();
-        } else{
-          console.log('User not in Firestore. Please go to create account')
+  const onSendEmailPressed = async () => {
+    if (email.length > 0) {
+      const userInfo = await getUserInfo(email);
+      if (userInfo != null) {
+        var charset = '';
+        charset += 'abcdefghijklmnopqrstuvwxyz';
+        charset += '0123456789';
+        charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var randomPassword: string = '';
+        for (let i = 0; i < 20; i++) {
+          randomPassword += charset.charAt(
+            Math.floor(Math.random() * charset.length),
+          );
         }
-      } else{
-        console.log('Fields cannot be empty')
+
+        const signUpStatus = await passwordSignUp(email, randomPassword);
+        if (signUpStatus) {
+          console.log('New Auth User created');
+        } else {
+          console.log('User already existed, send password changeEmail');
+        }
+        sendPasswordChangeEmail(email);
+        navigation.goBack();
+      } else {
+        console.log('User not in Firestore. Please go to create account');
       }
+    } else {
+      console.log('Fields cannot be empty');
+    }
   };
 
   // Go back to Sign In Screen
