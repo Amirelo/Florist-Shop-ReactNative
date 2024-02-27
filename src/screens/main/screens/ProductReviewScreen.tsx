@@ -53,7 +53,7 @@ const ProductReviewScreen = () => {
 
   // Navigate - ProductReviewEditScreen
   const onWritePresed = () => {
-    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT)
+    navigation.navigate(NAVIGATION_MAIN_PRODUCT_REVIEW_EDIT,{data:{product: route.params!.data}})
   }
 
   // Get data from route
@@ -65,7 +65,6 @@ const ProductReviewScreen = () => {
     <CustomView type="fullscreen">
       <CustomView type="body">
         <TextButton onPressed={onWritePresed} type='primary' marginBottom={20}>Write a review</TextButton>
-        <CustomText>Review screen</CustomText>
 
         <FlatList
           key={'#'}

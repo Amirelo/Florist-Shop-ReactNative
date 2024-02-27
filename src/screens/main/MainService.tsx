@@ -6,7 +6,7 @@ import {
   OrderModel,
   ProductModel,
   PromocodeModel,
-  ReviewModel
+  ReviewModel,
 } from '../../models';
 
 // Get all categories from server
@@ -55,7 +55,6 @@ export const getProductByID = async (id: string) => {
 };
 
 // Get Product Review
-
 export const getProductReviews = async (productID: string) => {
   return (
     await firestore()
@@ -75,6 +74,58 @@ export const getProductReviews = async (productID: string) => {
         doc.data().images,
       ),
   );
+};
+
+// Check if user has written a review
+export const checkUserReview = async (productID: string, email: string) => {
+  const data = (
+    await firestore()
+      .collection('products')
+      .doc(productID)
+      .collection('reviews')
+      .doc(email)
+      .get()
+  ).data();
+  if (data == null) {
+    console.log('Review not found');
+  } else {
+    console.log('Review found');
+  }
+  return data;
+};
+
+// Add review
+export const AddUserReview = async (
+  productID: string,
+  email: string,
+  userImage: string,
+  data: ReviewModel,
+) => {
+  var currentdate = new Date();
+  var year = currentdate.getFullYear();
+  var month =
+    currentdate.getMonth() + 1 < 10
+      ? '0' + (currentdate.getMonth() + 1)
+      : currentdate.getMonth() + 1;
+  var day =
+    currentdate.getDay() < 10
+      ? '0' + currentdate.getDay()
+      : currentdate.getDay();
+  var date: string = year.toString() + month.toString() + day.toString();
+
+  await firestore()
+    .collection('products')
+    .doc(productID)
+    .collection('reviews')
+    .doc(email)
+    .set({
+      date: date,
+      description: data.description,
+      images: data.images,
+      name: data.name,
+      rating: data.rating,
+      userImage: userImage,
+    });
 };
 
 // Get User Order by Email

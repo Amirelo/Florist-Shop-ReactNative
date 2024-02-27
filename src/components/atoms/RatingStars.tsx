@@ -5,7 +5,7 @@ import * as solid from '@fortawesome/free-solid-svg-icons';
 import * as regular from '@fortawesome/free-regular-svg-icons';
 import themes from '../../themes/themes';
 import {CustomButton} from '.';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 interface Props {
   totalRating: number;
@@ -14,11 +14,13 @@ interface Props {
 }
 
 const RatingStars = (props: Props) => {
-  const currentTheme:keyof typeof themes = useSelector((store:any) => store.preference.theme)
+  const currentTheme: keyof typeof themes = useSelector(
+    (store: any) => store.preference.theme,
+  );
   return (
     <View style={styles.rating}>
       <CustomButton
-        onPressed={() => (props.onChanged ? props.onChanged('0.5') : '')}>
+        onPressed={() => (props.onChanged ? props.onChanged('1') : '')}>
         <FontAwesomeIcon
           size={props.size ? props.size : 18}
           color={themes[currentTheme].warnColor}
@@ -31,50 +33,65 @@ const RatingStars = (props: Props) => {
           }
         />
       </CustomButton>
-      <FontAwesomeIcon
-        size={props.size ? props.size : 18}
-        color={themes[currentTheme].warnColor}
-        icon={
-          props.totalRating >= 2
-            ? solid.faStar
-            : props.totalRating >= 1.5
-            ? solid.faStarHalfAlt
-            : regular.faStar
-        }
-      />
-      <FontAwesomeIcon
-        size={props.size ? props.size : 18}
-        color={themes[currentTheme].warnColor}
-        icon={
-          props.totalRating >= 3
-            ? solid.faStar
-            : props.totalRating >= 2.5
-            ? solid.faStarHalfAlt
-            : regular.faStar
-        }
-      />
-      <FontAwesomeIcon
-        size={props.size ? props.size : 18}
-        color={themes[currentTheme].warnColor}
-        icon={
-          props.totalRating >= 4
-            ? solid.faStar
-            : props.totalRating >= 3.5
-            ? solid.faStarHalfAlt
-            : regular.faStar
-        }
-      />
-      <FontAwesomeIcon
-        size={props.size ? props.size : 18}
-        color={themes[currentTheme].warnColor}
-        icon={
-          props.totalRating == 5
-            ? solid.faStar
-            : props.totalRating >= 4.5
-            ? solid.faStarHalfAlt
-            : regular.faStar
-        }
-      />
+      <CustomButton
+        onPressed={() => (props.onChanged ? props.onChanged('2') : '')}>
+        <FontAwesomeIcon
+          size={props.size ? props.size : 18}
+          color={themes[currentTheme].warnColor}
+          icon={
+            props.totalRating >= 2
+              ? solid.faStar
+              : props.totalRating >= 1.5
+              ? solid.faStarHalfAlt
+              : regular.faStar
+          }
+        />
+      </CustomButton>
+
+      <CustomButton
+        onPressed={() => (props.onChanged ? props.onChanged('3') : '')}>
+        <FontAwesomeIcon
+          size={props.size ? props.size : 18}
+          color={themes[currentTheme].warnColor}
+          icon={
+            props.totalRating >= 3
+              ? solid.faStar
+              : props.totalRating >= 2.5
+              ? solid.faStarHalfAlt
+              : regular.faStar
+          }
+        />
+      </CustomButton>
+
+      <CustomButton
+        onPressed={() => (props.onChanged ? props.onChanged('4') : '')}>
+        <FontAwesomeIcon
+          size={props.size ? props.size : 18}
+          color={themes[currentTheme].warnColor}
+          icon={
+            props.totalRating >= 4
+              ? solid.faStar
+              : props.totalRating >= 3.5
+              ? solid.faStarHalfAlt
+              : regular.faStar
+          }
+        />
+      </CustomButton>
+
+      <CustomButton
+        onPressed={() => (props.onChanged ? props.onChanged('5') : '')}>
+        <FontAwesomeIcon
+          size={props.size ? props.size : 18}
+          color={themes[currentTheme].warnColor}
+          icon={
+            props.totalRating == 5
+              ? solid.faStar
+              : props.totalRating >= 4.5
+              ? solid.faStarHalfAlt
+              : regular.faStar
+          }
+        />
+      </CustomButton>
     </View>
   );
 };

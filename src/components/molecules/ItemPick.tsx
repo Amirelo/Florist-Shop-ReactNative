@@ -1,7 +1,7 @@
 import {faSquare, faSquareCheck} from '@fortawesome/free-regular-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {FlexStyle, StyleSheet, View} from 'react-native';
 import {CustomButton, CustomText} from '../atoms';
 import themes from '../../themes/themes';
 import { useSelector } from 'react-redux';
@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux';
 interface Props {
   children: string;
   onPressed(title: string, status: boolean): any;
-  isClear: boolean;
+  isClear?: boolean;
   status: boolean;
+  marginBottom?: FlexStyle['marginBottom']
 }
 
 const ItemPick = (props: Props) => {
@@ -42,7 +43,7 @@ const ItemPick = (props: Props) => {
 
   return (
     <CustomButton onPressed={onCategoryPressed} style={{width: '33%'}}>
-      <View style={styles.view}>
+      <View style={[styles.view,{marginBottom: props.marginBottom}]}>
         <FontAwesomeIcon color={themes[currentTheme].textColor} size={20} icon={status ? faSquareCheck : faSquare} />
         <CustomText type="subTitle">{props.children}</CustomText>
       </View>
