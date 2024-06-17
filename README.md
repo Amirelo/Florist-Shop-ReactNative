@@ -1,4 +1,4 @@
-![promo](https://github.com/Amirelo/Florist-Shop-ReactNative/assets/80700398/6bc87faf-b453-40e9-bbae-591eefd67423)
+Download: https://github.com/Amirelo/Florist-Shop-ReactNative/releases/tag/stable
 
 
 Step to run app:
@@ -8,5 +8,7 @@ Step to run app:
 3. npm run android
 
 Go to Sign Up Screen and create new account or Sign In with Google Account
+
+![promo](https://github.com/Amirelo/Florist-Shop-ReactNative/assets/80700398/6bc87faf-b453-40e9-bbae-591eefd67423)
 
 
