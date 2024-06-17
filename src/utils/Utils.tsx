@@ -1,5 +1,5 @@
 // React and libs
-import {Dimensions} from 'react-native';
+import {Alert, Dimensions, Platform, ToastAndroid} from 'react-native';
 
 // Models
 import {AddressModel} from '../models';
@@ -59,6 +59,15 @@ export const promoEffectFormat = (effect: string, amount: number) => {
   const discount =
     effect == '%' ? 'get ' + amount + '% off' : 'price decrease by ' + amount;
   return discount;
+};
+
+export const notifyMessage = (message: string) => {
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  }
+  if (Platform.OS == 'ios') {
+    Alert.alert(message);
+  }
 };
 
 // Device width and height

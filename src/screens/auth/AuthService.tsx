@@ -140,6 +140,7 @@ export const passwordSignUp = async (email: string, password: string) => {
     .createUserWithEmailAndPassword(email, password)
     .then(async credential => {
       console.log('User created');
+      
       status = true;
       // Save user to Firestore
       const userInfo = await getUserInfo(email)
@@ -151,9 +152,11 @@ export const passwordSignUp = async (email: string, password: string) => {
         .sendEmailVerification()
         .then(() => console.log('Email sent'))
         .catch((error: any) => console.log('Error sending email:', error.code));
-    })
+        return true
+      })
     .catch(error => {
       console.log('Error creating user:', error);
+      return false;
     });
   console.log(status);
   return status;

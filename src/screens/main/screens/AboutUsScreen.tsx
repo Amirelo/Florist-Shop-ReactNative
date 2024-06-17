@@ -44,14 +44,7 @@ const AboutUsScreen = () => {
           {/* Creator Major */}
           <ItemRow marginBottom={12}>
             <CustomText type="subTitle">{lang[langPref].text_major}</CustomText>
-            <CustomText type="subTitle">Computer Science</CustomText>
-          </ItemRow>
-          <Divider marginBottom={12} />
-
-          {/* Creator Phone Number */}
-          <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">{lang[langPref].text_creator_phone}</CustomText>
-            <CustomText type="subTitle">(+84) 58 281 4653</CustomText>
+            <CustomText type="subTitle">Computer Programming</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />
 
@@ -64,7 +57,7 @@ const AboutUsScreen = () => {
 
           {/* Backend Technology */}
           <ItemRow marginBottom={12}>
-            <CustomText type="subTitle">Backend:</CustomText>
+            <CustomText type="subTitle">Server:</CustomText>
             <CustomText type="subTitle">Firebase (Firestore)</CustomText>
           </ItemRow>
           <Divider marginBottom={12} />

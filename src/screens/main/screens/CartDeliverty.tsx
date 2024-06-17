@@ -7,11 +7,12 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 
 // Constants
 import {
+  MSG_FIELDS_EMPTY,
   NAVIGATION_MAIN_ADDRESS_EDIT,
   NAVIGATION_MAIN_CART_DETAIL,
 } from '../../../constants/AppConstants';
@@ -37,11 +38,13 @@ import lang from '../../../language/lang';
 
 // Utilities
 import {addressFormat} from '../../../utils/Utils';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const CartDelivery = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch()
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
@@ -109,6 +112,7 @@ const CartDelivery = () => {
         phoneNumber: phoneNumber,
       });
     } else {
+      dispatch(addMessage(MSG_FIELDS_EMPTY))
       console.log('Fields cannot be empty');
     }
   };

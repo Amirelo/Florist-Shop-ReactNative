@@ -9,6 +9,12 @@ import {faGoogle} from '@fortawesome/free-brands-svg-icons';
 // Constants
 import {
   IMAGE_AUTH_BACKGROUND,
+  MSG_FIELDS_EMPTY,
+  MSG_GOOGLE_FAIL,
+  MSG_GOOGLE_INFO_FAIL,
+  MSG_LOGIN_INVALID,
+  MSG_LOGIN_SUCCESS,
+  MSG_NO_SESSION,
   NAVIGATION_AUTH_SIGNUP,
   NAVIGATION_AUTH_VERIFY,
 } from '../../../constants/AppConstants';
@@ -26,7 +32,7 @@ import {
 
 // Redux
 import {authorizeLogin} from '../../../redux/actions/LoginAction';
-import {changeLanguage} from '../../../redux/actions/PreferenceAction';
+import {addMessage, changeLanguage} from '../../../redux/actions/PreferenceAction';
 
 // Components
 import {
@@ -41,6 +47,7 @@ import {SocialButton, TextButton} from '../../../components/molecules/buttons';
 
 // User Preferences
 import lang from '../../../language/lang';
+import { notifyMessage } from '../../../utils/Utils';
 
 const SignInScreen = () => {
   // Initial
@@ -100,11 +107,14 @@ const SignInScreen = () => {
           (await getUserInfo(email)) ?? new UserModel();
         console.log(userInfo);
         dispatch(authorizeLogin(email, userInfo));
+        dispatch(addMessage(MSG_LOGIN_SUCCESS + userInfo.username))
       } else {
-        console.log('Invalid username or password');
+        dispatch(addMessage(MSG_LOGIN_INVALID))
+        console.log(MSG_LOGIN_INVALID);
       }
     } else {
-      console.log('Fields cannot be empty');
+      dispatch(addMessage(MSG_FIELDS_EMPTY))
+      console.log(MSG_FIELDS_EMPTY);
     }
   };
 
@@ -118,7 +128,8 @@ const SignInScreen = () => {
         authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo!),
       );
     } else {
-      console.log('No previous Sign In session');
+      console.log(MSG_NO_SESSION);
+      dispatch(addMessage(MSG_NO_SESSION))
     }
   };
 
@@ -126,19 +137,22 @@ const SignInScreen = () => {
   const onGooglePressed = async () => {
     const email = await SignInWithGoogle();
     if (email) {
-      console.log('Sign in success with email:', email);
+      console.log(MSG_LOGIN_SUCCESS + email);
       const userInfo = await getUserInfo(email);
       if (userInfo != null) {
         dispatch(
           authorizeLogin((await GoogleSignin.signIn()).user.email, userInfo),
         );
+        notifyMessage(MSG_LOGIN_SUCCESS + userInfo.username)
         console.log('Login successful:', userInfo);
       } else {
         GoogleSignin.signOut();
-        console.log('Fail to get user info');
+        notifyMessage(MSG_GOOGLE_INFO_FAIL)
+        console.log(MSG_GOOGLE_INFO_FAIL)
       }
     } else {
-      console.log('Login failed');
+      notifyMessage(MSG_GOOGLE_FAIL)
+      console.log(MSG_GOOGLE_FAIL)
     }
   };
 

@@ -30,7 +30,6 @@ import {
 
 // User Preferences
 import lang from '../../../language/lang';
-import { Filter } from '@react-native-firebase/firestore';
 
 const HomeScreen = () => {
   // Initial

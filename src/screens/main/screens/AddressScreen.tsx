@@ -7,7 +7,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 
 // Constants
@@ -29,11 +29,13 @@ import lang from '../../../language/lang';
 
 // Utilities
 import {addressFormat} from '../../../utils/Utils';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const AddressScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch();
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
@@ -56,7 +58,7 @@ const AddressScreen = () => {
       'Delete address: ' + addressFormat(item),
       'Are you sure you want to delete? This action cannot be redo',
       [
-        {text: 'Delete', onPress: () => deleteUserAddress(email, item.id + '')},
+        {text: 'Delete', onPress: () => {deleteUserAddress(email, item.id + ''); dispatch(addMessage("Address deleted"))}},
         {text: 'Cancel', onPress: () => console.log('Pressed')},
       ],
     );

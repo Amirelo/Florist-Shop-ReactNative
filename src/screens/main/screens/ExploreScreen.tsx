@@ -1,6 +1,6 @@
 // React and libs
 import React from 'react';
-import {FlatList, ScrollView} from 'react-native';
+import {FlatList} from 'react-native';
 import {
   NavigationProp,
   RouteProp,

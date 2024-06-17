@@ -7,10 +7,11 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // Constants
 import {
+  MSG_CART_DELETE,
   NAVIGATION_BOTTOM_TAB_EXPLORE,
   NAVIGATION_MAIN_CART_DELIVERY,
 } from '../../../constants/AppConstants';
@@ -43,11 +44,13 @@ import lang from '../../../language/lang';
 
 // Utilities
 import {priceFormat} from '../../../utils/Utils';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const CartScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch();
   const langPref: keyof typeof lang = useSelector(
     (store: any) => store.preference.language,
   );
@@ -99,6 +102,7 @@ const CartScreen = () => {
         ),
       );
       // Remove item from cart list
+      dispatch(addMessage(MSG_CART_DELETE))
       setListCarts(
         listCarts.filter(cartItem => cartItem.id != selectedProduct!.id),
       );

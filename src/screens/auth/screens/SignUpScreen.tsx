@@ -1,7 +1,7 @@
 // React and libs
 import React from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   faArrowLeft,
   faEnvelope,
@@ -11,6 +11,10 @@ import {
 // Constants
 import {
   IMAGE_AUTH_BACKGROUND,
+  MSG_FIELDS_EMPTY,
+  MSG_PASSWORDS_MISMATCH,
+  MSG_SIGNUP_FAIL,
+  MSG_SIGNUP_SUCCESS,
   NAVIGATION_AUTH_ACTIONCOMPLETE,
 } from '../../../constants/AppConstants';
 
@@ -24,10 +28,12 @@ import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 
 // Preferences
 import lang from '../../../language/lang';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const SignUpScreen = () => {
   // Initial
   const navigation = useNavigation<NavigationProp<any>>();
+  const dispatch = useDispatch()
 
   // Fields
   const [email, setEmail] = React.useState('');
@@ -41,13 +47,17 @@ const SignUpScreen = () => {
 
   // Check if all fields are not empty
   const checkFields = () => {
-    const status =
-      email.length > 0 &&
-      password.length > 0 &&
-      confirmPassword.length > 0 &&
-      password == confirmPassword
-        ? true
-        : false;
+    var status = true
+    if (email.length <= 0 &&
+      password.length <= 0 && 
+      confirmPassword.length <= 0){
+        dispatch(addMessage(MSG_FIELDS_EMPTY));
+        status = false
+      }  
+      if(password != confirmPassword){
+        dispatch(addMessage(MSG_PASSWORDS_MISMATCH));
+        status = false
+      } 
     return status;
   };
 
@@ -57,16 +67,21 @@ const SignUpScreen = () => {
   };
 
   // Sign Up on pressed
-  const onSignUpPressed = () => {
-    checkFields()
-      ? [
-          passwordSignUp(email, password),
-          navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
-            title: lang[langPref]['complete_signup_title'],
-            description: lang[langPref]['complete_signup_description'],
-          }),
-        ]
-      : '';
+  const onSignUpPressed = async() => {
+    if(checkFields()){
+      const res = await passwordSignUp(email, password)
+      if (res == true){
+        dispatch(addMessage(MSG_SIGNUP_SUCCESS))
+      } else{
+        dispatch(addMessage(MSG_SIGNUP_FAIL));
+      }
+      navigation.navigate(NAVIGATION_AUTH_ACTIONCOMPLETE, {
+        title: lang[langPref]['complete_signup_title'],
+        description: lang[langPref]['complete_signup_description'],
+      })
+    } else{
+    }
+    
   };
 
   return (

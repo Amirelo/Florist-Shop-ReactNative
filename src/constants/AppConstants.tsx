@@ -10,6 +10,8 @@ export const THEME_CHANGE = 'CHANGETHEME';
 export const FONT_CHANGE = 'CHANGEFONT';
 export const FONT_SIZE_CHANGE = 'FONTSIZECHANGE';
 export const RESET_PREFERENCE = 'RESETPREFENCE';
+export const MESSAGE_ADD = "ADDMESSAGE";
+export const MESSAGE_DISMISS = "DISMISSMESSAGE";
 
 // Bottom tabs
 export const NAVIGATION_BOTTOM_TAB_HOME = 'Home';
@@ -57,3 +59,23 @@ export const IMAGE_ORDER_PENDING = 'https://images.pexels.com/photos/2419256/pex
 export const IMAGE_ORDER_DELIVERING = 'https://images.pexels.com/photos/8988448/pexels-photo-8988448.jpeg';
 export const IMAGE_ORDER_COMPLETED = 'https://images.pexels.com/photos/4560083/pexels-photo-4560083.jpeg';
 export const IMAGE_ORDER_FAIL = 'https://images.pexels.com/photos/897817/pexels-photo-897817.jpeg';
+
+// Messages
+export const MSG_FIELDS_EMPTY = "'Fields cannot be empty";
+export const MSG_NO_SESSION = "No previous Sign In session";
+export const MSG_LOGIN_INVALID = "Invalid username or password";
+export const MSG_LOGIN_SUCCESS = "Welcome back ";
+export const MSG_GOOGLE_INFO_FAIL = "Fail to get user info";
+export const MSG_GOOGLE_FAIL = "Login Failed";
+export const MSG_SIGNUP_SUCCESS = "Sign Up Success! Check your email for verification";
+export const MSG_SIGNUP_FAIL = "Sign Up Fail";
+export const MSG_PASSWORDS_MISMATCH = "Passwords does not match";
+export const MSG_USER_NOT_FOUND = "No account associated with your email. Please check again";
+export const MSG_PSCHANGE_NEW_USER = "No user found. New account created";
+export const MSG_PSCHANGE_SUCCESS = "Send password change email success";
+export const MSG_SIGNOUT_SUCCESS = "Sign Out success"
+export const MSG_ADDRESS_NEW = "New address created success"
+export const MSG_ADDRESS_UPDATE = "Update address success"
+export const MSG_ORDER_SUCCESS = "Order success"
+export const MSG_CART_DELETE = "Cart item deleted"
+export const MSG_PRODUCT_ADD = "Product add to cart"

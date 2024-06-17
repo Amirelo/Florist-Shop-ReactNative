@@ -1,11 +1,11 @@
 // React and libs
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {faArrowLeft, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 // Constants
-import {IMAGE_AUTH_BACKGROUND} from '../../../constants/AppConstants';
+import {IMAGE_AUTH_BACKGROUND, MSG_FIELDS_EMPTY, MSG_PSCHANGE_NEW_USER, MSG_PSCHANGE_SUCCESS, MSG_USER_NOT_FOUND} from '../../../constants/AppConstants';
 
 // Services
 import {
@@ -21,10 +21,12 @@ import {ImageButton, TextButton} from '../../../components/molecules/buttons';
 
 // User Preferences
 import lang from '../../../language/lang';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const VerifyEmailScreen = () => {
-  // Navigation
+  // Initials
   const navigation = useNavigation<NavigationProp<any>>();
+  const dispatch = useDispatch();
 
   // Fields
   const [email, setEmail] = React.useState('');
@@ -52,16 +54,20 @@ const VerifyEmailScreen = () => {
 
         const signUpStatus = await passwordSignUp(email, randomPassword);
         if (signUpStatus) {
+          dispatch(addMessage(MSG_PSCHANGE_NEW_USER))
           console.log('New Auth User created');
         } else {
+          dispatch(addMessage(MSG_PSCHANGE_SUCCESS))
           console.log('User already existed, send password changeEmail');
         }
         sendPasswordChangeEmail(email);
         navigation.goBack();
       } else {
-        console.log('User not in Firestore. Please go to create account');
+        dispatch(addMessage(MSG_USER_NOT_FOUND))
+        console.log('User not found. Please go to create account');
       }
     } else {
+      dispatch(addMessage(MSG_FIELDS_EMPTY))
       console.log('Fields cannot be empty');
     }
   };
@@ -80,7 +86,7 @@ const VerifyEmailScreen = () => {
       {/* Authentication Card */}
       <CustomView type="authCard">
         {/* Title and back button */}
-        <CustomView type={'itemRow'}>
+        <CustomView type={'itemRow'} style={{marginBottom:20}}>
           <ImageButton icon={faArrowLeft} onPressed={onBackButtonPressed} />
           <CustomText type="title" fontWeight="bold">
             {lang[langPref]['verify_title']}

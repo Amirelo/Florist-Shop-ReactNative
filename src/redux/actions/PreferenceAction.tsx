@@ -2,6 +2,8 @@ import {
   FONT_CHANGE,
   FONT_SIZE_CHANGE,
   LANG_CHANGE,
+  MESSAGE_ADD,
+  MESSAGE_DISMISS,
   RESET_PREFERENCE,
   THEME_CHANGE,
 } from '../../constants/AppConstants';
@@ -25,3 +27,11 @@ export const changeFontSize = (data: number) => {
 export const resetUserPreference = () => {
   return {type: RESET_PREFERENCE};
 };
+
+export const addMessage = (data: string) => {
+  return {type:MESSAGE_ADD, payload:{data:data}};
+}
+
+export const dissmissMessage = () => {
+  return {type:MESSAGE_DISMISS}
+}

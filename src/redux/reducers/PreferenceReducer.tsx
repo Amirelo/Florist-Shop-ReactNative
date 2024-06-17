@@ -2,6 +2,8 @@ import {
   FONT_CHANGE,
   FONT_SIZE_CHANGE,
   LANG_CHANGE,
+  MESSAGE_ADD,
+  MESSAGE_DISMISS,
   RESET_PREFERENCE,
   THEME_CHANGE,
 } from '../../constants/AppConstants';
@@ -11,6 +13,7 @@ const initialState = {
   theme: 'defaultTheme',
   font: '',
   fontScale: 0,
+  messages: [],
 };
 
 export default (state = initialState, action: any) => {
@@ -42,6 +45,16 @@ export default (state = initialState, action: any) => {
         font: '',
         fontScale: 0,
       };
+    case MESSAGE_ADD:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload.data]
+      }
+    case MESSAGE_DISMISS:
+      return {
+        ...state,
+        messages: state.messages.length > 1 ? state.messages.slice(1, state.messages.length) : []
+      }
     default:
       return state;
   }

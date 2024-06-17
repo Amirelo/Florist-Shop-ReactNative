@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 // Constants
 import {
+  MSG_SIGNOUT_SUCCESS,
   NAVIGATION_MAIN_ABOUTUS,
   NAVIGATION_MAIN_ADDRESS,
   NAVIGATION_MAIN_ORDER,
@@ -41,6 +42,7 @@ import {ItemAccount, ItemUser} from '../../../components/molecules';
 // User Preferences
 import lang from '../../../language/lang';
 import themes from '../../../themes/themes';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const AccountScreen = () => {
   // Initials
@@ -89,9 +91,10 @@ const AccountScreen = () => {
 
   // Logout on pressed
   const onLogoutPressed = async () => {
-    (await googleLogout())
-      ? dispatch(logout())
-      : console.log('Something wrong');
+    if (await googleLogout()){
+      dispatch(logout())
+      dispatch(addMessage(MSG_SIGNOUT_SUCCESS))
+    }
   };
 
   // Navigate - ProfileScreen
@@ -145,7 +148,7 @@ const AccountScreen = () => {
         <CustomView type="body">
           {/* User Profile */}
           <ItemUser
-            username={userInfo.username}
+            username={userInfo?.username}
             email={userEmail}
             source={
               user?.image

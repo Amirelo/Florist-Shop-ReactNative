@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/native';
 
 // Constants
-import {NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
+import {MSG_ORDER_SUCCESS, NAVIGATION_MAIN_CART} from '../../../constants/AppConstants';
 
 // Models
 import {
@@ -24,7 +24,7 @@ import {
 import {AddUserOrder, deleteCart, getUserPromoocodes} from '../MainService';
 
 // Redux
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // Components
 import {
@@ -47,11 +47,13 @@ import {
   priceFormat,
   promoEffectFormat,
 } from '../../../utils/Utils';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
 
 const CartDetail = () => {
   // initial
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch();
   const currentTheme: keyof typeof themes = useSelector(
     (store: any) => store.preference.theme,
   );
@@ -126,6 +128,7 @@ const CartDetail = () => {
     // If success
     if (addOrderRes) {
       // Delete carts
+      dispatch(addMessage(MSG_ORDER_SUCCESS))
       await deleteCart(email);
       navigation.navigate(NAVIGATION_MAIN_CART, {action: 'Order'});
     }

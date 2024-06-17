@@ -6,7 +6,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
 // Models
@@ -26,12 +26,15 @@ import themes from '../../../themes/themes';
 
 // Road data
 import * as road from '../../../data/roads.json';
+import { addMessage } from '../../../redux/actions/PreferenceAction';
+import { MSG_ADDRESS_NEW, MSG_ADDRESS_UPDATE, MSG_FIELDS_EMPTY } from '../../../constants/AppConstants';
 
 const AddressEdit = () => {
   // NOTE: there will be delay when opening street option panel due to the amount of data
 
   // Initial
   const route = useRoute<RouteProp<any>>();
+  const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<any>>();
   const email = useSelector((store: any) => store.isLoggedIn.userEmail);
   const langPref: keyof typeof lang = useSelector(
@@ -98,9 +101,10 @@ const AddressEdit = () => {
       ward.length > 0 &&
       district.length > 0
     ) {
-      console.log('No Empty Fields');
+      
       return true;
     }
+    dispatch(addMessage(MSG_FIELDS_EMPTY))
     console.log('Fields cannot be empty');
     return false;
   };
@@ -116,6 +120,7 @@ const AddressEdit = () => {
         district,
         'HCM City',
       );
+      dispatch(addMessage(MSG_ADDRESS_NEW))
       await AddNewUserAddress(email, address);
       navigation.goBack();
     }
@@ -132,6 +137,7 @@ const AddressEdit = () => {
         district,
         'HCM City',
       );
+      dispatch(addMessage(MSG_ADDRESS_UPDATE))
       await EditUserAddress(email, address);
       navigation.goBack();
     }
